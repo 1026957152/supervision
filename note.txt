@@ -1,0 +1,22 @@
+docker run -p 8444:8444 --name supervision  docker.yulinmei.cn/supervision:0.0.1-Alpha
+
+http://114.115.158.213:1883/
+
+
+nano frps.ini
+./frps -c frps.ini
+[supervision]
+listen_port = 1883 //访问http时使用的端口（自定义）
+#auth_token = 123123123 //身份验证（自定义）
+
+
+
+
+nano frp/frpc.ini
+[supervision]
+type = tcp
+local_port = 8444
+remote_port = 1883
+#custom_domains = yulinmei.cn
+
+docker-compose -f docker-compose.mosquitto_activemq_frp_mysql_redis.yml up frp
