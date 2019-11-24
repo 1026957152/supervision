@@ -11,7 +11,9 @@ plugins {
 group = 'docker.yulinmei.cn'
 
 
-version = '0.0.1-Release'
+version = '0.0.1-Alpha'
+
+//Release
 
 sourceCompatibility = '1.8'
 
