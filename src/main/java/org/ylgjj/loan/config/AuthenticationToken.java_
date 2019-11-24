@@ -1,0 +1,49 @@
+package org.ylgjj.loan.config;
+
+
+
+
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+
+/**
+ * This class is responsible for holding the raw token value and - if authenticated - the {@link User}.
+ */
+public class AuthenticationToken extends AbstractAuthenticationToken {
+	private final String appid;
+
+	private final String sign;
+	private final String signPost;
+
+	public AuthenticationToken(String appId, String phone, String sessionId) {
+		super(null);
+
+		this.appid = appId;
+
+		this.sign = phone;
+		this.signPost = sessionId;
+		setAuthenticated(false);
+	}
+
+	@Override
+	public Object getCredentials() {
+		return getAppid();
+	}
+
+	@Override
+	public Object getPrincipal() {
+		return "";
+	}
+
+	public String getAppid() {
+		return appid;
+	}
+
+	public String getSign() {
+		return sign;
+	}
+
+
+	public String getSignPost() {
+		return signPost;
+	}
+}

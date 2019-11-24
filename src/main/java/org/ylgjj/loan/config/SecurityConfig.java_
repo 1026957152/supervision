@@ -1,0 +1,210 @@
+package org.ylgjj.loan.config;
+
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+
+
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+
+/*@Configuration
+@Order(1)
+
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)*/
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+/*
+    @Autowired
+    private ServletContext servletContext;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
+*/
+
+
+   @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+ @Override
+    public void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+
+/*       auth.authenticationProvider(customAuthProvider);
+        auth.authenticationProvider(authProvider);*/
+     //   auth.userDetailsService(customUserDetailsService).passwordEncoder(new MyPasswordEncoder());
+        //  auth.userDetailsService()
+//https://blog.csdn.net/u013360850/article/details/78543788
+        //http://www.voidcn.com/article/p-xllxuhbq-bqu.html
+    auth.inMemoryAuthentication()
+            .withUser("memuser")
+            .password("pass")
+            .roles("USER");
+    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/css/**", "/js/**", "/img/**",
+                "/components/**",
+                "/js/**",
+                "/images/**",
+                "/api/v1/**",
+                "/login/sentSMSCodeToUser",
+
+        "/captch/**",
+
+                "/lib/**");
+    }
+
+
+
+  @Override
+    protected void configure(HttpSecurity http) throws Exception { // @formatter:off
+        http.requestMatchers(
+
+        ).requestMatchers(                new NegatedRequestMatcher(
+                new OrRequestMatcher(
+                        new AntPathRequestMatcher("/loanshare/public/xfd/gjjgrzhxxcx.service"),
+                        new AntPathRequestMatcher("/logout"),
+                        new AntPathRequestMatcher("/health"),
+
+                        new AntPathRequestMatcher("/user/me"),
+                        new AntPathRequestMatcher("/oauth/authorize"),
+                        new AntPathRequestMatcher("/oauth/confirm_access")
+                )
+        ))
+                .antMatchers("/login", // 这些会调整到 login AccessDenie  会 跳转到 登录界面 登录界面 登录界面
+                        "/error",
+
+                        "/error1",
+                        "/user/me",
+                        "/health",
+                        "/oauth/token",
+                        "/loanshare/public/xfd/gjjgrzhxxcx.service")  // 这些之外的 不跳转了啊啊啊啊啊。
+
+
+               .and()
+            .authorizeRequests()
+                .antMatchers(
+                     "/login",
+                        "/loanshare/public/xfd/gjjgrzhxxcx.service",//???
+                        "/user/me",//???
+                              "/health",
+                        "/register/registerUserByPhone_new",
+
+                        "/createCompany/createUser",
+                        "/createCompany/createNewUser",
+                        "/createCompany/createNewCompany",
+                        "/captch/sentSMSCodeToUser",
+                        "/captch/command_auth_locked_user_mobile_with_sms_verification_code_new",
+                        "/registerDriver/**",
+                        "/error",
+                        "/",
+                        "/oauth/token"
+                ).permitAll()
+                .and()
+                .authorizeRequests()
+            .anyRequest()
+            .authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/login")
+
+             .failureHandler(authenticationFailureHandler())
+             .failureUrl("/login?authentication_error=true")
+                .successForwardUrl("/index")
+
+            .permitAll()
+                .and()
+
+       // .addFilter(new JWTAuthorizationFilter(authenticationManager(),null))
+             .csrf().disable()
+        ;
+    } // @formatter:on
+
+/*
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception { // @formatter:off
+        auth.inMemoryAuthentication()
+            .withUser("john")
+            .password(passwordEncoder().encode("123"))
+            .roles("USER");
+    } // @formatter:on
+*/
+
+/*    @Bean
+    public BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//'http://localhost:59088/user/oauth/authorize?client_id=SampleClientId&redirect_uri=http://localhost:50080/ui/login&response_type=code&state=GKkMNw
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler()
+    {
+        return new RestAuthenticationFailureHandler();
+    }
+
+    public class RestAuthenticationFailureHandler implements AuthenticationFailureHandler
+    {
+        @Override
+        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
+                                            AuthenticationException ex) throws IOException {
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+
+            System.out.println("---------------------&&&&&&&&&&&&&&&&&&&&&&&&& 6^^^^^^^^^^^^^^^^^^^^^^^^^");
+            Map<String, Object> data = new HashMap<>();
+            data.put("timestamp", new Date());
+            data.put("status",HttpStatus.FORBIDDEN.value());
+            data.put("message", "Access Denied______________"  +ex.getMessage());
+            data.put("path", request.getRequestURL().toString());
+
+            OutputStream out = response.getOutputStream();
+            com.fasterxml.jackson.databind.ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(out, data);
+            out.flush();
+        }
+    }
+
+
+
+}

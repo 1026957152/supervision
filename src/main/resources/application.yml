@@ -1,0 +1,152 @@
+logging:
+  level:
+    root: ERROR
+    org.springframework.web: DEBUG
+    com.coalvalue: DEBUG
+    com.coalvalue.configuration: DEBUG
+    com.service: DEBUG
+    org.ylgjj.loan: DEBUG
+#security:
+#  require-ssl: true
+server:
+
+  port: 8444
+
+
+ # ssl:
+#    证书路径
+ #   key-store: classpath:keystore/baeldung.p12
+ #   key-store-type: PKCS12 #JKS
+ #   key-alias: baeldung
+#    配置密码，就是在生成证书的时候输入的密码
+#    key-store-password: password
+# keytool -genkeypair -alias baeldung -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore baeldung.p12 -validity 3650
+
+spring:
+  freemarker:
+    requestContextAttribute: rc
+    allowRequestOverride: false
+    allowSessionOverride: false
+    cache: false
+    checkTemplateLocation: true
+    contentType: text/html
+    exposeRequestAttributes: false
+    exposeSessionAttributes: false
+    exposeSpringMacroHelpers: true
+    # spring.freemarker.expose-spring-macro-helpers=true
+    suffix: .ftl
+    templateEncoding: UTF-8
+    templateLoaderPath: /WEB-INF/views/templates/,classpath:/templates/#表示所有的模板文件都放在该目录下
+  datasource:
+    jdbc-url: jdbc:db2://10.22.10.22:50010/rundb
+
+    #url: jdbc:db2://localhost:50010/rundb
+    driverClassName: com.ibm.db2.jcc.DB2Driver
+    username: bsprun
+    password: bsprun
+    default-read-only: true
+    read-only: true
+
+#  datasource:
+#    jdbc-url: jdbc:mysql://${mysql}:3306/clouddelivery?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
+#    #url: jdbc:mysql://localhost:3306/clouddelivery?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&useSSL=false
+#    username: root
+#    password: 123456
+#    driverClassName: com.mysql.cj.jdbc.Driver
+
+  datasourcesecondary:
+    #url: jdbc:mysql://localhost:3306/testcoalvalue?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    jdbc-url: jdbc:mysql://192.168.10.90:3306/supervision?createDatabaseIfNotExist=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+  datasourcetertiary:
+    jdbc-url: jdbc:db2://10.22.10.22:50010/rundb
+
+    #url: jdbc:db2://localhost:50010/rundb
+    driverClassName: com.ibm.db2.jcc.DB2Driver
+    username: bsprun
+    password: bsprun
+    default-read-only: true
+    read-only: true
+
+  jpa:
+    database: db2
+    show-sql: true
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.DB2400Dialect
+# database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#  freemarker:
+#    check-template-location: true
+#    charset: UTF-8
+#    content-type: text/html
+#    template-loader-path: classpath:/templates #/WEB-INF/views/
+#    suffix: .ftl
+#    exposeRequestAttributes: true
+#    exposeSessionAttributes: true
+#    requestContextAttribute: rc
+#    settings:
+#      locale: zh_CN
+#      date_format: yyyy-MM-dd
+#      time_format: HH:mm:ss
+#      datetime_format: yyyy-MM-dd HH:mm:ss
+#      number_format: #.##
+#      template_exception_handler: rethrow
+
+#  redis:
+#    database: 0 # Redis数据库索引（默认为0）,如果设置为1，那么存入的key-value都存放在select 1中
+#    host: localhost # Redis服务器地址
+#    port: 6379 # Redis服务器连接端口
+#    password: # Redis服务器连接密码（默认为空）
+#    pool: #连接池最大连接数（使用负值表示没有限制）
+#      max-active: 8 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#      max-wait: -1
+#      max-idle: 8 # 连接池中的最大空闲连接
+#      min-idle: 0 # 连接池中的最小空闲连接
+#    timeout: 0 # 连接超时时间（毫秒）
+
+
+
+#Simple properties
+mail:
+  hostname: mailer@mail.com
+  port: 9000
+  from: mailer@mail.com
+
+#List properties
+  defaultRecipients[0]: admin@mail.com
+  defaultRecipients[1]: owner@mail.com
+
+#Map Properties
+  additionalHeaders.redelivery: true
+  additionalHeaders.secure: true
+
+#Object properties
+  credentials:
+    username: john
+    password: password
+    authMethod: SHA1
+
+
+  icbc:
+    appid: '0001'
+    #eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlciI6ImljYmMifQ.Lf2NUX6BPwrohD9mnLZ6U2Cd-E66SW0wYkBsTVTkIL8
+    key: eyJhbGciOiJIUzUxMiJ9.eyJwYXNzd29yZCI6InBhc3N3b3JkIiwidXNlciI6ImljYmMifQ.uN4D22nkb2dI04ibDKiK_5CpnRwjj9-c5F4rF4IY-_QT4k3qAXLVFktgthDaExzh7ydv0Tdayls40cedo6150g
+
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    shutdown.enabled: true
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: ["metrics", "beans"]
+

@@ -1,0 +1,151 @@
+package org.ylgjj.loan.config;
+
+import java.io.UnsupportedEncodingException;
+import java.security.Key;
+import java.util.Date;
+
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.impl.TextCodec;
+import io.jsonwebtoken.impl.crypto.MacProvider;
+
+public class JWTtest_ {
+
+
+    static String key_s = "Yn2kji";
+    public static Claims parse(String compactJws) {
+
+        byte[] key_string = TextCodec.BASE64.decode(key_s);
+
+        // Parsing JWT
+
+            Jws<Claims> parseClaimsJws = Jwts.parser().setSigningKey(key_string).parseClaimsJws(compactJws);// compactJwsJWT string
+            Claims body = parseClaimsJws.getBody();// After getting the body, we can get the information we need from body.29             // For example, get the theme, of course, this is when we generate the JWT string when it has been saved.
+            String subject = body.getSubject();
+            System.out.println("the subject is: " + subject);
+            System.out.println("the studentId is: " + body.get("studentId"));
+
+            return body;
+            // OK, we can trust this JWT
+
+
+    }
+    public static String build() {
+        // Generating JWT
+        Key key = MacProvider.generateKey();// Here is the key for encryption and decryption.
+
+        byte[] key_string = TextCodec.BASE64.decode(key_s);
+
+        String compactJws = Jwts.builder()// The returned string is our JWT string
+/*                 .setSubject("Joe")// set up themes*/
+                .claim("password", "password")// Add custom data
+                .claim("user", "icbc")// Add custom data
+                /*               .claim("studentId", 2)// Add custom data*/
+                .signWith(SignatureAlgorithm.HS512,key_string)// key)// Set algorithm (must)
+                .compact();// This is a method of assembling JWT string after completion.
+        System.out.println("the generated token is: " + compactJws);
+        return compactJws;
+
+
+
+    }
+
+    public static String generate(String user,String password) {
+
+        byte[] key_string = TextCodec.BASE64.decode(key_s);
+
+        String compactJws = Jwts.builder()// The returned string is our JWT string
+/*                 .setSubject("Joe")// set up themes*/
+                //      .compressWith(CompressionCodecs.DEFLATE)
+                .claim("password", password)// Add custom data
+                .claim("user", user)// Add custom data
+                /*               .claim("studentId", 2)// Add custom data*/
+                //  .signWith(SignatureAlgorithm.HS512,key_string)// key)// Set algorithm (must)
+                .signWith(SignatureAlgorithm.HS256,key_string)// key)// Set algorithm (must)
+                .compact();// This is a method of assembling JWT string after completion.
+
+        return compactJws;
+
+
+    }
+
+    public static void main__(String[] args) {
+        // Generating JWT
+        Key key = MacProvider.generateKey();// Here is the key for encryption and decryption.
+
+
+
+     byte[] key_string = TextCodec.BASE64.decode(key_s);
+
+        String compactJws = Jwts.builder()// The returned string is our JWT string
+/*                 .setSubject("Joe")// set up themes*/
+                .compressWith(CompressionCodecs.DEFLATE)
+                .claim("password", "password")// Add custom data
+                .claim("user", "icbc")// Add custom data
+ /*               .claim("studentId", 2)// Add custom data*/
+               //  .signWith(SignatureAlgorithm.HS512,key_string)// key)// Set algorithm (must)
+                .signWith(SignatureAlgorithm.HS256,key_string)// key)// Set algorithm (must)
+                 .compact();// This is a method of assembling JWT string after completion.
+         System.out.println("the generated token is: " + compactJws);
+        try {
+            String jwt = Jwts.builder()
+                    .setSubject("users/TzMUocMF4p")
+                    .setExpiration(new Date(1300819380))
+                    .claim("name", "Robert Token Man")
+                    .claim("scope", "self groups/admins")
+                    .signWith(
+                            SignatureAlgorithm.HS256,
+                            "secret".getBytes("UTF-8")
+                    )
+                    .compact();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        // Parsing JWT
+         try {
+
+            Jws<Claims> parseClaimsJws = Jwts.parser().setSigningKey(key_string).parseClaimsJws(compactJws);// compactJwsJWT string
+             Claims body = parseClaimsJws.getBody();// After getting the body, we can get the information we need from body.29             // For example, get the theme, of course, this is when we generate the JWT string when it has been saved.
+            String subject = body.getSubject();
+             System.out.println("the subject is: " + subject);
+            System.out.println("the studentId is: " + body.get("studentId"));
+
+             // OK, we can trust this JWT
+
+        } catch (SignatureException | MalformedJwtException e) {
+             // TODO: handle exception
+             // don't trust the JWT!
+            // jwt Parsing error
+         } catch (ExpiredJwtException e) {
+             // TODO: handle exception
+             // jwt Already expired, if the expiration time is set when setting up JWT, it will automatically judge whether the JWT has expired, and if the outdated exception is thrown, we can catch the exception and do the related processing.
+        }
+     }
+
+
+
+
+
+
+    public static void main(String[] args) {
+
+
+        System.out.println("the generated token is: " + generate("icbc","password"));
+
+
+     /*   try {
+            String jwt = Jwts.builder()
+                    .setSubject("users/TzMUocMF4p")
+                    .setExpiration(new Date(1300819380))
+                    .claim("name", "Robert Token Man")
+                    .claim("scope", "self groups/admins")
+                    .signWith(
+                            SignatureAlgorithm.HS256,
+                            "secret".getBytes("UTF-8")
+                    )
+                    .compact();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+  */
+    }
+ }

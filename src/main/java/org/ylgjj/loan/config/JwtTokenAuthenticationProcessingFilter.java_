@@ -1,0 +1,138 @@
+package org.ylgjj.loan.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.ylgjj.loan.domain.Query;
+import org.ylgjj.loan.util.SecuritySHA1Utils;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Map;
+
+public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
+    private final AuthenticationFailureHandler failureHandler;
+/*    private final TokenExtractor tokenExtractor;*/
+private ConfigProperties configProperties = null;
+   // @Autowired
+    public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler,
+            /*TokenExtractor tokenExtractor,*/ RequestMatcher matcher,ConfigProperties configProperties) {
+        super(matcher);
+        this.failureHandler = failureHandler;
+        this.configProperties = configProperties;
+     /*   this.tokenExtractor = tokenExtractor;*/
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException {
+
+
+        Map compactJws = resolveToken(request);
+
+        String sign = request.getParameter("sign");
+
+
+        String appid = request.getParameter("appid");
+        AuthenticationToken authToken = new AuthenticationToken(
+                appid, (String)compactJws.get("sign"),sign);
+
+
+        return getAuthenticationManager().authenticate(authToken);
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
+            Authentication authResult) throws IOException, ServletException {
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authResult);
+        SecurityContextHolder.setContext(context);
+        chain.doFilter(request, response);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+            AuthenticationException failed) throws IOException, ServletException {
+        SecurityContextHolder.clearContext();
+
+
+        System.out.println("------- 错误了 错误了错误 了  "+failed.getMessage());
+        failureHandler.onAuthenticationFailure(request, response, failed);
+    }
+
+
+    public Map resolveToken(HttpServletRequest req) {
+        req.getParameter("sign");
+
+
+
+        String sign = req.getParameter("sign");
+        String zjbzxbm = req.getParameter("zjbzxbm");
+        String xingming = req.getParameter("xingming");
+        String zjhm = req.getParameter("zjhm");
+        String appid = req.getParameter("appid");
+        String zjhlx = req.getParameter("zjhlx");
+        String citybm = req.getParameter("citybm");
+
+
+        System.out.println("zjbzxbm:"+zjbzxbm);
+        System.out.println("xingming:"+xingming);
+        System.out.println("zjhm:"+zjhm);
+        System.out.println("appid:"+appid);
+        System.out.println("sign:"+sign);
+
+        Query query = new Query();
+       // query.setZjbzxbm(zjbzxbm);
+        query.setZjhlx(zjhlx);
+        query.setCitybm(citybm);
+        query.setXingming(xingming);
+        query.setZjhm(zjhm);
+        query.setAppid(appid);
+
+        Map abc = SecuritySHA1Utils.encodePassword(query,configProperties.getIcbc().getKey(),configProperties.getIcbc().getAppid());
+
+
+        if(abc != null){
+
+
+            return abc;
+        }
+
+
+
+
+
+
+
+
+
+        System.out.println("appid:"+appid);
+        System.out.println("sign:"+sign);
+
+
+/*        String bearerToken = req.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            System.out.println("Bearer:"+ bearerToken);
+
+            return bearerToken.substring(7, bearerToken.length());
+        }*/
+
+  /*      String jwt = (String)req.getParameter("sign");
+
+        if(jwt != null){
+            System.out.println("jwt:"+ jwt);
+            return jwt;
+        }
+*/
+        System.out.println("jwt+Authorization----:jwt"+ req.toString());
+        return null;
+    }
+}

@@ -1,0 +1,82 @@
+plugins {
+
+		id 'org.springframework.boot' version '2.1.9.RELEASE'
+    	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+
+	id 'java'
+	id 'com.palantir.docker' version '0.22.1'
+}
+
+
+group = 'docker.yulinmei.cn'
+
+
+version = '0.2.0-Release'
+
+sourceCompatibility = '1.8'
+
+
+docker {
+
+	name "$project.group/$project.name:$project.version"
+	//tags 'latest'
+	dependsOn build
+	files jar.archivePath
+	//files bootJar
+	dockerfile file('src/main/docker/Dockerfile')
+	buildArgs([BUILD_VERSION: project.version,JAR_FILE: project.name])
+}
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	implementation 'org.javatuples:javatuples:1.2'
+
+implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+/*	implementation 'org.springframework.boot:spring-boot-starter-security'*/
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+/*
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+*/
+//	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+	runtimeOnly 'mysql:mysql-connector-java'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testImplementation 'org.springframework.security:spring-security-test'
+/*	compile 'com.ibm.db2.jcc:db2jcc4:4.24.92'*/
+	compile files('libs/db2jcc4.jar')
+	compile("org.apache.commons:commons-lang3:3.3.2")
+
+	compile 'io.jsonwebtoken:jjwt:0.9.0'
+	//testCompile 'com.h2database:h2:1.4.194'
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.12'
+	compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+	///compile 'tech.tablesaw:tablesaw-core:LATEST'
+   compile group: 'tech.tablesaw', name: 'tablesaw-core', version: '0.36.0'
+//	implementation group: 'org.javatuples', name: 'javatuples', version: '1.1'
+	compile group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
+
+}
+
+/*dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}*/
+
+
+test {
+	// ...
+
+	// explicitly include or exclude tests
+	//include '**'
+	exclude '**'
+
+	// ...
+}

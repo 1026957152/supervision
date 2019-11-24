@@ -1,0 +1,201 @@
+package org.ylgjj.loan.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.ylgjj.loan.domain.ReturnResult;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
+
+@Configuration
+@EnableWebSecurity
+public class BasicConfiguration extends WebSecurityConfigurerAdapter {
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+    @Autowired
+    AuthProvider authProvider;
+    @Autowired
+    ConfigProperties configProperties;
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth)
+      throws Exception {
+    //    auth.authenticationProvider(authProvider);
+    /*    auth
+          .inMemoryAuthentication()
+          .withUser("user")
+            .password("{noop}password")
+            .roles("USER")
+            .and()
+                .withUser("icbc")
+                .password("{noop}password")
+                .roles("USER")
+                .and()
+
+          .withUser("admin")
+            .password("{noop}admin")
+            .roles("USER", "ADMIN");*/
+    }
+/*
+    @Bean
+    protected JwtTokenAuthenticationProcessingFilter buildJwtTokenAuthenticationProcessingFilter() throws Exception {
+     //   List<String> pathsToSkip = Arrays.asList(TOKEN_REFRESH_ENTRY_POINT, FORM_BASED_LOGIN_ENTRY_POINT);
+     //   SkipPathRequestMatcher matcher = new SkipPathRequestMatcher(pathsToSkip, TOKEN_BASED_AUTH_ENTRY_POINT);
+        RequestMatcher matcher = new RequestMatcher() {
+            @Override
+            public boolean matches(HttpServletRequest request) {
+                return true;
+            }
+        };
+        JwtTokenAuthenticationProcessingFilter filter
+                = new JwtTokenAuthenticationProcessingFilter(failureHandler(), matcher,configProperties);
+        filter.setAuthenticationManager(authenticationManager());
+        return filter;
+    }
+*/
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable()
+          .authorizeRequests()
+          .anyRequest()
+          .authenticated()
+                .antMatchers(
+                        "/" ).permitAll()
+                .and()
+
+             //   .addFilter(new JWTAuthorizationFilter(authenticationManager(),configProperties))
+        //        .addFilterBefore(buildJwtTokenAuthenticationProcessingFilter(), UsernamePasswordAuthenticationFilter.class)
+
+                .exceptionHandling()
+
+
+          //  .accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(authenticationEntryPoint())
+ ; // 1. 若是认证异常交给AuthenticationEntryPoint处理
+
+
+
+       //   .httpBasic();
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private AuthenticationSuccessHandler successHandler() {
+        return new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+                httpServletResponse.getWriter().append("OK");
+                httpServletResponse.setStatus(200);
+            }
+        };
+    }
+
+    private AuthenticationFailureHandler failureHandler() {
+        return new AuthenticationFailureHandler() {
+            @Override
+            public void onAuthenticationFailure(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+            //    httpServletResponse.getWriter().append("Authentication failure"+e.getMessage());
+                httpServletResponse.setStatus(401);
+                httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+                ReturnResult returnResult = ReturnResult.情况3_您没有权限访问(e.getMessage());
+                byte[] body = new ObjectMapper()
+
+
+                        .writeValueAsBytes(returnResult);//Collections.singletonMap("error", message));
+                httpServletResponse.getOutputStream().write(body);
+            }
+        };
+    }
+
+    private AccessDeniedHandler accessDeniedHandler() {
+        return new AccessDeniedHandler() {
+            @Override
+            public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
+                httpServletResponse.getWriter().append("Access denied");
+                httpServletResponse.setStatus(403);
+            }
+        };
+    }
+
+    private AuthenticationEntryPoint authenticationEntryPoint() {
+        return new AuthenticationEntryPoint() {
+            @Override
+            public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+/*                httpServletResponse.getWriter().append("Not authenticated");
+                httpServletResponse.setStatus(401);*/
+
+
+                httpServletResponse.setStatus(SC_FORBIDDEN);
+                httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
+
+                String message;
+                if(e.getCause() != null) {
+                    message = e.getCause().getMessage();
+                } else {
+                    message = e.getMessage();
+                }
+                System.out.println(e.getMessage()+"e-----"+ e.toString());
+                if(e instanceof  BadCredentialsException){
+                    BadCredentialsException b = (BadCredentialsException)e;
+                    ReturnResult returnResult = ReturnResult.情况3_您没有权限访问(b.getMessage());
+                    byte[] body = new ObjectMapper()
+
+
+                            .writeValueAsBytes(returnResult);//Collections.singletonMap("error", message));
+                    httpServletResponse.getOutputStream().write(body);
+                }else{
+                    ReturnResult returnResult = ReturnResult.情况3_您没有权限访问("未知 异常"+e.getMessage());
+                    byte[] body = new ObjectMapper()
+
+
+                            .writeValueAsBytes(returnResult);//Collections.singletonMap("error", message));
+                    httpServletResponse.getOutputStream().write(body);
+                }
+
+
+            }
+        };
+    }
+}
