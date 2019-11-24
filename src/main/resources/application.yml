@@ -36,7 +36,8 @@ spring:
     # spring.freemarker.expose-spring-macro-helpers=true
     suffix: .ftl
     templateEncoding: UTF-8
-    templateLoaderPath: /WEB-INF/views/templates/,classpath:/templates/#表示所有的模板文件都放在该目录下
+    templateLoaderPath: /WEB-INF/views/templates/,classpath:/templates/
+    #表示所有的模板文件都放在该目录下
   datasource:
     jdbc-url: jdbc:db2://10.22.10.22:50010/rundb
 
