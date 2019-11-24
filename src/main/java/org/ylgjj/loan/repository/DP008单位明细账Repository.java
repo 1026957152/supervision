@@ -15,9 +15,9 @@ import java.util.List;
 public interface DP008单位明细账Repository extends JpaRepository<DP008_单位明细账, Integer> {
 
 
-    List<DP008_单位明细账> findBySummarycodeIn(List<String> aa);
+    List<DP008_单位明细账> findBySummarycode不可为空摘要代码In(List<String> aa);
 
-    List<DP008_单位明细账> findBysummarycode不可为空摘要代码InAndsummarycode不可为空摘要代码Between(List<String> aa, LocalDate ldt_ksrq, LocalDate ldt_jsrq);
+    List<DP008_单位明细账> findBySummarycode不可为空摘要代码InAndsummarycode不可为空摘要代码Between(List<String> aa, LocalDate ldt_ksrq, LocalDate ldt_jsrq);
 
 
 

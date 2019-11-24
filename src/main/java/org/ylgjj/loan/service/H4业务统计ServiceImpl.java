@@ -3,14 +3,11 @@ package org.ylgjj.loan.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.ylgjj.loan.api.H4业务统计Controller;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.H单位公积金缴存登记簿_入账状态;
 import org.ylgjj.loan.output.H4_1业务统计_获取各渠道业务统计数据;
-import org.ylgjj.loan.outputenum.E_交易码_HX;
 import org.ylgjj.loan.outputenum.HX摘要码信息表;
 import org.ylgjj.loan.pojo.QueryH_4_1_业务统计_获取各渠道业务统计数据;
-import org.ylgjj.loan.repository.AN004Repository;
 import org.ylgjj.loan.repository.DP008单位明细账Repository;
 import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
@@ -57,10 +54,10 @@ public class H4业务统计ServiceImpl {
                 HX摘要码信息表.HX__89_S_不定额补缴入账_1222).stream().map(e->e.get编码()).collect(Collectors.toList());
 
 
-        List<DP008_单位明细账> dp021_单位缴存登记簿s = dp008单位明细账Repository.findBySummarycodeIn(aa);
+        List<DP008_单位明细账> dp021_单位缴存登记簿s = dp008单位明细账Repository.findBySummarycode不可为空摘要代码In(aa);
 
 
-        List<DP008_单位明细账> dp021_单位缴存登记簿s_peried = dp008单位明细账Repository.findBysummarycode不可为空摘要代码InAndsummarycode不可为空摘要代码Between(aa,ldt_ksrq,ldt_jsrq);
+        List<DP008_单位明细账> dp021_单位缴存登记簿s_peried = dp008单位明细账Repository.findBySummarycode不可为空摘要代码InAndsummarycode不可为空摘要代码Between(aa,ldt_ksrq,ldt_jsrq);
         double 发生额_提取= dp021_单位缴存登记簿s.stream().mapToDouble(e->e.getAmt_0_不可为空_发生额()).sum();
 
         double 比例_提取 = dp021_单位缴存登记簿s_peried.size() / dp021_单位缴存登记簿s.size();

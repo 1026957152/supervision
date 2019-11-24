@@ -10,6 +10,7 @@ import org.ylgjj.loan.domain.ReturnResult;
 import org.ylgjj.loan.enumT.H单位公积金缴存登记簿_入账状态;
 import org.ylgjj.loan.output.H4_1业务统计_获取各渠道业务统计数据;
 import org.ylgjj.loan.output.H5_1离柜率_离柜率查询;
+import org.ylgjj.loan.pojo.QueryH_4_1_业务统计_获取各渠道业务统计数据;
 import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
 
@@ -39,7 +40,7 @@ public class H5离柜率ServiceImpl {
         return null;
     }
 
-    public Output H_4_1_业务统计_获取各渠道业务统计数据(H4业务统计Controller.QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
+    public Output H_4_1_业务统计_获取各渠道业务统计数据(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
 
         H5_1离柜率_离柜率查询 h4_1业务统计_获取各渠道业务统计数据 = new H5_1离柜率_离柜率查询();
         DoubleSummaryStatistics 归集 = 归集(query);
@@ -74,7 +75,7 @@ public class H5离柜率ServiceImpl {
 
 
 
-    public DoubleSummaryStatistics 贷款(H4业务统计Controller.QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
+    public DoubleSummaryStatistics 贷款(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
 
         List<DP021_单位缴存登记簿> dp021_单位缴存登记簿s =null;// dp021_单位缴存登记薄Repository.findByUnitaccnum单位账号(query.getKsrq(),query.getJsrq());
         return dp021_单位缴存登记簿s.stream().filter(e->e.getInaccstate_入账状态().equals(H单位公积金缴存登记簿_入账状态.入账.getText()))
@@ -84,7 +85,7 @@ public class H5离柜率ServiceImpl {
 
 
 
-    public DoubleSummaryStatistics 归集(H4业务统计Controller.QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
+    public DoubleSummaryStatistics 归集(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
 
         List<DP021_单位缴存登记簿> dp021_单位缴存登记簿s = null;// dp021_单位缴存登记薄Repository.findByUnitaccnum单位账号(query.getKsrq(),query.getJsrq());
         return dp021_单位缴存登记簿s.stream().filter(e->e.getInaccstate_入账状态().equals(H单位公积金缴存登记簿_入账状态.入账.getText()))
