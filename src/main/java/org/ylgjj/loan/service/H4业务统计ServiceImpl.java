@@ -57,7 +57,7 @@ public class H4业务统计ServiceImpl {
         List<DP008_单位明细账> dp021_单位缴存登记簿s = dp008单位明细账Repository.findBySummarycode不可为空摘要代码In(aa);
 
 
-        List<DP008_单位明细账> dp021_单位缴存登记簿s_peried = dp008单位明细账Repository.findBySummarycode不可为空摘要代码InAndsummarycode不可为空摘要代码Between(aa,ldt_ksrq,ldt_jsrq);
+        List<DP008_单位明细账> dp021_单位缴存登记簿s_peried = dp008单位明细账Repository.findBySummarycode不可为空摘要代码InAndTransdate不可为空交易日期Between(aa,ldt_ksrq,ldt_jsrq);
         double 发生额_提取= dp021_单位缴存登记簿s.stream().mapToDouble(e->e.getAmt_0_不可为空_发生额()).sum();
 
         double 比例_提取 = dp021_单位缴存登记簿s_peried.size() / dp021_单位缴存登记簿s.size();

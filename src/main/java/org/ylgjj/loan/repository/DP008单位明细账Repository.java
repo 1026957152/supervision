@@ -17,7 +17,7 @@ public interface DP008单位明细账Repository extends JpaRepository<DP008_单�
 
     List<DP008_单位明细账> findBySummarycode不可为空摘要代码In(List<String> aa);
 
-    List<DP008_单位明细账> findBySummarycode不可为空摘要代码InAndsummarycode不可为空摘要代码Between(List<String> aa, LocalDate ldt_ksrq, LocalDate ldt_jsrq);
+    List<DP008_单位明细账> findBySummarycode不可为空摘要代码InAndTransdate不可为空交易日期Between(List<String> aa, LocalDate ldt_ksrq, LocalDate ldt_jsrq);
 
 
 
