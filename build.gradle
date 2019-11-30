@@ -11,7 +11,7 @@ plugins {
 group = 'docker.yulinmei.cn'
 
 
-version = '0.0.1-Alpha'
+version = '0.1.0-Alpha'
 
 //Release
 
