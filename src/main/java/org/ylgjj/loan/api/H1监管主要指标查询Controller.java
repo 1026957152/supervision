@@ -8,6 +8,7 @@ import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.domain.ReturnResult;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.outputenum.统计周期编码;
+import org.ylgjj.loan.pojo.QueryH_1_2_监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.repository.FD045_资金划转业务登记文件Repository;
 import org.ylgjj.loan.service.H1_2监管主要指标查询_公积金中心主要运行情况查询ServiceImpl;
 import org.ylgjj.loan.service.H1_3监管主要指标查询_指标明细查询ServiceImpl;
@@ -42,17 +43,37 @@ public class H1监管主要指标查询Controller {
         }
     }
 
-    @RequestMapping(value = "/get_all_bank.service", method = RequestMethod.POST)
+    @RequestMapping(value = "/get_zbnd.service", method = RequestMethod.POST)
     @ResponseBody
-    public Output H_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分(
+    public Output H_1_1_监管主要指标查询_公积金年度查询(
             @Valid @RequestBody  QueryH_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分 query, Errors errors)  {
         if (errors.hasErrors()) {
             return Output.情况4_入参数格式错误(errors.toString());
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
         }
         System.out.println("----------------- "+ query.toString());
-        return null;//h3银行实时交易Service.H_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分(query.getZjbzxbm());
+        return h1_2监管主要指标查询_公积金中心主要运行情况查询Service.H_1_1_监管主要指标查询_公积金年度查询(query.getZjbzxbm());
     }
+
+
+    @RequestMapping(value = "/get_business_data.service", method = RequestMethod.GET)
+    @ResponseBody
+    public Output H_1_2_监管主要指标查询_公积金中心主要运行情况查询(/*@Valid *//*@RequestBody*//* @RequestBody */QueryH_1_2_监管主要指标查询_公积金中心主要运行情况查询 query, Errors errors)  {
+        if (errors.hasErrors()) {
+            return Output.情况4_入参数格式错误(errors.toString());
+            //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
+        }
+        query.setKsrq("2019-09-11");
+        query.setJsrq("2019-11-30");
+        System.out.println("----------------- "+ query.toString());
+
+        return h1_3监管主要指标查询_指标明细查询Service.H_1_2_监管主要指标查询_公积金中心主要运行情况查询(
+                query.getKsrq(),
+                query.getJsrq()
+                );
+    }
+
+
 
     public class QueryH_1_2_监管主要指标查询_指标明细查询 {
 
@@ -173,10 +194,11 @@ public class H1监管主要指标查询Controller {
 
 
     }
+    //TODO ??????? dzbfx
 
-    @RequestMapping(value = "/get_bank_ye.service", method = RequestMethod.POST)
+    @RequestMapping(value = "/more_grid_cx.service", method = RequestMethod.POST)
     @ResponseBody
-    public Output H_1_2_监管主要指标查询_指标明细查询(@Valid /*@RequestBody*/ @RequestBody  QueryH_1_2_监管主要指标查询_指标明细查询 query, Errors errors)  {
+    public Output H_1_3_监管主要指标查询_指标明细查询(@Valid /*@RequestBody*/ @RequestBody  QueryH_1_2_监管主要指标查询_指标明细查询 query, Errors errors)  {
         if (errors.hasErrors()) {
             return Output.情况4_入参数格式错误(errors.toString());
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
@@ -193,11 +215,30 @@ public class H1监管主要指标查询Controller {
                 StatisticalIndexCodeEnum.valueOf(query.getTarget()),
                 query.getKsrq(),
                 query.getJsrq()
-                );
+        );
     }
 
+    @RequestMapping(value = "/get_fwxl.service", method = RequestMethod.POST)
+    @ResponseBody
+    public Output H_1_4_监管主要指标查询_离柜率明细查询(@Valid /*@RequestBody*/ @RequestBody  QueryH_1_2_监管主要指标查询_指标明细查询 query, Errors errors)  {
+        if (errors.hasErrors()) {
+            return Output.情况4_入参数格式错误(errors.toString());
+            //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
+        }
 
 
+        System.out.println("----------------- "+ query.toString());
+
+        return h1_3监管主要指标查询_指标明细查询Service.H_1_4_监管主要指标查询_离柜率明细查询(
+                query.getDimension1(),
+                query.getDimension2(),
+                query.getDimension3(),
+                统计周期编码.valueOf(query.getTjzq()),
+                StatisticalIndexCodeEnum.valueOf(query.getTarget()),
+                query.getKsrq(),
+                query.getJsrq()
+        );
+    }
 
 
 

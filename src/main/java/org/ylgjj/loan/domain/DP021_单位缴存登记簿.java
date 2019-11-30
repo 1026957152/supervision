@@ -102,13 +102,13 @@ public class DP021_单位缴存登记簿 {
     private String lmpayamt_上月汇缴金额;
 
     @Column(name = "cmpaynum")
-    private String cmpaynum_本月汇缴人数;
+    private Integer cmpaynum_本月汇缴人数;
 
     @Column(name = "cmpayamt")
     private BigDecimal cmpayamt_本月汇缴金额;
 
     @Column(name = "peoplenum")
-    private String peoplenum_人数;
+    private Integer peoplenum_人数;
 
 
 /*
@@ -139,7 +139,7 @@ public class DP021_单位缴存登记簿 {
     @Column(name = "factpayamt")
     private BigDecimal factpayamt_实际缴款金额;
     @Column(name = "uprepayamt")
-    private String uprepayamt_预缴户转出金额;
+    private BigDecimal uprepayamt_预缴户转出金额;
     @Column(name = "uprepayinamt")
     private String uprepayinamt_预缴户转入金额;
     @Column(name = "inaccstate")
@@ -318,11 +318,11 @@ public class DP021_单位缴存登记簿 {
         this.lmpayamt_上月汇缴金额 = lmpayamt_上月汇缴金额;
     }
 
-    public String getCmpaynum_本月汇缴人数() {
+    public Integer getCmpaynum_本月汇缴人数() {
         return cmpaynum_本月汇缴人数;
     }
 
-    public void setCmpaynum_本月汇缴人数(String cmpaynum_本月汇缴人数) {
+    public void setCmpaynum_本月汇缴人数(Integer cmpaynum_本月汇缴人数) {
         this.cmpaynum_本月汇缴人数 = cmpaynum_本月汇缴人数;
     }
 
@@ -334,11 +334,11 @@ public class DP021_单位缴存登记簿 {
         this.cmpayamt_本月汇缴金额 = cmpayamt_本月汇缴金额;
     }
 
-    public String getPeoplenum_人数() {
+    public Integer getPeoplenum_人数() {
         return peoplenum_人数;
     }
 
-    public void setPeoplenum_人数(String peoplenum_人数) {
+    public void setPeoplenum_人数(Integer peoplenum_人数) {
         this.peoplenum_人数 = peoplenum_人数;
     }
 
@@ -366,11 +366,11 @@ public class DP021_单位缴存登记簿 {
         this.factpayamt_实际缴款金额 = factpayamt_实际缴款金额;
     }
 
-    public String getUprepayamt_预缴户转出金额() {
+    public BigDecimal getUprepayamt_预缴户转出金额() {
         return uprepayamt_预缴户转出金额;
     }
 
-    public void setUprepayamt_预缴户转出金额(String uprepayamt_预缴户转出金额) {
+    public void setUprepayamt_预缴户转出金额(BigDecimal uprepayamt_预缴户转出金额) {
         this.uprepayamt_预缴户转出金额 = uprepayamt_预缴户转出金额;
     }
 

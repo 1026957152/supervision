@@ -3,12 +3,22 @@ package org.ylgjj.loan.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ylgjj.loan.domain.LN005_lone_sub_account_贷款分户信息;
+import org.ylgjj.loan.domain.LN101_贷款明细账_account;
 import org.ylgjj.loan.domain.Output;
+import org.ylgjj.loan.flow.YourHistory;
 import org.ylgjj.loan.outputenum.*;
 import org.ylgjj.loan.repository.*;
+import org.ylgjj.loan.repository_flow.LoanHistoryRepository;
+import org.ylgjj.loan.repository_flow.YourHistoryRepository;
 import org.ylgjj.loan.util.个人Utils;
 
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static java.lang.Math.abs;
 
 /**
  * Created by silence yuan on 2015/7/25.
@@ -19,7 +29,7 @@ public class B贷款_基本信息ServiceImpl {
 
 
     @Autowired
-    private CM002Repository cm002Repository;
+    private CM002_个人基本资料表Repository cm002个人基本资料表Repository;
     @Autowired
     private DP034_公积金开销户登记簿_Repository dp034_公积金开销户登记簿_repository;
 
@@ -79,18 +89,103 @@ public class B贷款_基本信息ServiceImpl {
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
-    private PB017_public_flowing公共流水登记簿Repository public_flowing公共流水登记簿Repository;
+    private LN101_贷款明细账_Repository ln101_贷款明细账_repository;
+
+    @Autowired
+    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    @Autowired
+    private YourHistoryRepository yourHistoryRepository;
+
+
+    @Autowired
+    private LoanHistoryRepository loanHistoryRepository;
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // TODO S_140_SEQ_贷款余额_AND_0302000801
     public Output S_140_SEQ_贷款余额_AND_0302000801(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ldt_ksrq = LocalDate.parse(ksrq,df);
+        LocalDate ldt_jsrq = LocalDate.parse(jsrq,df);
+
+
+        List<YourHistory> yourHistories = yourHistoryRepository.findByCreateDateBetween(ldt_ksrq.atStartOfDay(),ldt_jsrq.atStartOfDay());
+        //TODO 直接查询
+        // 在数据库找到 新建立的表格，存储计算出来的
+     //   时间，值，管理部，银行代码，
+
+
+        Map<String, Map<String,List<YourHistory>>> mapMap = yourHistories.stream().collect(Collectors.groupingBy(e->e.get管理部()))
+        .entrySet().stream().collect(
+                Collectors.toMap(ee->ee.getKey(),bb->bb.getValue().stream().collect(
+                        Collectors.groupingBy(eee->eee.get银行代码()))
+                )
+        );
+
+
+        List serial = new ArrayList();
+        List<YourHistory> list = mapMap.get(dimension1).get(dimension2);
+        serial.add(list);
+
+        Output output = new Output();
+        output.setData(serial);
+
+
+
+
+
+
+        //TODO 历史倒推
+        List<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息s = lN005_lone_sub_accountRepository.findAll().stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).collect(Collectors.toList());
+     //   List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期Between(ldt_ksrq,ldt_jsrq);
+
+         //TODO        获得某一日的贷款余额;
+        ln101_贷款明细账_repository.findByTransdate不可为空交易日期(LocalDate.now());
+
+        // TODO 获取某日的所有贷款，编号
+
+        //计算出改日的贷款余额；
+
+
+
         String name = StatisticalIndexCodeEnum.S_140_SEQ_贷款余额_AND_0302000801.name();
         dp021_单位缴存登记薄Repository.findAll();
         统计周期编码 A =统计周期编码.H__01_每日;
         Arrays.stream(E_银行编码_H.values()).forEach(e->{
         });
+
+
+
+        List<LN101_贷款明细账_account> ln101_贷款明细账_accounts___ = ln101_贷款明细账_repository.findByTransdate不可为空交易日期Between(ldt_ksrq,ldt_jsrq);
+        //ln101_贷款明细账_accounts.st
+
+
+
+        return output;
+    }
+
+    // TODO S_140_SEQ_贷款余额_AND_0302000801
+    public Output S_140_SEQ_贷款余额_AND_0302000801_CURRENT(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ldt_ksrq = LocalDate.parse(ksrq,df);
+        LocalDate ldt_jsrq = LocalDate.parse(jsrq,df);
+
+        List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期Between(ldt_ksrq,ldt_jsrq);
         return null;
     }
+
 
     // TODO S_141_SEQ_贷款余额__5年以内含___AND_0302000802
     public Output S_141_SEQ_贷款余额__5年以内含___AND_0302000802(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
@@ -295,7 +390,7 @@ public class B贷款_基本信息ServiceImpl {
         String name = StatisticalIndexCodeEnum.S_166_SEQ_发放户数__收入水平___AND_0302002018.name();
         dp021_单位缴存登记薄Repository.findAll();
         统计周期编码 A =统计周期编码.H__03_每月;
-        Arrays.stream(住建部编码_收入水平.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_收入水平.values()).forEach(e->{
         });
         return null;
     }

@@ -78,7 +78,12 @@ public class SecondaryConfig {
     }*/
     private Map<String, Object> getVendorProperties() {
         Map<String, String> properties = jpaProperties.getProperties();
-        properties.put("hibernate.hbm2ddl.auto", "create");
+        properties.put("hibernate.hbm2ddl.auto", "update");
+        properties.put("hibernate.show_sql", "true");
+
+      //  properties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto_mysql"));
+     //   properties.put("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect_mysql"));
+      //  properties.put("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));
         return hibernateProperties.determineHibernateProperties(properties, new HibernateSettings());
     }
 

@@ -2,6 +2,12 @@ package org.ylgjj.loan.outputenum;
 
 //import com.coalvalue.domain.pojo.ListItem;
 
+import org.ylgjj.loan.enumT.E_HX_机构_Institution_info_instCodeEnum;
+import org.ylgjj.loan.pojo.ListItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by silence on 2016/1/18.
  */
@@ -61,8 +67,20 @@ public enum E_银行编码_H {
         this.银行简称 = 银行简称;
 
     }
-   
 
+
+    public static List<ListItem> retriveTypese() {
+        // String userUrl =  linkTo(methodOn(MobileDistributorController.class).detail(null)).withSelfRel().getHref();
+
+        List<ListItem> list = new ArrayList<ListItem>();
+        for (E_HX_机构_Institution_info_instCodeEnum status : E_HX_机构_Institution_info_instCodeEnum.values()) {
+            ListItem<String> element = new ListItem<String>(status.getText(), status.getDisplayText(), status.getHelpMessage());
+            list.add(element);
+        }
+
+        return list;
+
+    }
 /*
     public static 银行编码 fromString(String text) {
         for (银行编码 status : 银行编码.values()) {

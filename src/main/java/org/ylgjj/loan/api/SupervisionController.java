@@ -36,7 +36,7 @@ public class SupervisionController {
     static public ApiUrl H1_1 = new ApiUrl("1.1",
             "1监管主要指标查询",
             "1.1公积金年度查询",
-            "http://ip:port/JG/common/get_zbnd.service",false);
+            "http://ip:port/JG/common/get_zbnd.service",true);
 
     static public ApiUrl H1_2 = new ApiUrl("1.1",
             "1监管主要指标查询",
@@ -65,12 +65,12 @@ public class SupervisionController {
     static public ApiUrl H2_1 = new ApiUrl("1.1",
             "业务指标",
             "添加常用指标",
-            "http://ip:port/JG/dzbfx/more_target_add.service", false);
+            "http://ip:port/JG/dzbfx/more_target_add.service", true);
 
     static public ApiUrl H2_2 = new ApiUrl("1.1",
             "2业务指标",
             "2.2查询常用指标",
-            "http://ip:port/JG/dzbfx/more_target_cx.service", false);
+            "http://ip:port/JG/dzbfx/more_target_cx.service", true);
 
     static public ApiUrl H2_3 = new ApiUrl("1.1",
             "2业务指标",
@@ -110,26 +110,26 @@ public class SupervisionController {
     static public ApiUrl H3_1 = new ApiUrl("1.1",
             "3结算监控",
             "3.1银行查询-查询所有关联银行，按总行区分",
-            "http://ip:port/JG/zjlxjk/get_all_bank.service", false);
+            "http://ip:port/JG/zjlxjk/get_all_bank.service", true);
 
     static public ApiUrl H3_2 = new ApiUrl("1.1",
             "3银行余额查询",
             "3.2银行余额查询",
-            "http://ip:port/JG/zjlxjk/get_bank_ye.service", false);
+            "http://ip:port/JG/zjlxjk/get_bank_ye.service", true);
 
     static public ApiUrl H3_3 = new ApiUrl("1.1",
             "3银行余额查询",
             "3.3银行实时交易",
-            "http://ip:port/JG/zjlxjk/get_all_bank_sszhmx.service", false);
+            "http://ip:port/JG/zjlxjk/get_all_bank_sszhmx.service", true);
     static public ApiUrl H3_4 = new ApiUrl("1.1",
             "3银行余额查询",
             "3.4金结算流水查询-查询最近15条结算明细数据",
-            "http://ip:port/JG/zjlxjk/get_jymx.service", false);
+            "http://ip:port/JG/zjlxjk/get_jymx.service", true);
 
     static public ApiUrl H3_5 = new ApiUrl("1.1",
             "3银行余额查询",
             "3.4资金结算流水查询-查询历史结算明细数据",
-            "http://ip:port/JG/zjlxjk/get_yhlsjymx.service", false);
+            "http://ip:port/JG/zjlxjk/get_yhlsjymx.service", true);
 
     static {
         api.add(H3_1);
@@ -142,7 +142,7 @@ public class SupervisionController {
     static public ApiUrl H4_1 = new ApiUrl("1.1",
             "4业务统计",
             "4.1业务统计——获取各渠道业务统计数据",
-            "http://ip:port/JG/bbgl/ywtj_cx.service", false);
+            "http://ip:port/JG/bbgl/ywtj_cx.service", true);
     static {
         api.add(H4_1);
 
@@ -165,7 +165,7 @@ public class SupervisionController {
     static public ApiUrl H6_2 = new ApiUrl("1.1",
             "6抵押办理时间",
             "6.2抵押物明细数据查询",
-            "http://ip:port/JG/dyw/get_dywmx.service", false);
+            "http://ip:port/JG/dyw/get_dywmx.service", true);
 
     static {
         api.add(H6_1);
@@ -191,7 +191,7 @@ public class SupervisionController {
     static public ApiUrl H8_1 = new ApiUrl("1.1",
             "8银行专户余额",
             "8.1银行专户余额查询",
-            "http://ip:port/JG/zjlxjk/yhzhye_table_cx.service", false);
+            "http://ip:port/JG/zjlxjk/yhzhye_table_cx.service", true);
 
     static {
         api.add(H8_1);

@@ -7059,5 +7059,13 @@ public class NativePlace {
             return null;
         }
     }
+
+    public static boolean isYulin(String certinum_证件号码) {
+
+        int nativePlaceCode=Integer.parseInt(certinum_证件号码.substring(0,4));
+        System.out.println(nativePlaceCode);
+        String nativePlace=NativePlace.getNativePlace(nativePlaceCode);
+       return nativePlace.equals("榆林市");
+    }
 }
 

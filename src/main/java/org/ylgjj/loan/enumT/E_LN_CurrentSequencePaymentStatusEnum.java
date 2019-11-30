@@ -5,34 +5,18 @@ package org.ylgjj.loan.enumT;
 /**
  * Created by silence on 2016/1/18.
  */
-public enum E_单位缴存登记簿_缴存类型 {
+public enum E_LN_CurrentSequencePaymentStatusEnum {
 
-    /*    //
-    dptype		"0-预缴,
-            1-汇缴,
-            2-正常全额补缴,
-            3-正常差额补缴,
-            4-不定额补缴,
-            5-退缴
-9-异地转入"	0:不可为空	缴存类型*/
-    预缴 ("0", "预缴",0,""),
-    汇缴 ("1", "汇缴",1,""),
-    正常全额补缴 ("2", "正常全额补缴",2,""),
-
-    正常差额补缴 ("3", "正常差额补缴",3,""),
-    不定额补缴 ("4", "不定额补缴",4,""),
-
-    退缴 ("5", "退缴",5,""),
-    异地转入 ("9", "异地转入",9,""),
-    ;
+    未还 ("0", "未还",1,""),
+    正常归还 ("1", "正常归还",2,""),
+    逾期归还 ("2", "逾期归还",1,""),
+    提前部分 ("3", "提前部分",2,""),
+    提前全部 ("4", "提前全部",1,""),
+    逾期 ("9", "逾期",2,""),
 
 ;
-    //private String inaccflag;//入账标志
-//-,
 
 
-    //   -
-//    -
 
 
 
@@ -54,7 +38,7 @@ public enum E_单位缴存登记簿_缴存类型 {
         return displayText;
     }
 
-    private E_单位缴存登记簿_缴存类型(String statusText, String displayText, Integer id, String helpMessage) {
+    private E_LN_CurrentSequencePaymentStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 
@@ -99,8 +83,8 @@ public enum E_单位缴存登记簿_缴存类型 {
 
 
 
-    public static E_单位缴存登记簿_缴存类型 fromString(String text) {
-        for (E_单位缴存登记簿_缴存类型 status : E_单位缴存登记簿_缴存类型.values()) {
+    public static E_LN_CurrentSequencePaymentStatusEnum fromString(String text) {
+        for (E_LN_CurrentSequencePaymentStatusEnum status : E_LN_CurrentSequencePaymentStatusEnum.values()) {
             if (status.getText().equals(text) ) {
                 return status;
             }
@@ -108,8 +92,8 @@ public enum E_单位缴存登记簿_缴存类型 {
         throw new RuntimeException("no customer status " + text);
     }
 
-    public static E_单位缴存登记簿_缴存类型 fromInt(Integer text) {
-        for (E_单位缴存登记簿_缴存类型 status : E_单位缴存登记簿_缴存类型.values()) {
+    public static E_LN_CurrentSequencePaymentStatusEnum fromInt(Integer text) {
+        for (E_LN_CurrentSequencePaymentStatusEnum status : E_LN_CurrentSequencePaymentStatusEnum.values()) {
             if (status.getId().equals(text) ) {
                 return status;
             }

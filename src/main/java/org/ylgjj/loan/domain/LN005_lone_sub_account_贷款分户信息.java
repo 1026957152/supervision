@@ -88,6 +88,10 @@ public class LN005_lone_sub_account_贷款分户信息 {
     lastbal_上日余额			0:不可为空	上日余额
     curbal_当前余额			0:不可为空	当前余额*/
 
+
+
+
+
     public String getDailybal_日终余额() {
         return dailybal_日终余额;
     }

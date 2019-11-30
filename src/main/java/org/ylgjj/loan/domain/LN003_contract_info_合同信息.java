@@ -111,6 +111,19 @@ public class LN003_contract_info_合同信息 {
     @Column(name = "agentbankcode")
     private String agentbankcode_经办银行;
 
+    @Column(name = "othplacflag")
+    private String othplacflag不可为空_异地标志;
+
+/*    		"1-是,
+            0-否"	0:*/
+
+    public String getOthplacflag不可为空_异地标志() {
+        return othplacflag不可为空_异地标志;
+    }
+
+    public void setOthplacflag不可为空_异地标志(String othplacflag不可为空_异地标志) {
+        this.othplacflag不可为空_异地标志 = othplacflag不可为空_异地标志;
+    }
 
     @Column(name = "enddate")
     private Date enddate_到期日期;

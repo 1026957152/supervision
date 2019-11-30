@@ -20,7 +20,7 @@ public class B贷款_发放ServiceImpl {
 
 
     @Autowired
-    private CM002Repository cm002Repository;
+    private CM002_个人基本资料表Repository cm002个人基本资料表Repository;
     @Autowired
     private DP034_公积金开销户登记簿_Repository dp034_公积金开销户登记簿_repository;
 
@@ -205,7 +205,7 @@ public class B贷款_发放ServiceImpl {
 
         Arrays.stream(E_HX_机构_Institution_info_instCodeEnum.values()).forEach(e->{
         });
-        Arrays.stream(住建部编码_购房面积.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_购房面积.values()).forEach(e->{
         });
 
         return null;
@@ -401,7 +401,7 @@ return  null;
         String name = StatisticalIndexCodeEnum.S_104_SEQ_发放额__收入水平___AND_0302000119.name();
         dp021_单位缴存登记薄Repository.findAll();
         统计周期编码 A =统计周期编码.H__03_每月;
-        Arrays.stream(住建部编码_收入水平.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_收入水平.values()).forEach(e->{
         });
         return null;
     }

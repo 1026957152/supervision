@@ -54,7 +54,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <span class="navbar-brand" ><b></b> 榆林住房公积金省监管平台接入</span>
+            <span class="navbar-brand" ><b></b> 榆林住房公积金省监管平台接入  ${version}</span>
 
         </div>
 
@@ -68,7 +68,13 @@
             <li role="presentation" class="active"><a href="#indexes" aria-controls="coalDeals" role="tab"
                                        data-toggle="tab">统计指标编码，完成率<span class="label label-success">${indexRate}</span></a></li>
             <li role="presentation"><a href="#apis" aria-controls="coalDeals" role="tab"
-                                       data-toggle="tab">API，完成率<span class="label label-success">${rate}</a></li>
+                                       data-toggle="tab">API，完成率<span class="label label-success">${rate}</span></a></li>
+            <li role="presentation"><a href="#rates" aria-controls="rates" role="tab"
+                                       data-toggle="tab">rates，完成率<span class="label label-success">${rate}</span></a></li>
+
+            <li role="presentation"><a href="#idea" aria-controls="idea" role="tab"
+                                       data-toggle="tab">设计思路</a></li>
+
 
         </ul>
         <div class="tab-content">
@@ -76,20 +82,21 @@
             <div role="tabpanel" class="tab-pane active" id="indexes">
                 <div class="row col-lg-12" style="">
                     <section class="">
-                        <table class="table">
+                        <table class="table table-striped">
                             <caption>基本的表格布局</caption>
                             <thead>
                             <tr>
                                 <th>名称</th>
-                                <th>城市</th>
+
                                 <th>是否完成</th>
+                                <th>城市</th>
                             </tr>
                             </thead>
                             <tbody>
                             <#list statisticalIndexCodeEnums as category >
                                 <tr>
                                     <td>${category.displayValue}</td>
-                                    <td>${category.id}</td>
+
                                     <td>
 
                                         <#if category.completed>
@@ -101,6 +108,7 @@
                                         </#if>
 
                                     </td>
+                                    <td>${category.id}</td>
                                     <td><a href="${category.url}">json返回</a></td>
                                 </tr>
 
@@ -116,7 +124,7 @@
             <div role="tabpanel" class="tab-pane" id="apis">
                 <div class="row col-lg-12" style="">
                     <section class="">
-                        <table class="table">
+                        <table class="table table-striped">
                             <caption>基本的表格布局</caption>
                             <thead>
                             <tr>
@@ -148,6 +156,162 @@
 
                             </tbody>
                         </table>
+
+                    </section>
+
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane " id="rates">
+                <div class="row col-lg-12" style="">
+                    <section class="">
+                        <table class="table table-striped">
+                            <caption>基本的表格布局</caption>
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+
+                                <th>是否完成</th>
+                                <th>城市</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <#list rates as category >
+                                <tr>
+                                    <td>${category.displayValue}</td>
+
+                                    <td>
+
+  <#--                                      <#if category.completed>
+                                            <span class="label label-success">成功标签</span>
+
+                                        <#else>
+                                            <span class="label label-default">默认标签</span>
+
+                                        </#if>-->
+
+                                    </td>
+                                    <td>${category.id}</td>
+                                    <td><a href="${category.url}">json返回</a></td>
+                                </tr>
+
+                            </#list>
+
+                            </tbody>
+                        </table>
+
+                    </section>
+
+                </div>
+            </div>
+
+
+            <div role="tabpanel" class="tab-pane" id="idea">
+                <div class="row col-lg-12" style="padding-top: 10px;>
+
+
+                    <section class="">
+                        <table  class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>内容</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr>
+                                    <td>设计思路</td>
+                                    <td>
+                                        根据状态表（table)和流水表(stream)推导出任意时刻的状态,进而进行当时的信息统计
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>设计的库表</td>
+                                    <td>
+
+
+                                        <#list ideas as api >
+                                            <table class="table">
+<#--
+                                                <caption>根据状态表（table)和流水表(stream)推导出任意时刻的状态,进而进行当时的信息统计</caption>
+-->
+                                                <thead>
+                                                <tr>
+                                                    <th>服务编号</th>
+                                                    <th>服务名称</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <#assign  keys=api?keys/>
+                                                <#list  keys as key>
+                                                    <tr>
+                                                        <td>流水表:${key}</td>
+
+                                                        <td>
+
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>表名称</th>
+                                                                    <th></th>
+
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <#list  api[key] as flow>
+                                                                    <tr>
+
+
+                                                                        <td>${flow}</td>
+
+                                                                        <td>
+                                                                        </td>
+
+                                                                    </tr>
+                                                                </#list>
+                                                                </tbody>
+                                                            </table>
+
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                </#list>
+
+
+                                                </tbody>
+                                            </table>
+                                        </#list>
+
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>设计思路</td>
+                                    <td>
+
+                                        <#list metadatas as metadata >
+
+
+                                            ${metadata.table_name}
+                                            ${metadata.columnName}
+
+                                        </#list>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+
+
+
 
                     </section>
 

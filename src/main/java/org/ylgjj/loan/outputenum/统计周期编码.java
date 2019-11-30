@@ -2,6 +2,11 @@ package org.ylgjj.loan.outputenum;
 
 //import com.coalvalue.domain.pojo.ListItem;
 
+import org.ylgjj.loan.pojo.ListItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by silence on 2016/1/18.
  */
@@ -41,8 +46,27 @@ public enum 统计周期编码 {
 
 
     }
-   
 
+    public String get编码() {
+        return 编码;
+    }
+
+    public String get名称() {
+        return 名称;
+    }
+
+    public static List<ListItem> retriveTypese() {
+        // String userUrl =  linkTo(methodOn(MobileDistributorController.class).detail(null)).withSelfRel().getHref();
+
+        List<ListItem> list = new ArrayList<ListItem>();
+        for (统计周期编码 status : 统计周期编码.values()) {
+            ListItem<String> element = new ListItem<String>(status.get编码(), status.get名称(), status.get名称());
+            list.add(element);
+        }
+
+        return list;
+
+    }
 /*
     public static 银行编码 fromString(String text) {
         for (银行编码 status : 银行编码.values()) {

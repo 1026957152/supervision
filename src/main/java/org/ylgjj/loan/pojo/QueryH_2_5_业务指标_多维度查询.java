@@ -25,7 +25,7 @@ public class QueryH_2_5_业务指标_多维度查询 {
 
       //  @NotBlank
         String order;//	order		String	输入(必传)
-       @NotBlank
+      // @NotBlank
         String target;//	target	目标	String	输入(必传)
        // @NotBlank
         String level;//级别	String	输入(必传)

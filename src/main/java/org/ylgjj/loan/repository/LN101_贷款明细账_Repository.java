@@ -41,4 +41,6 @@ public interface LN101_贷款明细账_Repository extends JpaRepository<LN101_�
 
     List<LN101_贷款明细账_account> findByTransdate不可为空交易日期(LocalDate n);
 
+    List<LN101_贷款明细账_account>  findByTransdate不可为空交易日期Between(LocalDate ldt_ksrq, LocalDate ldt_jsrq);
+
 }

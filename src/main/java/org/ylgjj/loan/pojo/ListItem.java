@@ -38,6 +38,16 @@ public class ListItem<T> implements Serializable {
     private  boolean completed;
     private String url;
 
+    public ListItem(T id, String displayValue, String 名称1, String userUrl) {
+
+        this.id = id;
+        this.displayValue = displayValue;
+
+        this.selected = false;
+        this.url = userUrl;
+        this.tipsMessage  = "";
+    }
+
     public boolean isSelected() {
         return selected;
     }

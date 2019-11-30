@@ -30,7 +30,7 @@ public class DP202_单位缴存变更登记簿 {
     @Column(name = "transdate")
     private LocalDate transdate不可为空交易日期;
     @Column(name = "unitaccnum")
-    private String unitaccnum_不可为空_单位账号;
+    private String unitaccnum不可为空单位账号;
     @Column(name = "unitcustid")
     private String unitcustid不可为空单位客户号;
     @Column(name = "onym")
@@ -43,7 +43,7 @@ public class DP202_单位缴存变更登记簿 {
 
 /*  chgtype		"1-新增个人,
           2-启封,
-          3-转入后正常状态,
+          3-转入后正常状态,AN125
           4-封存,
           5-正常状态销户,
           6-正常状态转出,
@@ -154,12 +154,12 @@ public class DP202_单位缴存变更登记簿 {
         this.transdate不可为空交易日期 = transdate不可为空交易日期;
     }
 
-    public String getUnitaccnum_不可为空_单位账号() {
-        return unitaccnum_不可为空_单位账号;
+    public String getUnitaccnum不可为空单位账号() {
+        return unitaccnum不可为空单位账号;
     }
 
-    public void setUnitaccnum_不可为空_单位账号(String unitaccnum_不可为空_单位账号) {
-        this.unitaccnum_不可为空_单位账号 = unitaccnum_不可为空_单位账号;
+    public void setUnitaccnum不可为空单位账号(String unitaccnum不可为空单位账号) {
+        this.unitaccnum不可为空单位账号 = unitaccnum不可为空单位账号;
     }
 
     public String getUnitcustid不可为空单位客户号() {

@@ -49,7 +49,7 @@ public class DP004_unit_payment_info_单位缴存信息表 {
 
 
     @Column(name = "basenum")
-    private String basenum_缴存基数;
+    private double basenum_缴存基数;
 
 
 
@@ -168,11 +168,11 @@ public class DP004_unit_payment_info_单位缴存信息表 {
         this.lpaym_缴至年月 = lpaym_缴至年月;
     }
 
-    public String getBasenum_缴存基数() {
+    public double getBasenum_缴存基数() {
         return basenum_缴存基数;
     }
 
-    public void setBasenum_缴存基数(String basenum_缴存基数) {
+    public void setBasenum_缴存基数(double basenum_缴存基数) {
         this.basenum_缴存基数 = basenum_缴存基数;
     }
 

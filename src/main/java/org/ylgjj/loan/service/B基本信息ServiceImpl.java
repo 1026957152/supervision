@@ -15,7 +15,6 @@ import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.UnitManagementAccountRepository;
 import org.ylgjj.loan.util.DateUtilsss;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.DoubleSummaryStatistics;
@@ -31,7 +30,7 @@ public class B基本信息ServiceImpl {
 
 
     @Autowired
-    private CM002Repository cm002Repository;
+    private CM002_个人基本资料表Repository cm002个人基本资料表Repository;
     @Autowired
     private DP034_公积金开销户登记簿_Repository dp034_公积金开销户登记簿_repository;
 
@@ -95,7 +94,7 @@ public class B基本信息ServiceImpl {
 
     @Autowired
     private UnitManagementAccountRepository unitManagementAccountRepository;
-    @PostConstruct
+    //@PostConstruct
     @Transactional
     public void S_83_SEQ_住房公积金使用率_AND_0301020501__() {
 
@@ -137,7 +136,7 @@ public class B基本信息ServiceImpl {
         });*/
     }
 
-    @PostConstruct
+   // @PostConstruct
     @Transactional
     public void S_83_SEQ_住房公积金使用率_AND_0301020501() {
         long count = dp021_单位缴存登记薄Repository.count();
@@ -178,7 +177,7 @@ public class B基本信息ServiceImpl {
 
         Arrays.stream(E_HX_机构_Institution_info_instCodeEnum.values()).forEach(e->{
         });
-        Arrays.stream(住建部编码_收入水平.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_收入水平.values()).forEach(e->{
         });
 
         return null;
@@ -198,7 +197,7 @@ public class B基本信息ServiceImpl {
 
         Arrays.stream(E_HX_机构_Institution_info_instCodeEnum.values()).forEach(e->{
         });
-        Arrays.stream(住建部编码_收入水平.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_收入水平.values()).forEach(e->{
         });
 
         return null;

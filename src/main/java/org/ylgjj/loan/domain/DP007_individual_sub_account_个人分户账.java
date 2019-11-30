@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -43,16 +44,18 @@ public class DP007_individual_sub_account_个人分户账 {
 
     @Column(name = "indiaccstate")
     private String indiaccstate_个人账户状态;
+/*	0-正常,1-全部冻结,2-部分冻结 3异地贷款：
+ */
 
     @Column(name = "frzflag")
     private String frzflag_冻结标志;
 
     //开户日期
     @Column(name = "opnaccdate")
-    private Date opnaccdate_开户日期;
+    private LocalDate opnaccdate_开户日期;
 
     @Column(name = "clsaccdate")
-    private Date clsaccdate_销户日期;
+    private LocalDate clsaccdate_销户日期;
 
     @Column(name = "lasttransdate")
     private Date lasttransdate_上笔发生日期;
@@ -170,19 +173,19 @@ public class DP007_individual_sub_account_个人分户账 {
         this.indiaccstate_个人账户状态 = indiaccstate_个人账户状态;
     }
 
-    public Date getOpnaccdate_开户日期() {
+    public LocalDate getOpnaccdate_开户日期() {
         return opnaccdate_开户日期;
     }
 
-    public void setOpnaccdate_开户日期(Date opnaccdate_开户日期) {
+    public void setOpnaccdate_开户日期(LocalDate opnaccdate_开户日期) {
         this.opnaccdate_开户日期 = opnaccdate_开户日期;
     }
 
-    public Date getClsaccdate_销户日期() {
+    public LocalDate getClsaccdate_销户日期() {
         return clsaccdate_销户日期;
     }
 
-    public void setClsaccdate_销户日期(Date clsaccdate_销户日期) {
+    public void setClsaccdate_销户日期(LocalDate clsaccdate_销户日期) {
         this.clsaccdate_销户日期 = clsaccdate_销户日期;
     }
 

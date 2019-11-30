@@ -5,17 +5,27 @@ package org.ylgjj.loan.enumT;
 /**
  * Created by silence on 2016/1/18.
  */
-public enum 个人账户状态_PersonalAccountStatusEnum {
+public enum H_LN101_贷款明细_结算方式 {
+
+    E_1_中心内部 ("1", "中心内部",1,""),
+    E_2_现金 ("2", "现金",2,""),
+    E_3_支票 ("3", "支票",2,""),
+    E_4_委托扣款 ("4", "委托扣款",2,""),
+    E_5_电子转账 ("5", "电子转账",2,""),
+
+/*    settlemode		"1-中心内部,
+            2-现金,
+            3-支票,
+            4-委托扣款,
+            5-电子转账"	0:不可为空_结算方式*/
+
+;
+    //private String inaccflag;//入账标志
+//-,
 
 
-    正常 ("0", "正常",0,""),
-    封存 ("1", "封存",1,""),
-
-    销户 ("9","销户", 9,""),
-    未知 ("7", "未知",7,""),;
-
-
-
+    //   -
+//    -
 
 
 
@@ -37,7 +47,7 @@ public enum 个人账户状态_PersonalAccountStatusEnum {
         return displayText;
     }
 
-    private 个人账户状态_PersonalAccountStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    private H_LN101_贷款明细_结算方式(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 
@@ -81,38 +91,9 @@ public enum 个人账户状态_PersonalAccountStatusEnum {
     }*/
 
 
-    public static 个人账户状态_PersonalAccountStatusEnum_银行 from(String text) {
 
-
-
-        个人账户状态_PersonalAccountStatusEnum typeEnum = 个人账户状态_PersonalAccountStatusEnum.fromString(text);
-
-        switch (typeEnum){
-            case 正常:
-
-                return 个人账户状态_PersonalAccountStatusEnum_银行.正常;
-
-            case 封存:
-                return 个人账户状态_PersonalAccountStatusEnum_银行.封存;
-
-            case 销户:
-
-                return 个人账户状态_PersonalAccountStatusEnum_银行.其他;
-
-
-
-
-            default:
-                return 个人账户状态_PersonalAccountStatusEnum_银行.其他;
-
-
-        }
-
-
-    }
-
-    public static 个人账户状态_PersonalAccountStatusEnum fromString(String text) {
-        for (个人账户状态_PersonalAccountStatusEnum status : 个人账户状态_PersonalAccountStatusEnum.values()) {
+    public static H_LN101_贷款明细_结算方式 fromString(String text) {
+        for (H_LN101_贷款明细_结算方式 status : H_LN101_贷款明细_结算方式.values()) {
             if (status.getText().equals(text) ) {
                 return status;
             }
@@ -120,8 +101,8 @@ public enum 个人账户状态_PersonalAccountStatusEnum {
         throw new RuntimeException("no customer status " + text);
     }
 
-    public static 个人账户状态_PersonalAccountStatusEnum fromInt(Integer text) {
-        for (个人账户状态_PersonalAccountStatusEnum status : 个人账户状态_PersonalAccountStatusEnum.values()) {
+    public static H_LN101_贷款明细_结算方式 fromInt(Integer text) {
+        for (H_LN101_贷款明细_结算方式 status : H_LN101_贷款明细_结算方式.values()) {
             if (status.getId().equals(text) ) {
                 return status;
             }

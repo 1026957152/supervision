@@ -91,6 +91,8 @@ public class DP022_个人缴存登记簿 {
     @Column(name = "dptype")
     private String dptype_缴存类型;
 
+
+
     public BigDecimal getUnitpayamt_单位月汇缴金额0() {
         return unitpayamt_单位月汇缴金额0;
     }

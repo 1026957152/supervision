@@ -5,14 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.ylgjj.loan.domain.CM001_单位基本资料表;
-import org.ylgjj.loan.domain.Data;
-import org.ylgjj.loan.domain.LN003_contract_info_合同信息;
-import org.ylgjj.loan.domain.ReturnResult;
+import org.ylgjj.loan.domain.*;
+import org.ylgjj.loan.output.H1_1监管主要指标查询_公积金年度查询;
 import org.ylgjj.loan.repository.AN004Repository;
 import org.ylgjj.loan.repository.LN003_Contract_info_Repository;
 import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -40,12 +39,18 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
 
         return null;
     }
-    public ReturnResult 逾期监管汇总查询(String zjbzxbm) {
-        return null;
+
+    public Output H_1_1_监管主要指标查询_公积金年度查询(String zjbzxbm) {
+        H1_1监管主要指标查询_公积金年度查询 h1_1监管主要指标查询_公积金年度查询 = new H1_1监管主要指标查询_公积金年度查询();
+        h1_1监管主要指标查询_公积金年度查询.setBbmc_年度名称("");
+        h1_1监管主要指标查询_公积金年度查询.setBbxm_年度编码("");
+        h1_1监管主要指标查询_公积金年度查询.setId_编号("");
+
+        h1_1监管主要指标查询_公积金年度查询.setZjbzxbm_住建部中心编码("");
+        Output output = new Output();
+
+        output.setData(Arrays.asList(h1_1监管主要指标查询_公积金年度查询));
+        return output;
+
     }
-
-
-
-
-
 }

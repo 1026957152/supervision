@@ -5,18 +5,20 @@ package org.ylgjj.loan.enumT;
 /**
  * Created by silence on 2016/1/18.
  */
-public enum CurrentSequencePaymentStatusEnum {
+public enum H_TR100_转移接续登记簿_交易类型 {
 
-    未还 ("0", "未还",1,""),
-    正常归还 ("1", "正常归还",2,""),
-    逾期归还 ("2", "逾期归还",1,""),
-    提前部分 ("3", "提前部分",2,""),
-    提前全部 ("4", "提前全部",1,""),
-    逾期 ("9", "逾期",2,""),
+    转入_1 ("1", "转入",1,""),
+    转出_2 ("2", "转出",2,""),
+
+
 
 ;
+    //private String inaccflag;//入账标志
+//-,
 
 
+    //   -
+//    -
 
 
 
@@ -38,7 +40,7 @@ public enum CurrentSequencePaymentStatusEnum {
         return displayText;
     }
 
-    private CurrentSequencePaymentStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    private H_TR100_转移接续登记簿_交易类型(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 
@@ -83,8 +85,8 @@ public enum CurrentSequencePaymentStatusEnum {
 
 
 
-    public static CurrentSequencePaymentStatusEnum fromString(String text) {
-        for (CurrentSequencePaymentStatusEnum status : CurrentSequencePaymentStatusEnum.values()) {
+    public static H_TR100_转移接续登记簿_交易类型 fromString(String text) {
+        for (H_TR100_转移接续登记簿_交易类型 status : H_TR100_转移接续登记簿_交易类型.values()) {
             if (status.getText().equals(text) ) {
                 return status;
             }
@@ -92,8 +94,8 @@ public enum CurrentSequencePaymentStatusEnum {
         throw new RuntimeException("no customer status " + text);
     }
 
-    public static CurrentSequencePaymentStatusEnum fromInt(Integer text) {
-        for (CurrentSequencePaymentStatusEnum status : CurrentSequencePaymentStatusEnum.values()) {
+    public static H_TR100_转移接续登记簿_交易类型 fromInt(Integer text) {
+        for (H_TR100_转移接续登记簿_交易类型 status : H_TR100_转移接续登记簿_交易类型.values()) {
             if (status.getId().equals(text) ) {
                 return status;
             }

@@ -91,7 +91,7 @@ public class LN006_RepaymentPlan_贷款分期还款计划 {
     private LocalDate enddate0终止日期;
 
     @Column(name = "repaydate")
-    private Date repaydate1还款日期;
+    private LocalDate repaydate1还款日期;
 
     @Column(name = "initialbal")
     private BigDecimal initialbal0期初余额;
@@ -189,11 +189,11 @@ public class LN006_RepaymentPlan_贷款分期还款计划 {
         this.enddate0终止日期 = enddate0终止日期;
     }
 
-    public Date getRepaydate1还款日期() {
+    public LocalDate getRepaydate1还款日期() {
         return repaydate1还款日期;
     }
 
-    public void setRepaydate1还款日期(Date repaydate1还款日期) {
+    public void setRepaydate1还款日期(LocalDate repaydate1还款日期) {
         this.repaydate1还款日期 = repaydate1还款日期;
     }
 

@@ -2,6 +2,12 @@ package org.ylgjj.loan.enumT;
 
 //import com.coalvalue.domain.pojo.ListItem;
 
+import org.ylgjj.loan.outputenum.统计周期编码;
+import org.ylgjj.loan.pojo.ListItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by silence on 2016/1/18.
  */
@@ -53,7 +59,18 @@ public enum E_HX_机构_Institution_info_instCodeEnum {
     public Integer getId() {
         return this.id;
     }
+    public static List<ListItem> retriveTypese() {
+        // String userUrl =  linkTo(methodOn(MobileDistributorController.class).detail(null)).withSelfRel().getHref();
 
+        List<ListItem> list = new ArrayList<ListItem>();
+        for (E_HX_机构_Institution_info_instCodeEnum status : E_HX_机构_Institution_info_instCodeEnum.values()) {
+            ListItem<String> element = new ListItem<String>(status.getText(), status.getDisplayText(), status.getHelpMessage());
+            list.add(element);
+        }
+
+        return list;
+
+    }
 /*
     public static List<ListItem> retriveTypese() {
 

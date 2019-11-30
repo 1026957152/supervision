@@ -52,7 +52,7 @@ public class LN0014_Trading_house_贷款房屋信息 {
     private String straddr_1_行政街号地址;
     
     private BigDecimal buyhousearea;
-    private BigDecimal tnhousearea;
+    private BigDecimal tnhousearea不可为空_购房面积;
 
     @Column(name = "sfhousemoney")
 
@@ -71,6 +71,7 @@ public class LN0014_Trading_house_贷款房屋信息 {
     private Date ceroutdate;
     private String seller;
     private Integer loanhousenum;
+
 
 
     private String cerrightnum;
@@ -154,12 +155,12 @@ public class LN0014_Trading_house_贷款房屋信息 {
         this.buyhousearea = buyhousearea;
     }
 
-    public BigDecimal getTnhousearea() {
-        return tnhousearea;
+    public BigDecimal getTnhousearea不可为空_购房面积() {
+        return tnhousearea不可为空_购房面积;
     }
 
-    public void setTnhousearea(BigDecimal tnhousearea) {
-        this.tnhousearea = tnhousearea;
+    public void setTnhousearea不可为空_购房面积(BigDecimal tnhousearea不可为空_购房面积) {
+        this.tnhousearea不可为空_购房面积 = tnhousearea不可为空_购房面积;
     }
 
     public BigDecimal getSfhousemoney_0_首付款() {

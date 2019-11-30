@@ -18,7 +18,7 @@ public class B贷款_回收ServiceImpl {
 
 
     @Autowired
-    private CM002Repository cm002Repository;
+    private CM002_个人基本资料表Repository cm002个人基本资料表Repository;
     @Autowired
     private DP034_公积金开销户登记簿_Repository dp034_公积金开销户登记簿_repository;
 

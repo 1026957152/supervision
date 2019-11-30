@@ -19,7 +19,7 @@ public class B贷款_基本信息_总体ServiceImpl {
 
 
     @Autowired
-    private CM002Repository cm002Repository;
+    private CM002_个人基本资料表Repository cm002个人基本资料表Repository;
     @Autowired
     private DP034_公积金开销户登记簿_Repository dp034_公积金开销户登记簿_repository;
 
@@ -134,7 +134,7 @@ public class B贷款_基本信息_总体ServiceImpl {
         统计周期编码 A =统计周期编码.H__06_每年;
         Arrays.stream(E_HX_机构_Institution_info_instCodeEnum.values()).forEach(e->{
         });
-        Arrays.stream(住建部编码_购房面积.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_购房面积.values()).forEach(e->{
         });
 
         return null;
@@ -148,7 +148,7 @@ public class B贷款_基本信息_总体ServiceImpl {
         统计周期编码 A =统计周期编码.H__06_每年;
         Arrays.stream(E_HX_机构_Institution_info_instCodeEnum.values()).forEach(e->{
         });
-        Arrays.stream(住建部编码_收入水平.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_收入水平.values()).forEach(e->{
         });
         return null;
     }

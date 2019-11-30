@@ -5,16 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.ylgjj.loan.domain.FD012_银行存款账号登记文件;
-import org.ylgjj.loan.domain.FN090_账户变动通知文件;
-import org.ylgjj.loan.domain.Output;
+import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_FD012_银行存款账号登记文件_FUNDKIND_资金性质;
 import org.ylgjj.loan.output.H8_1银行专户余额_银行专户余额查询;
+import org.ylgjj.loan.outputenum.E_银行编码_HX;
 import org.ylgjj.loan.repository.FD012_银行存款账号登记文件Repository;
+import org.ylgjj.loan.repository.FD029_定期存款分户文件Repository;
 import org.ylgjj.loan.repository.FN090_账户变动通知文件_Repository;
+import org.ylgjj.loan.repository.PB011_bank_infor_Repository;
 
 import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +31,12 @@ public class H8银行专户余额ServiceImpl {
 
     @Autowired
     private FN090_账户变动通知文件_Repository fn090_账户变动通知文件_repository;
+    @Autowired
+    private FD029_定期存款分户文件Repository fd029_定期存款分户文件Repository;
+
+    @Autowired
+    private PB011_bank_infor_Repository pb011_bank_infor_repository;
+
 
 
  /*   @Autowired
@@ -37,10 +45,23 @@ public class H8银行专户余额ServiceImpl {
 
 
     public Output H8_1银行专户余额_银行专户余额查询(String zjbzxbm) {
+        List<PB011_bank_info> pb011_bank_infos = pb011_bank_infor_repository.findAll();
 
-
+        List<FD029_定期存款分户文件>  fd029_定期存款分户文件s = fd029_定期存款分户文件Repository.findAll();
         List<FD012_银行存款账号登记文件> fd012_银行存款账号登记文件s = fd012_银行存款账号登记文件Repository.findAll();
-/*
+
+
+        fd029_定期存款分户文件s.stream().map(e->{
+
+            e.getOpnaccbank_不可为空_开户银行();
+            e.getTrsoutbank_不可为空_转出银行();
+
+
+            return null;
+        });
+        Map<String, List<FD029_定期存款分户文件>> 定期账户Map = fd029_定期存款分户文件s.stream().collect(Collectors.groupingBy(e->e.getOpnaccbank_不可为空_开户银行()));
+
+        /*
 
         int pageNumber = 1;
         int pageSize = 10;
@@ -95,6 +116,37 @@ public class H8银行专户余额ServiceImpl {
             h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getBANKCODE_不可为空_银行代码());
             h8_1银行专户余额_银行专户余额查询.setMc_银行名称(e.getBANKACCNM_不可为空_银行账户名称());
             h8_1银行专户余额_银行专户余额查询.setSszh_总行编码_String(e.getBANKCODE_不可为空_银行代码());
+
+            List<FD029_定期存款分户文件> fd029_定期存款分户文件s1 = 定期账户Map.get(e.getBANKCODE_不可为空_银行代码());
+
+
+
+
+            Map<String,List<FD029_定期存款分户文件>> ssssss= fd029_定期存款分户文件s1.stream().collect(Collectors.groupingBy(eeee->eeee.getFundkind_不可为空_资金性质()));
+
+            if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_02_委托贷款户.getText()) != null){
+
+                double sss= ssssss.get("").stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
+                h8_1银行专户余额_银行专户余额查询.setDqdkzhye_定期贷款账户余额_String(sss+"");
+            };
+            if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_01_住房公积金存款.getText()) != null){
+                double sss= ssssss.get("").stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
+                h8_1银行专户余额_银行专户余额查询.setDqgjzhye_定期归集账户余额_String(sss+"");
+            };
+
+            if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_03_增值收益存款.getText()) != null){
+                double sss= ssssss.get("").stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
+                h8_1银行专户余额_银行专户余额查询.setDqzzsyzhye_定期增值收益账户余额_String(sss+"");
+            };
+
+
+
+
+
+
+
+
+
 
 
             if(e.getFUNDKIND_不可为空_资金性质().equals(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_01_住房公积金存款.getText())){

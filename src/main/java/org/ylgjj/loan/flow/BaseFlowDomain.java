@@ -21,7 +21,7 @@ import java.util.UUID;
 public class BaseFlowDomain implements Serializable {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue//(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Transient

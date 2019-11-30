@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Autowired
-    private CM002Repository cm002Repository;
+    private CM002_个人基本资料表Repository cm002个人基本资料表Repository;
 
 
     @Autowired
@@ -96,7 +96,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Page<CM002_个人基本资料表> queryCustomer(Pageable pageable) {
 
 
-        return cm002Repository.findAll(pageable);
+        return cm002个人基本资料表Repository.findAll(pageable);
     }
 
     @Override
@@ -211,7 +211,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Data[] queryLoanee(String certinum) throws MyBusinessException {
 
 
-        List<CM002_个人基本资料表> cm002s =cm002Repository.findByCertinum(certinum);
+        List<CM002_个人基本资料表> cm002s = cm002个人基本资料表Repository.findByCertinum(certinum);
         if(cm002s.size()== 0){
             throw new MyBusinessException("找不到该缴存人",ErrorCodeEnum.查询为空);
         }
@@ -357,10 +357,10 @@ public class CustomerServiceImpl implements CustomerService {
         data.setCsrq(cm002.getBirthday_出生日期());
 
         //String cjgzsj; // 参加工作时间
-        data.setCjgzsj(DateUtils.getDate(dp007_individual_sub_account_个人分户账.getOpnaccdate_开户日期()));
+      //  data.setCjgzsj(DateUtils.getDate(dp007_individual_sub_account_个人分户账.getOpnaccdate_开户日期()));
 
         //String grzhzt; //个人账户状态
-        data.setGrzhzt(个人账户状态_PersonalAccountStatusEnum.from(dp007_individual_sub_account_个人分户账.getIndiaccstate_个人账户状态()).getText());
+        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007_individual_sub_account_个人分户账.getIndiaccstate_个人账户状态()).getText());
 
 
         //BigDecimal sqgzze; //税前工资总额
@@ -877,8 +877,8 @@ public class CustomerServiceImpl implements CustomerService {
             //TODO data.setDkzt(ln003_contract_info_合同信息.getOwecnt_欠还次数());
 
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlans1 =  ln006_repaymentPlans.stream().filter(e->e.getCurseqstate本期状态().equals(CurrentSequencePaymentStatusEnum.逾期.getText())
-                    || e.getCurseqstate本期状态().equals(CurrentSequencePaymentStatusEnum.逾期归还.getText())).collect(Collectors.toList());
+            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlans1 =  ln006_repaymentPlans.stream().filter(e->e.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期.getText())
+                    || e.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期归还.getText())).collect(Collectors.toList());
 
 
             LN006_RepaymentPlan_贷款分期还款计划 pre_LN006_RepaymentPlan = null;
@@ -970,10 +970,10 @@ public class CustomerServiceImpl implements CustomerService {
         data.setCsrq(cm002.getBirthday_出生日期());
 
         //String cjgzsj; // 参加工作时间
-        data.setCjgzsj(DateUtils.getDate(dp007_individual_sub_account_个人分户账.getOpnaccdate_开户日期()));
+      //  data.setCjgzsj(DateUtils.getDate(dp007_individual_sub_account_个人分户账.getOpnaccdate_开户日期()));
 
         //String grzhzt; //个人账户状态
-        data.setGrzhzt(个人账户状态_PersonalAccountStatusEnum.from(dp007_individual_sub_account_个人分户账.getIndiaccstate_个人账户状态()).getText());
+        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007_individual_sub_account_个人分户账.getIndiaccstate_个人账户状态()).getText());
 
         Double coefficient = 1.55;
         //BigDecimal sqgzze; //税前工资总额
@@ -1498,8 +1498,8 @@ public class CustomerServiceImpl implements CustomerService {
             //TODO data.setDkzt(ln003_contract_info_合同信息.getOwecnt_欠还次数());
 
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlans1 =  ln006_repaymentPlans.stream().filter(e->e.getCurseqstate本期状态().equals(CurrentSequencePaymentStatusEnum.逾期.getText())
-                    || e.getCurseqstate本期状态().equals(CurrentSequencePaymentStatusEnum.逾期归还.getText())).collect(Collectors.toList());
+            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlans1 =  ln006_repaymentPlans.stream().filter(e->e.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期.getText())
+                    || e.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期归还.getText())).collect(Collectors.toList());
 
 
             LN006_RepaymentPlan_贷款分期还款计划 pre_LN006_RepaymentPlan = null;

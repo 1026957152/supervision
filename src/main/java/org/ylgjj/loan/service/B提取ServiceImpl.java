@@ -1,22 +1,37 @@
 package org.ylgjj.loan.service;
 
 
+import org.apache.commons.lang3.time.DateUtils;
+import org.javatuples.Pair;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.ylgjj.loan.domain.DP202_单位缴存变更登记簿;
+import org.ylgjj.loan.domain.DW025_公积金提取审核登记表;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.enumT.E_HX_机构_Institution_info_instCodeEnum;
-import org.ylgjj.loan.enumT.E_单位缴存登记簿_缴存类型;
+import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
 import org.ylgjj.loan.enumT.E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEnum;
+import org.ylgjj.loan.flow.LoanHistory;
+import org.ylgjj.loan.history.ZYCommonHistoryerviceImpl;
 import org.ylgjj.loan.outputenum.*;
 import org.ylgjj.loan.repository.*;
+import org.ylgjj.loan.repository_flow.LoanHistoryRepository;
 import org.ylgjj.loan.util.个人Utils;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.ValueRange;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import static java.time.DayOfWeek.MONDAY;
+import static java.time.DayOfWeek.SUNDAY;
+import static java.time.temporal.TemporalAdjusters.*;
 
 /**
  * Created by silence yuan on 2015/7/25.
@@ -27,7 +42,7 @@ public class B提取ServiceImpl {
 
 
     @Autowired
-    private CM002Repository cm002Repository;
+    private CM002_个人基本资料表Repository cm002个人基本资料表Repository;
 
 
     @Autowired
@@ -59,7 +74,7 @@ public class B提取ServiceImpl {
 
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LoanHistoryRepository yourHistoryRepository;
 
 
     @Autowired
@@ -88,6 +103,10 @@ public class B提取ServiceImpl {
     private PB017_public_flowing公共流水登记簿Repository public_flowing公共流水登记簿Repository;
 
 
+    @Autowired
+    private LoanHistoryRepository loanHistoryRepository;
+    @Autowired
+    private ZYCommonHistoryerviceImpl zyCommonHistoryervice;
 
 
     //TODO 提取金额，提取原因，提取人账户号，提取人单位号，提取人机构号，提取人身份证号
@@ -96,14 +115,21 @@ public class B提取ServiceImpl {
         long count = dp202_单位缴存变更登记簿_repository.count();
         System.out.println("--日归集时间序列 dp202_单位缴存变更登记簿_repository---"+count);
 
-        List<DP202_单位缴存变更登记簿> dp021_单位缴存登记薄s = dW025_公积金提取审核登记表_Repository.findByTransdate交易日期(日期);
-        Optional<DP202_单位缴存变更登记簿> dp202_单位缴存变更登记簿 = dp021_单位缴存登记薄s.stream().filter(e->e.getTransdate不可为空交易日期().isBefore(日期.plusDays(1))).findFirst();
+        List<DW025_公积金提取审核登记表> dp021_单位缴存登记薄s = dW025_公积金提取审核登记表_Repository.findByTransdate交易日期(日期);
+        Optional<DW025_公积金提取审核登记表> dp202_单位缴存变更登记簿 = dp021_单位缴存登记薄s.stream().filter(e->e.getTransdate交易日期().isBefore(日期.plusDays(1))).findFirst();
 
 
 /*        if(dp202_单位缴存变更登记簿.isPresent()){
             return dp202_单位缴存变更登记簿.get().getFinchgnum_不可为空_财政变更人数();
         }*/
         Triplet<List<String>,Double,Integer> aa = new Triplet<List<String>,Double,Integer>(null,1d,1);
+
+
+
+
+
+
+
         return aa;
     }
 
@@ -112,6 +138,7 @@ public class B提取ServiceImpl {
     public Output S_19_SEQ_提取人数__非本市缴存职工___AND_0301003203(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
         String name = StatisticalIndexCodeEnum.S_19_SEQ_提取人数__非本市缴存职工___AND_0301003203.name();
         个人Utils.非本市缴存职工("");
+
 
 /*        指标分类编码.H_02_人数人次分析;
         统计周期编码.H__06_每年;
@@ -136,7 +163,7 @@ public class B提取ServiceImpl {
         Arrays.stream(E_HX_机构_Institution_info_instCodeEnum.values()).forEach(e->{
         });
 
-        Arrays.stream(住建部编码_收入水平.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_收入水平.values()).forEach(e->{
 
         });
 
@@ -179,7 +206,7 @@ public class B提取ServiceImpl {
 
 
         // TODO 每类型多少个人
-        Arrays.stream(住建部编码_收入水平.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_收入水平.values()).forEach(e->{
 
         });
         return null;
@@ -208,10 +235,153 @@ public class B提取ServiceImpl {
 
         return null;
     }
+
+    public static List<LocalDate> getDatesBetweenUsingJava8(
+            LocalDate startDate, LocalDate endDate) {
+
+        //先週の月曜日から土曜日までの１週間分をStringのリストで取得
+        DateTimeFormatter datePattern = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+        ZonedDateTime monday =
+                ZonedDateTime.now().minusWeeks(1).with(MONDAY);
+
+        List<String> dates =
+                IntStream.range(0,7)
+                        .mapToObj(i -> monday.plusDays(i).format(datePattern))
+                                .collect(Collectors.toList());
+
+//指定した月の１日から月末までの日付けをStringリストで取得//ZonedDateはない
+        LocalDate dec = LocalDate.parse("2014/12/01",datePattern);
+        List<String> dates__ =
+                IntStream.range(0, dec.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth())
+                        .mapToObj(i -> dec.plusDays(i).format(datePattern))
+                        .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+
+
+
+
+
+
+
+
+
+
+
+
+        long numOfDaysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+        return IntStream.iterate(0, i -> i + 1)
+                .limit(numOfDaysBetween)
+                .mapToObj(i -> startDate.plusDays(i))
+                .collect(Collectors.toList());
+    }
+
+    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     // TODO S_37_SEQ_提取人数__提取原因___AND_0301003911
-    public Output S_37_SEQ_提取人数__提取原因___AND_0301003911(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
-        String name = StatisticalIndexCodeEnum.S_37_SEQ_提取人数__提取原因___AND_0301003911.name();
-        dW025_公积金提取审核登记表_Repository.findAll();
+    public Output S_37_SEQ_提取人数__提取原因___AND_0301003911(String dimension1, String dimension2, String dimension3, 统计周期编码 period, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
+
+        LocalDate ldt_ksrq = LocalDate.parse(ksrq,df);
+        LocalDate ldt_jsrq = LocalDate.parse(ksrq,df);
+
+
+        if(period.equals(统计周期编码.H__01_每日)) {
+            long count = ldt_ksrq.until(ldt_jsrq,ChronoUnit.DAYS);
+            List<LocalDate> dates =
+                    IntStream.range(0, Long.valueOf(count).intValue())
+                            .mapToObj(i -> ldt_ksrq.plusDays(i))
+                            .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+
+        }
+
+
+
+
+
+        if(period.equals(统计周期编码.H__03_每月)) {
+            long count = ldt_ksrq.until(ldt_jsrq,ChronoUnit.MONTHS);
+            List<Pair<LocalDate,LocalDate>> dates =
+                    IntStream.range(0, Long.valueOf(count).intValue())
+                            .mapToObj(i -> {
+                                LocalDate now = ldt_ksrq.plusMonths(i);
+                                LocalDate monthBegin = LocalDate.now().withDayOfMonth(1);
+                                LocalDate monthEnd = LocalDate.now().plusMonths(1).withDayOfMonth(1).minusDays(1);
+                                return Pair.with(monthBegin,monthEnd);
+                            } )
+                            .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+
+        }
+
+
+        if(period.equals(统计周期编码.H__06_每年)) {
+            long count = ldt_ksrq.until(ldt_jsrq,ChronoUnit.YEARS);
+            List<LocalDate> dates =
+                    IntStream.range(0, Long.valueOf(count).intValue())
+                            .mapToObj(i -> ldt_ksrq.plusMonths(i))
+                            .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+
+            LocalDate now = LocalDate.now(); // 2015-11-23
+            LocalDate firstDay = now.with(firstDayOfYear()); // 2015-01-01
+            LocalDate lastDay = now.with(lastDayOfYear()); // 2015-12-31
+        }
+
+
+        if(period.equals(统计周期编码.H__04_每季)) {
+            long count = ldt_ksrq.until(ldt_jsrq,ChronoUnit.MONTHS);
+            List<LocalDate> dates =
+                    IntStream.range(0, Long.valueOf(count/3).intValue())
+                            .mapToObj(i -> ldt_ksrq.plusMonths(i*3))
+                            .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+        }
+
+        if(period.equals(统计周期编码.H__02_每周)) {
+            long count = ldt_ksrq.until(ldt_jsrq,ChronoUnit.WEEKS);
+            List<LocalDate> dates =
+                    IntStream.range(0, Long.valueOf(count).intValue())
+                            .mapToObj(i -> ldt_ksrq.plusWeeks(i))
+                            .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+            LocalDate today = LocalDate.now(); // 2015-11-23
+
+            LocalDate monday = today.with(previousOrSame(MONDAY));
+            LocalDate sunday = today.with(nextOrSame(SUNDAY));
+        }
+
+
+
+/*                List<String> dates =
+                IntStream.range(0, dec.with(TemporalAdjusters.lastDayOfMonth()).getDayOfMonth())
+                        .mapToObj(i -> dec.plusDays(i).format(datePattern))
+                        .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+
+        */
+
+
+
+        if(period.equals(统计周期编码.H__01_每日)){
+
+            ValueRange r = ldt_ksrq.range(ChronoField.MONTH_OF_YEAR);
+
+
+
+            DateUtils.ceiling(ldt_ksrq, Calendar.DAY_OF_MONTH);
+
+            Date ceiling_ldt_jsrq = DateUtils.ceiling(java.sql.Date.valueOf(ldt_jsrq), Calendar.DAY_OF_MONTH);
+
+
+        }
+        String name = StatisticalIndexCodeEnum.S_37_SEQ_提取人数__提取原因___AND_0301003911.get指标编码();
+
+
+
+        List<LoanHistory> loanHistories = yourHistoryRepository.findByIndexNo(name);
+
+
+        Map<String,List<LoanHistory>> a = loanHistories.stream().collect(Collectors.groupingBy(e->e.getIndex机构编码()));
+
+/*            Streams.mapWithIndex(studentList.stream(),(t, index)->{
+                System.out.println(t.getName());
+                System.out.println(index);
+                return t.getName();
+            }).count();*/
+
 /*        统计周期编码.H__03_每月;
 
         // TODO 每类型多少个人
@@ -226,7 +396,89 @@ public class B提取ServiceImpl {
 
         Arrays.stream(E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEnum.values()).forEach(e->{
         });
-        return null;
+
+
+        List<Map> mmmm = new ArrayList<>();
+        a.entrySet().stream().map(e->{
+
+
+            return e.getValue().stream().collect(Collectors.groupingBy(g->g.getIndex提取原因())).entrySet().stream().map(h->{
+
+
+                Map maps = new LinkedHashMap();
+                maps.put("target",name);
+                maps.put("dimension1",e.getKey());
+                maps.put("dimension2",h.getKey());
+
+/*                for(int i= 0 ; i< h.getValue().size(); i++){
+                    maps.put("value"+i,h.getValue().get(i).getValue贷款笔数()+"="+h.getValue().get(i).getDate());
+
+                }*/
+                List<Triplet<Integer,LocalDate,LocalDate>> rangDates = null;
+                if(period.equals(统计周期编码.H__03_每月)) {
+                    long count = ldt_ksrq.until(ldt_jsrq,ChronoUnit.MONTHS);
+                    rangDates =
+                            IntStream.range(0, Long.valueOf(count).intValue()+1)
+                                    .mapToObj(i -> {
+                                        System.out.println("------------rangDates--i-----i----i--"+i);
+                                        LocalDate now = ldt_ksrq.plusMonths(i);
+                                        LocalDate monthBegin = now.withDayOfMonth(1);
+                                        LocalDate monthEnd = now.plusMonths(1).withDayOfMonth(1).minusDays(1);
+                                        return Triplet.with(i,monthBegin,monthEnd);
+                                    } )
+                                    .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+
+                }
+
+
+                System.out.println("------------rangDates-------------"+rangDates.toString());
+                List<Triplet<Integer,LocalDate, LocalDate>> finalRangDates = rangDates;
+                Map<Triplet<Integer,LocalDate, LocalDate>,List<LoanHistory>> historyMap =  h.getValue().stream().collect(Collectors.groupingBy(j->{
+
+                    for(Triplet<Integer,LocalDate, LocalDate> localDatePair :finalRangDates){
+                        if((j.getDate().isAfter(localDatePair.getValue1()) && j.getDate().isBefore(localDatePair.getValue2()) )
+                                || j.getDate().isEqual(localDatePair.getValue1()) || j.getDate().isEqual(localDatePair.getValue2()) )
+                            return localDatePair;
+                    }
+                    return null;
+
+                    }));
+
+
+                historyMap.entrySet().forEach(mappp->{
+
+                    maps.put("value"+mappp.getKey().getValue0(),mappp.getValue().stream().map(ll->ll.getId()+"-"+ll.getDate()).collect(Collectors.toList()));
+                });
+
+
+
+
+
+              /*  IntStream.range(0, h.getValue().size())
+                        .forEach(i -> {
+
+                            LoanHistory loanHistory = h.getValue().get(i);
+                            maps.put("value"+i,loanHistory.getId() + "-" +loanHistory.getValue贷款笔数()+"="
+                                    +loanHistory.getDate());
+
+                        });
+*/
+                return maps;
+
+            }).collect(Collectors.toList());
+
+
+
+
+
+        }).collect(Collectors.toList()).forEach(e->{
+            mmmm.addAll(e);
+        });
+
+        Output output = new Output();
+        output.setData(mmmm);
+        output.setSuccess(true);
+        return output;
     }
     // TODO S_38_SEQ_提取人次_AND_0301004001
     public Output S_38_SEQ_提取人次_AND_0301004001(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
@@ -268,9 +520,9 @@ public class B提取ServiceImpl {
         dW025_公积金提取审核登记表_Repository.findAll();
         统计周期编码 A =统计周期编码.H__01_每日;
         // TODO 每类型多少个人
-        E_单位缴存登记簿_缴存类型 E = E_单位缴存登记簿_缴存类型.正常全额补缴;
-        E = E_单位缴存登记簿_缴存类型.正常全额补缴;
-        E = E_单位缴存登记簿_缴存类型.不定额补缴;
+        E_DP021_单位缴存登记簿_缴存类型 E = E_DP021_单位缴存登记簿_缴存类型.正常全额补缴;
+        E = E_DP021_单位缴存登记簿_缴存类型.正常全额补缴;
+        E = E_DP021_单位缴存登记簿_缴存类型.不定额补缴;
 
 
 
@@ -371,13 +623,19 @@ public class B提取ServiceImpl {
 
 
     // TODO
-    public Output S_58_SEQ_外部转入金额_AND_0301007801(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
+    public Output S_58_SEQ_外部转入金额_AND_0301007801(String dimension1, String dimension2, String dimension3, 统计周期编码 period, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
+
+
+
         String name = StatisticalIndexCodeEnum.S_58_SEQ_外部转入金额_AND_0301007801.name();
-        dW025_公积金提取审核登记表_Repository.findAll();
         统计周期编码 A =统计周期编码.H__01_每日;
         // TODO 每类型多少个人
 
 
+
+
+
+    //
 /*
         指标分类编码.H_03_汇补缴分析;
         SY_项目单位.H_01_元_金额价格;
@@ -387,7 +645,129 @@ public class B提取ServiceImpl {
         });
         Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
         });
-        return null;//
+
+
+
+
+
+
+        LocalDate ldt_ksrq = LocalDate.parse(ksrq,df);
+        LocalDate ldt_jsrq = LocalDate.parse(jsrq,df);
+
+
+
+
+        System.out.println("------------------------- index no index "+ valueOf1.get指标编码()+ldt_ksrq+ "__"+ldt_jsrq);
+
+        List<LoanHistory> histories = loanHistoryRepository.findByIndexNoAndDateBetween(valueOf1.get指标编码(),ldt_ksrq,ldt_jsrq);
+
+        System.out.println("------------------------- index no index "+ histories);
+
+        Map<String,List<LoanHistory>> a = histories.stream().collect(Collectors.groupingBy(e->e.getIndex机构编码()));
+
+/*            Streams.mapWithIndex(studentList.stream(),(t, index)->{
+                System.out.println(t.getName());
+                System.out.println(index);
+                return t.getName();
+            }).count();*/
+
+/*        统计周期编码.H__03_每月;
+
+        // TODO 每类型多少个人
+
+
+        指标分类编码.H_02_人数人次分析;
+        统计周期编码.H__03_每月;
+         SY_项目单位.H_02_个_人数;*/
+
+        Arrays.stream(E_HX_机构_Institution_info_instCodeEnum.values()).forEach(e->{
+        });
+
+        Arrays.stream(E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEnum.values()).forEach(e->{
+        });
+
+
+        List<Map> mmmm = new ArrayList<>();
+        a.entrySet().stream().map(e->{
+
+
+            return e.getValue().stream().collect(Collectors.groupingBy(g->g.getIndex经济类型())).entrySet().stream().map(h->{
+
+
+                Map maps = new LinkedHashMap();
+                maps.put("target",name);
+                maps.put("dimension1",e.getKey());
+                maps.put("dimension2",h.getKey());
+
+/*                for(int i= 0 ; i< h.getValue().size(); i++){
+                    maps.put("value"+i,h.getValue().get(i).getValue贷款笔数()+"="+h.getValue().get(i).getDate());
+
+                }*/
+                List<Triplet<Integer,LocalDate,LocalDate>> rangDates = null;
+                if(period.equals(统计周期编码.H__03_每月)) {
+                    long count = ldt_ksrq.until(ldt_jsrq,ChronoUnit.MONTHS);
+                    rangDates =
+                            IntStream.range(0, Long.valueOf(count).intValue()+1)
+                                    .mapToObj(i -> {
+                                        System.out.println("------------rangDates--i-----i----i--"+i);
+                                        LocalDate now = ldt_ksrq.plusMonths(i);
+                                        LocalDate monthBegin = now.withDayOfMonth(1);
+                                        LocalDate monthEnd = now.plusMonths(1).withDayOfMonth(1).minusDays(1);
+                                        return Triplet.with(i,monthBegin,monthEnd);
+                                    } )
+                                    .collect(Collectors.toList());//2015/12/01　〜 2015/12/31
+
+                }
+
+
+                System.out.println("------------rangDates-------------"+rangDates.toString());
+                List<Triplet<Integer,LocalDate, LocalDate>> finalRangDates = rangDates;
+                Map<Triplet<Integer,LocalDate, LocalDate>,List<LoanHistory>> historyMap =  h.getValue().stream().collect(Collectors.groupingBy(j->{
+
+                    for(Triplet<Integer,LocalDate, LocalDate> localDatePair :finalRangDates){
+                        if((j.getDate().isAfter(localDatePair.getValue1()) && j.getDate().isBefore(localDatePair.getValue2()) )
+                                || j.getDate().isEqual(localDatePair.getValue1()) || j.getDate().isEqual(localDatePair.getValue2()) )
+                            return localDatePair;
+                    }
+                    return null;
+
+                }));
+
+
+                historyMap.entrySet().forEach(mappp->{
+
+                    maps.put("value"+mappp.getKey().getValue0(),mappp.getValue().stream().map(ll->ll.getId()+"-"+ll.getDate()).collect(Collectors.toList()));
+                });
+
+
+
+
+
+              /*  IntStream.range(0, h.getValue().size())
+                        .forEach(i -> {
+
+                            LoanHistory loanHistory = h.getValue().get(i);
+                            maps.put("value"+i,loanHistory.getId() + "-" +loanHistory.getValue贷款笔数()+"="
+                                    +loanHistory.getDate());
+
+                        });
+*/
+                return maps;
+
+            }).collect(Collectors.toList());
+
+
+
+
+
+        }).collect(Collectors.toList()).forEach(e->{
+            mmmm.addAll(e);
+        });
+
+        Output output = new Output();
+        output.setData(mmmm);
+        output.setSuccess(true);
+        return output;
 
     }
 
@@ -405,7 +785,8 @@ public class B提取ServiceImpl {
         });
         Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
         });
-        return null;
+        return   zyCommonHistoryervice.commom(dimension1,dimension2,dimension3,valueOf,valueOf1,ksrq,jsrq);
+
     }
 
 
@@ -427,7 +808,8 @@ public class B提取ServiceImpl {
         Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
         });
 
-        return null;
+        return   zyCommonHistoryervice.commom(dimension1,dimension2,dimension3,valueOf,valueOf1,ksrq,jsrq);
+
     }
 
 

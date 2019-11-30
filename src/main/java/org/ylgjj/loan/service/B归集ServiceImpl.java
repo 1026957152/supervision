@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_HX_机构_Institution_info_instCodeEnum;
-import org.ylgjj.loan.enumT.E_单位缴存登记簿_缴存类型;
+import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
 import org.ylgjj.loan.flow.BaseFlowDomain;
 import org.ylgjj.loan.flow.Collect;
 import org.ylgjj.loan.flow.CollectPlan;
@@ -51,7 +51,7 @@ public class B归集ServiceImpl  {
 
 
     @Autowired
-    private CM002Repository cm002Repository;
+    private CM002_个人基本资料表Repository cm002个人基本资料表Repository;
 
 
     @Autowired
@@ -644,7 +644,7 @@ public class B归集ServiceImpl  {
 
 
         LocalDateTime ldt_ksrq = LocalDateTime.parse(ksrq,df);
-        LocalDateTime ldt_jsrq = LocalDateTime.parse(ksrq,df);
+        LocalDateTime ldt_jsrq = LocalDateTime.parse(jsrq,df);
         List<UnitManagementAccount> collectPlans = unitManagementAccountRepository.findByCreateDateBetween(ldt_ksrq,ldt_jsrq);
 
 
@@ -1279,9 +1279,9 @@ public class B归集ServiceImpl  {
 
 
         // TODO 每类型多少个人
-        E_单位缴存登记簿_缴存类型 E = E_单位缴存登记簿_缴存类型.正常全额补缴;
-        E = E_单位缴存登记簿_缴存类型.正常全额补缴;
-        E = E_单位缴存登记簿_缴存类型.不定额补缴;
+        E_DP021_单位缴存登记簿_缴存类型 E = E_DP021_单位缴存登记簿_缴存类型.正常全额补缴;
+        E = E_DP021_单位缴存登记簿_缴存类型.正常全额补缴;
+        E = E_DP021_单位缴存登记簿_缴存类型.不定额补缴;
 
 
 
@@ -1539,7 +1539,7 @@ public class B归集ServiceImpl  {
 
         Arrays.stream(E_HX_机构_Institution_info_instCodeEnum.values()).forEach(e->{
         });
-        Arrays.stream(住建部编码_收入水平.values()).forEach(e->{
+        Arrays.stream(E_住建部编码_收入水平.values()).forEach(e->{
         });
 
         return null;

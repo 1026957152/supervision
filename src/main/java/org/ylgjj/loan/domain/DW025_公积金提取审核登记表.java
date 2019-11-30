@@ -27,6 +27,12 @@ public class DW025_公积金提取审核登记表 {
     @Column(name = "transdate")
     private LocalDate transdate交易日期;
 
+
+
+    @Column(name = "unitaccnum")
+    private String unitaccnum单位账号;
+
+
     @Column(name = "custid")
     private String custid_客户号;
 
@@ -51,6 +57,55 @@ public class DW025_公积金提取审核登记表 {
     private String accname_姓名;
     @Column(name = "drawcertinum")
     private String drawcertinum_提取人身份证号;
+
+
+
+
+
+
+
+    @Column(name = "INCREBAL")
+    private double INCREBAL_不可为空_提取的增量金额;
+
+
+    @Column(name = "INTAMT")
+    private double INTAMT_不可为空_提取的结息金额;
+
+
+    @Column(name = "KEEPBAL")
+    private double KEEPBAL_不可为空_提取的存量金额;
+
+    public double getINCREBAL_不可为空_提取的增量金额() {
+        return INCREBAL_不可为空_提取的增量金额;
+    }
+
+    public void setINCREBAL_不可为空_提取的增量金额(double INCREBAL_不可为空_提取的增量金额) {
+        this.INCREBAL_不可为空_提取的增量金额 = INCREBAL_不可为空_提取的增量金额;
+    }
+
+    public double getINTAMT_不可为空_提取的结息金额() {
+        return INTAMT_不可为空_提取的结息金额;
+    }
+
+    public void setINTAMT_不可为空_提取的结息金额(double INTAMT_不可为空_提取的结息金额) {
+        this.INTAMT_不可为空_提取的结息金额 = INTAMT_不可为空_提取的结息金额;
+    }
+
+    public double getKEEPBAL_不可为空_提取的存量金额() {
+        return KEEPBAL_不可为空_提取的存量金额;
+    }
+
+    public void setKEEPBAL_不可为空_提取的存量金额(double KEEPBAL_不可为空_提取的存量金额) {
+        this.KEEPBAL_不可为空_提取的存量金额 = KEEPBAL_不可为空_提取的存量金额;
+    }
+
+    public String getUnitaccnum单位账号() {
+        return unitaccnum单位账号;
+    }
+
+    public void setUnitaccnum单位账号(String unitaccnum单位账号) {
+        this.unitaccnum单位账号 = unitaccnum单位账号;
+    }
 
     public String getAccname_姓名() {
         return accname_姓名;

@@ -16,7 +16,7 @@ public interface DW025_公积金提取审核登记表_Repository extends JpaRepo
 
    // List<DW025_公积金提取审核登记表> findTop19ByAccnum个人账号OrderByTransdate交易日期Desc(String accnum_个人账号);
 
-    List<DP202_单位缴存变更登记簿> findByTransdate交易日期(LocalDate 日期);
+    List<DW025_公积金提取审核登记表> findByTransdate交易日期(LocalDate 日期);
 
 
     //  List<DW025_withdraw_verify_公积金提取审核登记表> findByAccnum个人账号AndTransdate交易日期After(String accnum个人账号, LocalDate start);

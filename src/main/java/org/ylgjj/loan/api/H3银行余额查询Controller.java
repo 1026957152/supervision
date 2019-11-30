@@ -71,16 +71,16 @@ public class H3银行余额查询Controller {
 
     @RequestMapping(value = "/get_bank_ye.service", method = RequestMethod.POST)
     @ResponseBody
-    public ReturnResult H_3_2_银行余额查询_银行余额查询(@Valid /*@RequestBody*/ @RequestBody  QueryH_3_2_银行余额查询_银行余额查询 query, Errors errors)  {
+    public Output H_3_2_银行余额查询_银行余额查询(@Valid /*@RequestBody*/ @RequestBody  QueryH_3_2_银行余额查询_银行余额查询 query, Errors errors)  {
         if (errors.hasErrors()) {
-            return ReturnResult.情况4_入参数格式错误(errors.toString());
+            return Output.情况4_入参数格式错误(errors.toString());
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
         }
 
 
         System.out.println("----------------- "+ query.toString());
 
-        return  null;//h10逾期监管Service.逾期监管明细查询(query.getZjbzxbm());
+        return  h3银行实时交易Service.H_3_2_银行余额查询_银行余额查询(query.getZjbzxbm());
     }
 
 

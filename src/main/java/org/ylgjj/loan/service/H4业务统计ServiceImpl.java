@@ -48,10 +48,12 @@ public class H4业务统计ServiceImpl {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df);
         LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df);
-        List<String> aa  =Arrays.asList(HX摘要码信息表.HX__85_S_预缴入账_1213,
+        List<String> aa  =  null;//Arrays.asList(HX摘要码信息表.HX__85_S_预缴入账_1213,
+/*
                 HX摘要码信息表.HX__86_S_汇缴入账_1219,
                 HX摘要码信息表.HX__87_S_正常全额补缴入账_1220,
                 HX摘要码信息表.HX__89_S_不定额补缴入账_1222).stream().map(e->e.get编码()).collect(Collectors.toList());
+*/
 
 
         List<DP008_单位明细账> dp021_单位缴存登记簿s = dp008单位明细账Repository.findBySummarycode不可为空摘要代码In(aa);
