@@ -213,10 +213,6 @@ public class SupervisionController {
 
 
 
-            uuxz
-
-
-
             "http://ip:port/JG/zhfwpt/qdfwzl_cx.service", false);
     static public ApiUrl H9_3 = new ApiUrl("1.1",
             "9服务统计",
