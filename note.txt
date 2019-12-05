@@ -3,6 +3,8 @@ docker pull  docker.yulinmei.cn/supervision:0.1.0-Alpha
 
 
 docker run -p 8444:8444 --name supervision  docker.yulinmei.cn/supervision:0.1.0-Alpha
+
+docker run -p 8444:8444 --name supervision  docker.yulinmei.cn/supervision:0.1.1-Alpha
 http://114.115.158.213:1883/
 
 
