@@ -4,6 +4,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.univocity/univocity-parsers/2.7.5/194d7f8196cac66f134f7ca44d2686b4651caa19/univocity-parsers-2.7.5.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.univocity/univocity-parsers/2.7.5/6713d00ad6fe04fbeeea01b6a47594fdae309a49/univocity-parsers-2.7.5-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

@@ -212,7 +212,7 @@ public class SupervisionController {
     static public ApiUrl H9_4 = new ApiUrl("1.1",
             "9服务统计",
             "9.4用户性别查询",
-            "http://ip:port/JG/zhfwpt/yhxbxx_cx.service", false);
+            "http://ip:port/JG/zhfwpt/yhxbxx_cx.service", true);
 
     static public ApiUrl H9_5 = new ApiUrl("1.1",
             "9服务统计",
@@ -221,16 +221,16 @@ public class SupervisionController {
     static public ApiUrl H9_6 = new ApiUrl("1.1",
             "9服务统计",
             "9.6渠道登录次数查询",
-            "http://ip:port/JG/zhfwpt/qdlogin.service", false);
+            "http://ip:port/JG/zhfwpt/qdlogin.service", true);
     static public ApiUrl H9_7 = new ApiUrl("1.1",
             "9服务统计",
             "9.7用户年龄信息查询",
-            "http://ip:port/JG/zhfwpt/yhnlxx_cx.service", false);
+            "http://ip:port/JG/zhfwpt/yhnlxx_cx.service", true);
 
     static public ApiUrl H9_8 = new ApiUrl("1.1",
             "9服务统计",
             "9.8各渠道API总量",
-            "http://ip:port/JG/zhfwpt/lyqd_cx.service", false);
+            "http://ip:port/JG/zhfwpt/lyqd_cx.service", true);
 
     static {
         api.add(H9_1);

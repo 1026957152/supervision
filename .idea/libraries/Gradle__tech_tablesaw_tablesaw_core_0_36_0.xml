@@ -4,6 +4,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/tech.tablesaw/tablesaw-core/0.36.0/f9f9173df30df1588ff2b51b5fc1e9b1d0fbcff9/tablesaw-core-0.36.0.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/tech.tablesaw/tablesaw-core/0.36.0/fd86ce0fc08c6ecc0d0a4fb4003c38c33dcac9f7/tablesaw-core-0.36.0-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

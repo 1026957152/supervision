@@ -183,9 +183,19 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     private double dklgl_贷款离柜率_NUMBER_18_2;
     private double zxlgl_中心离柜率_NUMBER_18_2;
     private int tqcsbs_提取超时笔数_NUMBER_18_0;
+
+
+
     private int dkcsbs_贷款超时笔数_NUMBER_18_0;
+
+
+
     private int dkzcspsj_贷款最长审批时间_NUMBER_18_2;
     private int dkpjspts_贷款平均审批天数_NUMBER_18_2;
+
+
+
+
 
     public int getZjbbm_住建部编码_VARCHAR6() {
         return zjbbm_住建部编码_VARCHAR6;

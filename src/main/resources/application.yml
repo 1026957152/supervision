@@ -65,13 +65,16 @@ spring:
     password: 123456
     driverClassName: com.mysql.cj.jdbc.Driver
 
+
+
+
   datasourcetertiary:
-    jdbc-url: jdbc:db2://10.22.10.22:50010/rundb
+    jdbc-url: jdbc:db2://10.22.30.22:50020/webdb
 
     #url: jdbc:db2://localhost:50010/rundb
     driverClassName: com.ibm.db2.jcc.DB2Driver
-    username: bsprun
-    password: bsprun
+    username: miapp
+    password: miapp
     default-read-only: true
     read-only: true
 

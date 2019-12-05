@@ -4,6 +4,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.roaringbitmap/RoaringBitmap/0.7.14/d0859b3d64ba0690b715755e374812c0b4d4b622/RoaringBitmap-0.7.14.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.roaringbitmap/RoaringBitmap/0.7.14/6a9c7d53e259190e03f17257e5f369298b1e0b6d/RoaringBitmap-0.7.14-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

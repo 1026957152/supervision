@@ -209,7 +209,7 @@
                 <div class="row col-lg-12" style="padding-top: 10px;>
 
 
-                    <section class="">
+                    <section class=">
                         <table  class="table table-striped table-bordered">
                             <thead>
                             <tr>

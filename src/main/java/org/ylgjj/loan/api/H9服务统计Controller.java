@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.ylgjj.loan.domain.Output;
+import org.ylgjj.loan.repository_zhongfu.Mi0312_渠道用户登录ID辅助控制表_Repository;
 import org.ylgjj.loan.service.H9服务统计ServiceImpl;
 
 import javax.validation.Valid;
@@ -19,6 +20,8 @@ public class H9服务统计Controller {
 
 
 
+    @Autowired
+    Mi0312_渠道用户登录ID辅助控制表_Repository mi0312_渠道用户登录ID辅助控制表_repository;
 
     @Autowired
     H9服务统计ServiceImpl h9服务统计Service;

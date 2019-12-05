@@ -15,7 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "LN004")
 
-public class LN004_contract_state_change {
+public class LN004_合同状态信息 {
 
 
     @Id

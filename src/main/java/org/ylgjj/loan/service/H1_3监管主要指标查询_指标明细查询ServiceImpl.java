@@ -86,6 +86,12 @@ public class H1_3监管主要指标查询_指标明细查询ServiceImpl {
         h1.setLjhbjzzdws_环比建制总单位数_NUMBER_18_0((Double)hx_rate环比同比Historyervice.SY_1_ljjzzdws_建制总单位数(ksrq,jsrq).get(E_指标_RATE_SY.SY_2_ljhbjzzdws_环比建制总单位数));
         h1.setLjsnjzzdws_同比建制总单位数_NUMBER_18_0((Double)hx_rate环比同比Historyervice.SY_1_ljjzzdws_建制总单位数(ksrq,jsrq).get(E_指标_RATE_SY.SY_3_ljsnjzzdws_同比建制总单位数));
 
+
+
+
+
+        h1.setLjhbjzfcrs_环比建制封存人数_NUMBER_18_0((Double)hx_rate环比同比Historyervice.SY_1_ljjzzdws_建制总单位数(ksrq,jsrq).get(E_指标_RATE_SY.SY_3_ljsnjzzdws_同比建制总单位数));
+
         Output output = new Output();
 
         output.setData(Arrays.asList(h1));

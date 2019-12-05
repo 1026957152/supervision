@@ -89,6 +89,15 @@ public class DataSourceConfig {
     private DataSource dataSource;
 
 
+    //数据源2-引用配置:spring.datasource.secondary
+    @Bean(name = "tertiaryDataSource")
+    @Qualifier("tertiaryDataSource")
+
+    @ConfigurationProperties(prefix="spring.datasourcetertiary")
+    public DataSource tertiaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
 
 
 }

@@ -4,6 +4,8 @@
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.classgraph/classgraph/4.8.22/1c1003e00572b3bbcd88677d6ff619967dcdaf1a/classgraph-4.8.22.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.github.classgraph/classgraph/4.8.22/7e64272174e1d680c2b7c3850d1c7286b7586f84/classgraph-4.8.22-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
