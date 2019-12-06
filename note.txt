@@ -25,3 +25,7 @@ remote_port = 1883
 #custom_domains = yulinmei.cn
 
 docker-compose -f docker-compose.mosquitto_activemq_frp_mysql_redis.yml up frp
+
+
+docker run -v /var/run/docker.sock:/var/run/docker.sock \
+           -ti docker
