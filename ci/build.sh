@@ -3,11 +3,15 @@
 
 export ROOT_FOLDER=$( pwd )
 export REPO=resource-tutorial
-ls
+
 M2_HOME="${HOME}/.m2"
 M2_CACHE="${ROOT_FOLDER}/maven"
 GRADLE_HOME="${HOME}/.gradle"
 GRADLE_CACHE="${ROOT_FOLDER}/gradle"
+echo "Generating symbolic links for GRADLE_HOME"
+cd ${GRADLE_HOME}
+ls
+
 
 echo "Generating symbolic links for caches"
 
