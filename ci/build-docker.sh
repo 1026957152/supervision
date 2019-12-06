@@ -12,6 +12,6 @@ echo "显示 GRADLE_CACHE"
 
 ls ${ROOT_FOLDER}/gradle
 
-
+docker build -t yellow2:1.0  -f Dockerfile --build-arg JAR_FILE=supervision --build-arg BUILD_VERSION=0.1.1-Alpha resource-tutorial/build/libs
 echo "Generating symbolic links for caches"
 
