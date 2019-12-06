@@ -11,3 +11,7 @@ inputs:
 run:
   path: /bin/sh
   args: ["resource-tutorial/ci/build.sh"]
+
+caches:
+  - path: gradle
+  - path: maven
