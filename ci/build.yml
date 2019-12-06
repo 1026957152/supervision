@@ -8,6 +8,8 @@ image_resource:
 inputs:
   - name: resource-tutorial
 
+outputs:
+  - name: build/
 run:
   path: /bin/sh
   args: ["resource-tutorial/ci/build.sh"]
