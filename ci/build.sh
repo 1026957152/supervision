@@ -19,7 +19,7 @@ echo "Generating symbolic links for caches"
 [[ -d "${GRADLE_CACHE}" && ! -d "${GRADLE_HOME}" ]] && ln -s "${GRADLE_CACHE}" "${GRADLE_HOME}"
 
 
-#export GRADLE_USER_HOME="gradle"
+export GRADLE_USER_HOME="gradle"
 
 
 cd resource-tutorial
