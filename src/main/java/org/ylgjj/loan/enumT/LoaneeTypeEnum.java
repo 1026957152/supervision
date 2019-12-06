@@ -35,7 +35,7 @@ public enum LoaneeTypeEnum {
         return displayText;
     }
 
-    private LoaneeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    LoaneeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

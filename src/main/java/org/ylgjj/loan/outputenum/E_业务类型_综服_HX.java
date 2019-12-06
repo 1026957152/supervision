@@ -359,7 +359,7 @@ public enum E_业务类型_综服_HX {
         return 名称;
     }
 
-    private E_业务类型_综服_HX(String 编码, String 名称) {
+    E_业务类型_综服_HX(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

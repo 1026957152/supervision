@@ -11,8 +11,7 @@ public enum H单位公积金缴存登记簿_入账状态 {
     入账 ("1", "入账",2,""),
     ;
 
-;
-    //private String inaccflag;//入账标志
+//private String inaccflag;//入账标志
 //-,
 
 
@@ -39,7 +38,7 @@ public enum H单位公积金缴存登记簿_入账状态 {
         return displayText;
     }
 
-    private H单位公积金缴存登记簿_入账状态(String statusText, String displayText, Integer id, String helpMessage) {
+    H单位公积金缴存登记簿_入账状态(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

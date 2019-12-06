@@ -258,7 +258,7 @@
                                         }else{
                                             $("#tryGetSMSCodeBtn").addClass("disabled");
                                             count--;
-                                            $("#tryGetSMSCodeBtn").html("剩余"+count+"秒")
+                                            $("#tryGetSMSCodeBtn").html("剩余"+count+"秒");
                                             $("#tryGetSMSCodeBtn").attr("data-complete-text","test"+count);
                                             console.log(count);
                                         }

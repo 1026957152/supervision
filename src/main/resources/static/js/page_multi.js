@@ -21,7 +21,7 @@ function page() {
     };
     var refreshPage = function() {
         showPage(pageSettings.page);
-    }
+    };
     var showPage = function (i) {
         var goToPage = function (i) {
             pageSettings.page = i;
@@ -48,10 +48,10 @@ function page() {
         };
         var afterRenderTable = function () {
             pageSettings.afterRenderTable();
-        }
+        };
         var renderTable = function (data) {
             var content = data.content;
-            var html = new Array();
+            var html = [];
             content.forEach(function (row) {
                 var rowTemplate = $(pageSettings.rowTemplateDiv).html();
                 var rowData = pageSettings.rowData(row);
@@ -64,13 +64,13 @@ function page() {
                 html.push(rowHtml);
             });
             $(pageSettings.pageDataDiv).html(html.join(""));
-        }
+        };
         var renderPagination = function (data) {
             if (data.totalPages <= 1) {
                 $(pageSettings.paginationDiv).html('');
                 return;
             }
-            var html = new Array();
+            var html = [];
             html.push("<div class=\"pull-right pagination\">");
 
             var page_li = "<li class='{0}' value='{1}'><a href='javascript:void(0)'>{2}</a></li>";
@@ -116,14 +116,14 @@ function page() {
             }
             html.push("</div>");
             $(pageSettings.paginationDiv).html(html.join(""));
-        }
+        };
         var afterRenderPagination = function () {
             $(pageSettings.paginationDiv).find("li").not('.disabled').each(function () {
                 $(this).bind("click", function () {
                     goToPage(this.value);
                 });
             });
-        }
+        };
         var format = function (s, a) {
             for (var i = 0; i < a.length; i++) {
                 var v = a[i];
@@ -133,7 +133,7 @@ function page() {
                 s = s.replace(new RegExp('\\{' + i + '\\}', 'g'), v);
             }
             return s;
-        }
+        };
         var formatByObject = function (s, o) {
             for (x in o) {
                 var v = o[x];
@@ -143,9 +143,9 @@ function page() {
                 s = s.replace(new RegExp('\\{' + x + '\\}', 'g'), v);
             }
             return s;
-        }
+        };
         goToPage(i);
-    }
+    };
     return {
         initPage: function (settings) {
             initPage(settings);
@@ -157,4 +157,4 @@ function page() {
             showPage(i);
         }
     };
-};
+}

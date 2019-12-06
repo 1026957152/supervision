@@ -71,12 +71,5 @@ public class FN090_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

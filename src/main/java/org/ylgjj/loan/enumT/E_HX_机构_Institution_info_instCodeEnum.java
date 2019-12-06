@@ -45,7 +45,7 @@ public enum E_HX_机构_Institution_info_instCodeEnum {
         return displayText;
     }
 
-    private E_HX_机构_Institution_info_instCodeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    E_HX_机构_Institution_info_instCodeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

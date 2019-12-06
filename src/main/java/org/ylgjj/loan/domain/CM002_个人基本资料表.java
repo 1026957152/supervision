@@ -272,5 +272,4 @@ public class CM002_个人基本资料表 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
 }

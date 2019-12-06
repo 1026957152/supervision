@@ -40,7 +40,7 @@ public enum H_TR100_转移接续登记簿_交易类型 {
         return displayText;
     }
 
-    private H_TR100_转移接续登记簿_交易类型(String statusText, String displayText, Integer id, String helpMessage) {
+    H_TR100_转移接续登记簿_交易类型(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

@@ -64,7 +64,7 @@ public enum 提取原因_WithdrawReasonEnum_银行 {
         return displayText;
     }
 
-    private 提取原因_WithdrawReasonEnum_银行(String statusText, String displayText, Integer id, String helpMessage) {
+    提取原因_WithdrawReasonEnum_银行(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

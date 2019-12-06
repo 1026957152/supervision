@@ -32,12 +32,5 @@ public class TR003_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

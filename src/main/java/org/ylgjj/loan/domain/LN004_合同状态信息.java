@@ -97,12 +97,5 @@ public class LN004_合同状态信息 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

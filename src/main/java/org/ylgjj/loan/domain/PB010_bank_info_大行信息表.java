@@ -55,8 +55,6 @@ public class PB010_bank_info_大行信息表 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
     public String getBanknam1_不可为空_银行简称() {
         return banknam1_不可为空_银行简称;
     }

@@ -49,7 +49,7 @@ public enum H_DP202_单位缴存变更登记簿_变更类型 {
         return displayText;
     }
 
-    private H_DP202_单位缴存变更登记簿_变更类型(String statusText, String displayText, Integer id, String helpMessage) {
+    H_DP202_单位缴存变更登记簿_变更类型(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

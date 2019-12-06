@@ -147,7 +147,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
             return e.getCertinum()!= null;
 
         }).collect(Collectors.groupingBy(e->{
-            Map map = new HashMap();;
+            Map map = new HashMap();
 
 
             try {
@@ -210,7 +210,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
         })).entrySet().stream().map(e->{
             H9_6信息推送量查询_渠道登录次数查询 h9_6信息推送量查询_渠道登录次数查询 = new H9_6信息推送量查询_渠道登录次数查询();
             h9_6信息推送量查询_渠道登录次数查询.setName_渠道名称(E_渠道_HX.valueOf(e.getKey()).name());
-            h9_6信息推送量查询_渠道登录次数查询.setCount_条数(Integer.toString(e.getValue().size()).toString());
+            h9_6信息推送量查询_渠道登录次数查询.setCount_条数(Integer.toString(e.getValue().size()));
             return h9_6信息推送量查询_渠道登录次数查询;
         }).collect(Collectors.toList()));
         return output;
@@ -222,7 +222,6 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
 
         List<Mi107_业务日志> mi107_业务日志s = mi107_业务日志_repository.findAll();
 
-        ;
         Output output = new Output();
         output.setSuccess(true);
         output.setData(mi107_业务日志s.stream().collect(Collectors.groupingBy(e->e.getChanneltype())).entrySet().stream().map(e->{
@@ -267,7 +266,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
         return e.getCertinum()!= null;
 
     }).collect(Collectors.groupingBy(e->{
-        Map map = new HashMap();;
+        Map map = new HashMap();
 
 
        try {

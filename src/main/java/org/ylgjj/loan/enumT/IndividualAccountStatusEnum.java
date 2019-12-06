@@ -37,7 +37,7 @@ public enum IndividualAccountStatusEnum {
         return displayText;
     }
 
-    private IndividualAccountStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    IndividualAccountStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

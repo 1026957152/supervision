@@ -171,12 +171,5 @@ public class LN001_approval_process {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

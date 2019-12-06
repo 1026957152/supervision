@@ -43,8 +43,6 @@ public class H4业务统计ServiceImpl {
 
     public Output H_4_1_业务统计_获取各渠道业务统计数据(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
 
-        ;
-
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df);
         LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df);

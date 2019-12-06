@@ -38,7 +38,7 @@ public enum IssueLoansFlagEnum {
         return displayText;
     }
 
-    private IssueLoansFlagEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    IssueLoansFlagEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

@@ -4,6 +4,7 @@ import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class CustomServletInputStream extends ServletInputStream {
 
@@ -13,11 +14,7 @@ public class CustomServletInputStream extends ServletInputStream {
     private ReadListener readListener = null;
 
     public CustomServletInputStream(String s) {
-        try {
-            this.myBytes = s.getBytes("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            throw new IllegalStateException("JVM did not support UTF-8", ex);
-        }
+        this.myBytes = s.getBytes(StandardCharsets.UTF_8);
     }
 
     public CustomServletInputStream(byte[] inputBytes) {
@@ -73,4 +70,4 @@ public class CustomServletInputStream extends ServletInputStream {
             return -1;
         }
     }
-};
+}

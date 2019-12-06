@@ -41,7 +41,7 @@ var roleValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function() {
             handleSubmit();

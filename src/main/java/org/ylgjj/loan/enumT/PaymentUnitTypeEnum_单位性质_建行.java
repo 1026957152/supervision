@@ -49,7 +49,7 @@ public enum PaymentUnitTypeEnum_单位性质_建行 {
         return displayText;
     }
 
-    private PaymentUnitTypeEnum_单位性质_建行(String statusText, String displayText, Integer id, String helpMessage) {
+    PaymentUnitTypeEnum_单位性质_建行(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

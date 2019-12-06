@@ -358,7 +358,7 @@ public enum OutputDateClumnNameEnum_new1 {
         return displayText;
     }
 
-    private OutputDateClumnNameEnum_new1(String statusText, String displayText, Integer id, String helpMessage,Integer columnWidth) {
+    OutputDateClumnNameEnum_new1(String statusText, String displayText, Integer id, String helpMessage, Integer columnWidth) {
         this.statusText = statusText;
         this.displayText = displayText;
 

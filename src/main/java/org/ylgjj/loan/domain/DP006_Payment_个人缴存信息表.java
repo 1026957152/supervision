@@ -232,13 +232,5 @@ public class DP006_Payment_个人缴存信息表 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
-
 
 }

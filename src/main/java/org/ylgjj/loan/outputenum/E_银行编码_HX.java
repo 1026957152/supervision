@@ -44,7 +44,7 @@ public enum E_银行编码_HX {
 
 
 
-    private E_银行编码_HX(String 银行编码, String 银行名称, String 银行简称,E_银行编码_H SY_LINK) {
+    E_银行编码_HX(String 银行编码, String 银行名称, String 银行简称, E_银行编码_H SY_LINK) {
         this.银行编码 = 银行编码;
         this.银行名称 = 银行名称;
 

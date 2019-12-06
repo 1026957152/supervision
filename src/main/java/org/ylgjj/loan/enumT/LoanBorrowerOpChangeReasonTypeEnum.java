@@ -37,7 +37,7 @@ public enum LoanBorrowerOpChangeReasonTypeEnum {
         return displayText;
     }
 
-    private LoanBorrowerOpChangeReasonTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    LoanBorrowerOpChangeReasonTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

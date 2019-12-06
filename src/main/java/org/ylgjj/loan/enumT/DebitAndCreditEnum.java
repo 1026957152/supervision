@@ -36,7 +36,7 @@ public enum DebitAndCreditEnum {
         return displayText;
     }
 
-    private DebitAndCreditEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    DebitAndCreditEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

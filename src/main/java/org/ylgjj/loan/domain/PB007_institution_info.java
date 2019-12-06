@@ -202,10 +202,5 @@ public class PB007_institution_info {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
 
 }

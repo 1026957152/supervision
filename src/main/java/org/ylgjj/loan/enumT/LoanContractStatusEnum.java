@@ -51,7 +51,7 @@ public enum LoanContractStatusEnum {
         return displayText;
     }
 
-    private LoanContractStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    LoanContractStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

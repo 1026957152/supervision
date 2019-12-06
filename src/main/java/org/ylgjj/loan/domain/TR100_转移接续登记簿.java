@@ -99,7 +99,7 @@ public class TR100_转移接续登记簿 {
 
 
     @Column(name = "ywbs")
-    private String ywbs_不可为空_业务标识; ;//_0-单笔,1-批量_0:
+    private String ywbs_不可为空_业务标识; //_0-单笔,1-批量_0:
 
 
 
@@ -292,10 +292,6 @@ public class TR100_转移接续登记簿 {
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }
-
-
-
-    ;
 
 
 }

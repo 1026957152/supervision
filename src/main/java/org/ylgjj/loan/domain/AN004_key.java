@@ -41,12 +41,5 @@ public class AN004_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

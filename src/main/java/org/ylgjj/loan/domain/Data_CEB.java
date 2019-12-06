@@ -108,7 +108,7 @@ public class Data_CEB {
 
 
 
-    String stdgjjwdid;;//	个人公积金提取信息 公积金账号	CHAR	20	Y
+    String stdgjjwdid;//	个人公积金提取信息 公积金账号	CHAR	20	Y
     String stdgjjwdrn;//	个人公积金提取信息 提取原因	CHAR	100->1500
     String stdgjjwddt;//	个人公积金提取信息 提取时间	CHAR	10->140	Y
     String stdgjjwdtp;//	个人公积金提取信息 提取方式	CHAR	2->40	Y

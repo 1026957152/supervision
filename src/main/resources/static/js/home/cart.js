@@ -12,7 +12,7 @@ function renderShorpCartTable(){
         type: 'post'
     });
     req.done(function (data) {
-        var html = new Array();
+        var html = [];
        // alert(template);
         //alert(JSON.stringify(data));
         if (data) {
@@ -29,12 +29,7 @@ function renderShorpCartTable(){
         $("#cart").html(html.join(""));
 
     });
-};
-
-
-
-
-
+}
 var formatByObject = function (s, o) {
     for (x in o) {
         var v = o[x];

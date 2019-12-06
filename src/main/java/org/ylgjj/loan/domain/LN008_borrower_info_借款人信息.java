@@ -403,13 +403,5 @@ public class LN008_borrower_info_借款人信息 {
     }
 */
 
-    ;
-
-
-
-
-
-
-
 
 }

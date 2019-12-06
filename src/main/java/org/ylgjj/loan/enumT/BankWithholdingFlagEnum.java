@@ -42,7 +42,7 @@ public enum BankWithholdingFlagEnum {
         return displayText;
     }
 
-    private BankWithholdingFlagEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    BankWithholdingFlagEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

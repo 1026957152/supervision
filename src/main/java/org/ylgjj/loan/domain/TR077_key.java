@@ -31,8 +31,6 @@ public class TR077_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
     public long getInstance_不可为空_实例号() {
         return instance_不可为空_实例号;
     }

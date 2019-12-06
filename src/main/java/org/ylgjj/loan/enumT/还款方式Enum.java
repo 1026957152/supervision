@@ -40,7 +40,7 @@ public enum 还款方式Enum {
         return displayText;
     }
 
-    private 还款方式Enum(String statusText, String displayText, Integer id, String helpMessage) {
+    还款方式Enum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

@@ -40,7 +40,7 @@ public enum 证件类型 {
         return displayText;
     }
 
-    private 证件类型(String statusText, String displayText, Integer id, String helpMessage) {
+    证件类型(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

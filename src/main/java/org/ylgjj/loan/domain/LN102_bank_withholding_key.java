@@ -62,12 +62,5 @@ public class LN102_bank_withholding_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

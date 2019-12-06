@@ -44,7 +44,7 @@ var companyAccountValidator = function () {
                 return false;
             }
         });
-    }
+    };
     return {
         init: function () {
             handleSubmit();

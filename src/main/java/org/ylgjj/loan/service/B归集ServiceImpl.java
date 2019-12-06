@@ -200,8 +200,7 @@ public class B归集ServiceImpl  {
 
             Map<String, Map<String,List<Quartet<String,String,Integer,Double>>>> sssss =
                     maps___.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),a->{
-                ;
-                return a.getValue().stream().collect(Collectors.groupingBy(cc->cc.getValue1()));
+                        return a.getValue().stream().collect(Collectors.groupingBy(cc->cc.getValue1()));
             }));
 
             list.add(sssss);
@@ -544,7 +543,6 @@ public class B归集ServiceImpl  {
 
 
             Map<String, Map<String,List<Triplet<DP202_单位缴存变更登记簿,CM001_单位基本资料表,Double>>>> sssss = maps___.entrySet().stream().collect(Collectors.toMap(e->e.getKey(),a->{
-                ;
                 return a.getValue().stream().collect(Collectors.groupingBy(c->c.getValue1().getUnitkind_单位性质()));
             }));
 

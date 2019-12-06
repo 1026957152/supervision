@@ -75,9 +75,6 @@ public class AN001_交易渠道配置表 {
     }
 
 
-
-    ;
-
     public String getSettletranscode__交易码_两位序号渠道号码_不可为空_交易渠道码() {
         return settletranscode__交易码_两位序号渠道号码_不可为空_交易渠道码;
     }

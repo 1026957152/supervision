@@ -162,10 +162,5 @@ public class PB008_clerk_info {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
 
 }

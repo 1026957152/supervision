@@ -70,7 +70,6 @@ return map;
     {
         String name = E_指标_RATE_SY.SY_4_ljjzxhdws_建制销户单位数.name();
         String name_ = StatisticalIndexCodeEnum.S_7_SEQ_销户单位数_AND_0301000601.name();
-        ;
 
     }
 
@@ -80,7 +79,6 @@ return map;
         String name = E_指标_RATE_SY.SY_7_ljjzfxhdws_建制非销户单位数.name();
         String name_ = StatisticalIndexCodeEnum.S_15_SEQ_正常总单位数_AND_0301002301.name();
         String name__ = StatisticalIndexCodeEnum.S_16_SEQ_封存总单位数_AND_0301002401.name();
-        ;
 
     }
 

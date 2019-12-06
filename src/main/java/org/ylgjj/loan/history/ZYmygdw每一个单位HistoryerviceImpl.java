@@ -727,15 +727,13 @@ public class ZYmygdw每一个单位HistoryerviceImpl {
                         || e.getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.正常全额补缴.getText())
                         || e.getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.正常差额补缴.getText());
             }).collect(Collectors.toList());
-            ;
 
-            System.out.println("------- 补缴人数"+bbb.stream().mapToInt(e->e.getPeoplenum_人数()).sum());
+        System.out.println("------- 补缴人数"+bbb.stream().mapToInt(e->e.getPeoplenum_人数()).sum());
             System.out.println("------- 补缴金额"+bbb.stream().mapToDouble(e->e.getFactpayamt_实际缴款金额().doubleValue()).sum());
 
         List<DP021_单位缴存登记簿> ccc = a.stream().filter(e->{
             return e.getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.汇缴.getText());
                     }).collect(Collectors.toList());
-        ;
         System.out.println("------- 实缴人次"+ccc.stream().mapToInt(e->e.getCmpaynum_本月汇缴人数()).sum());
         System.out.println("------- 实缴金额"+ccc.stream().mapToDouble(e->e.getPeoplenum_人数().doubleValue()).sum());
         System.out.println("------- 实缴人次"+ccc.stream().mapToInt(e->e.getCmpaynum_本月汇缴人数()).sum());
@@ -789,7 +787,6 @@ public class ZYmygdw每一个单位HistoryerviceImpl {
 
 
         }).collect(Collectors.toList());
-        ;
 
         System.out.println("------- 提取人数"+bbb.stream().mapToInt(e->e.getPeoplenum_人数()).sum());
         System.out.println("------- 提取金额"+bbb.stream().mapToDouble(e->e.getAmt_发生额().doubleValue()).sum());
@@ -803,7 +800,6 @@ public class ZYmygdw每一个单位HistoryerviceImpl {
 
 
         }).collect(Collectors.toList());
-        ;
         System.out.println("------- 异地转入人数"+bbb.stream().mapToInt(e->e.getPeoplenum_人数()).sum());
         System.out.println("------- 异地转入金额"+bbb.stream().mapToDouble(e->e.getAmt_发生额().doubleValue()).sum());
 

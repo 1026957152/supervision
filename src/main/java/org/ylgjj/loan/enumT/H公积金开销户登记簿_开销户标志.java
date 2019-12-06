@@ -16,8 +16,7 @@ public enum H公积金开销户登记簿_开销户标志 {
 
     ;
 
-;
-    //private String inaccflag;//入账标志
+//private String inaccflag;//入账标志
 //-,
 
 
@@ -44,7 +43,7 @@ public enum H公积金开销户登记簿_开销户标志 {
         return displayText;
     }
 
-    private H公积金开销户登记簿_开销户标志(String statusText, String displayText, Integer id, String helpMessage) {
+    H公积金开销户登记簿_开销户标志(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

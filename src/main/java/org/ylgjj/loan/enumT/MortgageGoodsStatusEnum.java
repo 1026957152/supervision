@@ -43,7 +43,7 @@ public enum MortgageGoodsStatusEnum {
         return displayText;
     }
 
-    private MortgageGoodsStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    MortgageGoodsStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

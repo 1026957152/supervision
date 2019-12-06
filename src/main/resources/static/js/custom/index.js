@@ -85,7 +85,7 @@ define.pack("./ajax", ["jquery"], function (require, exports, module) {
             }
         });
         return defer;
-    }
+    };
 
     mod.registerUser = function (opt) {
         var defer = $.Deferred();

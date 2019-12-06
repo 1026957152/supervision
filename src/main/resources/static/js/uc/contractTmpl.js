@@ -80,7 +80,7 @@ var contractTmplValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function(settings) {
             handleSubmit(settings);

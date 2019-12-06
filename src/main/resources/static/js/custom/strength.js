@@ -29,12 +29,31 @@
             var specialChars = new RegExp('([!,%,&,@,#,$,^,*,?,_,~])');
 
             function check_strength(thisval,thisid){
-                if (thisval.length > 8) { characters = 1; } else { characters = 0; };
-                if (thisval.match(upperCase)) { capitalLetters = 1} else { capitalLetters = 0; };
-                if (thisval.match(lowerCase)) { loweLetters = 1}  else { loweLetters = 0; };
-                if (thisval.match(numbers)) { number = 1}  else { number = 0; };
-                if (thisval.match(specialChars)) { special = 1}  else { special = 0; };
-
+                if (thisval.length > 8) {
+                    characters = 1;
+                } else {
+                    characters = 0;
+                }
+                if (thisval.match(upperCase)) {
+                    capitalLetters = 1
+                } else {
+                    capitalLetters = 0;
+                }
+                if (thisval.match(lowerCase)) {
+                    loweLetters = 1
+                } else {
+                    loweLetters = 0;
+                }
+                if (thisval.match(numbers)) {
+                    number = 1
+                } else {
+                    number = 0;
+                }
+                if (thisval.match(specialChars)) {
+                    special = 1
+                } else {
+                    special = 0;
+                }
                 var total = characters + capitalLetters + loweLetters + number + special;
 
                 get_total(total,thisid);

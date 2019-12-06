@@ -126,7 +126,7 @@ public enum OutputDateClumnNameEnum {
         return displayText;
     }
 
-    private OutputDateClumnNameEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    OutputDateClumnNameEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

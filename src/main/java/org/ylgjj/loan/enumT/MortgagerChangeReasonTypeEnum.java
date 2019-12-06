@@ -40,7 +40,7 @@ public enum MortgagerChangeReasonTypeEnum {
         return displayText;
     }
 
-    private MortgagerChangeReasonTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    MortgagerChangeReasonTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

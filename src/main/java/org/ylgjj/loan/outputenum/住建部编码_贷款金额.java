@@ -37,7 +37,7 @@ public enum 住建部编码_贷款金额 {
 
 
 
-    private 住建部编码_贷款金额(String 编码, String 名称) {
+    住建部编码_贷款金额(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

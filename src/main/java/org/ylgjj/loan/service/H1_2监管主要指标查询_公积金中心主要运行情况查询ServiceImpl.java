@@ -34,7 +34,6 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
 
 
         LocalDate localDate = LocalDate.now();
-        ;
 
         Output output = new Output();
 

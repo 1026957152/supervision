@@ -33,6 +33,4 @@ public class UnitManagementAccount  extends BaseFlowDomain{
     }
 
 
-
-    ;
 }

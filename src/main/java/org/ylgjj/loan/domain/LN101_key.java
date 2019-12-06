@@ -48,12 +48,5 @@ public class LN101_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

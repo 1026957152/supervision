@@ -570,21 +570,21 @@ public enum StatisticalIndexCodeEnum {
         return 项目单位;
     }
 
-    private StatisticalIndexCodeEnum(String 业务代码,
-                                     String 指标编码,
-                                     String 指标名称,
-                                     String 指标说明,
-                                     String 指标分类,
-                                     String 统计周期,
-                                     String 维度一,
-                                     String 维度一描述,
-                                     String 维度二,
-                                     String 维度二描述,
-                                     String 维度三,
-                                     String 维度三描述,
-                                     String 显示精度,
-                                     String 项目单位,
-                                     Boolean 是否完成) {
+    StatisticalIndexCodeEnum(String 业务代码,
+                             String 指标编码,
+                             String 指标名称,
+                             String 指标说明,
+                             String 指标分类,
+                             String 统计周期,
+                             String 维度一,
+                             String 维度一描述,
+                             String 维度二,
+                             String 维度二描述,
+                             String 维度三,
+                             String 维度三描述,
+                             String 显示精度,
+                             String 项目单位,
+                             Boolean 是否完成) {
         this.业务代码 = 业务代码;
         this.指标编码 = 指标编码;
         this.指标名称 = 指标名称;

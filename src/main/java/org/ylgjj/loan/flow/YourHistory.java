@@ -77,6 +77,4 @@ public class YourHistory extends BaseFlowDomain {
         this.银行代码 = 银行代码;
     }
 
-    ;
-
 }

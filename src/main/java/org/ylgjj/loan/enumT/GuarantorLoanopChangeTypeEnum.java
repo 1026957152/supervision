@@ -38,7 +38,7 @@ public enum GuarantorLoanopChangeTypeEnum {
         return displayText;
     }
 
-    private GuarantorLoanopChangeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    GuarantorLoanopChangeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

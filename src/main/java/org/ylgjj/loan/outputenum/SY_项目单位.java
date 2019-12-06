@@ -35,7 +35,7 @@ public enum SY_项目单位 {
 
 
 
-    private SY_项目单位(String 编码, String 名称) {
+    SY_项目单位(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

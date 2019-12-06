@@ -57,7 +57,7 @@ var personValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function() {
             handleSubmit();

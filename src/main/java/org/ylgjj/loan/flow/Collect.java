@@ -38,7 +38,4 @@ public class Collect extends BaseFlowDomain {
     }
 
 
-
-    ;
-
 }

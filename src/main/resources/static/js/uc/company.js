@@ -94,7 +94,7 @@ var companyValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function() {
             handleSubmit();

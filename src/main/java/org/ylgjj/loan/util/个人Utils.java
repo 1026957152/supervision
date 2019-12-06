@@ -53,7 +53,6 @@ public class 个人Utils {
 
 
         System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        ;
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("yyyyMMdd")
               //  .parseDefaulting(ChronoField.DAY_OF_MONTH, 0)

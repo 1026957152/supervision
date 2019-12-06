@@ -60,7 +60,7 @@ public enum E_银行编码_H {
 
 
 
-    private E_银行编码_H(String 银行编码, String 银行名称, String 银行简称) {
+    E_银行编码_H(String 银行编码, String 银行名称, String 银行简称) {
         this.银行编码 = 银行编码;
         this.银行名称 = 银行名称;
 

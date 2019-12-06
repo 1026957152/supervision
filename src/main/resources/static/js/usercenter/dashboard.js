@@ -15,7 +15,7 @@ function renderShorpCartTable(){
     });
     req.done(function (data) {
       //  alert(JSON.stringify(data));
-        var html = new Array();
+        var html = [];
         if (data) {
           //  $("#recentMessageCount").html(data.recentCount);
             data.content.forEach(function(row){
@@ -28,9 +28,7 @@ function renderShorpCartTable(){
         $("#cart").html(html.join(""));
 
     });
-};
-
-
+}
 function renderTruckTable(){
     $("#messages").html();
     var url = $("#messageUri").val();
@@ -40,7 +38,7 @@ function renderTruckTable(){
         type: 'post'
     });
     req.done(function (data) {
-        var html = new Array();
+        var html = [];
         if (data) {
             $("#recentMessageCount").html(data.recentCount);
             data.items.forEach(function(row){
@@ -53,10 +51,7 @@ function renderTruckTable(){
         $("#messages").html(html.join(""));
 
     });
-};
-
-
-
+}
 var formatByObject = function (s, o) {
     for (x in o) {
         var v = o[x];
@@ -76,4 +71,4 @@ $("#messageDropdown").on("click", function() {
         isMessageLoad = true;
     }
 
-})
+});

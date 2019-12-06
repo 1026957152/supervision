@@ -1025,7 +1025,7 @@ function originToDestinationInfoFormatter(value, row, index) {
     function supplyCompanyInfoFormatter(value, row, index) {
 
 
-        var warehouseInfo = ""
+        var warehouseInfo = "";
 
         warehouseInfo = "堆场名称：" + row.warehouseStatistic.name +"\n" +
                 "当前正在装车： " +row.warehouseStatistic.countShipmentsLoading + "\n" +

@@ -11,13 +11,13 @@ $(document).ready(function(){
         $(".web_classLeftBlockList_li").removeClass("hover");
         $(this).addClass("hover");
         $(".web_classLeftBlock_hiddenBlock").fadeIn(100);
-    })
+    });
 
     $(".web_classLeftBlockList_li").click(function(){
         $(".web_classLeftBlockList_li").removeClass("hover");
         $(this).addClass("hover");
         $(".web_classLeftBlock_hiddenBlock").fadeIn(100);
-    })
+    });
     $(".web_classLeftBlock").bind("mouseleave",function(){
         $(".web_classLeftBlockList_li").removeClass("hover");
         $(".web_classLeftBlock_hiddenBlock").fadeOut(100);
@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 
 
-})
+});
 
 function classHidden(){
 
@@ -93,7 +93,7 @@ function inputClick(obj){
                 $(this).val($(this).attr("content"));
             }
         })
-    })
+    });
 
 
     $(".endInput").focus(function(e){
@@ -112,7 +112,7 @@ function inputClick(obj){
         })
 
 
-    })
+    });
 
     $(".web_searchSelect a").click(function(){
 
@@ -125,7 +125,7 @@ function inputClick(obj){
             $(".startInput").val($(this).html());
         }
         $(".web_searchSelect").fadeOut(300);
-    })
+    });
 
     $(".web_searchBar").mouseleave(function(){
         $(".web_searchSelect").fadeOut(300);

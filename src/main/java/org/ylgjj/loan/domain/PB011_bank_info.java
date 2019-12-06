@@ -74,10 +74,5 @@ public class PB011_bank_info {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
 
 }

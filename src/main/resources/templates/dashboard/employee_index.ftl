@@ -237,7 +237,7 @@
                                              <script type="text/javascript">
 
                                                  $("#userModalSave").click(function () {
-                                                     alert("dddd"+JSON.stringify($('#userForm').serialize()))
+                                                     alert("dddd"+JSON.stringify($('#userForm').serialize()));
                                                      var req = $.ajax({
 
                                                          url: $(this).attr('ref'),

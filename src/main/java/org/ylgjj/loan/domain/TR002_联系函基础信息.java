@@ -289,7 +289,5 @@ public class TR002_联系函基础信息 {
         this.freeuse6_可为空_备用字符 = freeuse6_可为空_备用字符;
     }
 
-    ;
-
 
 }

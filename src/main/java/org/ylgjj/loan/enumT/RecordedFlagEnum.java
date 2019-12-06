@@ -41,7 +41,7 @@ public enum RecordedFlagEnum {
         return displayText;
     }
 
-    private RecordedFlagEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    RecordedFlagEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

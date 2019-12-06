@@ -54,7 +54,7 @@ var page = function () {
         };
         var afterRenderTable = function () {
             pageSettings.afterRenderTable();
-        }
+        };
         var renderTable = function (data) {
             var content = data.content;
             if(jQuery.isEmptyObject(content)  ) {
@@ -65,7 +65,7 @@ var page = function () {
 
                 pageSettings.returnNotNon();
             }
-            var html = new Array();
+            var html = [];
             content.forEach(function (row) {
                 var rowTemplate = $("#rowTemplate").html();
                 var rowData = pageSettings.rowData(row);
@@ -78,13 +78,13 @@ var page = function () {
                 html.push(rowHtml);
             });
             $("#pageData").html(html.join(""));
-        }
+        };
         var renderPagination = function (data) {
             if (data.totalPages <= 1) {
                 $("#pagination").html('');
                 return;
             }
-            var html = new Array();
+            var html = [];
             html.push("<div class=\"pull-right pagination\">");
 
             var page_li = "<li class='{0}' value='{1}'><a href='javascript:void(0)'>{2}</a></li>";
@@ -130,14 +130,14 @@ var page = function () {
             }
             html.push("</div>");
             $("#pagination").html(html.join(""));
-        }
+        };
         var afterRenderPagination = function () {
             $("#pagination li").not('.disabled').each(function () {
                 $(this).bind("click", function () {
                     goToPage(this.value);
                 });
             });
-        }
+        };
         var format = function (s, a) {
             for (var i = 0; i < a.length; i++) {
                 var v = a[i];
@@ -147,7 +147,7 @@ var page = function () {
                 s = s.replace(new RegExp('\\{' + i + '\\}', 'g'), v);
             }
             return s;
-        }
+        };
         var formatByObject = function (s, o) {
             for (x in o) {
                 var v = o[x];
@@ -157,9 +157,9 @@ var page = function () {
                 s = s.replace(new RegExp('\\{' + x + '\\}', 'g'), v);
             }
             return s;
-        }
+        };
         goToPage(i);
-    }
+    };
     return {
         initPage: function (settings) {
             initPage(settings);

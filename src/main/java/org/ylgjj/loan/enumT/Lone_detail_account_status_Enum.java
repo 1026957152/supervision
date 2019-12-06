@@ -47,7 +47,7 @@ public enum Lone_detail_account_status_Enum {
         return displayText;
     }
 
-    private Lone_detail_account_status_Enum(String statusText, String displayText, Integer id, String helpMessage) {
+    Lone_detail_account_status_Enum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

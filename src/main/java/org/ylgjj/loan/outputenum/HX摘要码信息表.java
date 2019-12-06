@@ -284,7 +284,7 @@ public enum HX摘要码信息表 {
 
 
 
-    private HX摘要码信息表(String 编码, String 名称) {
+    HX摘要码信息表(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

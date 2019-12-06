@@ -40,7 +40,7 @@ public enum 单位账户状态Enum {
         return displayText;
     }
 
-    private 单位账户状态Enum(String statusText, String displayText, Integer id, String helpMessage) {
+    单位账户状态Enum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

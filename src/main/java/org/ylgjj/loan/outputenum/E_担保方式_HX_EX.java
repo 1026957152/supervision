@@ -29,7 +29,7 @@ public enum E_担保方式_HX_EX {
 
 
 
-    private E_担保方式_HX_EX(String 编码, String 名称) {
+    E_担保方式_HX_EX(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

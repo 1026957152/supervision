@@ -247,7 +247,7 @@ public enum E_指标_RATE_SY {
         return 名称;
     }
 
-    private E_指标_RATE_SY(String 编码, String 名称) {
+    E_指标_RATE_SY(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

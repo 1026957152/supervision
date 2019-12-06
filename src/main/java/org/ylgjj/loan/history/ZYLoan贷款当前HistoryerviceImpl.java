@@ -333,8 +333,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
 
 
 
-                        ;
-/*                StatisticalIndexCodeEnum.S_145_SEQ_目前逾期本息_AND_0302000901
+                        /*                StatisticalIndexCodeEnum.S_145_SEQ_目前逾期本息_AND_0302000901
                 StatisticalIndexCodeEnum.S_146_SEQ_目前逾期本金_AND_0302000902
                 StatisticalIndexCodeEnum.S_147_SEQ_目前逾期利息_AND_0302000903*/
                 LoanHistory loanHistory = new LoanHistory(n,StatisticalIndexCodeEnum.S_145_SEQ_目前逾期本息_AND_0302000901);

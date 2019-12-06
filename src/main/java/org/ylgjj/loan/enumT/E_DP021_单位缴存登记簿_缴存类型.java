@@ -26,8 +26,7 @@ public enum E_DP021_单位缴存登记簿_缴存类型 {
     异地转入 ("9", "异地转入",9,""),
     ;
 
-;
-    //private String inaccflag;//入账标志
+//private String inaccflag;//入账标志
 //-,
 
 
@@ -54,7 +53,7 @@ public enum E_DP021_单位缴存登记簿_缴存类型 {
         return displayText;
     }
 
-    private E_DP021_单位缴存登记簿_缴存类型(String statusText, String displayText, Integer id, String helpMessage) {
+    E_DP021_单位缴存登记簿_缴存类型(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

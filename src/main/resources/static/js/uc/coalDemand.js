@@ -80,21 +80,21 @@ var coalDemandValidator = function() {
                 e.preventDefault();
                 return false;
             }
-        }
+        };
         var validateCoalType = function(){
             var b = $("#coalTypeList").html() != '';
             if (!b) {
                 alert("请先新建煤种！");
             }
             return b;
-        }
+        };
         var validateDeliveryAddress = function(){
             var b = $("#deliveryAddressList").html() != '';
             if (!b) {
                 alert("请先添加收货地点！");
             }
             return b;
-        }
+        };
         var validateContract = function(){
             var b = $("#contractDetailDiv").html() != '';
             if (!b) {
@@ -103,7 +103,7 @@ var coalDemandValidator = function() {
             return b;
         }
 
-    }
+    };
     return {
         init : function() {
             handleSubmit();

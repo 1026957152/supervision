@@ -788,7 +788,7 @@
 
             stompClient.subscribe('${websocket_topic}', function (greeting) {
 
-                console.log("------"+JSON.parse(greeting.body))
+                console.log("------"+JSON.parse(greeting.body));
                 console.log("------ event-table ");
                // alert(JSON.stringify(greeting.body));
                 var map = JSON.parse(greeting.body);
@@ -880,7 +880,7 @@
 
         $('#inventory-table').bootstrapTable('refresh');
         $('#event-table').bootstrapTable('refresh');
-        refresh_container_producerDistributorOpenAccountDate()
+        refresh_container_producerDistributorOpenAccountDate();
 
         $.notify({
             title: map.distributor,
@@ -911,7 +911,7 @@
 
         $('#inventory-table').bootstrapTable('refresh');
         $('#event-table').bootstrapTable('refresh');
-        refresh_container_inventoryData()
+        refresh_container_inventoryData();
         refresh_container_producerInventoryClumnDate();
         $.notify({
             title: map.distributor,

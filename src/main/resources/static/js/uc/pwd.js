@@ -57,7 +57,7 @@ var pwdValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function() {
             handleSubmit();

@@ -4,6 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.ylgjj.loan.domain.Query;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +27,7 @@ public class SecuritySHA1Utils {
             return "";
         }
  
-        byte[] byteArray = inStr.getBytes("UTF-8");
+        byte[] byteArray = inStr.getBytes(StandardCharsets.UTF_8);
         byte[] md5Bytes = sha.digest(byteArray);
         StringBuffer hexValue = new StringBuffer();
         for (int i = 0; i < md5Bytes.length; i++) {
@@ -94,7 +95,7 @@ public class SecuritySHA1Utils {
         return map;
     }
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
 /*
         String str = new String("amigoxiexiexingxing");
         System.out.println("原始：" + str);

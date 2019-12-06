@@ -67,10 +67,7 @@ public class DateRange implements Comparable<DateRange> {
         if (end < other.start) {
             return false;
         }
-        if (start > other.end) {
-            return false;
-        }
-        return true;
+        return start <= other.end;
     }
  
     @Override

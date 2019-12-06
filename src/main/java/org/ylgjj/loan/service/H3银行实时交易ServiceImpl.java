@@ -145,7 +145,6 @@ public class H3银行实时交易ServiceImpl  {
 
             Page<FN090_账户变动通知文件> fn090_账户变动通知文件s = fn090_账户变动通知文件_repository.
                     findByBankaccnum不可为空账号OrderByTransdate不可为空写入日期DescBankhostsernum不可为空银行主机流水号Desc(e.getBANKACCNUM_不可为空_银行账号(), PageRequest.of(0, 10));
-            ;
             if(!fn090_账户变动通知文件s.getContent().isEmpty()){
                 System.out.println("账户余额："+fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额());
                 h8_1银行专户余额_银行专户余额查询

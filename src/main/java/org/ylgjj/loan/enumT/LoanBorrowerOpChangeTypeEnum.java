@@ -37,7 +37,7 @@ public enum LoanBorrowerOpChangeTypeEnum {
         return displayText;
     }
 
-    private LoanBorrowerOpChangeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    LoanBorrowerOpChangeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

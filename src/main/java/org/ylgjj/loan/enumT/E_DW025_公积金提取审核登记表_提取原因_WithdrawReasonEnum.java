@@ -76,7 +76,7 @@ public enum E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEn
         return displayText;
     }
 
-    private E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

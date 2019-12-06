@@ -13,7 +13,7 @@
         define(['jquery'], factory);
     } else {
         factory(window.jQuery || window.Zepto || window.$);
-    };
+    }
 }(function($) {
     alert("000");
 
@@ -33,7 +33,7 @@
                     return true;
                 } else {
                     return (o && o.nodeType && o.nodeType === 1) ? true : false;
-                };
+                }
             };
 
             // 检测是否为 jQuery 对象
@@ -49,11 +49,11 @@
                     self.dom.box = $(arguments[i]);
                 } else if (typeof arguments[i] === 'object') {
                     _settings = arguments[i];
-                };
-            };
-
-            if (!self.dom.box.length) {return};
-
+                }
+            }
+            if (!self.dom.box.length) {
+                return
+            }
             self.settings = $.extend({}, $.cxSelect.defaults, _settings, {
                 url: self.dom.box.data('url'),
                 nodata: self.dom.box.data('nodata'),
@@ -70,11 +70,11 @@
 
             if (typeof _dataSelects === 'string' && _dataSelects.length) {
                 self.settings.selects = _dataSelects.split(',');
-            };
-
+            }
             // 未设置选择器组
-            if (!$.isArray(self.settings.selects) || !self.settings.selects.length) {return};
-
+            if (!$.isArray(self.settings.selects) || !self.settings.selects.length) {
+                return
+            }
             self.selectArray = [];
 
             var _tempSelect;
@@ -82,19 +82,19 @@
             for (var i = 0, l = self.settings.selects.length; i < l; i++) {
                 _tempSelect = self.dom.box.find('select.' + self.settings.selects[i]);
 
-                if (!_tempSelect) {break};
-
+                if (!_tempSelect) {
+                    break
+                }
                 // 保存默认值
                 if (typeof _tempSelect.val() === 'string' && _tempSelect.val().length) {
                     _tempSelect.attr('data-value', _tempSelect.val());
-                };
-
+                }
                 self.selectArray.push(_tempSelect);
-            };
-
+            }
             // 设置的选择器组不存在
-            if (!self.selectArray.length) {return};
-
+            if (!self.selectArray.length) {
+                return
+            }
             self.dom.box.on('change', 'select', function() {
                 self.selectChange(this.className);
             });
@@ -115,7 +115,7 @@
                 // 设置自定义数据
             } else if (typeof self.settings.url === 'object') {
                 self.start(self.settings.url);
-            };
+            }
         };
 
         cxSelect.getIndex = function(n) {
@@ -136,10 +136,9 @@
 
                     for (var i = 0, l = _space.length; i < l; i++) {
                         self.dataJson = self.dataJson[_space[i]];
-                    };
-                };
-            };
-
+                    }
+                }
+            }
             if (self.dataJson || (typeof self.selectArray[0].data('url') === 'string' && self.selectArray[0].data('url').length)) {
                 self.getOptionData(0);
             } else {
@@ -147,13 +146,14 @@
                     'display': '',
                     'visibility': ''
                 });
-            };
+            }
         };
 
         // 改变选择时的处理
         cxSelect.selectChange = function(name) {
-            if (typeof name !== 'string' || !name.length) {return};
-
+            if (typeof name !== 'string' || !name.length) {
+                return
+            }
             name = name.replace(/\s+/g, ',');
             name = ',' + name + ',';
 
@@ -163,21 +163,21 @@
             for (var i = 0, l = this.selectArray.length; i < l; i++) {
                 if (name.indexOf(',' + this.settings.selects[i] + ',') > -1) {
                     _index = i;
-                };
-            };
-
+                }
+            }
             if (typeof _index === 'number') {
                 _index += 1;
                 this.getOptionData(_index);
-            };
+            }
         };
 
         // 获取选项数据
         cxSelect.getOptionData = function(index, opt) {
             var self = this;
 
-            if (typeof index !== 'number' || isNaN(index) || index < 0 || index >= self.selectArray.length) {return};
-
+            if (typeof index !== 'number' || isNaN(index) || index < 0 || index >= self.selectArray.length) {
+                return
+            }
             var _indexPrev = index - 1;
             var _select = self.selectArray[index];
             var _selectIndex;
@@ -199,14 +199,14 @@
 
                     } else if(self.settings.nodata === 'hidden') {
                         self.selectArray[i].css('visibility', 'hidden');
-                    };
-                };
-            };
-
+                    }
+                }
+            }
             if (typeof _dataUrl === 'string' && _dataUrl.length) {
                 if (_indexPrev >= 0) {
-                    if (!self.selectArray[_indexPrev].val().length) {return};
-
+                    if (!self.selectArray[_indexPrev].val().length) {
+                        return
+                    }
                     _queryName = _select.data('queryName');
                     _selectName = self.selectArray[_indexPrev].attr('name');
 
@@ -214,10 +214,8 @@
                         _query[_queryName] = self.selectArray[_indexPrev].val();
                     } else if (typeof _selectName === 'string' && _selectName.length) {
                         _query[_selectName] = self.selectArray[_indexPrev].val();
-                    };
-
-                };
-
+                    }
+                }
                 $.getJSON(_dataUrl, _query, function(json) {
                     alert(_dataUrl);
 
@@ -227,9 +225,8 @@
 
                         for (var i = 0, l = _space.length; i < l; i++) {
                             _selectData = _selectData[_space[i]];
-                        };
-                    };
-
+                        }
+                    }
                     self.buildOption(_select, _selectData);
                 });
 
@@ -244,12 +241,11 @@
                             _selectIndex = i;
                             _selectData = _selectData[_valueIndex][self.settings.jsonSub];
                         }
-                    };
-                };
-
+                    }
+                }
                 if (_indexPrev < 0 || _indexPrev === _selectIndex) {
                     self.buildOption(_select, _selectData);
-                };
+                }
             }
         };
 
@@ -261,8 +257,9 @@
             var _jsonName = typeof select.data('jsonName') === 'undefined' ? self.settings.jsonName : String(select.data('jsonName'));
             var _jsonValue = typeof select.data('jsonValue') === 'undefined' ? self.settings.jsonValue : String(select.data('jsonValue'));
 
-            if (!$.isArray(data)) {return};
-
+            if (!$.isArray(data)) {
+                return
+            }
             var _html = !self.settings.required ? '<option value="' + _firstValue + '">' + _firstTitle + '</option>' : '';
 
             // 区分标题或值的数据
@@ -270,19 +267,16 @@
                 // 无值字段时使用标题作为值
                 if (!_jsonValue.length) {
                     _jsonValue = _jsonName;
-                };
-
+                }
                 for (var i = 0, l = data.length; i < l; i++) {
                     _html += '<option value="' + String(data[i][_jsonValue]) + '">' + String(data[i][_jsonName]) + '</option>';
-                };
-
+                }
                 // 数组即为值的数据
             } else {
                 for (var i = 0, l = data.length; i < l; i++) {
                     _html += '<option value="' + String(data[i]) + '">' + String(data[i]) + '</option>';
-                };
-            };
-
+                }
+            }
             select.html(_html).prop('disabled', false).css({
                 'display': '',
                 'visibility': ''
@@ -291,8 +285,7 @@
             // 初次加载设置默认值
             if (typeof select.data('value') !== 'undefined') {
                 select.val(String(select.data('value'))).removeAttr('data-value');
-            };
-
+            }
             select.trigger('change');
         };
 

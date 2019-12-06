@@ -36,7 +36,7 @@ public enum E_渠道_HX {
         return 名称;
     }
 
-    private E_渠道_HX(String 编码, String 名称) {
+    E_渠道_HX(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

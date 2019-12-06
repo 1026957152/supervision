@@ -52,7 +52,7 @@ var deliveryAddrValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function() {
             handleSubmit();

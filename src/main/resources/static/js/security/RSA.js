@@ -54,7 +54,7 @@ function encryptedString(key, s)
 	////////////////////////////////// TYF
 
 
-	var a = new Array();
+	var a = [];
 	var sl = s.length;
 	
 	var i = 0;
@@ -88,7 +88,7 @@ function encryptedString(key, s)
 		var msgLength = (i+key.chunkSize)>al ? al%key.chunkSize : key.chunkSize;
 		
 		// Variable b with 0x00 || 0x02 at the highest index.
-		var b = new Array();
+		var b = [];
 		for (x=0; x<msgLength; x++)
 		{
 		    b[x] = a[i+msgLength-1-x];

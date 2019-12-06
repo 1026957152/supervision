@@ -26,7 +26,6 @@ public class BaseFlowDomain implements Serializable {
 
     @Transient
     DateRange dateRange;
-    ;
 
     public DateRange getDateRange() {
         return dateRange;

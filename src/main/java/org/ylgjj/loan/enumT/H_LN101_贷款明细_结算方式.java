@@ -47,7 +47,7 @@ public enum H_LN101_贷款明细_结算方式 {
         return displayText;
     }
 
-    private H_LN101_贷款明细_结算方式(String statusText, String displayText, Integer id, String helpMessage) {
+    H_LN101_贷款明细_结算方式(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

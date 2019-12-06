@@ -57,7 +57,7 @@ var resourceValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function() {
             handleSubmit();
@@ -96,7 +96,7 @@ var resourceTree = function() {
         };
         function transform_data(treeId, parentNode, data) {
             if (!data) return null;
-            var menuLen = data.menus.length
+            var menuLen = data.menus.length;
             var btnLen = data.buttons.length;
             var treeData = [];
             for (var i = 0; i < menuLen; i++) {
@@ -122,7 +122,7 @@ var resourceTree = function() {
             return treeData;
         }
         $.fn.zTree.init($("#resourceTree"), setting);
-    }
+    };
     return {
         init: function() {
             resourceTreeInit();

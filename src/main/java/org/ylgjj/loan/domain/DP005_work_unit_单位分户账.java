@@ -238,15 +238,5 @@ public class DP005_work_unit_单位分户账 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
-
-
-
 
 }

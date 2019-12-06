@@ -61,7 +61,7 @@ var coalQuotationValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function() {
             handleSubmit();

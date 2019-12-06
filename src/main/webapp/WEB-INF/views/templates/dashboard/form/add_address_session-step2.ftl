@@ -103,7 +103,7 @@
                                         //初始化
                                         $(function () {
                                             getProvince();
-                                        })
+                                        });
 
 
 
@@ -232,7 +232,7 @@
                                             var provinceId = $("#provinceList").val();
                                             //获取对应国家下面的省列表
                                             getCityByProvince(provinceId);
-                                        })
+                                        });
 
                                         //市列表下拉框发生改变时
                                         $("#cityList").change(function () {
@@ -242,7 +242,7 @@
                                             var cityId = $("#cityList").val();
                                             //获取对应国家下面的省列表
                                             getDistrictByCity(cityId);
-                                        })
+                                        });
 
 
                                         //市列表下拉框发生改变时
@@ -253,7 +253,7 @@
                                             var countyId = $("#districtList").val();
                                             //获取对应国家下面的省列表
                                             getTownByCounty(countyId);
-                                        })
+                                        });
 
                                         //市列表下拉框发生改变时
                                         $("#townList").change(function () {

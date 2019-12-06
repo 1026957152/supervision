@@ -39,7 +39,7 @@ public enum WithdrawVerifyStatusEnum {
         return displayText;
     }
 
-    private WithdrawVerifyStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    WithdrawVerifyStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

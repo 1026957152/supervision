@@ -677,7 +677,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-                        List<String> temps = dP022_个人缴存登记簿Optional.stream().map(e->e.getIndipayamt_个人月汇缴金额().toString()).collect(Collectors.toList());
+                        List<String> temps = dP022_个人缴存登记簿Optional.stream().map(e-> e.getIndipayamt_个人月汇缴金额()).collect(Collectors.toList());
 
                         近18个自然月个人缴存额_list.add(temps.get(0));
 
@@ -899,7 +899,7 @@ public class CustomerServiceImpl implements CustomerService {
 
                 pre_LN006_RepaymentPlan  = e;
 
-            };
+            }
 
             // String zdlxyqcs;//	最大连续逾期次数	char	输出
             data.setZdlxyqcs(最大连续逾期次数.toString());
@@ -1291,7 +1291,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-                List<String> temps = dP022_个人缴存登记簿Optional.stream().map(e->e.getIndipayamt_个人月汇缴金额().toString()).collect(Collectors.toList());
+                List<String> temps = dP022_个人缴存登记簿Optional.stream().map(e-> e.getIndipayamt_个人月汇缴金额()).collect(Collectors.toList());
 
                 近18个自然月个人缴存额_list.add((new BigDecimal(temps.get(0))).multiply(BigDecimal.valueOf(coefficient)).setScale(2,BigDecimal.ROUND_CEILING).toString());
 
@@ -1520,7 +1520,7 @@ public class CustomerServiceImpl implements CustomerService {
 
                 pre_LN006_RepaymentPlan  = e;
 
-            };
+            }
 
             // String zdlxyqcs;//	最大连续逾期次数	char	输出
             data.setZdlxyqcs(最大连续逾期次数.toString());

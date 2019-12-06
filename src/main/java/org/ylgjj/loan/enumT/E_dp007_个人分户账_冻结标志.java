@@ -17,8 +17,7 @@ public enum E_dp007_个人分户账_冻结标志 {
 
     ;
 
-;
-    //private String inaccflag;//入账标志
+//private String inaccflag;//入账标志
 //-,
 
 
@@ -45,7 +44,7 @@ public enum E_dp007_个人分户账_冻结标志 {
         return displayText;
     }
 
-    private E_dp007_个人分户账_冻结标志(String statusText, String displayText, Integer id, String helpMessage) {
+    E_dp007_个人分户账_冻结标志(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

@@ -52,7 +52,7 @@ public enum E_住建部编码_收入水平 {
         return 名称;
     }
 
-    private E_住建部编码_收入水平(String 编码, String 名称) {
+    E_住建部编码_收入水平(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

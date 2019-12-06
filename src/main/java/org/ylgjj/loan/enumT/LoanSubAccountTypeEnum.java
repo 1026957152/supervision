@@ -38,7 +38,7 @@ public enum LoanSubAccountTypeEnum {
         return displayText;
     }
 
-    private LoanSubAccountTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    LoanSubAccountTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

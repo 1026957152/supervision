@@ -66,26 +66,21 @@ public class FD029_定期存款分户文件 {
 
     @Column(name = "depotype")
     private String depotype_不可为空_存单类型;//_1=定期存款，2=通知存款_1-定期存款,2-通知存款
-    ;
 
     @Column(name = "termtype")
     private String termtype_不可为空_期限类型;//_Y=年，M=月，D=日_Y-年,M-月,D-日
-    ;
 
     @Column(name = "depoterm")
     private long depoterm_不可为空_存单期限;
 
     @Column(name = "depobegdate")
     private java.sql.Date depobegdate_不可为空_存单开户日;//_开始日期
-    ;
 
     @Column(name = "depoenddate")
     private java.sql.Date depoenddate_不可为空_存单到期日;//_结束日期
-    ;
 
     @Column(name = "expcalbegdate")
     private java.sql.Date expcalbegdate_不可为空_计息起日;//_到期收息时同开户日；按年收息时日期为最后一次收息日的下一天
-    ;
 
     @Column(name = "deporate")
     private double deporate_可为空_存单利率;
@@ -106,31 +101,24 @@ public class FD029_定期存款分户文件 {
 
     @Column(name = "expintmode")
     private String expintmode_可为空_计息方式;//_0=不计息，1=按月计息，2=按季计息_0-不计息,1-按月计息,2-按季计息
-    ;
 
     @Column(name = "incintmode")
     private String incintmode_可为空_收息方式;//_1=到期收息，2=按年收息_1-到期收息,2-按年收息
-    ;
 
     @Column(name = "depostate")
     private String depostate_不可为空_存单状态;//_0=正常，9=注销_0-正常,9-注销
-    ;
 
     @Column(name = "fundkindadjflag")
     private String fundkindadjflag_可为空_资金性质调整标志;//_0=未做调整 1=做过调整_0-未做调整,1-做过调整
-    ;
 
     @Column(name = "offtype")
     private String offtype_不可为空_注销类型;//_0=正常，1=到期，2=提前支取，3=冲账注销，4=本金转存，5=本息转存_0-正常,1-到期,2-提前支取,3-冲账注销,4-本金转存,5-本息转存
-    ;
 
     @Column(name = "incintsum")
     private double incintsum_可为空_收息总额;//_总收息额，年收息的话，累加
-    ;
 
     @Column(name = "expcalsum")
     private double expcalsum_可为空_计息总额;//_计提累加，收息时，清零
-    ;
 
     @Column(name = "adjdate")
     private java.sql.Date adjdate_可为空_调整日期;//_最后一次调整日期
@@ -149,10 +137,10 @@ public class FD029_定期存款分户文件 {
     private String remark_可为空_备注;
 
     @Column(name = "flag")
-    private String flag_可为空_标志;    ;//__0-线下,1-结算
+    private String flag_可为空_标志;    //__0-线下,1-结算
 
     @Column(name = "validflag")
-    private String validflag_可为空_有效标志;    ;//__0-否,1-是
+    private String validflag_可为空_有效标志;    //__0-否,1-是
 
     @Column(name = "redepotype")
     private String redepotype_可为空_转存类型;

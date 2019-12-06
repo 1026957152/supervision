@@ -59,7 +59,7 @@ var loginValidator = function () {
                 return false;
             }
         });
-    }
+    };
     return {
         init: function () {
             handleSubmit();

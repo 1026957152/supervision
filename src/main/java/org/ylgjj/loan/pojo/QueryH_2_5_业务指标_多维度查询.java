@@ -129,6 +129,4 @@ public class QueryH_2_5_业务指标_多维度查询 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-    ;
-
 }

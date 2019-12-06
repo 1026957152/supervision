@@ -45,5 +45,4 @@ public class PB002_摘要码信息表 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
 }

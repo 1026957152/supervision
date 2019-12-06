@@ -263,13 +263,5 @@ public class DP008_institution_detail_单位明细账 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
-
 
 }

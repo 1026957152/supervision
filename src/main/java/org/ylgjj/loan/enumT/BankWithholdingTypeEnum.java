@@ -39,7 +39,7 @@ public enum BankWithholdingTypeEnum {
         return displayText;
     }
 
-    private BankWithholdingTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    BankWithholdingTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

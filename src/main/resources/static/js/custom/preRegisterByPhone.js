@@ -61,7 +61,7 @@ $(function(){
                     return false;
                 }
             });
-        }
+        };
         return {
             init: function () {
                 handleSubmit();
@@ -83,7 +83,7 @@ $(function(){
             }else{
                 $btn.addClass("disabled");
                 count--;
-                $btn.html("剩余"+count+"秒")
+                $btn.html("剩余"+count+"秒");
                 $btn.attr("data-complete-text","test"+count);
                 console.log(count);
             }

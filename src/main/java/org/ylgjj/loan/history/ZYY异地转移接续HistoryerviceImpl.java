@@ -271,7 +271,6 @@ DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
                 loanHistory.setIndex机构编码(机构编码); // 机构名称
                 loanHistory.setIndex经济类型(uuu.getKey()); // 银行名称
                 //外部转入金额
-                ;
                 loanHistory.setDoubleValue(uuu.getValue().stream().
                         filter(k -> k.getValue0().getJylx_不可为空_交易类型().equals(H_TR100_转移接续登记簿_交易类型.转入_1.getText())).
                         mapToDouble(cc -> {
@@ -297,10 +296,6 @@ DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
                 loanHistoryRepository.save(loanHistory);
 
 
-
-               ;
-
-
                 loanHistory = new LoanHistory(n,StatisticalIndexCodeEnum.S_41_SEQ_外部转出人数_AND_0301004201);
                 loanHistory.setIndex机构编码(机构编码); // 机构名称
                 loanHistory.setIndex经济类型(uuu.getKey()); // 银行名称
@@ -324,12 +319,6 @@ DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
                 loanHistoryRepository.save(loanHistory);
 
                 //外部转出金额(本金)
-                ;
-
-
-
-
-
 
 
                 loanHistory = new LoanHistory(n,StatisticalIndexCodeEnum.S_60_SEQ_外部转出金额__利息___AND_0301007902);
@@ -343,7 +332,6 @@ DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 
                 //外部转出金额(利息)
-                ;
 
 
 /*                提取本金(跨中心转出)

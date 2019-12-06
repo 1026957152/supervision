@@ -35,7 +35,7 @@ public enum PayeeTypeEnum {
         return displayText;
     }
 
-    private PayeeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    PayeeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

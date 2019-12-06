@@ -154,12 +154,10 @@ function reverseStr(s)
 	return result;
 }
 
-var hexatrigesimalToChar = new Array(
- '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+var hexatrigesimalToChar = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
  'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
  'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
- 'u', 'v', 'w', 'x', 'y', 'z'
-);
+ 'u', 'v', 'w', 'x', 'y', 'z'];
 
 function biToString(x, radix)
 	// 2 <= radix <= 36
@@ -189,8 +187,8 @@ function biToDecimal(x)
 	return (x.isNeg ? "-" : "") + reverseStr(result);
 }
 
-var hexToChar = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                          'a', 'b', 'c', 'd', 'e', 'f');
+var hexToChar = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                          'a', 'b', 'c', 'd', 'e', 'f'];
 
 function digitToHex(n)
 {
@@ -409,9 +407,9 @@ function arrayCopy(src, srcStart, dest, destStart, n)
 	}
 }
 
-var highBitMasks = new Array(0x0000, 0x8000, 0xC000, 0xE000, 0xF000, 0xF800,
+var highBitMasks = [0x0000, 0x8000, 0xC000, 0xE000, 0xF000, 0xF800,
                              0xFC00, 0xFE00, 0xFF00, 0xFF80, 0xFFC0, 0xFFE0,
-                             0xFFF0, 0xFFF8, 0xFFFC, 0xFFFE, 0xFFFF);
+                             0xFFF0, 0xFFF8, 0xFFFC, 0xFFFE, 0xFFFF];
 
 function biShiftLeft(x, n)
 {
@@ -431,9 +429,9 @@ function biShiftLeft(x, n)
 	return result;
 }
 
-var lowBitMasks = new Array(0x0000, 0x0001, 0x0003, 0x0007, 0x000F, 0x001F,
+var lowBitMasks = [0x0000, 0x0001, 0x0003, 0x0007, 0x000F, 0x001F,
                             0x003F, 0x007F, 0x00FF, 0x01FF, 0x03FF, 0x07FF,
-                            0x0FFF, 0x1FFF, 0x3FFF, 0x7FFF, 0xFFFF);
+                            0x0FFF, 0x1FFF, 0x3FFF, 0x7FFF, 0xFFFF];
 
 function biShiftRight(x, n)
 {
@@ -511,7 +509,7 @@ function biDivideModulo(x, y)
 			q = new BigInt();
 			r = biCopy(x);
 		}
-		return new Array(q, r);
+		return [q, r];
 	}
 
 	q = new BigInt();
@@ -579,7 +577,7 @@ function biDivideModulo(x, y)
 	// Check for the unbelievably stupid degenerate case of r == -0.
 	if (r.digits[0] == 0 && biHighIndex(r) == 0) r.isNeg = false;
 
-	return new Array(q, r);
+	return [q, r];
 }
 
 function biDivide(x, y)

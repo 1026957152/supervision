@@ -159,7 +159,7 @@ var coalTypeValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function(settings) {
             handleSubmit(settings);

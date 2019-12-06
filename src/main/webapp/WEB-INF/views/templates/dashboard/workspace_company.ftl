@@ -27,7 +27,7 @@
             var req = {
                 method: 'DELETE',
                 url: "oauth/token"
-            }
+            };
             $http(req).then(
                     function(data){
                         $cookies.remove("access_token");

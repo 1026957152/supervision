@@ -43,7 +43,7 @@ public enum GuaranteeTypeEnum {
         return displayText;
     }
 
-    private GuaranteeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    GuaranteeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

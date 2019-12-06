@@ -92,10 +92,7 @@ public class H8银行专户余额ServiceImpl {
 */
 
 
-        ;
-
-
-/*
+        /*
         Page<FN090_账户变动通知文件> fn090_账户变动通知文件s = fn090_账户变动通知文件_repository.
                 findByBankaccnum不可为空账号OrderByTransdate不可为空写入日期Desc("961009010000505583", PageRequest.of(0, 100));
 
@@ -128,31 +125,21 @@ public class H8银行专户余额ServiceImpl {
 
                 double sss= ssssss.get("").stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
                 h8_1银行专户余额_银行专户余额查询.setDqdkzhye_定期贷款账户余额_String(sss+"");
-            };
+            }
             if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_01_住房公积金存款.getText()) != null){
                 double sss= ssssss.get("").stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
                 h8_1银行专户余额_银行专户余额查询.setDqgjzhye_定期归集账户余额_String(sss+"");
-            };
+            }
 
             if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_03_增值收益存款.getText()) != null){
                 double sss= ssssss.get("").stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
                 h8_1银行专户余额_银行专户余额查询.setDqzzsyzhye_定期增值收益账户余额_String(sss+"");
-            };
-
-
-
-
-
-
-
-
-
+            }
 
 
             if(e.getFUNDKIND_不可为空_资金性质().equals(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_01_住房公积金存款.getText())){
                 Page<FN090_账户变动通知文件> fn090_账户变动通知文件s = fn090_账户变动通知文件_repository.
                         findByBankaccnum不可为空账号OrderByTransdate不可为空写入日期DescBankhostsernum不可为空银行主机流水号Desc(e.getBANKACCNUM_不可为空_银行账号(), PageRequest.of(0, 10));
-                ;
                 if(!fn090_账户变动通知文件s.getContent().isEmpty()){
                     System.out.println("账户余额："+fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额());
                     h8_1银行专户余额_银行专户余额查询
@@ -166,7 +153,6 @@ public class H8银行专户余额ServiceImpl {
             if(e.getFUNDKIND_不可为空_资金性质().equals(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_02_委托贷款户.getText())){
                 Page<FN090_账户变动通知文件> fn090_账户变动通知文件s = fn090_账户变动通知文件_repository.
                         findByBankaccnum不可为空账号OrderByTransdate不可为空写入日期DescBankhostsernum不可为空银行主机流水号Desc(e.getBANKACCNUM_不可为空_银行账号(), PageRequest.of(0, 10));
-                ;
                 if(!fn090_账户变动通知文件s.getContent().isEmpty()){
                     System.out.println("账户余额："+fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额());
                     h8_1银行专户余额_银行专户余额查询
@@ -180,7 +166,6 @@ public class H8银行专户余额ServiceImpl {
             if(e.getFUNDKIND_不可为空_资金性质().equals(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_03_增值收益存款.getText())){
                 Page<FN090_账户变动通知文件> fn090_账户变动通知文件s = fn090_账户变动通知文件_repository.
                         findByBankaccnum不可为空账号OrderByTransdate不可为空写入日期DescBankhostsernum不可为空银行主机流水号Desc(e.getBANKACCNUM_不可为空_银行账号(), PageRequest.of(0, 10));
-                ;
                 if(!fn090_账户变动通知文件s.getContent().isEmpty()){
                     System.out.println("账户余额："+fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额());
                     h8_1银行专户余额_银行专户余额查询

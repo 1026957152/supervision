@@ -37,7 +37,7 @@ public enum E_DP007_个人分户账_个人账户状态 {
         return displayText;
     }
 
-    private E_DP007_个人分户账_个人账户状态(String statusText, String displayText, Integer id, String helpMessage) {
+    E_DP007_个人分户账_个人账户状态(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

@@ -79,7 +79,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
             modelAndView.addObject("indexRate", nf.format((indexes.get(true) == null?0 :indexes.get(true).size()+0d)/items.size()));
 
             Map<Boolean,List<ApiUrl>> apis = SupervisionController.api.stream().collect(Collectors.groupingBy(ApiUrl::is是否完成));
-            ;
 
             nf.setMaximumFractionDigits(1);//这个1的意识是保存结果到小数点后几位，但是特别声明：这个结果已经先＊100了。
             //System.out.println();//自动四舍五入。

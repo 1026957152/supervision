@@ -42,7 +42,7 @@ public enum MarstatusEnum {
         return displayText;
     }
 
-    private MarstatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    MarstatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

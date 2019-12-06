@@ -259,7 +259,6 @@ public class ZY离柜率HistoryerviceImpl {
     public void saveHistoryOneTime(LocalDate localDate) {
 
 
-       ;
         List<Mi107_业务日志> mi107_业务日志s = mi107_业务日志_repository.findAll();
 
 

@@ -367,12 +367,5 @@ public class LN005_lone_sub_account_贷款分户信息 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

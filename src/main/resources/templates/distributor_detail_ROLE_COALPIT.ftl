@@ -197,7 +197,7 @@
                                     if (data.status) {
                                         alert("解绑成功");
 
-                                        window.location.reload()
+                                        window.location.reload();
 
                                         $('#be-trader-request-table').bootstrapTable('refresh');
                                     } else {

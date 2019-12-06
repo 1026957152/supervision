@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="col-lg-6 col-md-6 col-xs-6">
                                         <img id="imgCheckCode"  alt="" src="${captcha_register_url}"/>
-                                        看不清?<a a href="javascript:;" <#-- href="#" -->class="changeCheckCode" rel="external nofollow">换一张</a>
+                                        看不清?<a a href="javascript:" <#-- href="#" -->class="changeCheckCode" rel="external nofollow">换一张</a>
                                         <p id="valid_failed"></p>
                                     </div>
 
@@ -236,7 +236,7 @@
         req.done(function (data) {
             if (data) {
 
-                alert("返回成功")
+                alert("返回成功");
                 return true;
 
 
@@ -247,7 +247,7 @@
             }
         });
 
-        alert("墨梅晚会")
+        alert("墨梅晚会");
         return true;
 
 
@@ -255,7 +255,7 @@
 
 
     $("#checkCode").keyup(function () {
-        var code_len = $("#checkCode").val().trim().length
+        var code_len = $("#checkCode").val().trim().length;
         if (code_len < codeLength) {
             $("#valid_failed").text("");
         } else if (code_len > codeLength) {
@@ -307,7 +307,7 @@
             }else{
                 $btn.addClass("disabled");
                 count--;
-                $btn.html("剩余"+count+"秒")
+                $btn.html("剩余"+count+"秒");
                 $btn.attr("data-complete-text","test"+count);
                 console.log(count);
             }

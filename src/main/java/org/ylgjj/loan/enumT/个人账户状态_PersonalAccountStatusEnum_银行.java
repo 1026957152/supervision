@@ -42,7 +42,7 @@ public enum 个人账户状态_PersonalAccountStatusEnum_银行 {
         return displayText;
     }
 
-    private 个人账户状态_PersonalAccountStatusEnum_银行(String statusText, String displayText, Integer id, String helpMessage) {
+    个人账户状态_PersonalAccountStatusEnum_银行(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

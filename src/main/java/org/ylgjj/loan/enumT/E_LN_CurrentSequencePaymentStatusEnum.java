@@ -38,7 +38,7 @@ public enum E_LN_CurrentSequencePaymentStatusEnum {
         return displayText;
     }
 
-    private E_LN_CurrentSequencePaymentStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    E_LN_CurrentSequencePaymentStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

@@ -181,10 +181,5 @@ public class DP004_unit_payment_info_单位缴存信息表 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
 
 }

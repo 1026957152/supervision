@@ -116,13 +116,5 @@ public class LN013_payee_info {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
-
 
 }

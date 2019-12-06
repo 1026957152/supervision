@@ -31,8 +31,6 @@ public class PB010_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-    ;
-
     public String getCENTERID_不可为空_城市中心代码() {
         return CENTERID_不可为空_城市中心代码;
     }

@@ -58,7 +58,6 @@ public class H10逾期监管ServiceImpl {
 
         LN003_contract_info_合同信息 ln003_contract_info_合同信息 = ln003_contract_info_repository.findByLoancontrcode合同代码(ln008_borrower_info_借款人信息_借款人.getLoancontrcode_合同代码());
 */
-        ;
 
         Output output = new Output();
         output.setData(ln003_contract_info_合同信息s.stream().map(e->{

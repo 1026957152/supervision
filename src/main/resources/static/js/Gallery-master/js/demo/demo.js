@@ -12,7 +12,7 @@
 /* global blueimp, $ */
 
 $(function () {
-  'use strict'
+  'use strict';
 
 
 
@@ -27,9 +27,9 @@ $(function () {
         dataType: 'jsonp',
         jsonp: 'jsoncallback'
     }).done(function (result) {
-        var carouselLinks = []
-        var linksContainer = $('#links')
-        var baseUrl
+        var carouselLinks = [];
+        var linksContainer = $('#links');
+        var baseUrl;
         alert(JSON.stringify(result.photos.photo));
 
         // Add the demo images as links with thumbnails to the page:
@@ -47,14 +47,14 @@ $(function () {
                 href: baseUrl + '',
                 title: photo.title
             })
-        })
+        });
         // Initialize the Gallery as image carousel:
         alert(JSON.stringify($('#links')));
         blueimp.Gallery(carouselLinks, {
             container: '#blueimp-image-carousel',
             carousel: true
         })
-    })
+    });
 
 
 
@@ -140,4 +140,4 @@ $(function () {
     container: '#blueimp-video-carousel',
     carousel: true
   })
-})
+});

@@ -16,8 +16,7 @@ public enum H个人缴存变更登记簿_变更类型 {
     比例变更 ("9", "比例变更",9,""),
     ;
 
-;
-    //private String inaccflag;//入账标志
+//private String inaccflag;//入账标志
 //-,
 
 
@@ -44,7 +43,7 @@ public enum H个人缴存变更登记簿_变更类型 {
         return displayText;
     }
 
-    private H个人缴存变更登记簿_变更类型(String statusText, String displayText, Integer id, String helpMessage) {
+    H个人缴存变更登记簿_变更类型(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

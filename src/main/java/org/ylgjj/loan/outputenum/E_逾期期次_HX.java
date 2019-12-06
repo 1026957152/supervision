@@ -30,7 +30,7 @@ public enum E_逾期期次_HX {
 
 
 
-    private E_逾期期次_HX(String PF03TRANCODE, String PF03DESC, String PF03SUBID, String PF03ATTR) {
+    E_逾期期次_HX(String PF03TRANCODE, String PF03DESC, String PF03SUBID, String PF03ATTR) {
         this.PF03TRANCODE = PF03TRANCODE;
         this.PF03DESC = PF03DESC;
 

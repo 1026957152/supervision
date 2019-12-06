@@ -62,12 +62,5 @@ public class LN004_contract_state_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

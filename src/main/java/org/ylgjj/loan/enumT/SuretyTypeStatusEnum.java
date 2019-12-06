@@ -38,7 +38,7 @@ public enum SuretyTypeStatusEnum {
         return displayText;
     }
 
-    private SuretyTypeStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    SuretyTypeStatusEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

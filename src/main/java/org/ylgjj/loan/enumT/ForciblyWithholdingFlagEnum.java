@@ -39,7 +39,7 @@ public enum ForciblyWithholdingFlagEnum {
         return displayText;
     }
 
-    private ForciblyWithholdingFlagEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    ForciblyWithholdingFlagEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

@@ -495,7 +495,7 @@ public class DateUtils {
     //一天的结束
     public Date getEndOfDay(String date){
         LocalDate localDate = LocalDate.parse(date);
-        return this.getEndOfDay(localDate);
+        return getEndOfDay(localDate);
     }
     public static Date getEndOfDay(TemporalAccessor date) {
         LocalDate localDate = LocalDate.from(date);
@@ -622,7 +622,6 @@ public class DateUtils {
 
          System.out.println(getFuture(start));
         System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-        ;
         DateTimeFormatter formatter = new DateTimeFormatterBuilder()
                 .appendPattern("yyyyMMdd")
               //  .parseDefaulting(ChronoField.DAY_OF_MONTH, 0)
@@ -642,10 +641,7 @@ public class DateUtils {
 
         Instant instant = LocalDateTime.now().minusMinutes(i).atZone(ZoneId.systemDefault()).toInstant();
 
-        if(lastUseTime.before(Date.from(instant))){
-            return true;
-        }
-        return  false;
+        return lastUseTime.before(Date.from(instant));
     }
 
     public static String getDateAndHour(Date deliveryStartDate) {

@@ -35,7 +35,7 @@ public enum 住建部编码 {
 
 
 
-    private 住建部编码(String 编码, String 名称) {
+    住建部编码(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

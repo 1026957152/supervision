@@ -43,7 +43,7 @@ public enum ErrorCodeEnum {
         return displayText;
     }
 
-    private ErrorCodeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    ErrorCodeEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

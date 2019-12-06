@@ -61,7 +61,7 @@ public enum 指标分类编码 {
 
 
 
-    private 指标分类编码(String 编码, String 名称) {
+    指标分类编码(String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

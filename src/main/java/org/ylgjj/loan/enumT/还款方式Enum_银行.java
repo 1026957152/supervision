@@ -51,7 +51,7 @@ public enum 还款方式Enum_银行 {
         return displayText;
     }
 
-    private 还款方式Enum_银行(String statusText, String displayText, Integer id, String helpMessage) {
+    还款方式Enum_银行(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

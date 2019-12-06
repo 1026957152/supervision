@@ -63,7 +63,7 @@ public enum E_住建部编码_购房面积 {
         return ceiling;
     }
 
-    private E_住建部编码_购房面积(String 编码, String 名称, double floor, double ceiling) {
+    E_住建部编码_购房面积(String 编码, String 名称, double floor, double ceiling) {
         this.编码 = 编码;
         this.名称 = 名称;
 

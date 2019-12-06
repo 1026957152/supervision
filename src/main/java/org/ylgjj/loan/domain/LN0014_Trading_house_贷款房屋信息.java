@@ -280,12 +280,5 @@ public class LN0014_Trading_house_贷款房屋信息 {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }

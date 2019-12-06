@@ -64,7 +64,7 @@ var coalSupplyValidator = function() {
                 return false;
             }
         });
-    }
+    };
     return {
         init : function() {
             handleSubmit();

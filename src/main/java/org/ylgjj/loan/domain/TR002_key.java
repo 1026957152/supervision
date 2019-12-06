@@ -33,8 +33,6 @@ public class TR002_key implements Serializable {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
     public String getLxhbh_不可为空_联系函编号() {
         return lxhbh_不可为空_联系函编号;
     }

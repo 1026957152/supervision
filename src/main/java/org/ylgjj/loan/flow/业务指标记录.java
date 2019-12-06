@@ -44,6 +44,4 @@ public class 业务指标记录 extends BaseFlowDomain {
         this.userid = userid;
     }
 
-    ;
-
 }

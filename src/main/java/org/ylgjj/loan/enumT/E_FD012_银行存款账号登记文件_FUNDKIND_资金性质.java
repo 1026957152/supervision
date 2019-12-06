@@ -40,7 +40,7 @@ public enum E_FD012_银行存款账号登记文件_FUNDKIND_资金性质 {
         return displayText;
     }
 
-    private E_FD012_银行存款账号登记文件_FUNDKIND_资金性质(String statusText, String displayText, Integer id, String helpMessage) {
+    E_FD012_银行存款账号登记文件_FUNDKIND_资金性质(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

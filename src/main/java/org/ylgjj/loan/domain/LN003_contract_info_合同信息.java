@@ -396,12 +396,5 @@ public class LN003_contract_info_合同信息 {
         this.cleardate_结清日期 = cleardate_结清日期;
     }
 
-    ;
-
-
-
-
-
-
 
 }

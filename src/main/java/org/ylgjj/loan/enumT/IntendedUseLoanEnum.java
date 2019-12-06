@@ -36,7 +36,7 @@ public enum IntendedUseLoanEnum {
         return displayText;
     }
 
-    private IntendedUseLoanEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    IntendedUseLoanEnum(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 

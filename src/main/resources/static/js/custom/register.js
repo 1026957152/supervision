@@ -62,7 +62,7 @@ var registerValidator = function () {
                 return false;
             }
         });
-    }
+    };
     return {
         init: function () {
             handleSubmit();

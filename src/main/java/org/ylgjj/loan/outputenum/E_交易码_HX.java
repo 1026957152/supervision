@@ -865,7 +865,7 @@ public enum E_交易码_HX {
 
 
 
-    private E_交易码_HX(String PF03TRANCODE, String PF03DESC, String PF03SUBID, String PF03ATTR) {
+    E_交易码_HX(String PF03TRANCODE, String PF03DESC, String PF03SUBID, String PF03ATTR) {
         this.PF03TRANCODE = PF03TRANCODE;
         this.PF03DESC = PF03DESC;
 

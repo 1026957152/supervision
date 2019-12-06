@@ -315,12 +315,5 @@ public class LN102_bank_withholding {
         return ReflectionToStringBuilder.toString(this);
     }
 
-;
-
-
-
-
-
-
 
 }
