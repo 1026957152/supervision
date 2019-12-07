@@ -31,7 +31,7 @@ chmod +x gradlew
 mv build/libs/supervision-*.jar ../build_jar
 
 
-JAVA_OPTS =$(./gradlew -q pV)
+JAVA_OPTS=$(./gradlew -q pV)
 
 
 
