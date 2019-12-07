@@ -8,11 +8,12 @@ image_resource:
 
 inputs:
   - name: repo
+  - name: build_jar
 #inputs:
 #  - name: build
 #run:
 #  path: ls
 run:
-  path: /bin/sh
+  path: sh
   args: ["repo/ci/build-docker.sh"]
 #  args: [hello world]

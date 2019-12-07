@@ -26,3 +26,7 @@ cd resource-tutorial
 ls
 chmod +x gradlew
 ./gradlew --no-daemon build
+
+# mv build/libs/cloudfoundry-identity-uaa-*.war ../uaa_war
+mv build/libs/supervision-*.jar ../build_jar
+mv src/main/docker/Dockerfile ../build_jar

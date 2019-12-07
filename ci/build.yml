@@ -9,7 +9,7 @@ inputs:
   - name: resource-tutorial
 
 outputs:
-  - name: build/
+  - name: build_jar
 run:
   path: /bin/sh
   args: ["resource-tutorial/ci/build.sh"]
