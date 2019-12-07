@@ -36,7 +36,7 @@ JAVA_OPTS=$(./gradlew -q pV)
 
 
 cp ci/docker/Dockerfile ../build_jar
-sed -i 's/JARFILENAME/$JAVA_OPTS/g' ../build_jar/Dockerfile
+sed -i 's/JARFILENAME/'${JAVA_OPTS}'/g' ../build_jar/Dockerfile
 
 #https://askubuntu.com/questions/20414/find-and-replace-text-within-a-file-using-commands
 echo "Generating symbolic links for caches"
