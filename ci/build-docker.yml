@@ -5,9 +5,8 @@ image_resource:
   type: docker-image
   source: {repository: docker:dind}
 
-
 inputs:
-  - name: repo
+  - name: resource-tutorial
   - name: build_jar
 #inputs:
 #  - name: build
@@ -15,5 +14,5 @@ inputs:
 #  path: ls
 run:
   path: sh
-  args: ["repo/ci/build-docker.sh"]
+  args: ["resource-tutorial/ci/build-docker.sh"]
 #  args: [hello world]

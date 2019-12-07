@@ -30,3 +30,5 @@ chmod +x gradlew
 # mv build/libs/cloudfoundry-identity-uaa-*.war ../uaa_war
 mv build/libs/supervision-*.jar ../build_jar
 mv src/main/docker/Dockerfile ../build_jar
+
+echo "Generating symbolic links for caches"
