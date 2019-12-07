@@ -16,7 +16,15 @@ version = '0.1.1-Alpha'
 //Release
 
 sourceCompatibility = '1.8'
+task printVersion {
+	doLast {
+		//println "$project.group/$project.name:$project.version"
+		println "$jar.archiveName"
+		//println "hello world from groovy version $bootJar.archiveFileName"
 
+
+	}
+}
 
 docker {
 

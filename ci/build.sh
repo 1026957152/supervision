@@ -29,6 +29,14 @@ chmod +x gradlew
 
 # mv build/libs/cloudfoundry-identity-uaa-*.war ../uaa_war
 mv build/libs/supervision-*.jar ../build_jar
-mv src/main/docker/Dockerfile ../build_jar
 
+
+JAVA_OPTS =$(./gradlew gradlew -q pV)
+
+
+
+cp ci/docker/Dockerfile ../build_jar
+sed -i 's/JARFILENAME/$JAVA_OPTS/g' ../build_jar/Dockerfile
+
+#https://askubuntu.com/questions/20414/find-and-replace-text-within-a-file-using-commands
 echo "Generating symbolic links for caches"

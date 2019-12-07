@@ -7,6 +7,7 @@ docker run -p 8444:8444 --name supervision  docker.yulinmei.cn/supervision:0.1.0
 docker run -p 8444:8444 --name supervision  docker.yulinmei.cn/supervision:0.1.1-Alpha
 http://114.115.158.213:1883/
 
+docker run -p 8444:8444 --name supervision  swr.cn-north-1.myhuaweicloud.com/yuan/huawei-docker-image:test
 
 nano frps.ini
 ./frps -c frps.ini
