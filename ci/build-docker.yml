@@ -7,12 +7,12 @@ image_resource:
 
 
 inputs:
-  - name: resource-tutorial
+  - name: repo
 #inputs:
 #  - name: build
 #run:
 #  path: ls
 run:
   path: /bin/sh
-  args: ["resource-tutorial/ci/build-docker.sh"]
+  args: ["repo/ci/build-docker.sh"]
 #  args: [hello world]
