@@ -30,3 +30,11 @@ docker-compose -f docker-compose.mosquitto_activemq_frp_mysql_redis.yml up frp
 
 docker run -v /var/run/docker.sock:/var/run/docker.sock \
            -ti docker
+
+
+
+
+
+
+
+fly -t tutorial sp -c pipeline.yml -p hello-world

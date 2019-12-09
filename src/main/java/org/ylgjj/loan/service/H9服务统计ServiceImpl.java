@@ -234,7 +234,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
     }
 
 
-@PostConstruct
+//@PostConstruct
     public void H_9_4_服务统计_用户性别查询() {
 
     List<Mi029_综合服务个人用户基础信息表> count = mi029_综合服务个人用户基础信息表_repository.findAll();

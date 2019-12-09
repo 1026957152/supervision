@@ -2,6 +2,8 @@ package org.ylgjj.loan.api;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.ylgjj.loan.domain.Output;
@@ -53,6 +55,10 @@ public class H1监管主要指标查询Controller {
         }
         System.out.println("----------------- "+ query.toString());
         return h1_2监管主要指标查询_公积金中心主要运行情况查询Service.H_1_1_监管主要指标查询_公积金年度查询(query.getZjbzxbm());
+
+        //return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+
+
     }
 
 

@@ -1,13 +1,106 @@
 
 ---
-platform: linux
+  --
+#resource_types:
+#  - name: email
+#    type: docker-image
+#    source:
+#      repository: pcfseceng/email-resource
 
-image_resource:
-  type: docker-image
-  source: {repository: java, tag: openjdk-8}
 
-inputs:
+resources:
   - name: resource-tutorial
+    type: git
+    source:
+      #      uri: https://github.com/starkandwayne/concourse-tutorial.git
+      #      uri: https://github.com/1026957152/supervision.git
+      uri: https://gitee.com/y1026957152/supervision.git
+      #      username: 1026957152
+      #      password: silence110
+      username: y1026957152
+      password: silence@110!
 
-run:
-  path: resource-tutorial/concourse/task/build.sh
+
+
+
+#      branch: develop
+
+
+  - name: hello-world-docker-image
+    type: docker-image
+    source:
+      #      repository: docker.yulinmei.cn/hello-world-docker-image
+      #      tag: test
+      #      insecure_registries: [ "http://docker.yulinmei.cn" ]
+
+      repository: swr.cn-north-1.myhuaweicloud.com/yuan/hello-world-docker-image
+      tag: test
+      username: cn-north-1@25NO2MU2XUBNNO5QCXQH
+      password: f179d562ef799d42e8e9971fd41aad5f580b7b24c5cb2ca2b376612d066edefa
+#      insecure_registries: [ "http://docker.yulinmei.cn" ]
+
+  - name: huawei-docker-image
+    type: docker-image
+    source:
+      repository: swr.cn-north-1.myhuaweicloud.com/yuan/huawei-docker-image
+      tag: test
+      username: cn-north-1@25NO2MU2XUBNNO5QCXQH
+      password: f179d562ef799d42e8e9971fd41aad5f580b7b24c5cb2ca2b376612d066edefa
+
+
+
+#  - name: send-an-email
+#    type: email
+#    source:
+#      smtp:
+#        host: smtp.example.com
+#        port: "587" # this must be a string
+#        username: a-user
+#        password: my-password
+#      from: build-system@example.com
+#      to: [ "dev-team@example.com", "product@example.net" ] #optional if `params.additional_recipient` is specified
+
+
+jobs:
+  - name: job-hello-world
+    public: true
+    plan:
+      - get: resource-tutorial
+        trigger: true
+
+      - put: hello-world-docker-image
+        params:
+          build: resource-tutorial/docker
+
+      - task: hello-world
+        file: resource-tutorial/ci/build.yml
+
+      - put: huawei-docker-image
+        params:
+          build: build_jar
+#          build_args:
+#            JAR_FILE: supervision
+#            BUILD_VERSION: 0.1.1-Alpha
+
+
+
+      #      - task: consume-the-file-build-docker
+      #        input_mapping:
+      # NOTE: We are mapping the previous _unique task output_ "workspace-first-task"
+      #       to the _common task input_ "repo"
+#          repo: resource-tutorial
+#          version: latest-version
+#        file: resource-tutorial/ci/build-docker.yml
+
+#  - name: send-email
+#    plan:
+#      - put: send-an-email
+#        params:
+#	#subject_text: subject
+#	#body_text: body
+#          subject_text: "Build finished: ${BUILD_PIPELINE_NAME}/${BUILD_JOB_NAME}/${BUILD_NAME}"
+#          body_text: "Build finished: ${ATC_EXTERNAL_URL}/teams/main/pipelines/${BUILD_PIPELINE_NAME}/jobs/${BUILD_JOB_NAME}/builds/${BUILD_NAME}"
+
+
+
+
