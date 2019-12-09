@@ -50,8 +50,10 @@ public class LN0014_Trading_house_贷款房屋信息 {
     @Column(name = "straddr")
 
     private String straddr_1_行政街号地址;
-    
+    @Column(name = "buyhousearea")
     private BigDecimal buyhousearea;
+
+    @Column(name = "tnhousearea")
     private BigDecimal tnhousearea不可为空_购房面积;
 
     @Column(name = "sfhousemoney")

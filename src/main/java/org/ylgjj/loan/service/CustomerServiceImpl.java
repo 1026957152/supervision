@@ -800,7 +800,7 @@ public class CustomerServiceImpl implements CustomerService {
             data.setDkqx(ln003_contract_info_合同信息.getLoanterm_贷款期限().toString());
 
             //String 公积金贷款还款方式  输出	3.2.4贷款还款方式
-            data.setDkhkfs(还款方式Enum.from(ln003_contract_info_合同信息.getRepaymode_还款方式()).getText());
+            data.setDkhkfs(E_还款方式Enum_HX.from(ln003_contract_info_合同信息.getRepaymode_还款方式()).getText());
 
           //  LN005_lone_sub_account_贷款分户信息 ln005_lone_sub_account_贷款分户信息 = lN005_lone_sub_accountRepository.findByloancontrcode合同代码(ln008_borrower_info_借款人信息_借款人.getLoancontrcode合同代码());
 
@@ -1421,7 +1421,7 @@ public class CustomerServiceImpl implements CustomerService {
             data.setDkqx(ln003_contract_info_合同信息.getLoanterm_贷款期限().toString());
 
             //String 公积金贷款还款方式  输出	3.2.4贷款还款方式
-            data.setDkhkfs(还款方式Enum.from(ln003_contract_info_合同信息.getRepaymode_还款方式()).getText());
+            data.setDkhkfs(E_还款方式Enum_HX.from(ln003_contract_info_合同信息.getRepaymode_还款方式()).getText());
 
            // LN005_lone_sub_account_贷款分户信息 ln005_lone_sub_account_贷款分户信息 = lN005_lone_sub_accountRepository.findByloancontrcode合同代码(ln008_borrower_info_借款人信息_借款人.getLoancontrcode合同代码());
 

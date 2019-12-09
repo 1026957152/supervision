@@ -3,6 +3,7 @@ package org.ylgjj.loan.domain;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -111,7 +112,7 @@ public class LN009_抵押物信息mortgager_goods_info {
     private String mortarea_可为空_抵押物面积;
 
     @Column(name = "transdate")
-    private Date transdate_不可为空_交易日期;
+    private LocalDate transdate不可为空交易日期;
 
     @Column(name = "hostsernum")
     private Integer hostsernum_不可为空_主机流水号;
@@ -306,12 +307,12 @@ public class LN009_抵押物信息mortgager_goods_info {
         this.mortarea_可为空_抵押物面积 = mortarea_可为空_抵押物面积;
     }
 
-    public Date getTransdate_不可为空_交易日期() {
-        return transdate_不可为空_交易日期;
+    public LocalDate getTransdate不可为空交易日期() {
+        return transdate不可为空交易日期;
     }
 
-    public void setTransdate_不可为空_交易日期(Date transdate_不可为空_交易日期) {
-        this.transdate_不可为空_交易日期 = transdate_不可为空_交易日期;
+    public void setTransdate不可为空交易日期(LocalDate transdate不可为空交易日期) {
+        this.transdate不可为空交易日期 = transdate不可为空交易日期;
     }
 
     public Integer getHostsernum_不可为空_主机流水号() {

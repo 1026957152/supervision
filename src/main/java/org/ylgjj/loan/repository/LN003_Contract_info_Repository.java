@@ -1,6 +1,10 @@
 package org.ylgjj.loan.repository;
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.ylgjj.loan.domain.LN003_contract_info_合同信息;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -21,4 +25,10 @@ public interface LN003_Contract_info_Repository extends JpaRepository<LN003_cont
 
     List<LN003_contract_info_合同信息> findByOwecnt欠还次数GreaterThanEqual(int i);
 
+    List<LN003_contract_info_合同信息> findByOwecnt欠还次数GreaterThanEqualAndOwecnt欠还次数LessThan(Integer 逾期次数_floor, Integer 逾期次数_ceiling, Pageable of);
+
+
+/* @Query(value = "SELECT * FROM reg_step_log WHERE email_has_sent = ?1 and opt_time >= ?2 and opt_time <= ?3",
+         nativeQuery = true)*/
+Page<LN003_contract_info_合同信息> findByOwecnt欠还次数GreaterThanEqualAndOwecnt欠还次数LessThanAndLoandate放款日期Between(Integer 逾期次数_floor, Integer 逾期次数_ceiling, LocalDate ldt_ksrq, LocalDate ldt_jsrq, Pageable of);
 }

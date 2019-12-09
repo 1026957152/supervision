@@ -109,4 +109,43 @@ public class CardJunit {
         return map;
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
+     * 18位身份证获取性别和年龄
+     * @param CardCode
+     * @return
+     * @throws Exception
+     */
+    public static String identityCard18_Sex(String CardCode) throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 得到年份
+        String year = CardCode.substring(6).substring(0, 4);
+        // 得到月份
+        String month = CardCode.substring(10).substring(0, 2);
+        //得到日
+        //String day=CardCode.substring(12).substring(0,2);
+        String sex;
+        // 判断性别
+        if (Integer.parseInt(CardCode.substring(16).substring(0, 1)) % 2 == 0) {
+            sex = "女";
+        } else {
+            sex = "男";
+        }
+
+        return sex;
+    }
+
 }

@@ -7,151 +7,90 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H10_2逾期监管_逾期监管明细查询 {
 
-    @JsonProperty("jkhtbh")
-    @JSONField(name="jkhtbh")
+    // @JsonProperty("jkhtbh")
+    // @JSONField(name="jkhtbh")
     private String jkhtbh_合同编号_String;
 
-    @JsonProperty("dkffrq")
+    // @JsonProperty("dkffrq")
 
-    @JSONField(name="dkffrq")
+    // @JSONField(name="dkffrq")
     private String dkffrq_发放日期_String;
-    @JsonProperty("dkffe")
-    @JSONField(name="dkffe")
+    // @JsonProperty("dkffe")
+    // @JSONField(name="dkffe")
     private double dkffe_发放金额_double;
-    @JsonProperty("dkye")
-    @JSONField(name="dkye")
+    // @JsonProperty("dkye")
+    // @JSONField(name="dkye")
     private double dkye_贷款余额_double;
 
-    @JsonProperty("dqyqbj")
-    @JSONField(name="dqyqbj")
+    // @JsonProperty("dqyqbj")
+    // @JSONField(name="dqyqbj")
     private double dqyqbj_当前逾期本金_double;
 
-    @JsonProperty("dqyqcs")
-    @JSONField(name="dqyqcs")
+    // @JsonProperty("dqyqcs")
+    // @JSONField(name="dqyqcs")
     private int dqyqcs_当前逾期次数_int;
 
-    @JsonProperty("ljyqqs")
-    @JSONField(name="ljyqqs")
+    // @JsonProperty("ljyqqs")
+    // @JSONField(name="ljyqqs")
     private int ljyqqs_累计逾期次数_int;
 
-    @JsonProperty("yqkssj")
-    @JSONField(name="yqkssj")
+    // @JsonProperty("yqkssj")
+    // @JSONField(name="yqkssj")
     private String yqkssj_逾期开始日期_String;
 
 
-    @JsonProperty("yqts")
-    @JSONField(name="yqts")
+    // @JsonProperty("yqts")
+    // @JSONField(name="yqts")
     private int yqts_逾期天数_int;
 
-    @JsonProperty("grjcjs")
-    @JSONField(name="grjcjs")
+    // @JsonProperty("grjcjs")
+    // @JSONField(name="grjcjs")
     private double grjcjs_主借款人月缴存基数_double;
 
-    @JsonProperty("grztmc")
-    @JSONField(name="grztmc")
+    // @JsonProperty("grztmc")
+    // @JSONField(name="grztmc")
     private String grztmc_主借款人账户状态_String;
 
-    @JsonProperty("dqjhhkje")
-    @JSONField(name="dqjhhkje")
+    // @JsonProperty("dqjhhkje")
+    // @JSONField(name="dqjhhkje")
     private double dqjhhkje_月还款额_double;
 
-    @JsonProperty("spczyxm")
-    @JSONField(name="spczyxm")
+    // @JsonProperty("spczyxm")
+    // @JSONField(name="spczyxm")
     private String spczyxm_审批人_String;
 
-    @JsonProperty("dwmc")
-    @JSONField(name="dwmc")
+    // @JsonProperty("dwmc")
+    // @JSONField(name="dwmc")
     private String dwmc_单位名称_String;
 
-    @JsonProperty("jkrgjjzh")
-    @JSONField(name="jkrgjjzh")
+    // @JsonProperty("jkrgjjzh")
+    // @JSONField(name="jkrgjjzh")
     private String jkrgjjzh_借款人公积金账号_String;
 
-    @JsonProperty("jkrxm")
-    @JSONField(name="jkrxm")
+    // @JsonProperty("jkrxm")
+    // @JSONField(name="jkrxm")
     private String jkrxm_借款人姓名_String;
 
-    @JsonProperty("jkrzjh")
-    @JSONField(name="jkrzjh")
+    // @JsonProperty("jkrzjh")
+    // @JSONField(name="jkrzjh")
     private String jkrzjh_借款人证件号码_String;
 
-    @JsonProperty("dblxmc")
-    @JSONField(name="dblxmc")
+    // @JsonProperty("dblxmc")
+    // @JSONField(name="dblxmc")
     private String dblxmc_担保类型_String;
 
-    @JsonProperty("fwzl")
-    @JSONField(name="fwzl")
+    // @JsonProperty("fwzl")
+    // @JSONField(name="fwzl")
     private String fwzl_房屋地址_String;
 
-    @JsonProperty("hkfsmc")
-    @JSONField(name="hkfsmc")
+    // @JsonProperty("hkfsmc")
+    // @JSONField(name="hkfsmc")
     private String hkfsmc_还款方式_String;
 
-    @JsonProperty("fwxzmc")
-    @JSONField(name="fwxzmc")
+    // @JsonProperty("fwxzmc")
+    // @JSONField(name="fwxzmc")
     private String fwxzmc_房屋性质_String;
 
-
-    @JsonProperty("zxjgbm")
-    @JSONField(name="zxjgbm")
-    private String output_zxjgbm_办理渠道;
-
-    @JsonProperty("yq1")
-    @JSONField(name="yq1")
-    private int yq1_1个月_含_以上_3个月以下笔数;
-
-    @JsonProperty("yqje1")
-    @JSONField(name="yqje1")
-    private double yqje1_1个月_含_以上_3个月以下金额;
-
-    @JsonProperty("yq2")
-    @JSONField(name="yq2")
-    private int yq2_3个月_含_以上_6个月以下笔数;
-
-    @JsonProperty("yqje2")
-    @JSONField(name="yqje2")
-    private double yqje2_3个月_含_以上_6个月以下金额;
-
-    @JsonProperty("yq3")
-    @JSONField(name="yq3")
-    private int yq3_6个月_含_以上_1年以下笔数;
-
-    @JsonProperty("yqje3")
-    @JSONField(name="yqje3")
-    private double yqje3_6个月_含_以上_1年以下金额;
-
-    @JsonProperty("yq4")
-    @JSONField(name="yq4")
-    private int yq4_1年_含_以上_3年以下笔数;
-
-    @JsonProperty("yqje4")
-    @JSONField(name="yqje4")
-    private double yqje4_1年_含_以上_3年以下金额;
-
-    @JsonProperty("yq5")
-    @JSONField(name="yq5")
-    private int yq5_3年_含_以上笔数;
-
-    @JsonProperty("yqje5")
-    @JSONField(name="yqje5")
-    private double yqje5_3年_含_以上金额;
-
-    @JsonProperty("yq6")
-    @JSONField(name="yq6")
-    private int yq6_六期_含_以上笔数;
-
-    @JsonProperty("ysdkye6")
-    @JSONField(name="ysdkye6")
-    private double ysdkye6_六期_含_以上金额;
-
-
-    @JsonProperty("yql")
-    @JSONField(name="yql")
-    private double yql_逾期率; //((yqje2+ysdkye6)/dkye)*1000; #0.00数值格式化
-
-    @JsonProperty("yqlbfb")
-    @JSONField(name="yqlbfb")
-    private double yqlbfb; //((yqje2+ysdkye6)/dkye)*1000;
 
     public String getJkhtbh_合同编号_String() {
         return jkhtbh_合同编号_String;
@@ -321,124 +260,4 @@ public class H10_2逾期监管_逾期监管明细查询 {
         this.fwxzmc_房屋性质_String = fwxzmc_房屋性质_String;
     }
 
-    public String getOutput_zxjgbm_办理渠道() {
-        return output_zxjgbm_办理渠道;
-    }
-
-    public void setOutput_zxjgbm_办理渠道(String output_zxjgbm_办理渠道) {
-        this.output_zxjgbm_办理渠道 = output_zxjgbm_办理渠道;
-    }
-
-    public int getYq1_1个月_含_以上_3个月以下笔数() {
-        return yq1_1个月_含_以上_3个月以下笔数;
-    }
-
-    public void setYq1_1个月_含_以上_3个月以下笔数(int yq1_1个月_含_以上_3个月以下笔数) {
-        this.yq1_1个月_含_以上_3个月以下笔数 = yq1_1个月_含_以上_3个月以下笔数;
-    }
-
-    public double getYqje1_1个月_含_以上_3个月以下金额() {
-        return yqje1_1个月_含_以上_3个月以下金额;
-    }
-
-    public void setYqje1_1个月_含_以上_3个月以下金额(double yqje1_1个月_含_以上_3个月以下金额) {
-        this.yqje1_1个月_含_以上_3个月以下金额 = yqje1_1个月_含_以上_3个月以下金额;
-    }
-
-    public int getYq2_3个月_含_以上_6个月以下笔数() {
-        return yq2_3个月_含_以上_6个月以下笔数;
-    }
-
-    public void setYq2_3个月_含_以上_6个月以下笔数(int yq2_3个月_含_以上_6个月以下笔数) {
-        this.yq2_3个月_含_以上_6个月以下笔数 = yq2_3个月_含_以上_6个月以下笔数;
-    }
-
-    public double getYqje2_3个月_含_以上_6个月以下金额() {
-        return yqje2_3个月_含_以上_6个月以下金额;
-    }
-
-    public void setYqje2_3个月_含_以上_6个月以下金额(double yqje2_3个月_含_以上_6个月以下金额) {
-        this.yqje2_3个月_含_以上_6个月以下金额 = yqje2_3个月_含_以上_6个月以下金额;
-    }
-
-    public int getYq3_6个月_含_以上_1年以下笔数() {
-        return yq3_6个月_含_以上_1年以下笔数;
-    }
-
-    public void setYq3_6个月_含_以上_1年以下笔数(int yq3_6个月_含_以上_1年以下笔数) {
-        this.yq3_6个月_含_以上_1年以下笔数 = yq3_6个月_含_以上_1年以下笔数;
-    }
-
-    public double getYqje3_6个月_含_以上_1年以下金额() {
-        return yqje3_6个月_含_以上_1年以下金额;
-    }
-
-    public void setYqje3_6个月_含_以上_1年以下金额(double yqje3_6个月_含_以上_1年以下金额) {
-        this.yqje3_6个月_含_以上_1年以下金额 = yqje3_6个月_含_以上_1年以下金额;
-    }
-
-    public int getYq4_1年_含_以上_3年以下笔数() {
-        return yq4_1年_含_以上_3年以下笔数;
-    }
-
-    public void setYq4_1年_含_以上_3年以下笔数(int yq4_1年_含_以上_3年以下笔数) {
-        this.yq4_1年_含_以上_3年以下笔数 = yq4_1年_含_以上_3年以下笔数;
-    }
-
-    public double getYqje4_1年_含_以上_3年以下金额() {
-        return yqje4_1年_含_以上_3年以下金额;
-    }
-
-    public void setYqje4_1年_含_以上_3年以下金额(double yqje4_1年_含_以上_3年以下金额) {
-        this.yqje4_1年_含_以上_3年以下金额 = yqje4_1年_含_以上_3年以下金额;
-    }
-
-    public int getYq5_3年_含_以上笔数() {
-        return yq5_3年_含_以上笔数;
-    }
-
-    public void setYq5_3年_含_以上笔数(int yq5_3年_含_以上笔数) {
-        this.yq5_3年_含_以上笔数 = yq5_3年_含_以上笔数;
-    }
-
-    public double getYqje5_3年_含_以上金额() {
-        return yqje5_3年_含_以上金额;
-    }
-
-    public void setYqje5_3年_含_以上金额(double yqje5_3年_含_以上金额) {
-        this.yqje5_3年_含_以上金额 = yqje5_3年_含_以上金额;
-    }
-
-    public int getYq6_六期_含_以上笔数() {
-        return yq6_六期_含_以上笔数;
-    }
-
-    public void setYq6_六期_含_以上笔数(int yq6_六期_含_以上笔数) {
-        this.yq6_六期_含_以上笔数 = yq6_六期_含_以上笔数;
-    }
-
-    public double getYsdkye6_六期_含_以上金额() {
-        return ysdkye6_六期_含_以上金额;
-    }
-
-    public void setYsdkye6_六期_含_以上金额(double ysdkye6_六期_含_以上金额) {
-        this.ysdkye6_六期_含_以上金额 = ysdkye6_六期_含_以上金额;
-    }
-
-
-    public double getYql_逾期率() {
-        return yql_逾期率;
-    }
-
-    public void setYql_逾期率(double yql_逾期率) {
-        this.yql_逾期率 = yql_逾期率;
-    }
-
-    public double getYqlbfb() {
-        return yqlbfb;
-    }
-
-    public void setYqlbfb(double yqlbfb) {
-        this.yqlbfb = yqlbfb;
-    }
 }

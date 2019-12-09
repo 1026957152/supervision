@@ -96,7 +96,7 @@ public class BFlowoutputServiceImpl {
     private UnitManagementAccountRepository unitManagementAccountRepository;
 
     @Autowired
-    private PB011_bank_infor_Repository pb011_bank_infor_repository;
+    private PB011_银行信息表Repository pb011_银行信息表_repository;
 
 
    // @PostConstruct
@@ -303,9 +303,9 @@ public class BFlowoutputServiceImpl {
     public void 日个贷款信息数量() {
 
 
-        List<PB011_bank_info> pb011_bank_infos = pb011_bank_infor_repository.findAll();
+        List<PB011_银行信息表> pb011_银行信息表s = pb011_银行信息表_repository.findAll();
 
-        Map<String, String> map =  pb011_bank_infos.stream().collect(Collectors.toMap(PB011_bank_info::getBankcode, PB011_bank_info::getSUPERBANKCODE));
+        Map<String, String> map =  pb011_银行信息表s.stream().collect(Collectors.toMap(PB011_银行信息表::getBankcode, PB011_银行信息表::getSUPERBANKCODE));
 
 
         long count = ln003_contract_info_repository.count();
@@ -373,9 +373,9 @@ public class BFlowoutputServiceImpl {
     public void 日个还款数量() {
 
 
-        List<PB011_bank_info> pb011_bank_infos = pb011_bank_infor_repository.findAll();
+        List<PB011_银行信息表> pb011_银行信息表s = pb011_银行信息表_repository.findAll();
 
-        Map<String, String> map =  pb011_bank_infos.stream().collect(Collectors.toMap(PB011_bank_info::getBankcode, PB011_bank_info::getSUPERBANKCODE));
+        Map<String, String> map =  pb011_银行信息表s.stream().collect(Collectors.toMap(PB011_银行信息表::getBankcode, PB011_银行信息表::getSUPERBANKCODE));
 
 
         long count = ln003_contract_info_repository.count();

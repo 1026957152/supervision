@@ -9,7 +9,7 @@ public class QueryH6_2抵押办理时间_抵押物明细数据查询 {
 
     String ksrq; //ksrq	开始日期	date	输入(必传)
     String jsrq; //jsrq	结束日期	date	输入(必传)
-    int level; //类型	int	输入(必传)
+ //   int level; //类型	int	输入(必传)
 
 
 
@@ -22,4 +22,21 @@ public class QueryH6_2抵押办理时间_抵押物明细数据查询 {
         public void setZjbzxbm(String zjbzxbm) {
             this.zjbzxbm = zjbzxbm;
         }
+
+
+    public String getKsrq() {
+        return ksrq;
     }
+
+    public void setKsrq(String ksrq) {
+        this.ksrq = ksrq;
+    }
+
+    public String getJsrq() {
+        return jsrq;
+    }
+
+    public void setJsrq(String jsrq) {
+        this.jsrq = jsrq;
+    }
+}

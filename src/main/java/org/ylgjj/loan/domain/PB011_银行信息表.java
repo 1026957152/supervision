@@ -15,7 +15,7 @@ import java.util.Date;
 
 @Table(name = "PB011")
 
-public class PB011_bank_info {
+public class PB011_银行信息表 {
 
 
 

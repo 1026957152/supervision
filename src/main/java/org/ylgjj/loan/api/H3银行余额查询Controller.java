@@ -1,14 +1,18 @@
 package org.ylgjj.loan.api;
 
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.domain.ReturnResult;
+import org.ylgjj.loan.pojo.QueryH_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分;
+import org.ylgjj.loan.pojo.QueryH_3_2_银行余额查询_银行余额查询;
 import org.ylgjj.loan.repository.FD045_资金划转业务登记文件Repository;
 import org.ylgjj.loan.service.H10逾期监管ServiceImpl;
 import org.ylgjj.loan.service.H3银行实时交易ServiceImpl;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -16,6 +20,7 @@ import javax.validation.constraints.NotBlank;
 /**
  * Created by zohu on 6/29/2015.
  */
+@Api//(tags = "H3银行余额查询Controller")
 @RestController
 @RequestMapping("/JG/zjlxjk")
 public class H3银行余额查询Controller {
@@ -29,21 +34,11 @@ public class H3银行余额查询Controller {
     H3银行实时交易ServiceImpl h3银行实时交易Service;
 
 
-    public class QueryH_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分 {
-        @NotBlank
-        String zjbzxbm;
-        public String getZjbzxbm() {
-            return zjbzxbm;
-        }
-        public void setZjbzxbm(String zjbzxbm) {
-            this.zjbzxbm = zjbzxbm;
-        }
-    }
 
     @RequestMapping(value = "/get_all_bank.service", method = RequestMethod.POST)
     @ResponseBody
     public Output H_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分(
-            @Valid @RequestBody  QueryH_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分 query, Errors errors)  {
+            @Valid @RequestBody QueryH_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分 query, Errors errors)  {
         if (errors.hasErrors()) {
             return Output.情况4_入参数格式错误(errors.toString());
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
@@ -52,36 +47,24 @@ public class H3银行余额查询Controller {
         return h3银行实时交易Service.H_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分(query.getZjbzxbm());
     }
 
-    public class QueryH_3_2_银行余额查询_银行余额查询 {
-
-        @NotBlank
-        String zjbzxbm; //zjbzxbm	住建部中心编码	String	输入(必传)	  长度：6，举例：C61010
-        @NotBlank
-        String ksrq; //开始日期	String	输入(必传)	长度：10，举例：2019-07-03
-        @NotBlank
-        String jsrq; //结束日期	String	输入(必传)	长度：10，举例：2019-07-03
-        public String getZjbzxbm() {
-            return zjbzxbm;
-        }
-        public void setZjbzxbm(String zjbzxbm) {
-            this.zjbzxbm = zjbzxbm;
-        }
-    }
-
 
     @RequestMapping(value = "/get_bank_ye.service", method = RequestMethod.POST)
     @ResponseBody
-    public Output H_3_2_银行余额查询_银行余额查询(@Valid /*@RequestBody*/ @RequestBody  QueryH_3_2_银行余额查询_银行余额查询 query, Errors errors)  {
+    public Output H_3_2_银行余额查询_银行余额查询(@Valid /*@RequestBody*/ @RequestBody QueryH_3_2_银行余额查询_银行余额查询 query, Errors errors)  {
         if (errors.hasErrors()) {
             return Output.情况4_入参数格式错误(errors.toString());
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
         }
 
-
         System.out.println("----------------- "+ query.toString());
-
-        return  h3银行实时交易Service.H_3_2_银行余额查询_银行余额查询(query.getZjbzxbm());
+        return  h3银行实时交易Service.H_3_2_银行余额查询_银行余额查询(query);
     }
+
+
+
+
+
+
 
 
     public class QueryH_3_3_银行余额查询_银行实时交易 {
@@ -116,7 +99,7 @@ public class H3银行余额查询Controller {
     }
 
 
-
+    @ApiIgnore
     @RequestMapping(value = "/get_all_bank_sszhmx.service", method = RequestMethod.POST)
     @ResponseBody
     public Output H_3_3_银行余额查询_银行实时交易(@Valid /*@RequestBody*/ @RequestBody  QueryH_3_3_银行余额查询_银行实时交易 query, Errors errors)  {
@@ -159,7 +142,7 @@ public class H3银行余额查询Controller {
             this.jsrq = jsrq;
         }
     }
-
+    @ApiIgnore
     @RequestMapping(value = "/get_jymx.service", method = RequestMethod.POST)
     @ResponseBody
     public Output H_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据(
@@ -235,6 +218,7 @@ public class H3银行余额查询Controller {
             this.bm = bm;
         }
     }
+    @ApiIgnore
     @RequestMapping(value = "/get_yhlsjymx.service", method = RequestMethod.POST)
     @ResponseBody
     public Output H_3_5_银行余额查询_资金结算流水查询_查询历史结算明细数据(

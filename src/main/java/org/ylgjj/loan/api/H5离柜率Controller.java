@@ -32,7 +32,7 @@ public class H5离柜率Controller {
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
         }
         System.out.println("----------------- "+ query.toString());
-        return h8银行专户余额Service.H8_1银行专户余额_银行专户余额查询(query.getZjbzxbm());
+        return h8银行专户余额Service.H8_1银行专户余额_银行专户余额查询(query);
     }
 
 

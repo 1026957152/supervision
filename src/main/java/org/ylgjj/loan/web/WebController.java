@@ -41,6 +41,8 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
     @Autowired
     private GitProperties git;
+
+
     NumberFormat nf = NumberFormat.getPercentInstance();
 
     @Autowired
@@ -170,4 +172,40 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 
     }
+
+
+
+    @GetMapping("/test")
+    public ModelAndView test(HttpServletRequest request) {
+
+
+
+        ModelAndView modelAndView = new ModelAndView("/test");
+
+
+
+
+        modelAndView.addObject("E统计周期编码s", 统计周期编码.retriveTypese());
+        modelAndView.addObject("E_HX_机构_Institution_info_instCodeEnums", E_HX_机构_Institution_info_instCodeEnum.retriveTypese());
+        modelAndView.addObject("E_银行编码_HEnums", E_银行编码_H.retriveTypese());
+
+
+        modelAndView.addObject("住建部编码_单位经济类型Enums", 住建部编码_单位经济类型.retriveTypese());
+        modelAndView.addObject("E_住建部编码_收入水平Enums", E_住建部编码_收入水平.retriveTypese());
+        modelAndView.addObject("E_住建部编码_购房面积Enums", E_住建部编码_购房面积.retriveTypese());
+        List<Map> items = StatisticalIndexCodeEnum.retriveTypeseMap();
+        modelAndView.addObject("statisticalIndexCodeEnums", items);
+        //      modelAndView.addObject("statisticalIndexEnums", StatisticalIndexCodeEnum.retriveTypeseValues());
+
+
+
+        modelAndView.addObject("version", git.get("build.version"));
+
+        modelAndView.addObject("git", git.toString()+git.get("build.version")+"--"+git.get("branch"));
+
+        return modelAndView;
+
+
+    }
+
     }

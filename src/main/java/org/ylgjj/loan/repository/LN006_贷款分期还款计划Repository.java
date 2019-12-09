@@ -20,6 +20,8 @@ public interface LN006_贷款分期还款计划Repository extends JpaRepository<
 
     List<LN006_RepaymentPlan_贷款分期还款计划> findByRepaydate1还款日期(LocalDate localDate);
 
+    List<LN006_RepaymentPlan_贷款分期还款计划> findByLoancontrcode0合同代码OrderByBegdate0开始日期Asc(String loancontrcode合同代码);
+
 /*
     List<LN006_RepaymentPlan> findByLoancontrcodeAndCurseqstate(String loancontrcode, String text);
     List<LN006_RepaymentPlan> findByLoancontrcodeAndCurseqstateOrderByBegdateAsc(String loancontrcode, String text);*/

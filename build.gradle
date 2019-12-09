@@ -11,7 +11,7 @@ plugins {
 group = 'docker.yulinmei.cn'
 
 
-version = '0.1.1-Alpha'
+version = '0.1.2-Alpha'
 
 //Release
 
@@ -75,6 +75,11 @@ implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 
     compile 'com.github.vladimir-bukhtoyarov:bucket4j-core:4.4.1'
+
+    compile 'io.springfox:springfox-swagger2:2.7.0'
+    compile 'io.springfox:springfox-swagger-ui:2.7.0'
+	compile group: 'commons-io', name: 'commons-io', version: '2.6'
+
 }
 
 /*dependencyManagement {

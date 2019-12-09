@@ -45,7 +45,7 @@ public class H7大额资金监控ServiceImpl {
         LocalDate ldt_ksrq = LocalDate.parse(ksrq,df);
         LocalDate ldt_jsrq = LocalDate.parse(jsrq,df);
 
-        List<FD045_资金划转业务登记文件>  fd045_资金划转业务登记文件s = fd045_资金划转业务登记文件Repository.findAll();
+        List<FD045_资金划转业务登记文件>  fd045_资金划转业务登记文件s = fd045_资金划转业务登记文件Repository.findByTRANSDATE不可为空交易日期Between(ldt_ksrq,ldt_jsrq);
 
 
 
@@ -116,11 +116,13 @@ public class H7大额资金监控ServiceImpl {
     }
 
     public Output H_7_2_大额资金监控_大额资金监控汇总数据查询(QueryH_7_2_大额资金监控_大额资金监控汇总数据查询 query) {
-
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df);
+        LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df);
        // fd045_资金划转业务登记文件Repository.
 
     //    List<FD045_资金划转业务登记文件>  fd045_资金划转业务登记文件s = fd045_资金划转业务登记文件Repository.findByDAMT不可为空借方发生额Between(query.getKsje().doubleValue(),query.getJsje().doubleValue());
-        List<FD045_资金划转业务登记文件>  fd045_资金划转业务登记文件s = fd045_资金划转业务登记文件Repository.findAll();
+        List<FD045_资金划转业务登记文件>  fd045_资金划转业务登记文件s = fd045_资金划转业务登记文件Repository.findByTRANSDATE不可为空交易日期Between(ldt_ksrq,ldt_jsrq);
 
         List map =  fd045_资金划转业务登记文件s.stream().
                 map(e->{

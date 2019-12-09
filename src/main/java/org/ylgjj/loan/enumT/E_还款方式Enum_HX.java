@@ -5,7 +5,7 @@ package org.ylgjj.loan.enumT;
 /**
  * Created by silence on 2016/1/18.
  */
-public enum 还款方式Enum {
+public enum E_还款方式Enum_HX {
 
     等额本息 ("1", "等额本息",1,""),
     等额本金 ("2", "等额本金",2,""),
@@ -40,7 +40,7 @@ public enum 还款方式Enum {
         return displayText;
     }
 
-    还款方式Enum(String statusText, String displayText, Integer id, String helpMessage) {
+    E_还款方式Enum_HX(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 
@@ -60,7 +60,7 @@ public enum 还款方式Enum {
 
         System.out.println(text);
 
-        还款方式Enum typeEnum = 还款方式Enum.fromString(text);
+        E_还款方式Enum_HX typeEnum = E_还款方式Enum_HX.fromString(text);
         switch (typeEnum){
             case 等本等息:
 
@@ -84,8 +84,8 @@ public enum 还款方式Enum {
 
 
     }
-    public static 还款方式Enum fromString(String text) {
-        for (还款方式Enum status : 还款方式Enum.values()) {
+    public static E_还款方式Enum_HX fromString(String text) {
+        for (E_还款方式Enum_HX status : E_还款方式Enum_HX.values()) {
             if (status.getText().equals(text) ) {
                 return status;
             }
@@ -93,8 +93,8 @@ public enum 还款方式Enum {
         throw new RuntimeException("no customer status " + text);
     }
 
-    public static 还款方式Enum fromInt(Integer text) {
-        for (还款方式Enum status : 还款方式Enum.values()) {
+    public static E_还款方式Enum_HX fromInt(Integer text) {
+        for (E_还款方式Enum_HX status : E_还款方式Enum_HX.values()) {
             if (status.getId().equals(text) ) {
                 return status;
             }

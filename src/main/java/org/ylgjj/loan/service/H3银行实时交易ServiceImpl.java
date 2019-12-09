@@ -1,33 +1,33 @@
 package org.ylgjj.loan.service;
 
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.io.IOUtils;
+import org.javatuples.Quartet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.api.H3银行余额查询Controller;
 import org.ylgjj.loan.domain.*;
-import org.ylgjj.loan.enumT.*;
-import org.ylgjj.loan.exception.MyBusinessException;
 import org.ylgjj.loan.output.*;
+import org.ylgjj.loan.outputenum.E_银行编码_HX;
+import org.ylgjj.loan.pojo.QueryH_3_2_银行余额查询_银行余额查询;
 import org.ylgjj.loan.repository.*;
-import org.ylgjj.loan.util.DateUtils;
 
+import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.ChronoField;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
-import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
+import static java.lang.Math.abs;
 
 /**
  * Created by silence yuan on 2015/7/25.
@@ -50,9 +50,20 @@ public class H3银行实时交易ServiceImpl  {
     @Autowired
     FN090_账户变动通知文件_Repository fn090_账户变动通知文件_repository;
 
+    @Autowired
+    PB011_银行信息表Repository pb011_银行信息表_repository;
 
+
+
+    @Autowired
+    ResourceLoader resourceLoader;
 
     public Output H_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分(String zjbzxbm) {
+
+        Arrays.stream(E_银行编码_HX.values()).forEach(e->{
+
+        });
+
 
         List<PB010_bank_info_大行信息表> pb010_bank_info_大行信息表s = pb010_bank_info_大行信息表Repository.findAll();
         Output output = new Output();
@@ -60,7 +71,20 @@ public class H3银行实时交易ServiceImpl  {
             H3_1结算监控_银行查询 object = new H3_1结算监控_银行查询();
 
             object.setMc_银行名称(e.getBanknam1_不可为空_银行简称());
-            object.setId_银行logo图片(e.getBanknam1_不可为空_银行简称());
+
+            Resource resource = resourceLoader.getResource("classpath:各银行图标png/"+E_银行编码_HX.fromString(e.getBankcode_不可为空_银行代码()).getLogoPath());
+
+            try {
+                InputStream input = resource.getInputStream();
+                byte[] bytes = IOUtils.toByteArray(input);
+
+                String encoded = Base64.getEncoder().encodeToString(bytes);
+                object.setId_银行logo图片(encoded);
+
+                File file = resource.getFile();
+            } catch (IOException ee) {
+                ee.printStackTrace();
+            }
             object.setBm_银行编码(e.getBankcode_不可为空_银行代码());
             return object;
         }).collect(Collectors.toList()));
@@ -132,16 +156,30 @@ public class H3银行实时交易ServiceImpl  {
 
 
 
-    public Output H_3_2_银行余额查询_银行余额查询(String zjbzxbm) {
+    public Output H_3_2_银行余额查询_银行余额查询(@Valid QueryH_3_2_银行余额查询_银行余额查询 query) {
 
         List<FD012_银行存款账号登记文件> fd012_银行存款账号登记文件s = fd012_银行存款账号登记文件Repository.findAll();
 
+        List<PB011_银行信息表> pb011_银行信息表s = pb011_银行信息表_repository.findAll();
+
+        Map<String, PB011_银行信息表> pb011_bank_infoMap = pb011_银行信息表s.stream().collect(Collectors.toMap(e->e.getBankcode(), h->h));
         DecimalFormat df = new DecimalFormat("0.0000");
+        Map<String,PB010_bank_info_大行信息表> pb010_bank_info_大行信息表Map = pb010_bank_info_大行信息表Repository.findAll().stream().collect(Collectors.toMap(e->e.getBankcode_不可为空_银行代码(),h->h));
+
+
+
+   /*
+
         List<H3_2结算监控_银行余额查询> aaaaa = fd012_银行存款账号登记文件s.stream().map(e->{
+
+
+
             H3_2结算监控_银行余额查询 h8_1银行专户余额_银行专户余额查询 = new H3_2结算监控_银行余额查询();
             h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getBANKCODE_不可为空_银行代码());
-            h8_1银行专户余额_银行专户余额查询.setMc_银行名称(e.getBANKACCNM_不可为空_银行账户名称());
+            ;
+            //h8_1银行专户余额_银行专户余额查询.setMc_银行名称(e.getBANKACCNM_不可为空_银行账户名称());
 
+            h8_1银行专户余额_银行专户余额查询.setMc_银行名称(pb011_bank_infoMap.get(e.getBANKCODE_不可为空_银行代码()).getBanknam1());
 
             Page<FN090_账户变动通知文件> fn090_账户变动通知文件s = fn090_账户变动通知文件_repository.
                     findByBankaccnum不可为空账号OrderByTransdate不可为空写入日期DescBankhostsernum不可为空银行主机流水号Desc(e.getBANKACCNUM_不可为空_银行账号(), PageRequest.of(0, 10));
@@ -162,6 +200,59 @@ public class H3银行实时交易ServiceImpl  {
             return h8_1银行专户余额_银行专户余额查询;
 
         }).collect(Collectors.toList());
+
+
+
+*/
+
+
+        DateTimeFormatter df_ = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df_);
+        LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df_);
+
+        List<FN090_账户变动通知文件> fn090_账户变动通知文件s  = fn090_账户变动通知文件_repository.findByTransdate不可为空写入日期Between(ldt_ksrq,ldt_jsrq);
+
+
+
+
+
+
+       List<H3_2结算监控_银行余额查询> aaaaa =
+                fd012_银行存款账号登记文件s.stream().map(e->{
+
+
+            double 支出额= fn090_账户变动通知文件s.stream()
+                    .filter(x->x.getBankaccnum不可为空账号().equals(e.getBANKACCNUM_不可为空_银行账号()))
+                    .filter(x->x.getAmt__不可为空__金额()<0)
+                    .mapToDouble(x-> x.getAmt__不可为空__金额()).sum();
+            double 收入额= fn090_账户变动通知文件s.stream()
+                    .filter(x->x.getBankaccnum不可为空账号().equals(e.getBANKACCNUM_不可为空_银行账号()))
+                    .filter(x->x.getAmt__不可为空__金额()>0)
+                    .mapToDouble(x-> x.getAmt__不可为空__金额()).sum();
+            double 发生额 = abs(支出额) + abs(收入额);
+
+            return Quartet.with(e,发生额,abs(收入额),abs(支出额));
+
+
+        }).collect(Collectors.groupingBy(e->pb011_bank_infoMap.get(e.getValue0().getBANKCODE_不可为空_银行代码()).getSUPERBANKCODE()))
+
+        .entrySet().stream()
+  .map(e->{
+      H3_2结算监控_银行余额查询 h8_1银行专户余额_银行专户余额查询 = new H3_2结算监控_银行余额查询();
+      h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getKey());
+      h8_1银行专户余额_银行专户余额查询.setMc_银行名称(pb010_bank_info_大行信息表Map.get(e.getKey()).getBANKNAME_不可为空_银行名称());
+      h8_1银行专户余额_银行专户余额查询
+              .setFse_发生额(Double.valueOf(df.format(e.getValue().stream().mapToDouble(x->x.getValue1()).sum())));
+      h8_1银行专户余额_银行专户余额查询
+              .setSre_收入额(Double.valueOf(df.format(e.getValue().stream().mapToDouble(x->x.getValue2()).sum())));
+
+      h8_1银行专户余额_银行专户余额查询
+              .setZce_支出额(Double.valueOf(df.format(e.getValue().stream().mapToDouble(x->x.getValue3()).sum())));
+      return h8_1银行专户余额_银行专户余额查询;
+  }).collect(Collectors.toList());
+
+
+
         Output output = new Output();
         output.setData(aaaaa);
         return output;

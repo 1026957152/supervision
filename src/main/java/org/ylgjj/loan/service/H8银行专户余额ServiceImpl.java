@@ -8,11 +8,8 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_FD012_银行存款账号登记文件_FUNDKIND_资金性质;
 import org.ylgjj.loan.output.H8_1银行专户余额_银行专户余额查询;
-import org.ylgjj.loan.outputenum.E_银行编码_HX;
-import org.ylgjj.loan.repository.FD012_银行存款账号登记文件Repository;
-import org.ylgjj.loan.repository.FD029_定期存款分户文件Repository;
-import org.ylgjj.loan.repository.FN090_账户变动通知文件_Repository;
-import org.ylgjj.loan.repository.PB011_bank_infor_Repository;
+import org.ylgjj.loan.pojo.QueryH8_1银行专户余额_银行专户余额查询;
+import org.ylgjj.loan.repository.*;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -35,8 +32,10 @@ public class H8银行专户余额ServiceImpl {
     private FD029_定期存款分户文件Repository fd029_定期存款分户文件Repository;
 
     @Autowired
-    private PB011_bank_infor_Repository pb011_bank_infor_repository;
+    private PB011_银行信息表Repository pb011_银行信息表_repository;
 
+    @Autowired
+    private FD032_定期存款收息注销登记文件Repository fd032_定期存款收息注销登记文件Repository;
 
 
  /*   @Autowired
@@ -44,8 +43,10 @@ public class H8银行专户余额ServiceImpl {
 */
 
 
-    public Output H8_1银行专户余额_银行专户余额查询(String zjbzxbm) {
-        List<PB011_bank_info> pb011_bank_infos = pb011_bank_infor_repository.findAll();
+    public Output H8_1银行专户余额_银行专户余额查询(QueryH8_1银行专户余额_银行专户余额查询 zjbzxbm) {
+
+        List<FD032_定期存款收息注销登记文件> fd032_定期存款收息注销登记文件s = fd032_定期存款收息注销登记文件Repository.findAll();
+        List<PB011_银行信息表> pb011_银行信息表s = pb011_银行信息表_repository.findAll();
 
         List<FD029_定期存款分户文件>  fd029_定期存款分户文件s = fd029_定期存款分户文件Repository.findAll();
         List<FD012_银行存款账号登记文件> fd012_银行存款账号登记文件s = fd012_银行存款账号登记文件Repository.findAll();

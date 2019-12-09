@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Table(name = "LN001")
 
-public class LN001_approval_process {
+public class LN001_申请审批信息 {
 
 
 

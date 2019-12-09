@@ -5,21 +5,23 @@ package org.ylgjj.loan.enumT;
 /**
  * Created by silence on 2016/1/18.
  */
-public enum GuaranteeTypeEnum {
+public enum E_LN004_合同状态信息_合同状态 {
 
 
-    抵押 ("01", "抵押",0,""),
-    质押 ("02", "质押",1,""),
+    E_00_申请 ("00", "申请",0,""),
+    E_01_审批 ("01", "审批",1,""),
 
-    保证 ("04","保证", 9,""),
+    E_02_合同签订 ("02","合同签订", 9,""),
+    E_07_贷款担保 ("07", "贷款担保",7,""),
+    E_08_放款通知 ("08", "放款通知",7,""),
+    E_09_放款 ("09", "放款",7,""),
+    E_90_合同终止 ("08", "合同终止",7,""),
+    E_98_审批撤销 ("98", "审批撤销",7,""),
 
-    抵押_质押 ("03","抵押+质押", 9,""),
-    抵押_保证 ("05","抵押_保证", 9,""),
-    质押_保证 ("06","质押_保证", 9,""),
-    抵押_质押_保证 ("07","抵押_质押_保证", 9,""),
-    其他 ("99","其他", 9,"");
+    E_99_合同废弃 ("99", "合同废弃",7,""),
+    ;
 
-
+// 00-申请,  01-审批,  02-合同签订,  07-贷款担保,  08-放款通知,  09-放款,  90-合同终止,  98-审批撤销,  99-合同废弃
 
 
 
@@ -43,7 +45,7 @@ public enum GuaranteeTypeEnum {
         return displayText;
     }
 
-    GuaranteeTypeEnum(String statusText, String displayText, Integer id, String helpMessage) {
+    E_LN004_合同状态信息_合同状态(String statusText, String displayText, Integer id, String helpMessage) {
         this.statusText = statusText;
         this.displayText = displayText;
 
@@ -88,8 +90,8 @@ public enum GuaranteeTypeEnum {
 
 
 
-    public static GuaranteeTypeEnum fromString(String text) {
-        for (GuaranteeTypeEnum status : GuaranteeTypeEnum.values()) {
+    public static E_LN004_合同状态信息_合同状态 fromString(String text) {
+        for (E_LN004_合同状态信息_合同状态 status : E_LN004_合同状态信息_合同状态.values()) {
             if (status.getText().equals(text) ) {
                 return status;
             }
@@ -97,8 +99,8 @@ public enum GuaranteeTypeEnum {
         throw new RuntimeException("no customer status " + text);
     }
 
-    public static GuaranteeTypeEnum fromInt(Integer text) {
-        for (GuaranteeTypeEnum status : GuaranteeTypeEnum.values()) {
+    public static E_LN004_合同状态信息_合同状态 fromInt(Integer text) {
+        for (E_LN004_合同状态信息_合同状态 status : E_LN004_合同状态信息_合同状态.values()) {
             if (status.getId().equals(text) ) {
                 return status;
             }

@@ -140,7 +140,7 @@ public class LN005_lone_sub_account_贷款分户信息 {
 
 
     @Column(name = "currate")
-    private String currate_执行利率;
+    private double currate_执行利率;
 
     @Column(name = "oweamt")
     private String oweamt_欠还金额;
@@ -162,7 +162,7 @@ public class LN005_lone_sub_account_贷款分户信息 {
 
 
     @Column(name = "currintamt")
-    private String currintamt_当期利息金额;
+    private double currintamt_当期利息金额;
 
 
 
@@ -236,11 +236,11 @@ public class LN005_lone_sub_account_贷款分户信息 {
         this.repaydate_还款日期 = repaydate_还款日期;
     }
 
-    public String getCurrate_执行利率() {
+    public double getCurrate_执行利率() {
         return currate_执行利率;
     }
 
-    public void setCurrate_执行利率(String currate_执行利率) {
+    public void setCurrate_执行利率(double currate_执行利率) {
         this.currate_执行利率 = currate_执行利率;
     }
 
@@ -276,11 +276,11 @@ public class LN005_lone_sub_account_贷款分户信息 {
         this.planprin_当期计划扣本金 = planprin_当期计划扣本金;
     }
 
-    public String getCurrintamt_当期利息金额() {
+    public double getCurrintamt_当期利息金额() {
         return currintamt_当期利息金额;
     }
 
-    public void setCurrintamt_当期利息金额(String currintamt_当期利息金额) {
+    public void setCurrintamt_当期利息金额(double currintamt_当期利息金额) {
         this.currintamt_当期利息金额 = currintamt_当期利息金额;
     }
 

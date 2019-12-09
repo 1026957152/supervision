@@ -19,4 +19,5 @@ public interface FD045_资金划转业务登记文件Repository extends JpaRepos
 
     List<FD045_资金划转业务登记文件> findByTRANSFERAMT不可为空划转金额Between(double doubleValue, double doubleValue1);
 
+    List<FD045_资金划转业务登记文件> findByTRANSDATE不可为空交易日期Between(LocalDate ldt_ksrq, LocalDate ldt_jsrq);
 }

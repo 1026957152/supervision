@@ -23,7 +23,7 @@ public class LN004_合同状态信息 {
 
     @Id
     private String loancontrstate;
-
+// 00-申请,  01-审批,  02-合同签订,  07-贷款担保,  08-放款通知,  09-放款,  90-合同终止,  98-审批撤销,  99-合同废弃
     @Id
     private String apprnum;
 

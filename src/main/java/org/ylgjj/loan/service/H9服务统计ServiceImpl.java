@@ -14,6 +14,7 @@ import org.ylgjj.loan.domain_zongfu.Mi107_业务日志;
 import org.ylgjj.loan.output.*;
 import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;
 import org.ylgjj.loan.outputenum.E_渠道_HX;
+import org.ylgjj.loan.pojo.*;
 import org.ylgjj.loan.repository.AN004Repository;
 import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
 import org.ylgjj.loan.repository_zhongfu.MI029_综合服务个人用户基础信息表_Repository;
@@ -40,11 +41,8 @@ public class H9服务统计ServiceImpl {
 /*
     @Autowired
     private MI029_综合服务个人用户基础信息表_Repository mi029_综合服务个人用户基础信息表_repository;
-
-
     @Autowired
     private MI007_系统码表_Repository mi007_系统码表_repository;
-
 */
 @Autowired
 private MI029_综合服务个人用户基础信息表_Repository mi029_综合服务个人用户基础信息表_repository;
@@ -68,7 +66,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
     }
 
 
-    public Output H_9_2_服务统计_渠道访问总量查询(H9服务统计Controller.QueryH_9_2_服务统计_渠道访问总量查询 query) {
+    public Output H_9_2_服务统计_渠道访问总量查询(QueryH_9_2_服务统计_渠道访问总量查询 query) {
 
 
 
@@ -118,12 +116,20 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
         return output;
     }
 
-    public Output H_9_4_服务统计_用户性别查询(H9服务统计Controller.QueryH_9_4_服务统计_用户性别查询 query) {
+    public Output H_9_4_服务统计_用户性别查询(QueryH_9_4_服务统计_用户性别查询 query) {
 
         List<Mi029_综合服务个人用户基础信息表> count = mi029_综合服务个人用户基础信息表_repository.findAll();
         Output output = new Output();
         List<Object> a = new ArrayList<>();
-        a.addAll( count.stream().collect(Collectors.groupingBy(e->e.getSex())).entrySet().stream().map(e->{
+        a.addAll( count.stream().filter(e->e.getSex()!= null).collect(Collectors.groupingBy(e->{
+
+            try {
+                return CardJunit.identityCard18_Sex(e.getCertinum());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                return e.getSex();
+            }
+        })).entrySet().stream().map(e->{
             H9_4信息推送量查询_用户性别查询 h4_1业务统计_获取各渠道业务统计数据_man = new H9_4信息推送量查询_用户性别查询();
             h4_1业务统计_获取各渠道业务统计数据_man.setMc_性别(e.getKey());
             h4_1业务统计_获取各渠道业务统计数据_man.setCount_人数(Integer.valueOf(e.getValue().size()).toString());
@@ -134,7 +140,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
     }
 
 
-    public Output H_9_7_服务统计_用户年龄信息查询(H9服务统计Controller.QueryH_9_7_服务统计_用户年龄信息查询 query) {
+    public Output H_9_7_服务统计_用户年龄信息查询(QueryH_9_7_服务统计_用户年龄信息查询 query) {
 
         List<Mi029_综合服务个人用户基础信息表> count = mi029_综合服务个人用户基础信息表_repository.findAll();
 
@@ -200,7 +206,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
         return null;
     }
 
-    public Output H_9_6_服务统计_渠道登录次数查询(H9服务统计Controller.QueryH_9_6_服务统计_渠道登录次数查询 query) {
+    public Output H_9_6_服务统计_渠道登录次数查询(QueryH_9_6_服务统计_渠道登录次数查询 query) {
 
         List<Mi0312_渠道用户登录ID辅助控制表> mi0312_渠道用户登录ID辅助控制表s = mi0312_渠道用户登录ID辅助控制表_repository.findAll();
         Output output = new Output();
@@ -216,7 +222,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
         return output;
     }
 
-    public Output H_9_8_服务统计_各渠道API总量(H9服务统计Controller.QueryH_9_8_服务统计_各渠道API总量 query) {
+    public Output H_9_8_服务统计_各渠道API总量(QueryH_9_8_服务统计_各渠道API总量 query) {
 
 
 
@@ -245,7 +251,16 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
         }
         return e.getSex()!= null;
 
-    }).collect(Collectors.groupingBy(e->e.getSex())).entrySet().stream().map(e->{
+    }).collect(Collectors.groupingBy(e->{
+
+        try {
+            return CardJunit.identityCard18_Sex(e.getCertinum());
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return e.getSex();
+        }
+        // return e.getSex();
+    })).entrySet().stream().map(e->{
         System.out.println("mi029_综合服务个人用户基础信息表_repository ---------- "+ e.getKey());
         H9_4信息推送量查询_用户性别查询 h4_1业务统计_获取各渠道业务统计数据_man = new H9_4信息推送量查询_用户性别查询();
         h4_1业务统计_获取各渠道业务统计数据_man.setMc_性别(e.getKey());

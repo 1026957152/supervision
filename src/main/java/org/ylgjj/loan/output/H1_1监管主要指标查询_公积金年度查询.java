@@ -1,6 +1,8 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H1_1监管主要指标查询_公积金年度查询 {
@@ -9,12 +11,21 @@ public class H1_1监管主要指标查询_公积金年度查询 {
 
 
 
-
+    @JsonProperty("id")
+    @JSONField(name="id")
 
     private String id_编号;
+    @JsonProperty("zjbzxbm")
+    @JSONField(name="zjbzxbm")
     private String zjbzxbm_住建部中心编码;
+
+    @JsonProperty("bbxm")
+    @JSONField(name="bbxm")
     private String bbxm_年度编码;
 
+
+    @JsonProperty("bbmc")
+    @JSONField(name="bbmc")
     private String bbmc_年度名称;
 
     public String getId_编号() {

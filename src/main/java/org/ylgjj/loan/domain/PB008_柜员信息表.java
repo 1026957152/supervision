@@ -16,7 +16,7 @@ import java.util.Date;
 
 @Table(name = "PB008")
 
-public class PB008_clerk_info {
+public class PB008_柜员信息表 {
 
     @Id
     private String operid;

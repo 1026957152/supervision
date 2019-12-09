@@ -1,6 +1,8 @@
 package org.ylgjj.loan.api;
 
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import javax.validation.constraints.NotBlank;
  */
 @RestController
 @RequestMapping("/JG/zjlxjk")
+@Api
 public class H7大额资金监控Controller {
 
 
