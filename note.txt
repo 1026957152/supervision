@@ -66,3 +66,7 @@ java -jar -Dspring.config.additional-location=./config.yml supervision-0.1.2-Alp
 配置 docker-compose.yml 核心数据库，综服数据库
 docker-compose up
 
+
+
+
+gradle dockerPush -PprojGroup=swr.cn-north-1.myhuaweicloud.com/yuan

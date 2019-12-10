@@ -1,0 +1,30 @@
+# 核心库,db2
+hexin_ip: 10.22.10.22
+hexin_port: 50010
+hexin_db: rundb
+hexin_username: bsprun
+hexin_password: bsprun
+
+
+# 综服库，db2
+zf_ip: 10.22.30.22
+zf_port: 50020
+zf_db: webdb
+zf_username: miapp
+zf_password: miapp
+
+# 本地库，mysql
+local_ip: 192.168.10.90
+local_port: 3306
+local_db: supervision
+local_username: root
+local_password: 123456
+
+
+
+
+
+
+
+
+
