@@ -26,6 +26,13 @@ task printVersion {
 	}
 }
 
+if (project.hasProperty('projGroup')) {
+	project.group = project.projGroup
+}/* else {
+	project.version = '10.0.0'
+}*/
+
+
 docker {
 
 	name "$project.group/$project.name:$project.version"
