@@ -1,3 +1,29 @@
+# 核心库,db2
+hexin_ip: 10.22.10.22
+hexin_port: 50010
+hexin_db: rundb
+hexin_username: bsprun
+hexin_password: bsprun
+
+
+# 综服库，db2
+zf_ip: 10.22.30.22
+zf_port: 50020
+zf_db: webdb
+zf_username: miapp
+zf_password: miapp
+
+# 本地库，mysql
+local_ip: 192.168.10.90
+local_port: 3306
+local_db: supervision
+local_username: root
+local_password: 123456
+
+
+
+
+
 logging:
   level:
     root: ERROR
@@ -25,7 +51,13 @@ server:
 #    key-store-password: password
 # keytool -genkeypair -alias baeldung -keyalg RSA -keysize 2048 -storetype PKCS12 -keystore baeldung.p12 -validity 3650
 
+
+
 spring:
+  application:
+    name: supervision
+
+
   freemarker:
     requestContextAttribute: rc
     allowRequestOverride: false
@@ -41,15 +73,20 @@ spring:
     templateEncoding: UTF-8
     templateLoaderPath: /WEB-INF/views/templates/,classpath:/templates/
     #表示所有的模板文件都放在该目录下
-  datasource:
-    jdbc-url: jdbc:db2://10.22.10.22:50010/rundb
 
-    #url: jdbc:db2://localhost:50010/rundb
-    driverClassName: com.ibm.db2.jcc.DB2Driver
-    username: bsprun
-    password: bsprun
+
+
+
+
+
+
+  datasource:
+    jdbc-url: jdbc:db2://${hexin_ip}:${hexin_port}/${hexin_db}
+    username: ${hexin_username}
+    password: ${hexin_password}
     default-read-only: true
     read-only: true
+    driverClassName: com.ibm.db2.jcc.DB2Driver
 
 #  datasource:
 #    jdbc-url: jdbc:mysql://${mysql}:3306/clouddelivery?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&useSSL=false
@@ -60,21 +97,18 @@ spring:
 
   datasourcesecondary:
     #url: jdbc:mysql://localhost:3306/testcoalvalue?characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
-    jdbc-url: jdbc:mysql://192.168.10.90:3306/supervision?createDatabaseIfNotExist=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: 123456
+    jdbc-url: jdbc:mysql://${local_ip}:${local_port}/${local_db}?createDatabaseIfNotExist=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${local_username}
+    password: ${local_password}
     driverClassName: com.mysql.cj.jdbc.Driver
 
 
 
-
   datasourcetertiary:
-    jdbc-url: jdbc:db2://10.22.30.22:50020/webdb
-
-    #url: jdbc:db2://localhost:50010/rundb
+    jdbc-url: jdbc:db2://${zf_ip}:${zf_port}/${zf_db}
     driverClassName: com.ibm.db2.jcc.DB2Driver
-    username: miapp
-    password: miapp
+    username: ${zf_username}
+    password: ${zf_password}
     default-read-only: true
     read-only: true
 

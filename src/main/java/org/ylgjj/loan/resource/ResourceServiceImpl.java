@@ -55,7 +55,7 @@ public class ResourceServiceImpl {
 
                 String encoded = Base64.getEncoder().encodeToString(bytes);
 
-                System.out.println(encoded+"---------------");
+          //      System.out.println(encoded+"---------------");
              //   File file = resource.getFile();
             } catch (IOException ee) {
                 ee.printStackTrace();

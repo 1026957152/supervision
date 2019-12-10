@@ -142,7 +142,7 @@ public class H3银行余额查询Controller {
             this.jsrq = jsrq;
         }
     }
-    @ApiIgnore
+
     @RequestMapping(value = "/get_jymx.service", method = RequestMethod.POST)
     @ResponseBody
     public Output H_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据(

@@ -132,6 +132,8 @@ public class H3银行实时交易ServiceImpl  {
     private BigDecimal fse_发生额;
     private BigDecimal ye_余额;
     private String sszh_银行编码;
+
+
     public Output H_3_3_银行余额查询_银行实时交易(H3银行余额查询Controller.QueryH_3_3_银行余额查询_银行实时交易 query) {
         List<FD045_资金划转业务登记文件> page = null;//fd045_资金划转业务登记文件Repository.findByTRANSDATE_不可为空_交易日期Between(query.getKsrq(),query.getJsrq());
 
