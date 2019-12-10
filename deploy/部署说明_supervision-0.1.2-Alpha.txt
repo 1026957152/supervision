@@ -1,0 +1,23 @@
+以下由两种方式（注意相应修改版本号），第二种方式更快捷：
+
+第一种方式jar包部署：
+部署本地数据库mysql 环境，
+配置 config.yml 核心数据库，本地数据库和综服数据库地址和密码
+
+java -jar -Dspring.config.additional-location=./config.yml supervision-0.1.2-Alpha.jar
+
+
+第二种方式docker部署：
+
+1、建立 docker 环境,使用以下命令一键安装
+curl -fsSL get.docker.com | sh
+
+2、安装 docker-compose, 需要 先由python 环境 （yum install python-pip）
+pip docker-compose
+
+
+修改 docker-compose.yml 核心数据库，综服数据库地址和密码
+docker-compose up
+
+
+默认端口 8444，可直接在docker中更改 映射到 80端口

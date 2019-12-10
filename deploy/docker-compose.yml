@@ -4,7 +4,7 @@ services:
 
 
   mysql:
-    name: quickstart-mysql
+#    name: quickstart-mysql
     image: mysql:8.0.18
     #    ports:
     #      - "8080:8080"
@@ -18,7 +18,7 @@ services:
 
 
   supervision:
-    image: swr.cn-north-1.myhuaweicloud.com/yuan/supervision:0.1.1-Alpha
+    image: swr.cn-north-1.myhuaweicloud.com/yuan/supervision:0.1.2-Alpha
     ports:
       - "8444:8444"
     depends_on:
@@ -46,10 +46,10 @@ services:
       zf_password: miapp
 
       # 本地库，mysql
-      local_ip: 192.168.10.90
+      local_ip: mysql
       local_port: 3306
       local_db: supervision
       local_username: root
-      local_password: 123456
+      local_password: 9aU5CKHUpN
 
 
