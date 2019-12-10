@@ -61,6 +61,13 @@
         </nav>
 
 
+    <div class="col-l">
+    </div>
+    <div class="well">
+        <a href="/swagger-ui.html" class="btn-success btn-lg">待上线接口测试</a>
+
+
+    </div>
     <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
 
