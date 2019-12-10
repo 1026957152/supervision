@@ -72,7 +72,7 @@ public class H3银行实时交易ServiceImpl  {
 
             object.setMc_银行名称(e.getBanknam1_不可为空_银行简称());
 
-            Resource resource = resourceLoader.getResource("classpath:各银行图标png/"+E_银行编码_HX.fromString(e.getBankcode_不可为空_银行代码()).getLogoPath());
+            Resource resource = resourceLoader.getResource("classpath:banklogo/"+E_银行编码_HX.fromString(e.getBankcode_不可为空_银行代码()).getLogoPath());
 
             try {
                 InputStream input = resource.getInputStream();

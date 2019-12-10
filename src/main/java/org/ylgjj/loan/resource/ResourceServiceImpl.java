@@ -47,7 +47,7 @@ public class ResourceServiceImpl {
 
     public void S_83_SEQ_住房公积金使用率_AND_0301020501__() {
         Arrays.stream(E_银行编码_HX.values()).forEach(e->{
-            Resource resource = resourceLoader.getResource("classpath:各银行图标png/"+e.getLogoPath());
+            Resource resource = resourceLoader.getResource("classpath:banklogo/"+e.getLogoPath());
 
             try {
                 InputStream input = resource.getInputStream();
