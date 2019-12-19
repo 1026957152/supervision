@@ -59,6 +59,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
 
+
      String a=   "当前接口并未做缓存或优化，避免大时间间隔数据抽取, h-9服务统计-controller 需要读入所有注册用户身份证，未作存量数据缓存，返回时间较久。" +
              "\n这些问题需要一天左右时间可解决";
         return new ApiInfoBuilder()
