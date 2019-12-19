@@ -81,7 +81,8 @@
 
             <li role="presentation"><a href="#idea" aria-controls="idea" role="tab"
                                        data-toggle="tab">设计思路</a></li>
-
+            <li role="presentation" ><a href="#index" aria-controls="coalDeals" role="tab"
+                                                      data-toggle="tab">统计指标编码</a></li>
 
         </ul>
         <div class="tab-content">
@@ -96,6 +97,9 @@
                                 <th>名称</th>
 
                                 <th>是否完成</th>
+                                <th>编号</th>
+                                <th>建立日志</th>
+                                <th>更新日志</th>
                                 <th>城市</th>
                             </tr>
                             </thead>
@@ -116,6 +120,9 @@
 
                                     </td>
                                     <td>${category.id}</td>
+                                    <td>${category.createDate!''}</td>
+                                    <td>${category.modifyDate!''}</td>
+
                                     <td><a href="${category.url}">json返回</a></td>
                                 </tr>
 
@@ -145,7 +152,12 @@
                             <#list apis as api >
                                 <tr>
                                     <td>${api.服务编号}</td>
-                                    <td>${api.服务名称}</td>
+                                    <#if api.testPageUrl??>
+                                        <td><a href="${api.testPageUrl}">${api.服务名称}</a></td>
+                                        <#else>
+                                            <td>${api.服务名称}</td>
+                                    </#if>
+
                                     <td>${api.服务地址}</td>
                                     <td>
                                         <#if api.是否完成>
@@ -213,10 +225,10 @@
 
 
             <div role="tabpanel" class="tab-pane" id="idea">
-                <div class="row col-lg-12" style="padding-top: 10px;>
+                <div class="row col-lg-12" style="padding-top: 10px;">
 
 
-                    <section class=">
+                    <section class="">
                         <table  class="table table-striped table-bordered">
                             <thead>
                             <tr>
@@ -301,13 +313,13 @@
                                     <td>设计思路</td>
                                     <td>
 
-                                        <#list metadatas as metadata >
+<#--                                        <#list metadatas as metadata >
 
 
                                             ${metadata.table_name}
                                             ${metadata.columnName}
 
-                                        </#list>
+                                        </#list>-->
 
                                     </td>
 
@@ -324,6 +336,106 @@
 
                 </div>
             </div>
+
+            <div role="tabpanel" class="tab-pane" id="index">
+                <div class="row col-lg-12" style="padding-top: 10px";>
+                    <div id="bussiness_toolbar" class=" " >
+
+
+                        <a href="{bussinessUrl}" type="button" class="btn btn-primary"  >
+                            业务设置
+                        </a>
+                        <a href="{employeeUrl}" type="button" class="btn btn-primary" >员工管理</a>
+                        <#---->
+
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                其他 <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a id="addBtn" href="#" type="button" class=""  data-toggle="modal" data-target="#terminateModal">
+                                        终止雇佣关系
+                                    </a>
+
+
+                                </li>
+                                <li><a href="#">Another action</a></li>
+                                <li><a href="#">Something else here</a></li>
+                                <li role="separator" class="divider"></li>
+                                <li><a href="#">Separated link</a></li>
+                            </ul>
+                        </div>
+                        <script type="text/javascript">
+
+
+                            $("#setPrimaryBtn").click(function() {
+                                var row =  $('#bussiness-table').bootstrapTable('getSelections');
+
+                                if (row != '') {
+                                    $('#setPrimaryModal').modal();
+
+                                    $('#bussinessId').val(row[0].id);
+
+                                }
+                            });
+
+
+
+
+                        </script>
+
+
+                    </div>
+
+
+                    <table class=" table-striped" id="bussiness-table" data-url="${analysisUrl}" data-toggle="table" data-classes="table table-hover"   data-method="GET"
+                           data-content-type="application/x-www-form-urlencoded; charset=UTF-8"
+                           data-query-params-type="unlimit"
+                           data-query-params="queryParams"
+                           data-response-handler="handleResponse"
+                           data-pagination="true"
+                           data-side-pagination="server"
+                           data-page-number="1"
+                           data-page-list="[10]"
+                           data-page-size="10"
+                           data-click-to-select="true"
+                           data-single-select="true"
+                           data-search="true"
+                           data-show-refresh="true"
+                           data-toolbar="#bussiness_toolbar">
+                        <thead>
+                        <tr>
+
+                            <th data-field="state" data-checkbox="true"></th>
+
+                            <th data-field="indexNo">编号</th>
+                            <th data-field="name">名称</th>
+                            <th data-field="period">周期</th>
+
+
+
+                            <th data-field="status" >状态</th>
+                            <th data-field="description" >描述</th>
+                            <th data-field="createDate" >建立时间</th>
+
+
+                            <th data-field="modifyDate" >更新时间</th>
+
+
+                            <th data-field=""  data-formatter="operationFormatter">操作</th>
+
+                        </tr>
+                        </thead>
+                    </table>
+
+
+
+                </div>
+            </div>
+
+
 
         </div>
 
