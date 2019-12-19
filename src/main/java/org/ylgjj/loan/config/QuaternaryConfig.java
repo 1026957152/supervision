@@ -30,8 +30,9 @@ import java.util.Map;
 @EnableJpaRepositories(
         entityManagerFactoryRef="entityManagerFactoryQuaternary",
         transactionManagerRef="transactionManagerQuaternary",
-        basePackages= {"org.ylgjj.loan.repository_zhongfu"}) //设置Repository所在位置
+        basePackages= {"org.ylgjj.loan.repository_sms"}) //设置Repository所在位置
 public class QuaternaryConfig {
+
 
     /**
      * 自动注入 DataSourceConfig 类中的数据源配置文件secondaryDataSource
@@ -65,10 +66,11 @@ public class QuaternaryConfig {
         return builder
                 .dataSource(QuaternaryDataSource)
                 .properties(getVendorProperties())
-                .packages("org.ylgjj.loan.domain_zongfu") //设置实体类所在位置
+                .packages("org.ylgjj.loan.domain_sms") //设置实体类所在位置
                 .persistenceUnit("QuaternaryPersistenceUnit")
                 .build();
     }
+
 
     @Resource
     private JpaProperties jpaProperties;

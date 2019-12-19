@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.LN005_贷款分户信息;
 import org.ylgjj.loan.domain.LN101_贷款明细账;
 import org.ylgjj.loan.domain.Output;
-import org.ylgjj.loan.flow.YourHistory;
+import org.ylgjj.loan.domain_flow.YourHistory;
 import org.ylgjj.loan.outputenum.*;
 import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.LoanHistoryRepository;

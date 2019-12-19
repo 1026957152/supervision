@@ -3,9 +3,7 @@ package org.ylgjj.loan.repository_flow;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.ylgjj.loan.flow.AnalysisStream;
-import org.ylgjj.loan.flow.RateHistory;
-import org.ylgjj.loan.flow.StreamHistory;
+import org.ylgjj.loan.domain_flow.RateHistory;
 
 import java.time.LocalDate;
 import java.util.List;

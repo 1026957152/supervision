@@ -26,8 +26,6 @@ import java.util.stream.Collectors;
 @Service("H7大额资金监控ServiceImpl")
 public class H7大额资金监控ServiceImpl {
 
-    @Autowired
-    private LN009_抵押物信息_mortgager_goods_info_Repository ln009_抵押物信息_mortgager_goods_info_repository;
 
     @Autowired
     private FD045_资金划转业务登记文件Repository fd045_资金划转业务登记文件Repository;
@@ -38,6 +36,7 @@ public class H7大额资金监控ServiceImpl {
 
 
     public Output H_7_1_大额资金监控_监控数据明细查询(String zjbzxbm, String ksrq, String jsrq) {
+
        // List<FD045_资金划转业务登记文件>  fd045_资金划转业务登记文件s = fd045_资金划转业务登记文件Repository.findByTRANSDATE不可为空交易日期(LocalDate.now(),LocalDate.now());
 
 

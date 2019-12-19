@@ -60,8 +60,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private ApiInfo apiInfo() {
 
 
-     String a=   "当前接口并未做缓存或优化，避免大时间间隔数据抽取, h-9服务统计-controller 需要读入所有注册用户身份证，未作存量数据缓存，返回时间较久。" +
-             "\n这些问题需要一天左右时间可解决";
+     String a=   "渠道业务统计，和离柜率 存在较多问题，暂未上线，177项数据暂未上线，244指标暂未上线" ;
         return new ApiInfoBuilder()
                 .title("榆林住房公积金省监管平台 API "+git.get("build.version"))  //设置文档的标题
                 .description("\n"+a) //设置文档的描述

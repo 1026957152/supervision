@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.ylgjj.loan.domain.*;
-import org.ylgjj.loan.flow.Config;
+import org.ylgjj.loan.domain_flow.Config;
 import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.ConfigRepository;
 
@@ -132,7 +132,7 @@ public class BaseServiceImpl implements BaseService {
 // chops a list into non-view sublists of length L
 
 
-static <T> List<List<T>> chopped(List<T> list, final int L) {
+public static <T> List<List<T>> chopped(List<T> list, final int L) {
     List<List<T>> parts = new ArrayList<List<T>>();
     final int N = list.size();
     for (int i = 0; i < N; i += L) {

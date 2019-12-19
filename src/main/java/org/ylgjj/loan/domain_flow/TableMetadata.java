@@ -1,4 +1,4 @@
-package org.ylgjj.loan.flow;
+package org.ylgjj.loan.domain_flow;
 
 import javax.persistence.*;
 import java.io.Serializable;

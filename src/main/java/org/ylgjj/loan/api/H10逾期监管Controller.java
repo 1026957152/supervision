@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.pojo.QueryH10_1逾期监管_逾期监管汇总查询;
 import org.ylgjj.loan.pojo.QueryH10_2逾期监管_逾期监管明细查询;
-import org.ylgjj.loan.service.H10逾期监管ServiceImpl;
-import springfox.documentation.annotations.ApiIgnore;
+import org.ylgjj.loan.service.H10_2逾期监管_逾期监管明细查询_ServiceImpl;
+import org.ylgjj.loan.service.H10_1逾期监管_逾期监管汇总查询ServiceImpl;
 
 import javax.validation.Valid;
 
@@ -25,8 +25,10 @@ public class H10逾期监管Controller {
 
 
     @Autowired
-    H10逾期监管ServiceImpl h10逾期监管Service;
+    H10_1逾期监管_逾期监管汇总查询ServiceImpl h10逾期监管Service;
 
+    @Autowired
+    H10_2逾期监管_逾期监管明细查询_ServiceImpl h10_2逾期监管_逾期监管明细查询_service;
 
 
     @RequestMapping(value = "/get_yqqk_DataCx.service", method = RequestMethod.POST)
@@ -52,7 +54,7 @@ public class H10逾期监管Controller {
 
         System.out.println("----------------- "+ query.toString());
 
-        return h10逾期监管Service.H10_2逾期监管_逾期监管明细查询(query);
+        return h10_2逾期监管_逾期监管明细查询_service.H10_2逾期监管_逾期监管明细查询(query);
     }
 
 

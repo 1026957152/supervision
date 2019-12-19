@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
-import org.ylgjj.loan.flow.LoanHistory;
+import org.ylgjj.loan.domain_flow.LoanHistory;
 import org.ylgjj.loan.outputenum.E_TABLE_HX;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.outputenum.统计周期编码;

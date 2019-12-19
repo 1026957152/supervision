@@ -7,14 +7,10 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.LN003_合同信息;
 import org.ylgjj.loan.domain.LN006_贷款分期还款计划;
 import org.ylgjj.loan.enumT.E_LN006_贷款分期还款计划_curseqStatusEnum;
-import org.ylgjj.loan.flow.RateHistory;
-import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
-import org.ylgjj.loan.repository.LN004_合同状态信息Repository;
 import org.ylgjj.loan.repository.LN006_贷款分期还款计划Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;

@@ -5,9 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ylgjj.loan.api.SupervisionController;
-import org.ylgjj.loan.flow.ApiCacheAnalysisItem;
-import org.ylgjj.loan.flow.ApiCacheAnalysisTable;
-import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
+import org.ylgjj.loan.domain_flow.ApiCacheAnalysisItem;
+import org.ylgjj.loan.domain_flow.ApiCacheAnalysisTable;
 import org.ylgjj.loan.rates.SY_137_ljffbs_累计发放笔数_RateServiceImpl;
 import org.ylgjj.loan.repository_flow.ApiCacheAnalysisTableRepository;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
@@ -16,9 +15,7 @@ import org.ylgjj.loan.repository_flow.RateAnalysisStreamRepository;
 
 import javax.annotation.PostConstruct;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by silence yuan on 2015/7/25.
@@ -44,10 +41,9 @@ public class ApiServiceImpl {
 
 
 
-    //@PostConstruct
+    @PostConstruct
     @Transactional
     public void S_83_SEQ_住房公积金使用率_AND_0301020501__() {
-        List<E_指标_RATE_SY> statisticalIndexCodeEnums = Arrays.stream(E_指标_RATE_SY.values()).collect(Collectors.toList());
 
 
        SupervisionController.api.stream().forEach(e->{

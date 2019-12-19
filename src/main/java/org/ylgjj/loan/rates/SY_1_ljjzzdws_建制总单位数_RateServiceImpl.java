@@ -5,13 +5,12 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.ylgjj.loan.domain.DP004_单位缴存信息表;
 import org.ylgjj.loan.domain.DP005_单位分户账;
 import org.ylgjj.loan.enumT.E_DP005_单位分户账_单位账户状态;
 import org.ylgjj.loan.enumT.E_DP005_单位分户账_单位账户类型;
-import org.ylgjj.loan.flow.RateAnalysisStream;
-import org.ylgjj.loan.flow.RateAnalysisTable;
-import org.ylgjj.loan.flow.RateHistory;
+import org.ylgjj.loan.domain_flow.RateAnalysisStream;
+import org.ylgjj.loan.domain_flow.RateAnalysisTable;
+import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.repository.DP004_单位缴存信息表_Repository;
@@ -19,7 +18,6 @@ import org.ylgjj.loan.repository.DP005_单位分户账_Repository;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,7 +25,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 /**

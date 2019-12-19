@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.LN003_合同信息;
 import org.ylgjj.loan.domain_zongfu.Mi107_业务日志;
-import org.ylgjj.loan.flow.RateHistory;
+import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
@@ -14,7 +14,6 @@ import org.ylgjj.loan.repository.LN004_合同状态信息Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 import org.ylgjj.loan.repository_zhongfu.Mi107_业务日志_Repository;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

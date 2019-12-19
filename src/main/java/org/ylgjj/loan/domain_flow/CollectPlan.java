@@ -1,7 +1,6 @@
-package org.ylgjj.loan.flow;
+package org.ylgjj.loan.domain_flow;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.ylgjj.loan.util.DateRange;
 
 import javax.persistence.*;
 

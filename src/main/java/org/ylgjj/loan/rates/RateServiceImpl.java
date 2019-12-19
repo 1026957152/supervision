@@ -1,29 +1,18 @@
 package org.ylgjj.loan.rates;
 
 
-import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.ylgjj.loan.domain.LN003_合同信息;
-import org.ylgjj.loan.flow.AnalysisTable;
-import org.ylgjj.loan.flow.RateAnalysisTable;
-import org.ylgjj.loan.flow.RateHistory;
+import org.ylgjj.loan.domain_flow.RateAnalysisTable;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
-import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
-import org.ylgjj.loan.repository.LN004_合同状态信息Repository;
 import org.ylgjj.loan.repository_flow.RateAnalysisStreamRepository;
 import org.ylgjj.loan.repository_flow.RateAnalysisTableRepository;
-import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;

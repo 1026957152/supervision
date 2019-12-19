@@ -1,20 +1,19 @@
-package org.ylgjj.loan.flow;
+package org.ylgjj.loan.domain_flow;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 /**
  * Created by yuan zhao  on 08/10/2015.
  */
 
 @Entity
-@Table(name = "业务指标记录")
+@Table(name = "target")
 
-public class 业务指标记录 extends BaseFlowDomain {
+public class Target_业务指标记录 extends BaseDomain {
 
     @Column(name = "xmbm")
     private String xmbm;

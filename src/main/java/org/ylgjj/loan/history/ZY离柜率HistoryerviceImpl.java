@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_zongfu.Mi107_业务日志;
 import org.ylgjj.loan.enumT.LoaneeTypeEnum;
-import org.ylgjj.loan.flow.LoanHistory;
+import org.ylgjj.loan.domain_flow.LoanHistory;
 import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.*;

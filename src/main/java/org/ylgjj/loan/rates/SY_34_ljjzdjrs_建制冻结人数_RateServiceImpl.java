@@ -8,15 +8,14 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.DP093_冻结解冻登记簿;
 import org.ylgjj.loan.enumT.E_DP093_冻结解冻登记表_冻结业务标志;
 import org.ylgjj.loan.enumT.E_DP093_冻结解冻登记表_冻结类型;
-import org.ylgjj.loan.flow.RateAnalysisStream;
-import org.ylgjj.loan.flow.RateAnalysisTable;
-import org.ylgjj.loan.flow.RateHistory;
+import org.ylgjj.loan.domain_flow.RateAnalysisStream;
+import org.ylgjj.loan.domain_flow.RateAnalysisTable;
+import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;

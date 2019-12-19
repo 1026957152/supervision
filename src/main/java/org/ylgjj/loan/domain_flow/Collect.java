@@ -1,11 +1,8 @@
-package org.ylgjj.loan.flow;
+package org.ylgjj.loan.domain_flow;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by yuan zhao  on 08/10/2015.
@@ -14,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "collect")
 
-public class collectMonthSet extends BaseFlowDomain {
+public class Collect extends BaseFlowDomain {
 
     @Column(name = "UnitNo")
     private String UnitNo;

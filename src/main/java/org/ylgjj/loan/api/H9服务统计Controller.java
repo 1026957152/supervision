@@ -152,7 +152,7 @@ public class H9服务统计Controller {
 
 
 
-    @ApiIgnore
+
     @RequestMapping(value = "/qdlogin.service", method = RequestMethod.POST)
     @ResponseBody
     public Output H_9_6_服务统计_渠道登录次数查询(

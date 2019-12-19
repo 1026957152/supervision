@@ -8,7 +8,7 @@ import org.ylgjj.loan.domain.DP202_单位缴存变更登记簿;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.enumT.E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEnum;
 import org.ylgjj.loan.enumT.E_HX_机构_Institution_info_instCodeEnum;
-import org.ylgjj.loan.flow.LoanHistory;
+import org.ylgjj.loan.domain_flow.LoanHistory;
 import org.ylgjj.loan.history.ZYCommonHistoryerviceImpl;
 import org.ylgjj.loan.outputenum.*;
 import org.ylgjj.loan.repository.*;

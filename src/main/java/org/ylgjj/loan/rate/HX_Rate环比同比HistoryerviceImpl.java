@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.enumT.E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEnum;
 import org.ylgjj.loan.enumT.E_HX_机构_Institution_info_instCodeEnum;
-import org.ylgjj.loan.flow.LoanHistory;
+import org.ylgjj.loan.domain_flow.LoanHistory;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.outputenum.住建部编码_单位经济类型;

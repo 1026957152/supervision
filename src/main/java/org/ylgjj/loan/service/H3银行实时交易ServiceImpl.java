@@ -14,6 +14,9 @@ import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.output.*;
 import org.ylgjj.loan.outputenum.E_银行编码_HX;
 import org.ylgjj.loan.pojo.QueryH_3_2_银行余额查询_银行余额查询;
+import org.ylgjj.loan.pojo.QueryH_3_3_银行余额查询_银行实时交易;
+import org.ylgjj.loan.pojo.QueryH_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据;
+import org.ylgjj.loan.pojo.QueryH_3_5_银行余额查询_资金结算流水查询_查询历史结算明细数据;
 import org.ylgjj.loan.repository.*;
 
 import javax.validation.Valid;
@@ -91,7 +94,7 @@ public class H3银行实时交易ServiceImpl  {
         return output;
     }
 
-    public Output H_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据(H3银行余额查询Controller.QueryH_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据 query) {
+    public Output H_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据(QueryH_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据 query) {
 
         Page<AN004_单位基本资料表> page = an004Repository.findAll(PageRequest.of(1,10));
 
@@ -110,7 +113,7 @@ public class H3银行实时交易ServiceImpl  {
     }
 
 
-    public Output H_3_5_银行余额查询_资金结算流水查询_查询历史结算明细数据(H3银行余额查询Controller.QueryH_3_5_银行余额查询_资金结算流水查询_查询历史结算明细数据 query) {
+    public Output H_3_5_银行余额查询_资金结算流水查询_查询历史结算明细数据(QueryH_3_5_银行余额查询_资金结算流水查询_查询历史结算明细数据 query) {
         Page<AN004_单位基本资料表> page = an004Repository.findAll(PageRequest.of(query.getPagenum(),query.getPagesize()));
 
         Output output = new Output();
@@ -134,19 +137,30 @@ public class H3银行实时交易ServiceImpl  {
     private String sszh_银行编码;
 
 
-    public Output H_3_3_银行余额查询_银行实时交易(H3银行余额查询Controller.QueryH_3_3_银行余额查询_银行实时交易 query) {
-        List<FD045_资金划转业务登记文件> page = null;//fd045_资金划转业务登记文件Repository.findByTRANSDATE_不可为空_交易日期Between(query.getKsrq(),query.getJsrq());
+    public Output H_3_3_银行余额查询_银行实时交易(QueryH_3_3_银行余额查询_银行实时交易 query) {
+
+        List<FD012_银行存款账号登记文件> fd012_银行存款账号登记文件s = fd012_银行存款账号登记文件Repository.findAll();
+        Map<String,FD012_银行存款账号登记文件> fd012_银行存款账号登记文件Map = fd012_银行存款账号登记文件Repository
+                .findAll().stream().collect(Collectors.toMap(e->e.getBANKACCNUM_不可为空_银行账号(),e->e));
+        DateTimeFormatter df_ = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df_);
+        LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df_);
+
+        List<FN090_账户变动通知文件> fn090_账户变动通知文件s  = fn090_账户变动通知文件_repository.findByTransdate不可为空写入日期Between(ldt_ksrq,ldt_jsrq);
 
         Output output = new Output();
-        output.setData(page.stream().map(e->{
+        output.setData(fn090_账户变动通知文件s.stream().map(e->{
             H3_3结算监控_银行实时交易 object = new H3_3结算监控_银行实时交易();
 
 
-/*            object.setId_唯一标识(e.get());
-            object.setFsefx_发生额方向(e.getSettlehostsernum结算流水号_可为空());
-            object.setFse_发生额(e.getBANKCODE银行代码_可为空());  // TODO 要银行枚举
-            object.setYe_余额(e.getTransdate_不可为空_交易日期());
-            object.setSszh_银行编码(e.getSettletransusage交易用途_可为空());*/
+           object.setId_唯一标识(e.getBankhostsernum不可为空银行主机流水号());
+            object.setFsefx_发生额方向(e.getAmt__不可为空__金额()>0?"01":"02") ;  //01：转入，02：支出
+            object.setFse_发生额(e.getAmt__不可为空__金额());  // TODO 要银行枚举
+            object.setYe_余额(e.getCurrbal__不可为空__余额());
+            object.setSszh_银行编码(fd012_银行存款账号登记文件Map.get(e.getBankaccnum不可为空账号()).getBANKCODE_不可为空_银行代码());
+            object.setBm(fd012_银行存款账号登记文件Map.get(e.getBankaccnum不可为空账号()).getBANKCODE_不可为空_银行代码());
+            object.setMc(fd012_银行存款账号登记文件Map.get(e.getBankaccnum不可为空账号()).getBANKACCNM_不可为空_银行账户名称());
+            object.setSszh_银行编码(e.getBankaccnum不可为空账号());
             return object;
         }).collect(Collectors.toList()));
         return output;

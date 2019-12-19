@@ -4,17 +4,15 @@ package org.ylgjj.loan.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.ylgjj.loan.domain.Data;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.domain.ReturnResult;
-import org.ylgjj.loan.flow.业务指标记录;
+import org.ylgjj.loan.domain_flow.Target_业务指标记录;
 import org.ylgjj.loan.output.H2_2业务指标_常用指标数据查询;
 import org.ylgjj.loan.pojo.*;
-import org.ylgjj.loan.repository.AN004Repository;
-import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
-import org.ylgjj.loan.repository_flow.业务指标记录Repository;
 
-import java.util.Date;
+
+import org.ylgjj.loan.repository_flow.Target_业务指标记录Repository;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +24,8 @@ import java.util.stream.Collectors;
 public class H2统计指标ServiceImpl {
 
     @Autowired
-    private 业务指标记录Repository 业务指标记录Repository;
+    private Target_业务指标记录Repository Target_业务指标记录Repository;
 
-
-    @Autowired
-    private PB010_bank_info_大行信息表Repository pb010_bank_info_大行信息表Repository;
 
 
 
@@ -42,13 +37,13 @@ public class H2统计指标ServiceImpl {
     public Output H_2_1_业务指标_添加常用指标(QueryH_2_1_业务指标_添加常用指标 query) {
 
 
-        List<业务指标记录> y = 业务指标记录Repository.findByXmbm(query.getXmbm());
+        List<Target_业务指标记录> y = Target_业务指标记录Repository.findByXmbm(query.getXmbm());
 
         if(y.isEmpty()){
-            业务指标记录 ii = new 业务指标记录();
+            Target_业务指标记录 ii = new Target_业务指标记录();
             ii.setUserid(query.getUserid());
             ii.setXmbm(query.getUserid());
-            ii = 业务指标记录Repository.save(ii);
+            ii = Target_业务指标记录Repository.save(ii);
         }
         Output output = new Output();
         output.setSuccess(true);
@@ -58,7 +53,7 @@ public class H2统计指标ServiceImpl {
 
     public Output H_2_2_业务指标_查询常用指标(QueryH_2_2_业务指标_查询常用指标 query) {
 
-        List<业务指标记录> y = 业务指标记录Repository.findAll();
+        List<Target_业务指标记录> y = Target_业务指标记录Repository.findAll();
 
 
         Output output = new Output();

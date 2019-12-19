@@ -227,15 +227,15 @@ public class SupervisionController {
             "9.4用户性别查询",
             "/JG/zhfwpt/yhxbxx_cx.service", true);
 
-    static public ApiUrl H9_5 = new ApiUrl("090504",
+    static public ApiUrl H9_5 = new ApiUrl("090501",
             "9服务统计",
             "9.5短信发送量查询",
             "/JG/zhfwpt/sms_cx.service", true);
-    static public ApiUrl H9_6 = new ApiUrl("090604",
+    static public ApiUrl H9_6 = new ApiUrl("090601",
             "9服务统计",
             "9.6渠道登录次数查询",
             "/JG/zhfwpt/qdlogin.service", true);
-    static public ApiUrl H9_7 = new ApiUrl("090704",
+    static public ApiUrl H9_7 = new ApiUrl("090701",
             "9服务统计",
             "9.7用户年龄信息查询",
             "/JG/zhfwpt/yhnlxx_cx.service", true);

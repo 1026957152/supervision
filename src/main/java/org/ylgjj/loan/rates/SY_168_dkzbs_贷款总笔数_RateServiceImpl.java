@@ -6,29 +6,20 @@ import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.LN003_合同信息;
-import org.ylgjj.loan.domain.LN004_合同状态信息;
-import org.ylgjj.loan.domain.Output;
-import org.ylgjj.loan.flow.RateAnalysisStream;
-import org.ylgjj.loan.flow.RateAnalysisTable;
-import org.ylgjj.loan.flow.RateHistory;
+import org.ylgjj.loan.domain_flow.RateAnalysisStream;
+import org.ylgjj.loan.domain_flow.RateAnalysisTable;
+import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
-import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
-import org.ylgjj.loan.outputenum.统计周期编码;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
 import org.ylgjj.loan.repository.LN004_合同状态信息Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Created by silence yuan on 2015/7/25.

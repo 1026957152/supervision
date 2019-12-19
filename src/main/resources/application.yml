@@ -131,13 +131,13 @@ spring:
     read-only: true
 
 
-  jpa:
-    database: db2
-    show-sql: true
-
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.DB2400Dialect
+#  jpa:
+#    database: db2
+#    show-sql: true
+#
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.DB2400Dialect
 
 # database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
 #  freemarker:

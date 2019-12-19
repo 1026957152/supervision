@@ -4,7 +4,7 @@ package org.ylgjj.loan.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.Output;
-import org.ylgjj.loan.flow.LoanHistory;
+import org.ylgjj.loan.domain_flow.LoanHistory;
 import org.ylgjj.loan.outputenum.*;
 import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.LoanHistoryRepository;

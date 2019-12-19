@@ -20,4 +20,6 @@ public interface LN004_合同状态信息Repository extends JpaRepository<LN004_
     List<LN004_合同状态信息> findByTransdateBetween(LocalDate minusDays, LocalDate now);
 
     List<LN004_合同状态信息> findByTransdateBetweenOrderByTransdateDesc(LocalDate minusDays, LocalDate now);
+
+    List<LN004_合同状态信息> findByLoancontrcodeIn(List<String> list);
 }

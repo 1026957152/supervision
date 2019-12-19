@@ -17,8 +17,8 @@
           <factory-entry name="entityManagerFactory" />
           <factory-entry name="entityManagerFactoryPrimary" value="b79a6848-0311-4cd7-a2c5-61491215e6c8" />
           <factory-entry name="entityManagerFactoryQuaternary" value="5b1a37b0-a81c-486f-9d94-df09ec061a8f" />
-          <factory-entry name="entityManagerFactorySecondary" />
-          <factory-entry name="entityManagerFactoryTertiary" />
+          <factory-entry name="entityManagerFactorySecondary" value="5c372ef4-914c-4427-820b-13032c0a0f23" />
+          <factory-entry name="entityManagerFactoryTertiary" value="260c7d5b-1aca-48d6-9915-aa22119c2a47" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>

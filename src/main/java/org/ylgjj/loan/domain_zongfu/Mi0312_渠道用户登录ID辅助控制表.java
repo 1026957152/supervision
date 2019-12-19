@@ -24,7 +24,7 @@ public class Mi0312_渠道用户登录ID辅助控制表 {
   private String freeuse1;
   private String freeuse2;
   private String freeuse3;
-  private long freeuse4;
+  private Long freeuse4;
 
 
   public String getId() {
@@ -171,11 +171,11 @@ public class Mi0312_渠道用户登录ID辅助控制表 {
   }
 
 
-  public long getFreeuse4() {
+  public Long getFreeuse4() {
     return freeuse4;
   }
 
-  public void setFreeuse4(long freeuse4) {
+  public void setFreeuse4(Long freeuse4) {
     this.freeuse4 = freeuse4;
   }
 

@@ -22,5 +22,7 @@ public interface Mi0312_渠道用户登录ID辅助控制表_Repository extends J
     List<Mi0312_渠道用户登录ID辅助控制表> findByOrderByDatemodifiedDesc();
 
 
+    List<Mi0312_渠道用户登录ID辅助控制表> findAllByOrderByDatemodifiedDesc();
+
 }
 

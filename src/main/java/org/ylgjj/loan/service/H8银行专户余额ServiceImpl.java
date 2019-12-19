@@ -38,18 +38,17 @@ public class H8银行专户余额ServiceImpl {
     private FD032_定期存款收息注销登记文件Repository fd032_定期存款收息注销登记文件Repository;
 
 
- /*   @Autowired
-    @PersistenceContext(unitName  = "primaryPersistenceUnit")
-*/
 
 
     public Output H8_1银行专户余额_银行专户余额查询(QueryH8_1银行专户余额_银行专户余额查询 zjbzxbm) {
 
-        List<FD032_定期存款收息注销登记文件> fd032_定期存款收息注销登记文件s = fd032_定期存款收息注销登记文件Repository.findAll();
-        List<PB011_银行信息表> pb011_银行信息表s = pb011_银行信息表_repository.findAll();
+/*        List<FD032_定期存款收息注销登记文件> fd032_定期存款收息注销登记文件s = fd032_定期存款收息注销登记文件Repository.findAll();
+        List<PB011_银行信息表> pb011_银行信息表s = pb011_银行信息表_repository.findAll();*/
 
         List<FD029_定期存款分户文件>  fd029_定期存款分户文件s = fd029_定期存款分户文件Repository.findAll();
         List<FD012_银行存款账号登记文件> fd012_银行存款账号登记文件s = fd012_银行存款账号登记文件Repository.findAll();
+
+
 
 
         fd029_定期存款分户文件s.stream().map(e->{
@@ -60,6 +59,9 @@ public class H8银行专户余额ServiceImpl {
 
             return null;
         });
+
+
+
         Map<String, List<FD029_定期存款分户文件>> 定期账户Map = fd029_定期存款分户文件s.stream().collect(Collectors.groupingBy(e->e.getOpnaccbank_不可为空_开户银行()));
 
         /*
@@ -109,6 +111,8 @@ public class H8银行专户余额ServiceImpl {
 
 
         DecimalFormat df = new DecimalFormat("0.0000");
+
+
         List<H8_1银行专户余额_银行专户余额查询> aaaaa = fd012_银行存款账号登记文件s.stream().map(e->{
             H8_1银行专户余额_银行专户余额查询 h8_1银行专户余额_银行专户余额查询 = new H8_1银行专户余额_银行专户余额查询();
             h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getBANKCODE_不可为空_银行代码());
@@ -116,7 +120,6 @@ public class H8银行专户余额ServiceImpl {
             h8_1银行专户余额_银行专户余额查询.setSszh_总行编码_String(e.getBANKCODE_不可为空_银行代码());
 
             List<FD029_定期存款分户文件> fd029_定期存款分户文件s1 = 定期账户Map.get(e.getBANKCODE_不可为空_银行代码());
-
 
 
 

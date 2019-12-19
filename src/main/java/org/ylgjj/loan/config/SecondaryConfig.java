@@ -66,7 +66,7 @@ public class SecondaryConfig {
         return builder
                 .dataSource(secondaryDataSource)
                 .properties(getVendorProperties())
-                .packages("org.ylgjj.loan.flow") //设置实体类所在位置
+                .packages("org.ylgjj.loan.domain_flow") //设置实体类所在位置
                 .persistenceUnit("secondaryPersistenceUnit")
                 .build();
     }

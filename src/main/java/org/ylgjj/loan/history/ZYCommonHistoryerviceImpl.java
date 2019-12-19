@@ -1,21 +1,17 @@
 package org.ylgjj.loan.history;
 
 
-import org.javatuples.Septet;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_DW025_公积金提取审核登记表_提取原因_WithdrawReasonEnum;
 import org.ylgjj.loan.enumT.E_HX_机构_Institution_info_instCodeEnum;
-import org.ylgjj.loan.flow.LoanHistory;
+import org.ylgjj.loan.domain_flow.LoanHistory;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.outputenum.住建部编码_单位经济类型;
 import org.ylgjj.loan.outputenum.统计周期编码;
-import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.LoanHistoryRepository;
-import org.ylgjj.loan.repository_flow.YourHistoryRepository;
-import org.ylgjj.loan.util.DateUtilsss;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

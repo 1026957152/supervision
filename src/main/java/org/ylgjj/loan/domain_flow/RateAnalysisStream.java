@@ -1,4 +1,4 @@
-package org.ylgjj.loan.flow;
+package org.ylgjj.loan.domain_flow;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
  */
 
 @Entity
-@Table(name = "analysis_stream")
+@Table(name = "rate_analysis_stream")
 
-public class AnalysisStream extends BaseDomain {
+public class RateAnalysisStream extends BaseDomain {
 
 
 
@@ -28,6 +28,8 @@ public class AnalysisStream extends BaseDomain {
     private LocalDate endDate;
     private LocalDate beginDate
             ;
+    private long duration;
+    private Integer rateTableId;
 
 
     @Override
@@ -90,5 +92,21 @@ public class AnalysisStream extends BaseDomain {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setRateTableId(Integer rateTableId) {
+        this.rateTableId = rateTableId;
+    }
+
+    public Integer getRateTableId() {
+        return rateTableId;
     }
 }
