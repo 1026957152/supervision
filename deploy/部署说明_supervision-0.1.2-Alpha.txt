@@ -3,8 +3,10 @@
 第一种方式jar包部署：
 部署本地数据库mysql 环境，
 配置 config.yml 核心数据库，本地数据库和综服数据库地址和密码
+默认端口 8444，可直接在config.yml 中更改 server.port: 80 映射到 80端口
 
 java -jar -Dspring.config.additional-location=./config.yml supervision-0.1.2-Alpha.jar
+
 
 
 第二种方式docker部署：

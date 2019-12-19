@@ -1,15 +1,12 @@
 package org.ylgjj.loan.domain;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Created by yuan zhao  on 08/10/2015.
@@ -37,7 +34,7 @@ public class DP204_个人缴存变更登记簿 {
     private String unitaccnum_不可为空_单位账号;
 
     @Column(name = "accnum")
-    private String accnum_不可为空_个人账号;
+    private String accnum不可为空个人账号;
 
     @Column(name = "onym")
     private String onym_可为空_启用年月;
@@ -193,12 +190,12 @@ public class DP204_个人缴存变更登记簿 {
         this.unitaccnum_不可为空_单位账号 = unitaccnum_不可为空_单位账号;
     }
 
-    public String getAccnum_不可为空_个人账号() {
-        return accnum_不可为空_个人账号;
+    public String getAccnum不可为空个人账号() {
+        return accnum不可为空个人账号;
     }
 
-    public void setAccnum_不可为空_个人账号(String accnum_不可为空_个人账号) {
-        this.accnum_不可为空_个人账号 = accnum_不可为空_个人账号;
+    public void setAccnum不可为空个人账号(String accnum不可为空个人账号) {
+        this.accnum不可为空个人账号 = accnum不可为空个人账号;
     }
 
     public String getOnym_可为空_启用年月() {

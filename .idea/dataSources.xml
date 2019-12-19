@@ -10,7 +10,7 @@
         <property name="clientProgramName" value="DataGrip" />
       </driver-properties>
     </data-source>
-    <data-source source="LOCAL" name="webdb@10.22.30.22" uuid="5c372ef4-914c-4427-820b-13032c0a0f23">
+    <data-source source="LOCAL" name="webdb@10.22.30.22" read-only="true" uuid="5c372ef4-914c-4427-820b-13032c0a0f23">
       <driver-ref>db2</driver-ref>
       <jdbc-driver>com.ibm.db2.jcc.DB2Driver</jdbc-driver>
       <jdbc-url>jdbc:db2://10.22.30.22:50020/webdb</jdbc-url>
@@ -18,6 +18,21 @@
         <property name="retrieveMessagesFromServerOnGetMessage" value="true" />
         <property name="clientProgramName" value="DataGrip" />
       </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="webdb@10.22.30.22 [2]" read-only="true" uuid="260c7d5b-1aca-48d6-9915-aa22119c2a47">
+      <driver-ref>db2</driver-ref>
+      <jdbc-driver>com.ibm.db2.jcc.DB2Driver</jdbc-driver>
+      <jdbc-url>jdbc:db2://10.22.30.22:50020/webdb</jdbc-url>
+      <driver-properties>
+        <property name="retrieveMessagesFromServerOnGetMessage" value="true" />
+        <property name="clientProgramName" value="DataGrip" />
+      </driver-properties>
+    </data-source>
+    <data-source source="LOCAL" name="supervision@192.168.10.90" uuid="5b1a37b0-a81c-486f-9d94-df09ec061a8f">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://192.168.10.90:3306/supervision</jdbc-url>
     </data-source>
   </component>
 </project>

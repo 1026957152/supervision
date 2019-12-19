@@ -19,4 +19,5 @@ public interface DW145_提取结算登记薄_Repository extends JpaRepository<DW
 
     List<DW145_提取结算登记簿> findByTRANSDATE交易日期0(LocalDate n);
 
+    List<DW145_提取结算登记簿> findByTRANSDATE交易日期0BetweenOrderByTRANSDATE交易日期0Desc(LocalDate minusDays, LocalDate now);
 }

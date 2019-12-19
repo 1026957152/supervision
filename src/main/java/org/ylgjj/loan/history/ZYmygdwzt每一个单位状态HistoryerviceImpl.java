@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
-import org.ylgjj.loan.enumT.H_DP202_单位缴存变更登记簿_变更类型;
+import org.ylgjj.loan.enumT.E_DP202_单位缴存变更登记簿_变更类型;
 import org.ylgjj.loan.flow.LoanHistory;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.*;
@@ -39,7 +39,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -56,13 +56,13 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
 
 
     @Autowired
@@ -75,15 +75,15 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
@@ -107,30 +107,30 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
 
 
     boolean initComplte = false;
-    List<DP004_unit_payment_info_单位缴存信息表> dp004_unit_payment_info_单位缴存信息表s = null;
+    List<DP004_单位缴存信息表> dp004__单位缴存信息表s = null;
 
     Map<String, CM001_单位基本资料表> cm001_单位基本资料表Map = null;
-    Map<String, DP005_work_unit_单位分户账> dp005_work_unit_单位分户账Map = null;
-    Map<String, List<LN008_borrower_info_借款人信息>> ln008_borrower_info_借款人信息Map = null;
+    Map<String, DP005_单位分户账> dp005_work_unit_单位分户账Map = null;
+    Map<String, List<LN008_借款人信息>> ln008_borrower_info_借款人信息Map = null;
 
     //TODO 历史倒推
 
-    public List<Septet<DP004_unit_payment_info_单位缴存信息表,
+    public List<Septet<DP004_单位缴存信息表,
             CM001_单位基本资料表,
-            DP005_work_unit_单位分户账,
+            DP005_单位分户账,
 
             List<DP021_单位缴存登记簿>,
             List<DW025_公积金提取审核登记表>,
 
-            List<DP008_institution_detail_单位明细账>,
+            List<DP008_单位明细账>,
             List<DP202_单位缴存变更登记簿>>> 历史倒推_某一日的缴存(LocalDate localDate) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         if (!initComplte) {
             //     dp005_workUnit_单位分户账_repository.findAll();
-            dp004_unit_payment_info_单位缴存信息表s = dp004_unit_payment_info单位缴存信息表Repository.findAll();
+            dp004__单位缴存信息表s = dp004_unit_payment_info单位缴存信息表Repository.findAll();
             cm001_单位基本资料表Map = cm001单位基本资料表Repository.findAll().stream().collect(Collectors.toMap(e -> e.getUnitcustid单位客户号(), a -> a));
-            dp005_work_unit_单位分户账Map = dp005_workUnit_单位分户账_repository.findAll().stream().collect(Collectors.toMap(e -> e.getUnitaccnum单位账号(), a -> a));
+            dp005_work_unit_单位分户账Map = dp005__单位分户账_repository.findAll().stream().collect(Collectors.toMap(e -> e.getUnitaccnum单位账号(), a -> a));
 
 
             initComplte = true;
@@ -141,7 +141,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
 
         List<DP021_单位缴存登记簿> dp021_单位缴存登记簿s = dp021_单位缴存登记薄Repository.findByRegdate不可为空登记日期(localDate);
         List<DW025_公积金提取审核登记表> dw025_公积金提取审核登记表s = dW025__公积金提取审核登记表_Repository.findByTransdate交易日期(localDate);
-        List<DP008_institution_detail_单位明细账> dp008_institution_detail_单位明细账s = dp008_institution_detail_单位明细账_repository.findByTransdate不可为空交易日期(localDate);
+        List<DP008_单位明细账> DP008_单位明细账s = dp008__单位明细账_repository.findByTransdate不可为空交易日期(localDate);
 
 
         List<DP202_单位缴存变更登记簿> dp202_单位缴存变更登记簿s = dp202_单位缴存变更登记簿_repository.findByTransdate不可为空交易日期(localDate);
@@ -151,8 +151,8 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
         Map<String, List<DW025_公积金提取审核登记表>> dw025_公积金提取审核登记表Map
                 = dw025_公积金提取审核登记表s.stream().collect(Collectors.groupingBy(e -> e.getUnitaccnum单位账号()));
 
-        Map<String, List<DP008_institution_detail_单位明细账>> dp008_institution_detail_单位明细账Map
-                = dp008_institution_detail_单位明细账s.stream().collect(Collectors.groupingBy(e -> e.getUnitaccnum_单位账号()));
+        Map<String, List<DP008_单位明细账>> DP008_单位明细账Map
+                = DP008_单位明细账s.stream().collect(Collectors.groupingBy(e -> e.getUnitaccnum不可为空单位账号()));
 
 
         Map<String, List<DP202_单位缴存变更登记簿>> dp202_单位缴存变更登记簿Map
@@ -161,20 +161,20 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
         //List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期Between(ldt_ksrq,ldt_jsrq);
 
 
-        return dp004_unit_payment_info_单位缴存信息表s.stream().collect(Collectors.toList()).stream().map(e -> {
+        return dp004__单位缴存信息表s.stream().collect(Collectors.toList()).stream().map(e -> {
                     //TODO        获得某一日的缴存列表;
 
 
-                    DP005_work_unit_单位分户账 dp005_work_unit_单位分户账 = dp005_work_unit_单位分户账Map.get(e.getUnitaccnum单位账号());
+                    DP005_单位分户账 dp005__单位分户账 = dp005_work_unit_单位分户账Map.get(e.getUnitaccnum单位账号());
 
 
                     return Septet.with(e,
-                            cm001_单位基本资料表Map.get(dp005_work_unit_单位分户账.getUnitcustid_单位客户号()),
-                            dp005_work_unit_单位分户账,
+                            cm001_单位基本资料表Map.get(dp005__单位分户账.getUnitcustid_单位客户号()),
+                            dp005__单位分户账,
                             dp021_单位缴存登记簿Map.get(e.getUnitaccnum单位账号()),
                             dw025_公积金提取审核登记表Map.get(e.getUnitaccnum单位账号()),
 
-                            dp008_institution_detail_单位明细账Map.get(e.getUnitaccnum单位账号()),
+                            DP008_单位明细账Map.get(e.getUnitaccnum单位账号()),
                             dp202_单位缴存变更登记簿Map.get(e.getUnitaccnum单位账号()));
                 }).collect(Collectors.toList());
 
@@ -195,12 +195,12 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
     //TODO 存储统计信息
     @Transactional
     public void saveHistoryOneTime(LocalDate n, List<Septet<
-            DP004_unit_payment_info_单位缴存信息表,
-            CM001_单位基本资料表, DP005_work_unit_单位分户账,
+            DP004_单位缴存信息表,
+            CM001_单位基本资料表, DP005_单位分户账,
 
             List<DP021_单位缴存登记簿>,
             List<DW025_公积金提取审核登记表>,
-            List<DP008_institution_detail_单位明细账>,
+            List<DP008_单位明细账>,
             List<DP202_单位缴存变更登记簿>>> inputs) {
 
         inputs.stream().collect(Collectors.groupingBy(e -> e.getValue1().getAgentinstcode_经办机构())).entrySet().forEach(eee -> {
@@ -231,7 +231,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                 LoanHistory loanHistory = new LoanHistory(n,StatisticalIndexCodeEnum.S_6_SEQ_新增单位数_AND_0301000501);
                 loanHistory.setIndex机构编码(机构编码); // 机构名称
                 loanHistory.setIndex单位性质(o.getKey()); // 银行名称
-                loanHistory.setIntValue(o.getValue().stream().map(h->h.getValue2().getOpnaccdate__开户日期().equals(n)).count()); // 银行名称
+                loanHistory.setIntValue(o.getValue().stream().map(h->h.getValue2().getOpnaccdate开户日期().equals(n)).count()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
 
 
@@ -241,7 +241,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                 loanHistory.setIntValue(o.getValue().stream().map(h->h.getValue6().stream().
                         filter(i->{
                             return i.getTransdate不可为空交易日期().equals(n)
-                                    && i.getChgtype_不可为空_变更类型().equals(H_DP202_单位缴存变更登记簿_变更类型.E_5_正常状态销户);
+                                    && i.getChgtype_不可为空_变更类型().equals(E_DP202_单位缴存变更登记簿_变更类型.E_5_正常状态销户);
                         }) )
                         .count()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
@@ -254,7 +254,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                 loanHistory.setIntValue(o.getValue().stream().map(h->h.getValue6().stream().
                         filter(i->{
                             return i.getTransdate不可为空交易日期().equals(n)
-                                    && i.getChgtype_不可为空_变更类型().equals(H_DP202_单位缴存变更登记簿_变更类型.E_4_封存);
+                                    && i.getChgtype_不可为空_变更类型().equals(E_DP202_单位缴存变更登记簿_变更类型.E_4_封存);
                         }) )
                         .count()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
@@ -271,7 +271,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                 loanHistory.setIntValue(o.getValue().stream().map(h->h.getValue6().stream().
                         filter(i->{
                             return i.getTransdate不可为空交易日期().equals(n)
-                                    && i.getChgtype_不可为空_变更类型().equals(H_DP202_单位缴存变更登记簿_变更类型.E_4_封存);
+                                    && i.getChgtype_不可为空_变更类型().equals(E_DP202_单位缴存变更登记簿_变更类型.E_4_封存);
                         }) )
                         .count()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
@@ -282,7 +282,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                 loanHistory.setIntValue(o.getValue().stream().map(h->h.getValue6().stream().
                         filter(i->{
                             return i.getTransdate不可为空交易日期().equals(n)
-                                    && i.getChgtype_不可为空_变更类型().equals(H_DP202_单位缴存变更登记簿_变更类型.E_4_封存);
+                                    && i.getChgtype_不可为空_变更类型().equals(E_DP202_单位缴存变更登记簿_变更类型.E_4_封存);
                         }) )
                         .count()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
@@ -293,25 +293,25 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                 Map<String,List<String>> result = o.getValue().stream().map(h->   Collections.max(h.getValue6().stream().
                         filter(i->{
                             return i.getTransdate不可为空交易日期().isBefore(n) || i.getTransdate不可为空交易日期().isEqual(n)
-                                    && i.getChgtype_不可为空_变更类型().equals(H_DP202_单位缴存变更登记簿_变更类型.E_4_封存);
+                                    && i.getChgtype_不可为空_变更类型().equals(E_DP202_单位缴存变更登记簿_变更类型.E_4_封存);
                         }).collect(Collectors.toList()), Comparator.comparingLong(l->l.getTransdate不可为空交易日期().toEpochDay())).getChgtype_不可为空_变更类型() ).collect(Collectors.groupingBy(m->m));
 
 
                 loanHistory = new LoanHistory(n,StatisticalIndexCodeEnum.S_14_SEQ_销户总单位数_AND_0301002201);
                 loanHistory.setIndex机构编码(机构编码); // 机构名称
                 loanHistory.setIndex单位性质(o.getKey()); // 银行名称
-                loanHistory.setIntValue(result.get(H_DP202_单位缴存变更登记簿_变更类型.E_5_正常状态销户.getText()).size()); // 银行名称
+                loanHistory.setIntValue(result.get(E_DP202_单位缴存变更登记簿_变更类型.E_5_正常状态销户.getText()).size()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
                 loanHistory = new LoanHistory(n,StatisticalIndexCodeEnum.S_15_SEQ_正常总单位数_AND_0301002301);
                 loanHistory.setIndex机构编码(机构编码); // 机构名称
                 loanHistory.setIndex单位性质(o.getKey()); // 银行名称
-                loanHistory.setIntValue(result.get(H_DP202_单位缴存变更登记簿_变更类型.E_3_转入后正常状态.getText()).size()); // 银行名称
+                loanHistory.setIntValue(result.get(E_DP202_单位缴存变更登记簿_变更类型.E_3_转入后正常状态.getText()).size()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
 
                 loanHistory = new LoanHistory(n,StatisticalIndexCodeEnum.S_16_SEQ_封存总单位数_AND_0301002401);
                 loanHistory.setIndex机构编码(机构编码); // 机构名称
                 loanHistory.setIndex单位性质(o.getKey()); // 银行名称
-                loanHistory.setIntValue(result.get(H_DP202_单位缴存变更登记簿_变更类型.E_4_封存.getText()).size()); // 银行名称
+                loanHistory.setIntValue(result.get(E_DP202_单位缴存变更登记簿_变更类型.E_4_封存.getText()).size()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
 
 
@@ -357,7 +357,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                 loanHistory.setIntValue(
                         o.getValue().stream()
                                 .filter(p->{
-                                    return p.getValue2().getOpnaccdate__开户日期().equals(n);
+                                    return p.getValue2().getOpnaccdate开户日期().equals(n);
                                 }).count()
                 );
                 loanHistoryRepository.save(loanHistory);
@@ -383,7 +383,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                         o.getValue().stream()
                                 .filter(p->{
 
-                                    return p.getValue2().getOpnaccdate__开户日期().equals(n);
+                                    return p.getValue2().getOpnaccdate开户日期().equals(n);
                                 }).mapToDouble(j->j.getValue0().getBasenum_缴存基数()).sum()
                 );
                 loanHistoryRepository.save(loanHistory);
@@ -425,7 +425,7 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
                     List<DP202_单位缴存变更登记簿> dp202_单位缴存变更登记簿s = ff.getValue6();
                     List<DP021_单位缴存登记簿> dp021_单位缴存登记簿s = ff.getValue3();
                     List<DW025_公积金提取审核登记表> dw025_公积金提取审核登记表s = ff.getValue4();
-                    List<DP008_institution_detail_单位明细账> dp008_institution_detail_单位明细账s = ff.getValue5();
+                    List<DP008_单位明细账> DP008_单位明细账s = ff.getValue5();
                 });
 
 
@@ -491,18 +491,18 @@ public class ZYmygdwzt每一个单位状态HistoryerviceImpl {
         for (int i = 0; i <= abs(num); i++) {
             LocalDate n = ldt_ksrq.minusDays(i);
 
-            List<Septet<DP004_unit_payment_info_单位缴存信息表, CM001_单位基本资料表, DP005_work_unit_单位分户账,
+            List<Septet<DP004_单位缴存信息表, CM001_单位基本资料表, DP005_单位分户账,
 
                     List<DP021_单位缴存登记簿>, List<DW025_公积金提取审核登记表>,
 
-                    List<DP008_institution_detail_单位明细账>,
+                    List<DP008_单位明细账>,
                     List<DP202_单位缴存变更登记簿>>> aa = 历史倒推_某一日的缴存(n);
             saveHistoryOneTime(n, aa);
         }
     }
 
 
-   // @PostConstruct
+   //
     public void run() {
 
        // DateUtils.truncate(LocalDate.now(), Calendar.DAY_OF_MONTH);

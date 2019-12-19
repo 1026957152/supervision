@@ -58,7 +58,7 @@ public class B归集ServiceImpl  {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -77,9 +77,9 @@ public class B归集ServiceImpl  {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
@@ -87,7 +87,7 @@ public class B归集ServiceImpl  {
 
 
     @Autowired
-    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    private LN005_贷款分户信息_Repository lN005_贷款分户信息RepositoryLN005;
     @Autowired
     private DW145_提取结算登记薄_Repository dw145_提取结算登记薄_repository;
 
@@ -97,15 +97,15 @@ public class B归集ServiceImpl  {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
@@ -127,7 +127,7 @@ public class B归集ServiceImpl  {
     //TODO 单位号，管理办机构号，归集人数，归集金额
     public List<Quartet<String,String,Integer,Double>> 当日情况_归集_动作(LocalDate 日期) {
 
-        long count = dp008_institution_detail_单位明细账_repository.count();
+        long count = dp008__单位明细账_repository.count();
 /*        System.out.println("--日归集时间序列 dp202_单位缴存变更登记簿_repository---"+count);
 
         List<DP202_单位缴存变更登记簿> dp021_单位缴存登记薄s = dp021_单位缴存登记薄Repository.findByTransdate交易日期Desc(日期);
@@ -138,12 +138,12 @@ public class B归集ServiceImpl  {
         }*/
         System.out.println("----count-----------------"+ count);
         System.out.println("----日期-----------------"+ 日期.toString());
-        List<DP008_institution_detail_单位明细账> dp021_单位缴存登记薄s =dp008_institution_detail_单位明细账_repository.findByTransdate不可为空交易日期(日期);
+        List<DP008_单位明细账> dp021_单位缴存登记薄s = dp008__单位明细账_repository.findByTransdate不可为空交易日期(日期);
         List<Quartet<String,String,Integer,Double>> list= new ArrayList<>();
 
 
         list.addAll(dp021_单位缴存登记薄s.stream().map(e->{
-            return new Quartet<String,String,Integer,Double>(e.getUnitaccnum_单位账号(),"88888",e.getPeoplenum_人数(),e.getAmt_发生额().doubleValue());
+            return new Quartet<String,String,Integer,Double>(e.getUnitaccnum不可为空单位账号(),"88888",Long.valueOf(e.getPeoplenum_0_不可为空_人数()).intValue(),e.getAmt_0_不可为空_发生额());
 
         }).collect(Collectors.toList()));
         return list;
@@ -167,7 +167,7 @@ public class B归集ServiceImpl  {
      //   HX摘要码信息表.HX__1_S_单位正常汇缴入账_9101;
     //    HX摘要码信息表.HX__86_S_汇缴入账_1219;
 
-     //   DP008_institution_detail_单位明细账_Repository
+     //   DP008_单位明细账_Repository
 
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ldt_ksrq = LocalDate.parse(ksrq,df);
@@ -486,7 +486,7 @@ public class B归集ServiceImpl  {
     }
 
 
-   //  @PostConstruct
+   //
     // @Transactional
     public Map 日单位状态变更时间序列(String dimension1, String dimension2) {
 
@@ -1353,7 +1353,7 @@ public class B归集ServiceImpl  {
     // TODO
     public Output S_64_SEQ_非正常账户余额_AND_0301008004(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
         String name = StatisticalIndexCodeEnum.S_64_SEQ_非正常账户余额_AND_0301008004.name();
-        dp006_payment_个人缴存信息表_repository.findAll();
+        dp006__个人缴存信息表_repository.findAll();
         统计周期编码 A =统计周期编码.H__03_每月;
         // TODO 每类型多少个人
 

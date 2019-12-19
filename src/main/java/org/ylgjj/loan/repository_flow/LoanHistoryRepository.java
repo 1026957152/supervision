@@ -2,6 +2,8 @@ package org.ylgjj.loan.repository_flow;
 
 
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.ylgjj.loan.domain.AN004_单位基本资料表;
 import org.ylgjj.loan.flow.LoanHistory;
@@ -24,4 +26,6 @@ public interface LoanHistoryRepository extends JpaRepository<LoanHistory, Intege
     List<LoanHistory> findByIndexNo(String name);
 
     List<LoanHistory> findByIndexNoAndDateBetween(String 指标编码, LocalDate ldt_ksrq, LocalDate ldt_jsrq);
+
+    Page<LoanHistory> findByIndexNo(String 指标编码, Pageable pageable);
 }

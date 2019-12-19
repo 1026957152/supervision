@@ -17,4 +17,8 @@ public interface TR100_转移接续登记簿Repository extends JpaRepository<TR1
 
 
     List<TR100_转移接续登记簿> findByTransdate不可为空交易日期After(LocalDate minusDays);
+
+    List<TR100_转移接续登记簿> findByJyrq不可为空交易日期BetweenOrderByJyrq不可为空交易日期Desc(LocalDate minusDays, LocalDate now);
+
+
 }

@@ -2,24 +2,20 @@ package org.ylgjj.loan.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.ylgjj.loan.domain.LN003_contract_info_合同信息;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.domain.ReturnResult;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.output.H1_4监管主要指标查询_离柜率查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
-import org.ylgjj.loan.outputenum.HX摘要码信息表;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.outputenum.统计周期编码;
+import org.ylgjj.loan.pojo.QueryH_1_3_监管主要指标查询_指标明细查询;
 import org.ylgjj.loan.rate.HX_Rate环比同比HistoryerviceImpl;
+import org.ylgjj.loan.rates.*;
 import org.ylgjj.loan.repository.*;
 
 import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created by silence yuan on 2015/7/25.
@@ -45,9 +41,135 @@ public class H1_3监管主要指标查询_指标明细查询ServiceImpl {
     private HX_Rate环比同比HistoryerviceImpl hx_rate环比同比Historyervice;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004UnitPaymentInfo_单位缴存信息表_repository;
+    private DP004_单位缴存信息表_Repository dp004UnitPaymentInfo_单位缴存信息表_repository;
 
 
+    @Autowired
+    private SY_137_ljffbs_累计发放笔数_RateServiceImpl sy_137_ljffbs_累计发放笔数_rateService;
+    @Autowired
+    private SY_134_ffbs_发放笔数_RateServiceImpl sy_134_ffbs_发放笔数_rateService;
+    @Autowired
+    private SY_127_ljffdkje_累计发放贷款金额_RateServiceImpl sy_127_ljffdkje_累计发放贷款金额_rateService;
+    @Autowired
+    private SY_166_tqzbs_提取总笔数_RateServiceImpl sy_166_tqzbs_提取总笔数_rateService;
+    @Autowired
+    private SY_131_dkye_贷款余额_RateServiceImpl sy_131_dkye_贷款余额_rateService;
+    @Autowired
+    private SY_143_hqzhye_活期账户余额_RateServiceImpl sy_143_hqzhye_活期账户余额_rateService;
+    @Autowired
+    private SY_49_ljthreeyqhs_三期以上笔数_RateServiceImpl sy_49_ljthreeyqhs_三期以上笔数_rateService;
+    @Autowired
+    private SY_52_ljsixyqhs_六期以上笔数_RateServiceImpl sy_52_ljsixyqhs_六期以上笔数_rateService;
+    @Autowired
+    private SY_121_hsje_回收金额_RateServiceImpl sy_121_hsje_回收金额_rateService;
+
+
+    @Autowired
+    private SY_124_ljhsje_累计回收金额_RateServiceImpl sy_124_ljhsje_累计回收金额_rateService;
+
+    @Autowired
+    private SY_19_ljjzzrs_建制总人数_RateServiceImpl sy_19_ljjzzrs_建制总人数_rateService;
+    @Autowired
+    private SY_55_hslx_回收利息_RateServiceImpl sy_55_hslx_回收利息_rateService;
+
+
+    @Autowired
+    private SY_58_ljhslx_累计回收利息_RateServiceImpl sy_58_ljhslx_累计回收利息_rateService;
+    @Autowired
+    private SY_46_ljzldkbs_存量贷款笔数_RateServiceImpl sy_46_ljzldkbs_存量贷款笔数_rateService;
+
+    @Autowired
+    private SY_118_ljffje_累计发放金额_RateServiceImpl sy_118_ljffje_累计发放金额_rateService;
+    @Autowired
+    private SY_112_ljtqje_累计提取金额_RateServiceImpl sy_112_ljtqje_累计提取金额_rateService;
+    @Autowired
+    private SY_109_tqje_提取金额_RateServiceImpl sy_109_tqje_提取金额_rateService;
+    @Autowired
+    private SY_106_ljtqe_历史累计提取额_提取原因_RateServiceImpl sy_106_ljtqe_历史累计提取额_提取原因_rateService;
+    @Autowired
+    private SY_103_ljsjce_累计实缴存额_RateServiceImpl sy_103_ljsjce_累计实缴存额_rateService;
+
+    @Autowired
+    private SY_100_sjce_实缴存额_RateServiceImpl sy_100_sjce_实缴存额_rateService;
+    @Autowired
+    private SY_97_ljjce_累计缴存额_RateServiceImpl sy_97_ljjce_累计缴存额_rateService;
+    @Autowired
+    private SY_94_ljxkhzgs_累计新开户职工_RateServiceImpl sy_94_ljxkhzgs_累计新开户职工_rateService;
+
+    @Autowired
+    private SY_82_jcye_缴存余额_RateServiceImpl sy_82_jcye_缴存余额_rateService;
+    @Autowired
+    private SY_88_ljxkhdws_累计新开户单位_RateServiceImpl sy_88_ljxkhdws_累计新开户单位_rateService;
+    @Autowired
+    private SY_85_xkhdws_新开户单位_RateServiceImpl sy_85_xkhdws_新开户单位_rateService;
+
+
+    @Autowired
+    private SY_76_sjdws_实缴单位数_RateServiceImpl sy_76_sjdws_实缴单位数_rateService;
+    @Autowired
+    private SY_79_sjzgs_实缴职工数_RateServiceImpl sy_79_sjzgs_实缴职工数_rateService;
+    @Autowired
+    private SY_70_wbzcje_外部转出金额_RateServiceImpl sy_70_wbzcje_外部转出金额_rateService;
+    @Autowired
+    private SY_73_ljwbzcje_累计外部转出金额_RateServiceImpl sy_73_ljwbzcje_累计外部转出金额_rateService;
+    @Autowired
+    private SY_64_wbzrje_外部转入金额_RateServiceImpl sy_64_wbzrje_外部转入金额_rateService;
+
+    @Autowired
+    private SY_67_ljwbzrje_外部转入金额_RateServiceImpl sy_67_ljwbzrje_外部转入金额_rateService;
+
+
+    @Autowired
+    private SY_37_ljhse_累计回收额_RateServiceImpl sy_37_ljhse_累计回收额_rateService;
+
+
+    @Autowired
+    private SY_40_ljhsdkje_历史累计回收额_RateServiceImpl sy_40_ljhsdkje_历史累计回收额_rateService;
+
+    @Autowired
+    private SY_34_ljjzdjrs_建制冻结人数_RateServiceImpl sy_34_ljjzdjrs_建制冻结人数_rateService;
+    @Autowired
+    private SY_31_ljjzzcrs_建制正常人数_RateServiceImpl sy_31_ljjzzcrs_建制正常人数_rateService;
+
+    @Autowired
+    private SY_25_ljjzfxhrs_建制非销户人数_RateServiceImpl sy_25_ljjzfxhrs_建制非销户人数_rateService;
+    @Autowired
+    private SY_28_ljjzfcrs_建制封存人数_RateServiceImpl__ sy_28_ljjzfcrs_建制封存人数_rateServiceImpl__;
+
+    @Autowired
+    private SY_22_ljjzxhrs_建制销户人数_RateServiceImpl sy_22_ljjzxhrs_建制销户人数_rateService;
+    @Autowired
+    private SY_16_ljjzhjdws_建制缓缴单位数_RateServiceImpl sy_16_ljjzhjdws_建制缓缴单位数_rateService;
+    @Autowired
+    private SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl sy_13_ljjzzcdws_建制正常单位数_rateService;
+
+    @Autowired
+    private SY_10_ljjzfcdws_建制封存单位数_RateServiceImpl sy_10_ljjzfcdws_建制封存单位数_rateService;
+
+    @Autowired
+    private SY_7_ljjzfxhdws_建制非销户单位数_RateServiceImpl sy_7_ljjzfxhdws_建制非销户单位数_rateService;
+
+    @Autowired
+    private SY_4_ljjzxhdws_建制销户单位数_RateServiceImpl sy_4_ljjzxhdws_建制销户单位数_rateService;
+
+    @Autowired
+    private SY_1_ljjzzdws_建制总单位数_RateServiceImpl sy_1_ljjzzdws_建制总单位数_rateService;
+
+    @Autowired
+    private SY_144_ywsrje_业务收入金额_RateServiceImpl sy_144_ywsrje_业务收入金额_rateService;
+    @Autowired
+    private SY_145_ywzcje_业务收出金额_RateServiceImpl sy_145_ywzcje_业务收出金额_rateService;
+    @Autowired
+    private SY_168_dkzbs_贷款总笔数_RateServiceImpl sy_168_dkzbs_贷款总笔数_rateService;
+    @Autowired
+    private SY_164_gjzbs_归集总笔数_RateServiceImpl sy_164_gjzbs_归集总笔数_rateService;
+
+
+    @Autowired
+    private SY_176_dkzcspsj_贷款最长审批时间_RateServiceImpl sy_176_dkzcspsj_贷款最长审批时间_rateService;
+
+    @Autowired
+    private SY_177_dkpjspts_贷款平均审批天数_RateServiceImpl sy_177_dkpjspts_贷款平均审批天数_rateService;
 
 
     public ReturnResult 逾期监管汇总查询(String zjbzxbm) {
@@ -82,19 +204,101 @@ public class H1_3监管主要指标查询_指标明细查询ServiceImpl {
 
     public Output H_1_2_监管主要指标查询_公积金中心主要运行情况查询(String ksrq, String jsrq) {
         H1_2监管主要指标查询_公积金中心主要运行情况查询 h1 = new H1_2监管主要指标查询_公积金中心主要运行情况查询();
+/*
         h1.setLjjzzdws_建制总单位数_NUMBER_18_2((Integer)hx_rate环比同比Historyervice.SY_1_ljjzzdws_建制总单位数(ksrq,jsrq).get(E_指标_RATE_SY.SY_1_ljjzzdws_建制总单位数));
         h1.setLjhbjzzdws_环比建制总单位数_NUMBER_18_0((Double)hx_rate环比同比Historyervice.SY_1_ljjzzdws_建制总单位数(ksrq,jsrq).get(E_指标_RATE_SY.SY_2_ljhbjzzdws_环比建制总单位数));
         h1.setLjsnjzzdws_同比建制总单位数_NUMBER_18_0((Double)hx_rate环比同比Historyervice.SY_1_ljjzzdws_建制总单位数(ksrq,jsrq).get(E_指标_RATE_SY.SY_3_ljsnjzzdws_同比建制总单位数));
 
-
-
-
-
         h1.setLjhbjzfcrs_环比建制封存人数_NUMBER_18_0((Double)hx_rate环比同比Historyervice.SY_1_ljjzzdws_建制总单位数(ksrq,jsrq).get(E_指标_RATE_SY.SY_3_ljsnjzzdws_同比建制总单位数));
+*/
+
+        sy_137_ljffbs_累计发放笔数_rateService.query(h1,ksrq,jsrq);
+        sy_134_ffbs_发放笔数_rateService.query(h1,ksrq,jsrq);
+        sy_127_ljffdkje_累计发放贷款金额_rateService.query(h1,ksrq,jsrq);
+        sy_166_tqzbs_提取总笔数_rateService.query(h1,ksrq,jsrq);
+        sy_131_dkye_贷款余额_rateService.query(h1,ksrq,jsrq);
+        sy_143_hqzhye_活期账户余额_rateService.query(h1,ksrq,jsrq);
+        sy_49_ljthreeyqhs_三期以上笔数_rateService.query(h1,ksrq,jsrq);
+        sy_52_ljsixyqhs_六期以上笔数_rateService.query(h1,ksrq,jsrq);
+        sy_121_hsje_回收金额_rateService.query(h1,ksrq,jsrq);
+        sy_124_ljhsje_累计回收金额_rateService.query(h1,ksrq,jsrq);
+        sy_121_hsje_回收金额_rateService.query(h1,ksrq,jsrq);
+        sy_19_ljjzzrs_建制总人数_rateService.query(h1,ksrq,jsrq);
+        sy_55_hslx_回收利息_rateService.query(h1,ksrq,jsrq);
+        sy_58_ljhslx_累计回收利息_rateService.query(h1,ksrq,jsrq);
+        sy_46_ljzldkbs_存量贷款笔数_rateService.query(h1,ksrq,jsrq);
+        sy_124_ljhsje_累计回收金额_rateService.query(h1,ksrq,jsrq);
+        sy_118_ljffje_累计发放金额_rateService.query(h1,ksrq,jsrq);
+        sy_112_ljtqje_累计提取金额_rateService.query(h1,ksrq,jsrq);
+        sy_109_tqje_提取金额_rateService.query(h1,ksrq,jsrq);
+        sy_106_ljtqe_历史累计提取额_提取原因_rateService.query(h1,ksrq,jsrq);
+        sy_103_ljsjce_累计实缴存额_rateService.query(h1,ksrq,jsrq);
+        sy_100_sjce_实缴存额_rateService.query(h1,ksrq,jsrq);
+        sy_97_ljjce_累计缴存额_rateService.query(h1,ksrq,jsrq);
+        sy_94_ljxkhzgs_累计新开户职工_rateService.query(h1,ksrq,jsrq);
+        sy_82_jcye_缴存余额_rateService.query(h1,ksrq,jsrq);
+        sy_88_ljxkhdws_累计新开户单位_rateService.query(h1,ksrq,jsrq);
+        sy_85_xkhdws_新开户单位_rateService.query(h1,ksrq,jsrq);
+
+        sy_76_sjdws_实缴单位数_rateService.query(h1,ksrq,jsrq);
+        sy_79_sjzgs_实缴职工数_rateService.query(h1,ksrq,jsrq);
+        sy_70_wbzcje_外部转出金额_rateService.query(h1,ksrq,jsrq);
+        sy_73_ljwbzcje_累计外部转出金额_rateService.query(h1,ksrq,jsrq);
+        sy_64_wbzrje_外部转入金额_rateService.query(h1,ksrq,jsrq);
+        sy_67_ljwbzrje_外部转入金额_rateService.query(h1,ksrq,jsrq);
+
+
+
+        sy_1_ljjzzdws_建制总单位数_rateService.query(h1,ksrq,jsrq);
+        sy_4_ljjzxhdws_建制销户单位数_rateService.query(h1,ksrq,jsrq);
+        sy_7_ljjzfxhdws_建制非销户单位数_rateService.query(h1,ksrq,jsrq);
+        sy_10_ljjzfcdws_建制封存单位数_rateService.query(h1,ksrq,jsrq);
+
+        sy_16_ljjzhjdws_建制缓缴单位数_rateService.query(h1,ksrq,jsrq);
+        sy_22_ljjzxhrs_建制销户人数_rateService.query(h1,ksrq,jsrq);
+        sy_28_ljjzfcrs_建制封存人数_rateServiceImpl__.query(h1,ksrq,jsrq);
+        sy_31_ljjzzcrs_建制正常人数_rateService.query(h1,ksrq,jsrq);
+        sy_34_ljjzdjrs_建制冻结人数_rateService.query(h1,ksrq,jsrq);
+        sy_37_ljhse_累计回收额_rateService.query(h1,ksrq,jsrq);
+        sy_40_ljhsdkje_历史累计回收额_rateService.query(h1,ksrq,jsrq);
+
+        sy_13_ljjzzcdws_建制正常单位数_rateService.query(h1,ksrq,jsrq);
+        sy_25_ljjzfxhrs_建制非销户人数_rateService.query(h1,ksrq,jsrq);
+
+        sy_144_ywsrje_业务收入金额_rateService.query(h1,ksrq,jsrq);
+        sy_145_ywzcje_业务收出金额_rateService.query(h1,ksrq,jsrq);
+
+        sy_168_dkzbs_贷款总笔数_rateService.query(h1,ksrq,jsrq);
+        sy_164_gjzbs_归集总笔数_rateService.query(h1,ksrq,jsrq);
+
+
+        sy_176_dkzcspsj_贷款最长审批时间_rateService.query(h1,ksrq,jsrq);
+        sy_177_dkpjspts_贷款平均审批天数_rateService.query(h1,ksrq,jsrq);
+
+
+
+
+
+
+
+
 
         Output output = new Output();
 
         output.setData(Arrays.asList(h1));
         return output;
+    }
+
+    public Output H_1_3_监管主要指标查询_指标明细查询(QueryH_1_3_监管主要指标查询_指标明细查询 query) {
+
+/*                query.getDimension2(),
+                query.getDimension3(),
+                统计周期编码.valueOf(query.getTjzq()),
+                StatisticalIndexCodeEnum.valueOf(query.getTarget()),
+                query.getKsrq(),
+                query.getJsrq();*/
+
+
+        return null;
     }
 }

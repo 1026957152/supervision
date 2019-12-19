@@ -4,6 +4,9 @@ package org.ylgjj.loan.repository;
 import org.ylgjj.loan.domain.CM001_单位基本资料表;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by zhao yuan on 01/10/2015.
  */
@@ -13,4 +16,5 @@ public interface CM001_单位基本资料表Repository extends JpaRepository<CM0
     CM001_单位基本资料表 findByUnitcustid单位客户号(String unitcustid_单位客户号);
 
 
+    List<CM001_单位基本资料表> findByUnitcustid单位客户号In(List<String> collect);
 }

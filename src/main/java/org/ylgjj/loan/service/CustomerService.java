@@ -18,7 +18,7 @@ public interface CustomerService {
 
     Page<LN002> queryLoans(Pageable pageable);
 
-    Page<LN008_borrower_info_借款人信息> queryLoanee(Pageable pageable);
+    Page<LN008_借款人信息> queryLoanee(Pageable pageable);
 
     ReturnResult queryLoanee(Query query);
 }

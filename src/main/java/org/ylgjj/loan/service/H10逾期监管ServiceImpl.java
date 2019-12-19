@@ -30,11 +30,11 @@ public class H10逾期监管ServiceImpl {
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
     @Autowired
-    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    private LN005_贷款分户信息_Repository lN005_贷款分户信息RepositoryLN005;
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN008_借款人类型Repository ln008_借款人类型Repository;
 
@@ -87,7 +87,7 @@ public class H10逾期监管ServiceImpl {
 
         System.out.println("--------getJsrq_开始日期-------"+ldt_jsrq.toString());
         System.out.println("--------getKsrq_结束日期-------"+ldt_jsrq.toString());
-        Page<LN003_contract_info_合同信息> ln003_contract_info_合同信息s = ln003_contract_info_repository
+        Page<LN003_合同信息> ln003_contract_info_合同信息s = ln003_合同信息_repository
                 .findByOwecnt欠还次数GreaterThanEqualAndOwecnt欠还次数LessThanAndLoandate放款日期Between(逾期次数_floor,逾期次数_ceiling,
                         ldt_ksrq,ldt_jsrq,
                         PageRequest.of(zjbzxbm.getPageNumber(),zjbzxbm.getPageSize()));
@@ -120,16 +120,16 @@ public class H10逾期监管ServiceImpl {
             h10_2逾期监管_逾期监管明细查询.setHkfsmc_还款方式_String(E_还款方式Enum_HX.fromString(e.getRepaymode_还款方式()).getDisplayText());
 
 
-            List<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息s = lN005_lone_sub_accountRepository.findByloancontrcode合同代码(e.getLoancontrcode合同代码());
-            Optional<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息_optional = ln005_lone_sub_account_贷款分户信息s.stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).findAny();
+            List<LN005_贷款分户信息> ln005__贷款分户信息s = lN005_贷款分户信息RepositoryLN005.findByloancontrcode合同代码(e.getLoancontrcode合同代码());
+            Optional<LN005_贷款分户信息> ln005_lone_sub_account_贷款分户信息_optional = ln005__贷款分户信息s.stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).findAny();
 
             if(ln005_lone_sub_account_贷款分户信息_optional.isPresent()){
 
-                LN005_lone_sub_account_贷款分户信息 ln005_lone_sub_account_贷款分户信息 = ln005_lone_sub_account_贷款分户信息_optional.get();
-                h10_2逾期监管_逾期监管明细查询.setDkye_贷款余额_double(ln005_lone_sub_account_贷款分户信息.getCurbal_当前余额().doubleValue());
+                LN005_贷款分户信息 ln005__贷款分户信息 = ln005_lone_sub_account_贷款分户信息_optional.get();
+                h10_2逾期监管_逾期监管明细查询.setDkye_贷款余额_double(ln005__贷款分户信息.getCurbal_当前余额().doubleValue());
 
-                h10_2逾期监管_逾期监管明细查询.setDqjhhkje_月还款额_double(ln005_lone_sub_account_贷款分户信息
-                        .getMonthrepayamt_贷款月还款额_本金_().doubleValue()+ln005_lone_sub_account_贷款分户信息.getCurrintamt_当期利息金额());
+                h10_2逾期监管_逾期监管明细查询.setDqjhhkje_月还款额_double(ln005__贷款分户信息
+                        .getMonthrepayamt_贷款月还款额_本金_().doubleValue()+ ln005__贷款分户信息.getCurrintamt_当期利息金额());
 
             }else{
                 h10_2逾期监管_逾期监管明细查询.setDkye_贷款余额_double(-1l);
@@ -139,15 +139,15 @@ public class H10逾期监管ServiceImpl {
             }
 
 
-            LN0014_Trading_house_贷款房屋信息 ln0014_trading_house_贷款房屋信息 = ln014_tradingHouse_贷款房屋信息Repository.findByLoancontrcode0合同代码(e.getLoancontrcode合同代码());
-            h10_2逾期监管_逾期监管明细查询.setFwxzmc_房屋性质_String(E_LN014_贷款房屋信息_房屋类型.fromString(ln0014_trading_house_贷款房屋信息.getHousetype_0_房屋类型()).getDisplayText());
-            h10_2逾期监管_逾期监管明细查询.setFwzl_房屋地址_String(ln0014_trading_house_贷款房屋信息.getHouseaddr_1_房屋坐落());
+            LN014_贷款房屋信息 ln0014__贷款房屋信息 = ln014__贷款房屋信息Repository.findByLoancontrcode0合同代码(e.getLoancontrcode合同代码());
+            h10_2逾期监管_逾期监管明细查询.setFwxzmc_房屋性质_String(E_LN014_贷款房屋信息_房屋类型.fromString(ln0014__贷款房屋信息.getHousetype_0_房屋类型()).getDisplayText());
+            h10_2逾期监管_逾期监管明细查询.setFwzl_房屋地址_String(ln0014__贷款房屋信息.getHouseaddr_1_房屋坐落());
 
 
 
-            List<LN008_borrower_info_借款人信息> borrower_info_借款人信息s = ln008_借款人类型Repository.findByloancontrcode合同代码(e.getLoancontrcode合同代码());
+            List<LN008_借款人信息> borrower_info_借款人信息s = ln008_借款人类型Repository.findByloancontrcode合同代码(e.getLoancontrcode合同代码());
 
-            LN008_borrower_info_借款人信息 borrower_info_借款人信息 = borrower_info_借款人信息s.stream().filter(bbb->bbb.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).findFirst().get();
+            LN008_借款人信息 borrower_info_借款人信息 = borrower_info_借款人信息s.stream().filter(bbb->bbb.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).findFirst().get();
 
             h10_2逾期监管_逾期监管明细查询.setGrztmc_主借款人账户状态_String(borrower_info_借款人信息.getIndiaccstate_1_个人账户状态());
             h10_2逾期监管_逾期监管明细查询.setGrjcjs_主借款人月缴存基数_double(borrower_info_借款人信息.getBasenum_0_缴存基数().doubleValue());
@@ -157,7 +157,7 @@ public class H10逾期监管ServiceImpl {
             h10_2逾期监管_逾期监管明细查询.setJkrxm_借款人姓名_String(borrower_info_借款人信息.getAccname_0_个人姓名());
             h10_2逾期监管_逾期监管明细查询.setJkrzjh_借款人证件号码_String(borrower_info_借款人信息.getCertinum_0_证件号码());
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlan_贷款分期还款计划s  = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码OrderByBegdate0开始日期Asc(e.getLoancontrcode合同代码());
+            List<LN006_贷款分期还款计划> ln006__贷款分期还款计划s = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码OrderByBegdate0开始日期Asc(e.getLoancontrcode合同代码());
 
             List<LN004_合同状态信息> ln004_合同状态信息s = ln004_合同状态信息Repository.findByLoancontrcode(e.getLoancontrcode合同代码());
 
@@ -181,20 +181,20 @@ public class H10逾期监管ServiceImpl {
             PB008_柜员信息表 pb008_柜员信息表 = pb008_柜员信息表_repository.findByOperid(ln001_申请审批信息.getApproveop());
             h10_2逾期监管_逾期监管明细查询.setSpczyxm_审批人_String(pb008_柜员信息表.getOpname());
 
-            h10_2逾期监管_逾期监管明细查询.setYqkssj_逾期开始日期_String(ln006_repaymentPlan_贷款分期还款计划s.stream()
-                    .filter(h->h.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期.getText()))
+            h10_2逾期监管_逾期监管明细查询.setYqkssj_逾期开始日期_String(ln006__贷款分期还款计划s.stream()
+                    .filter(h->h.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.逾期.getText()))
                     .findFirst().get().getBegdate0开始日期().toString());
 
-            double Dqyqbj_当前逾期金额 = ln006_repaymentPlan_贷款分期还款计划s.stream().filter(h->h.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期))
+            double Dqyqbj_当前逾期金额 = ln006__贷款分期还款计划s.stream().filter(h->h.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.逾期))
                     .mapToDouble(h->h.getPlanprin0本期应还本金().add(h.getPlanint本期应还利息0()).doubleValue()).sum();
            // h10_2逾期监管_逾期监管明细查询.setYql_逾期率(Dqyqbj_当前逾期金额/h10_2逾期监管_逾期监管明细查询.getDkye_贷款余额_double());
           //  h10_2逾期监管_逾期监管明细查询.setYqlbfb(12);
-            h10_2逾期监管_逾期监管明细查询.setDqyqbj_当前逾期本金_double(ln006_repaymentPlan_贷款分期还款计划s.stream().filter(h->h.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期))
+            h10_2逾期监管_逾期监管明细查询.setDqyqbj_当前逾期本金_double(ln006__贷款分期还款计划s.stream().filter(h->h.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.逾期))
                     .mapToDouble(h->h.getPlanprin0本期应还本金().doubleValue()).sum());
 
             //return LocalDate.now().until(endDate, ChronoUnit.DAYS);
-            long num = ln006_repaymentPlan_贷款分期还款计划s.stream()
-                    .filter(h->h.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期.getText()))
+            long num = ln006__贷款分期还款计划s.stream()
+                    .filter(h->h.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.逾期.getText()))
                     .findFirst().get().getEnddate0终止日期().until(LocalDate.now(), ChronoUnit.DAYS);
 
             h10_2逾期监管_逾期监管明细查询.setYqts_逾期天数_int(Long.valueOf(num).intValue());
@@ -208,23 +208,23 @@ public class H10逾期监管ServiceImpl {
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
 
 
     public Output H10_1逾期监管_逾期监管汇总查询(String zjbzxbm) {
         //List<DP202_单位缴存变更登记簿> dp021_单位缴存登记薄s = dp202_单位缴存变更登记簿_repository.findByTransdate不可为空交易日期(LocalDate.now());
-        List<LN003_contract_info_合同信息> ln003_contract_info_合同信息s = ln003_contract_info_repository.findByOwecnt欠还次数GreaterThanEqual(6);
+        List<LN003_合同信息> ln003__合同信息s = ln003_合同信息_repository.findByOwecnt欠还次数GreaterThanEqual(6);
 
-        System.out.println("--日归集时间序列 dp202_单位缴存变更登记簿_repository---"+ln003_contract_info_合同信息s.size());
+        System.out.println("--日归集时间序列 dp202_单位缴存变更登记簿_repository---"+ ln003__合同信息s.size());
 
-        Map<Integer, List<Triplet<LN003_contract_info_合同信息,LN005_lone_sub_account_贷款分户信息,Double>>>  a =ln003_contract_info_合同信息s.stream().map(e->{
-            List<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息s = lN005_lone_sub_accountRepository.findByloancontrcode合同代码(e.getLoancontrcode合同代码());
-            Optional<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息_optional = ln005_lone_sub_account_贷款分户信息s.stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).findFirst();
+        Map<Integer, List<Triplet<LN003_合同信息, LN005_贷款分户信息,Double>>>  a = ln003__合同信息s.stream().map(e->{
+            List<LN005_贷款分户信息> ln005__贷款分户信息s = lN005_贷款分户信息RepositoryLN005.findByloancontrcode合同代码(e.getLoancontrcode合同代码());
+            Optional<LN005_贷款分户信息> ln005_lone_sub_account_贷款分户信息_optional = ln005__贷款分户信息s.stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).findFirst();
 
-            Triplet<LN003_contract_info_合同信息,LN005_lone_sub_account_贷款分户信息,Double> triplet =
-                    Triplet.with(e, ln005_lone_sub_account_贷款分户信息s.get(0), 1.0D);
+            Triplet<LN003_合同信息, LN005_贷款分户信息,Double> triplet =
+                    Triplet.with(e, ln005__贷款分户信息s.get(0), 1.0D);
             return triplet ;
 
         }).collect(Collectors.toList()).stream().collect(  // 机构分类

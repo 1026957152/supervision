@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 @Entity
 
-@Table(name = "DP095")
+@Table(name = "DP008")
 
 public class DP008_单位明细账 {
     //DP095_PK_1_3:索引_accinstcode,accflag,calintdate
@@ -34,10 +34,10 @@ public class DP008_单位明细账 {
     private LocalDate transdate不可为空交易日期;
 
     @Column(name = "unitaccnum")
-    private String unitaccnum_0_不可为空_单位账号;
+    private String unitaccnum不可为空单位账号;
 
 
-    @Column(name = "accflag")
+    @Column(name = "dcflag")
     private String dcflag_不可为空_借贷标志; //1-借,2-贷
 
 
@@ -68,8 +68,7 @@ public class DP008_单位明细账 {
 
 
 
-    @Column(name = "dcflag")
-    private String dcflag;
+
     @Column(name = "amt")
     private double amt_0_不可为空_发生额;
     @Column(name = "lbal")
@@ -145,12 +144,12 @@ public class DP008_单位明细账 {
         this.transdate不可为空交易日期 = transdate不可为空交易日期;
     }
 
-    public String getUnitaccnum_0_不可为空_单位账号() {
-        return unitaccnum_0_不可为空_单位账号;
+    public String getUnitaccnum不可为空单位账号() {
+        return unitaccnum不可为空单位账号;
     }
 
-    public void setUnitaccnum_0_不可为空_单位账号(String unitaccnum_0_不可为空_单位账号) {
-        this.unitaccnum_0_不可为空_单位账号 = unitaccnum_0_不可为空_单位账号;
+    public void setUnitaccnum不可为空单位账号(String unitaccnum不可为空单位账号) {
+        this.unitaccnum不可为空单位账号 = unitaccnum不可为空单位账号;
     }
 
     public String getDcflag_不可为空_借贷标志() {
@@ -207,14 +206,6 @@ public class DP008_单位明细账 {
 
     public void setPeoplenum_0_不可为空_人数(long peoplenum_0_不可为空_人数) {
         this.peoplenum_0_不可为空_人数 = peoplenum_0_不可为空_人数;
-    }
-
-    public String getDcflag() {
-        return dcflag;
-    }
-
-    public void setDcflag(String dcflag) {
-        this.dcflag = dcflag;
     }
 
     public double getAmt_0_不可为空_发生额() {

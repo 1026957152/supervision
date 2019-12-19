@@ -49,7 +49,7 @@ public class B提取ServiceImpl {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -68,9 +68,9 @@ public class B提取ServiceImpl {
     private DW025_公积金提取审核登记表_Repository dW025_公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
@@ -78,7 +78,7 @@ public class B提取ServiceImpl {
 
 
     @Autowired
-    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    private LN005_贷款分户信息_Repository lN005_贷款分户信息RepositoryLN005;
     @Autowired
     private DW145_提取结算登记薄_Repository dw145_提取结算登记薄_repository;
 
@@ -88,15 +88,15 @@ public class B提取ServiceImpl {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
@@ -819,7 +819,7 @@ public class B提取ServiceImpl {
     // TODO
     public Output S_65_SEQ_归集余额_AND_0301008101(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
         String name = StatisticalIndexCodeEnum.S_65_SEQ_归集余额_AND_0301008101.name();
-        dp006_payment_个人缴存信息表_repository.findAll();
+        dp006__个人缴存信息表_repository.findAll();
         统计周期编码 A =统计周期编码.H__01_每日;
         // TODO 每类型多少个人
 
@@ -842,7 +842,7 @@ public class B提取ServiceImpl {
     // TODO
     public Output S_71_SEQ_历史累计提取额_AND_0301010701(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
         String name = StatisticalIndexCodeEnum.S_71_SEQ_历史累计提取额_AND_0301010701.name();
-        dp006_payment_个人缴存信息表_repository.findAll();
+        dp006__个人缴存信息表_repository.findAll();
         统计周期编码 A =统计周期编码.H__01_每日;
         // TODO 每类型多少个人
 
@@ -860,7 +860,7 @@ public class B提取ServiceImpl {
     // TODO S_72_SEQ_历史累计提取额__提取原因___AND_0301010711
     public Output S_72_SEQ_历史累计提取额__提取原因___AND_0301010711(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {
         String name = StatisticalIndexCodeEnum.S_72_SEQ_历史累计提取额__提取原因___AND_0301010711.name();
-        dp006_payment_个人缴存信息表_repository.findAll();
+        dp006__个人缴存信息表_repository.findAll();
         统计周期编码 A =统计周期编码.H__01_每日;
         // TODO 每类型多少个人
 

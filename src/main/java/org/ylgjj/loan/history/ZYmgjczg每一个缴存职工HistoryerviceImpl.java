@@ -42,7 +42,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -61,13 +61,13 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
 
 
     @Autowired
@@ -81,15 +81,15 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
@@ -112,18 +112,21 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
 
     boolean initComplte = false;
-    List<DP006_Payment_个人缴存信息表> dp006_payment_个人缴存信息表s = null;
+    List<DP006_个人缴存信息表> dp006__个人缴存信息表s = null;
 
     Map<String,CM002_个人基本资料表> cm002_个人基本资料表Map = null;
-    Map<String,DP007_individual_sub_account_个人分户账> dp007_individual_sub_account_个人分户账Map = null;
+    Map<String, DP007_个人分户账> dp007_individual_sub_account_个人分户账Map = null;
 
     Map<String, CM001_单位基本资料表> cm001_单位基本资料表Map = null;
     //TODO 历史倒推
 
-    public  List<Octet<DP006_Payment_个人缴存信息表,
+
+
+
+    public  List<Octet<DP006_个人缴存信息表,
             CM001_单位基本资料表,
             CM002_个人基本资料表,
-            DP007_individual_sub_account_个人分户账,
+            DP007_个人分户账,
             List<DP022_个人缴存登记簿>,
             List<DW025_公积金提取审核登记表>,
             List<DP009_个人明细账>,
@@ -132,7 +135,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         if(!initComplte){
-            dp006_payment_个人缴存信息表s = dp006_payment_个人缴存信息表_repository.findAll();
+            dp006__个人缴存信息表s = dp006__个人缴存信息表_repository.findAll();
 
             cm002_个人基本资料表Map = cm002个人基本资料表Repository.findAll().stream().collect(Collectors.toMap(e->e.getAccname_个人姓名(), a->a));
             dp007_individual_sub_account_个人分户账Map = dp007_individual_sub_account个人分户账Repository.findAll().stream().collect(Collectors.toMap(e->e.getAccnum_个人账号(),a->a));
@@ -154,20 +157,20 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
                 = dw025_公积金提取审核登记表s.stream().collect(Collectors.groupingBy(e->e.getUnitaccnum单位账号()));
 
         Map<String,List<DP009_个人明细账>> dp009_个人明细账Map
-                = dp009_个人明细账s.stream().collect(Collectors.groupingBy(e->e.getAccnum_不可为空_个人账号()));
+                = dp009_个人明细账s.stream().collect(Collectors.groupingBy(e->e.getAccnum不可为空个人账号()));
 
 
         Map<String,List<DP204_个人缴存变更登记簿>> dp204_个人缴存变更登记簿Map
-                = dp204_个人缴存变更登记簿s.stream().collect(Collectors.groupingBy(e->e.getAccnum_不可为空_个人账号()));
+                = dp204_个人缴存变更登记簿s.stream().collect(Collectors.groupingBy(e->e.getAccnum不可为空个人账号()));
 
 
 
 
-              return  dp006_payment_个人缴存信息表s.stream().collect(Collectors.toList()).stream().map(e->{
+              return  dp006__个人缴存信息表s.stream().collect(Collectors.toList()).stream().map(e->{
             //TODO        获得某一日的缴存列表;
 
 
-            DP007_individual_sub_account_个人分户账 dp005_work_unit_单位分户账 = dp007_individual_sub_account_个人分户账Map.get(e.getAccnum个人账号());
+            DP007_个人分户账 dp005_work_unit_单位分户账 = dp007_individual_sub_account_个人分户账Map.get(e.getAccnum个人账号());
 
 
                 return Octet.with(e,
@@ -191,10 +194,10 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
     //TODO 存储统计信息
     public void saveHistoryOneTime(LocalDate n,
-                                   List<Octet<DP006_Payment_个人缴存信息表,
+                                   List<Octet<DP006_个人缴存信息表,
             CM001_单位基本资料表,
             CM002_个人基本资料表,
-            DP007_individual_sub_account_个人分户账,
+                                           DP007_个人分户账,
             List<DP022_个人缴存登记簿>,
             List<DW025_公积金提取审核登记表>,
             List<DP009_个人明细账>,
@@ -239,7 +242,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
                         loanHistory.setIntValue(o.getValue().stream()
                                 .filter(x->! NativePlace.isYulin(x.getValue3().getCertinum_证件号码()))
-                                .filter(x->x.getValue3().getOpnaccdate_开户日期().equals(n)
+                                .filter(x->x.getValue3().getOpnaccdate开户日期().equals(n)
                                 ).count());  //
                         loanHistoryRepository.save(loanHistory);
 
@@ -258,7 +261,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
                         loanHistory.setIntValue(o.getValue().stream()
                                 .filter(x->! NativePlace.isYulin(x.getValue3().getCertinum_证件号码()))
-                                .filter(x->x.getValue3().getOpnaccdate_开户日期().equals(n)
+                                .filter(x->x.getValue3().getOpnaccdate开户日期().equals(n)
                                 ).count());  //
 
                         loanHistoryRepository.save(loanHistory);
@@ -274,7 +277,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
                                     loanHistory.setIntValue(o.getValue().stream()
                                             .filter(x->! NativePlace.isYulin(x.getValue3().getCertinum_证件号码()))
-                                            .filter(x->x.getValue3().getOpnaccdate_开户日期().equals(n)
+                                            .filter(x->x.getValue3().getOpnaccdate开户日期().equals(n)
                                             ).count());  //
 
                                     loanHistoryRepository.save(loanHistory);
@@ -287,7 +290,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
                                 loanHistory = new LoanHistory(n, StatisticalIndexCodeEnum.S_31_SEQ_新增人数_AND_0301003601);
                         loanHistory.setIndex机构编码(机构编码); // 机构名称
                         loanHistory.setIndex经济类型(o.getKey());
-                        loanHistory.setIntValue(o.getValue().stream().filter(x->x.getValue3().getOpnaccdate_开户日期().equals(n)).count());  //
+                        loanHistory.setIntValue(o.getValue().stream().filter(x->x.getValue3().getOpnaccdate开户日期().equals(n)).count());  //
                         loanHistoryRepository.save(loanHistory);
 
                         loanHistory = new LoanHistory(n, StatisticalIndexCodeEnum.S_34_SEQ_销户人数_AND_0301003801);
@@ -297,7 +300,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
                         loanHistory.setIntValue(o.getValue().stream()
                                 .filter(x->! NativePlace.isYulin(x.getValue3().getCertinum_证件号码()))
-                                .filter(x->x.getValue3().getOpnaccdate_开户日期().equals(n)
+                                .filter(x->x.getValue3().getOpnaccdate开户日期().equals(n)
                                 ).count());  //
 
                         loanHistoryRepository.save(loanHistory);
@@ -311,7 +314,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
                         loanHistory.setIndex经济类型(o.getKey());
                         loanHistory.setIntValue(o.getValue().stream()
                                 .filter(x->! NativePlace.isYulin(x.getValue3().getCertinum_证件号码()))
-                                .filter(x->x.getValue3().getOpnaccdate_开户日期().equals(n)
+                                .filter(x->x.getValue3().getOpnaccdate开户日期().equals(n)
                                 ).count());  //
 
                         loanHistoryRepository.save(loanHistory);
@@ -373,7 +376,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
                         loanHistory.setIntValue(o.getValue().stream()
                                 .filter(x->x.getValue3().getIndiaccstate_个人账户状态().equals(E_DP007_个人分户账_个人账户状态.销户))
-                                .filter(x->x.getValue3().getClsaccdate_销户日期().minusDays(1).isBefore(n))
+                                .filter(x->x.getValue3().getClsaccdate销户日期().minusDays(1).isBefore(n))
                                 .count());  //
 
                         loanHistoryRepository.save(loanHistory);
@@ -387,7 +390,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
                         loanHistory.setIntValue(o.getValue().stream()
                                // .filter(x->x.getValue3().getIndiaccstate_个人账户状态().equals(E_DP007_个人分户账_个人账户状态.销户))
-                                .filter(x->x.getValue3().getOpnaccdate_开户日期().minusDays(1).isBefore(n))
+                                .filter(x->x.getValue3().getOpnaccdate开户日期().minusDays(1).isBefore(n))
                                 .count());  //
 
                         loanHistoryRepository.save(loanHistory);
@@ -435,9 +438,45 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
                       //  S_17_SEQ_应缴人数_AND_0301003101("0301","0301003101","应缴人数"," ","02","03","bm_khjg","机构","bm_dwjjlx","经济类型"," "," ","0","02",true),
                        //         S_18_SEQ_实缴人数_AND_0301003201("0301","0301003201","实缴人数"," ","02","03","bm_khjg","机构","bm_dwjjlx","经济类型"," "," ","0","02",true),
 
-                                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMM");
+                        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMM");
 /*                        LocalDate ldt_ksrq = LocalDate.parse(ksrq,df);
                         LocalDate ldt_jsrq = LocalDate.parse(jsrq,df);*/
+
+
+
+                       // S_22_SEQ_实缴人数__按年___AND_0301003206("0301","0301003206","实缴人数(按年)"," ","02","06","bm_khjg","机构","bm_dwjjlx","经济类型"," "," ","0"," ",false),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                         loanHistory = new LoanHistory(n, StatisticalIndexCodeEnum.S_18_SEQ_实缴人数_AND_0301003201);
@@ -463,6 +502,8 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
                                 .count());
 
                         loanHistoryRepository.save(loanHistory);
+
+
 
 
 
@@ -571,7 +612,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
                         loanHistory.setDoubleValue(o.getValue().stream()
                                 .filter(x->! NativePlace.isYulin(x.getValue3().getCertinum_证件号码()))
-                                .filter(x->x.getValue3().getOpnaccdate_开户日期().equals(n) )
+                                .filter(x->x.getValue3().getOpnaccdate开户日期().equals(n) )
 
                                 .mapToDouble(q->{
                                     return q.getValue4().stream()
@@ -668,7 +709,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
                         loanHistory.setDoubleValue(o.getValue().stream()
                                 .filter(x->! NativePlace.isYulin(x.getValue3().getCertinum_证件号码()))
-                                .filter(x->x.getValue3().getOpnaccdate_开户日期().equals(n) )
+                                .filter(x->x.getValue3().getOpnaccdate开户日期().equals(n) )
 
                                 .mapToDouble(q->{
                                     return q.getValue4().stream()
@@ -790,10 +831,10 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
         for(int i=0; i<=abs(num); i++) {
             LocalDate n = ldt_ksrq.minusDays(i);
 
-            List<Octet<DP006_Payment_个人缴存信息表,
+            List<Octet<DP006_个人缴存信息表,
                     CM001_单位基本资料表,
                     CM002_个人基本资料表,
-                    DP007_individual_sub_account_个人分户账,
+                    DP007_个人分户账,
                     List<DP022_个人缴存登记簿>,
                     List<DW025_公积金提取审核登记表>,
                     List<DP009_个人明细账>,
@@ -819,7 +860,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
         //从时间变化的列表中，抽取变化时记录的 状态。
 
    //     private BigDecimal loanbal不可为空_账户余额;
-        List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(localDate);
+        List<LN101_贷款明细账> ln101_贷款明细账_s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(localDate);
 
 
     }

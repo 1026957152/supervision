@@ -30,7 +30,7 @@ import java.util.Map;
 @EnableJpaRepositories(
         entityManagerFactoryRef="entityManagerFactoryTertiary",
         transactionManagerRef="transactionManagerTertiary",
-        basePackages= {"org.ylgjj.loan.repository_zhongfu"}) //设置Repository所在位置
+        basePackages= {"org.ylgjj.loan.repository_sms"}) //设置Repository所在位置
 public class TertiaryConfig {
 
     /**
@@ -65,7 +65,7 @@ public class TertiaryConfig {
         return builder
                 .dataSource(tertiaryDataSource)
                 .properties(getVendorProperties())
-                .packages("org.ylgjj.loan.domain_zongfu") //设置实体类所在位置
+                .packages("org.ylgjj.loan.domain_sms") //设置实体类所在位置
                 .persistenceUnit("tertiaryPersistenceUnit")
                 .build();
     }

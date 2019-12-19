@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -31,7 +32,7 @@ public class DP030_单位缓缴登记簿 {
 
 
     @Column(name = "transdate")
-    private Date transdate不可为空交易日期;
+    private LocalDate transdate不可为空交易日期;
 
     @Column(name = "unitaccnum")
     private String unitaccnum_单位账号;
@@ -65,11 +66,11 @@ public class DP030_单位缓缴登记簿 {
         this.apprnum审批号 = apprnum审批号;
     }
 
-    public Date getTransdate不可为空交易日期() {
+    public LocalDate getTransdate不可为空交易日期() {
         return transdate不可为空交易日期;
     }
 
-    public void setTransdate不可为空交易日期(Date transdate不可为空交易日期) {
+    public void setTransdate不可为空交易日期(LocalDate transdate不可为空交易日期) {
         this.transdate不可为空交易日期 = transdate不可为空交易日期;
     }
 

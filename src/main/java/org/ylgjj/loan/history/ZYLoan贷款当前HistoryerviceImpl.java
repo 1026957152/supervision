@@ -2,16 +2,13 @@ package org.ylgjj.loan.history;
 
 
 import org.javatuples.Quartet;
-import org.javatuples.Quintet;
 import org.javatuples.Sextet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
-import org.ylgjj.loan.enumT.E_LN_CurrentSequencePaymentStatusEnum;
+import org.ylgjj.loan.enumT.E_LN006_贷款分期还款计划_curseqStatusEnum;
 import org.ylgjj.loan.enumT.LoaneeTypeEnum;
 import org.ylgjj.loan.flow.LoanHistory;
-import org.ylgjj.loan.outputenum.E_住建部编码_收入水平;
-import org.ylgjj.loan.outputenum.E_住建部编码_购房面积;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.LoanHistoryRepository;
@@ -46,7 +43,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -65,13 +62,13 @@ public class ZYLoan贷款当前HistoryerviceImpl {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
 
 
     @Autowired
@@ -85,15 +82,15 @@ public class ZYLoan贷款当前HistoryerviceImpl {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
@@ -104,7 +101,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
     private LN101_贷款明细账_Repository ln101_贷款明细账_repository;
 
     @Autowired
-    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    private LN005_贷款分户信息_Repository lN005_贷款分户信息RepositoryLN005;
     @Autowired
     private YourHistoryRepository yourHistoryRepository;
 
@@ -115,28 +112,28 @@ public class ZYLoan贷款当前HistoryerviceImpl {
 
 
     boolean initComplte = false;
-    List<LN003_contract_info_合同信息> ln003_contract_info_合同信息s = null;
-    Map<String,LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息Map = null;
-    Map<String,LN0014_Trading_house_贷款房屋信息> ln0014_trading_house_贷款房屋信息Map = null;
-    Map<String,List<LN008_borrower_info_借款人信息>> ln008_borrower_info_借款人信息Map = null;
+    List<LN003_合同信息> ln003__合同信息s = null;
+    Map<String, LN005_贷款分户信息> ln005_lone_sub_account_贷款分户信息Map = null;
+    Map<String, LN014_贷款房屋信息> ln0014_trading_house_贷款房屋信息Map = null;
+    Map<String,List<LN008_借款人信息>> ln008_borrower_info_借款人信息Map = null;
 
 
 
 
     //TODO 历史倒推
     // TODO S_140_SEQ_贷款余额_AND_0302000801
-    public List<Sextet<LN003_contract_info_合同信息,LN005_lone_sub_account_贷款分户信息,LN0014_Trading_house_贷款房屋信息,
-            List<LN008_borrower_info_借款人信息>,
-            List<LN101_贷款明细账_account>,
-            List<LN006_RepaymentPlan_贷款分期还款计划>>> 历史倒推_某一日的贷款(LocalDate localDate) {
+    public List<Sextet<LN003_合同信息, LN005_贷款分户信息, LN014_贷款房屋信息,
+            List<LN008_借款人信息>,
+            List<LN101_贷款明细账>,
+            List<LN006_贷款分期还款计划>>> 历史倒推_某一日的贷款(LocalDate localDate) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         if(!initComplte){
-            ln003_contract_info_合同信息s = ln003_contract_info_repository.findAll();
-            List<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息s = lN005_lone_sub_accountRepository.findAll().stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).collect(Collectors.toList());
-            ln005_lone_sub_account_贷款分户信息Map = ln005_lone_sub_account_贷款分户信息s.stream().collect(Collectors.toMap(e->e.getLoancontrcode合同代码(),e->e));
+            ln003__合同信息s = ln003_合同信息_repository.findAll();
+            List<LN005_贷款分户信息> ln005__贷款分户信息s = lN005_贷款分户信息RepositoryLN005.findAll().stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).collect(Collectors.toList());
+            ln005_lone_sub_account_贷款分户信息Map = ln005__贷款分户信息s.stream().collect(Collectors.toMap(e->e.getLoancontrcode合同代码(), e->e));
 
-            ln0014_trading_house_贷款房屋信息Map = ln014_tradingHouse_贷款房屋信息Repository.findAll().stream().collect(Collectors.toMap(e->e.getLoancontrcode0合同代码(),e->e));
+            ln0014_trading_house_贷款房屋信息Map = ln014__贷款房屋信息Repository.findAll().stream().collect(Collectors.toMap(e->e.getLoancontrcode0合同代码(), e->e));
 
             ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText()))
                     .collect(Collectors.groupingBy(e->e.getLoancontrcode合同代码()));
@@ -149,13 +146,13 @@ public class ZYLoan贷款当前HistoryerviceImpl {
         //   List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期Between(ldt_ksrq,ldt_jsrq);
 
 
-        return ln003_contract_info_合同信息s.stream().map(e-> {
+        return ln003__合同信息s.stream().map(e-> {
 
             //TODO        获得某一日的贷款余额;
-            List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(localDate);
-            Optional<LN101_贷款明细账_account> ln101_贷款明细账_account = ln101_贷款明细账_accounts.stream().findFirst();
+            List<LN101_贷款明细账> ln101_贷款明细账_s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(localDate);
+            Optional<LN101_贷款明细账> ln101_贷款明细账_account = ln101_贷款明细账_s.stream().findFirst();
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlan_贷款分期还款计划s = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码(e.getLoancontrcode合同代码());
+            List<LN006_贷款分期还款计划> ln006__贷款分期还款计划s = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码(e.getLoancontrcode合同代码());
 
 
             if(ln101_贷款明细账_account.isPresent()){
@@ -163,7 +160,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         ln005_lone_sub_account_贷款分户信息Map.get(e.getLoancontrnum_借款合同号()),
                         ln0014_trading_house_贷款房屋信息Map.get(e.getLoancontrnum_借款合同号()),
                         ln008_borrower_info_借款人信息Map.get(e.getLoancontrnum_借款合同号()),
-                        ln101_贷款明细账_accounts,ln006_repaymentPlan_贷款分期还款计划s);
+                        ln101_贷款明细账_s, ln006__贷款分期还款计划s);
             }else{
                 return null;
             }
@@ -181,11 +178,11 @@ public class ZYLoan贷款当前HistoryerviceImpl {
 
     //也是按照放款的一个流水在进行啊啊。
     //TODO 存储统计信息
-    public void saveHistoryOneTime(LocalDate n, List<Sextet<LN003_contract_info_合同信息,
-            LN005_lone_sub_account_贷款分户信息,
-            LN0014_Trading_house_贷款房屋信息,
-            List<LN008_borrower_info_借款人信息>,
-            List<LN101_贷款明细账_account>,List<LN006_RepaymentPlan_贷款分期还款计划>>> inputs) {
+    public void saveHistoryOneTime(LocalDate n, List<Sextet<LN003_合同信息,
+            LN005_贷款分户信息,
+            LN014_贷款房屋信息,
+            List<LN008_借款人信息>,
+            List<LN101_贷款明细账>,List<LN006_贷款分期还款计划>>> inputs) {
 
 
 
@@ -341,7 +338,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                 loanHistory.setIndex银行名称(uuu.getKey()); // 银行名称
                 loanHistory.setValue贷款金额(uuu.getValue().stream().mapToDouble(j->{
                     return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                            o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                            o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                             mapToDouble(p->p.getPlanprin0本期应还本金().add(p.getPlanint本期应还利息0()).doubleValue()).sum();
                 }).sum());  //
                 loanHistoryRepository.save(loanHistory);
@@ -353,7 +350,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                 loanHistory.setIndex银行名称(uuu.getKey()); // 银行名称
                 loanHistory.setValue贷款金额(uuu.getValue().stream().mapToDouble(j->{
                     return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                            o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                            o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                             mapToDouble(p->p.getPlanprin0本期应还本金().doubleValue()).sum();
                 }).sum());  //
                 loanHistoryRepository.save(loanHistory);
@@ -363,7 +360,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                 loanHistory.setIndex银行名称(uuu.getKey()); // 银行名称
                 loanHistory.setValue贷款金额(uuu.getValue().stream().mapToDouble(j->{
                     return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                            o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                            o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                             mapToDouble(p->p.getPlanprin0本期应还本金().doubleValue()).sum();
                 }).sum());  //
                 loanHistoryRepository.save(loanHistory);
@@ -376,7 +373,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                 loanHistory.setIndex银行名称(uuu.getKey()); // 银行名称
                 loanHistory.setValue贷款笔数(uuu.getValue().stream().mapToDouble(j->{
                     return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                            o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                            o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                             mapToDouble(p->p.getPlanprin0本期应还本金().doubleValue()).count();
                 }).count());  //
                 loanHistoryRepository.save(loanHistory);
@@ -398,7 +395,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                 loanHistory.setIndex银行名称(uuu.getKey()); // 银行名称
                 loanHistory.setValue贷款金额(uuu.getValue().stream().mapToDouble(j->{
                     return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                            o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                            o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                             mapToDouble(p->p.getInitialbal0期初余额().doubleValue()).count();
                 }).count());
 
@@ -414,7 +411,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         .filter(c->c.getValue0().getLoanterm_贷款期限()>5*12)
                         .mapToDouble(j->{
                     return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                            o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                            o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                             mapToDouble(p->p.getInitialbal0期初余额().doubleValue()).count();
                 }).count());  //
                 loanHistoryRepository.save(loanHistory);
@@ -430,7 +427,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         .filter(c->c.getValue0().getLoanterm_贷款期限()>5*12)
                         .mapToDouble(j->{
                             return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                    o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                    o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                     mapToDouble(p->p.getInitialbal0期初余额().doubleValue()).count();
                         }).count());  //
                 loanHistoryRepository.save(loanHistory);
@@ -445,7 +442,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         .filter(c->c.getValue0().getLoanterm_贷款期限()>5*12)
                         .mapToDouble(j->{
                             return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                    o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                    o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                     mapToDouble(p->p.getInitialbal0期初余额().doubleValue()).count();
                         }).count());  //
                 loanHistoryRepository.save(loanHistory);
@@ -461,7 +458,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
 
                         .mapToDouble(j->{
                             return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                    o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                    o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                     mapToDouble(p->p.getInitialbal0期初余额().doubleValue()).count();
                         }).count());
                 //
@@ -544,7 +541,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                     eee.getValue().stream().collect(Collectors.groupingBy(
                             j->{
                                 return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                        o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                        o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                         mapToDouble(p->p.getPlanprin0本期应还本金().doubleValue()).count();
                             }
                     )).entrySet()
@@ -555,7 +552,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         loanHistory.setIndex逾期次数(uuu.getKey().intValue()); // 银行名称
                         loanHistory.setValue贷款金额(uuu.getValue().stream().mapToDouble(j->{
                             return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                    o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                    o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                     mapToDouble(p->p.getPlanprin0本期应还本金().add(p.getPlanint本期应还利息0()).doubleValue()).sum();
                         }).sum());  //
                         loanHistoryRepository.save(loanHistory);
@@ -567,7 +564,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         loanHistory.setIndex逾期次数(uuu.getKey().intValue()); // 银行名称
                         loanHistory.setValue贷款金额(uuu.getValue().stream().mapToDouble(j->{
                             return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                    o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                    o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                     mapToDouble(p->p.getPlanprin0本期应还本金().doubleValue()).sum();
                         }).sum());  //
                         loanHistoryRepository.save(loanHistory);
@@ -577,7 +574,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         loanHistory.setIndex逾期次数(uuu.getKey().intValue()); // 银行名称
                         loanHistory.setValue贷款金额(uuu.getValue().stream().mapToDouble(j->{
                             return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                    o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                    o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                     mapToDouble(p->p.getPlanprin0本期应还本金().doubleValue()).sum();
                         }).sum());  //
                         loanHistoryRepository.save(loanHistory);
@@ -594,7 +591,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         loanHistory.setIndex逾期次数(uuu.getKey().intValue()); // 银行名称
                         loanHistory.setValue贷款笔数(uuu.getValue().stream().mapToDouble(j->{
                             return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                    o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                    o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                     mapToDouble(p->p.getPlanprin0本期应还本金().doubleValue()).count();
                         }).count());  //
                         loanHistoryRepository.save(loanHistory);
@@ -607,7 +604,7 @@ public class ZYLoan贷款当前HistoryerviceImpl {
                         loanHistory.setIndex逾期次数(uuu.getKey().intValue()); // 银行名称
                         loanHistory.setValue贷款笔数(uuu.getValue().stream().mapToDouble(j->{
                             return  j.getValue5().stream().filter(o-> o.getRepaydate1还款日期().isAfter(n) &&
-                                    o.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.未还.getText())).
+                                    o.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.未还.getText())).
                                     mapToDouble(p->p.getInitialbal0期初余额().doubleValue()).count();
                         }).count());  //
                         loanHistoryRepository.save(loanHistory);
@@ -679,9 +676,9 @@ StatisticalIndexCodeEnum.S_160_SEQ_发放户数__还款方式___AND_0302002011
         for(int i=0; i<=abs(num); i++) {
             LocalDate n = ldt_ksrq.minusDays(i);
 
-            List<Sextet<LN003_contract_info_合同信息,LN005_lone_sub_account_贷款分户信息,LN0014_Trading_house_贷款房屋信息,
-                    List<LN008_borrower_info_借款人信息>,
-                    List<LN101_贷款明细账_account>,List<LN006_RepaymentPlan_贷款分期还款计划>>>  aa = 历史倒推_某一日的贷款(n);
+            List<Sextet<LN003_合同信息, LN005_贷款分户信息, LN014_贷款房屋信息,
+                    List<LN008_借款人信息>,
+                    List<LN101_贷款明细账>,List<LN006_贷款分期还款计划>>>  aa = 历史倒推_某一日的贷款(n);
             saveHistoryOneTime(n,aa);
         }
     }
@@ -719,7 +716,7 @@ StatisticalIndexCodeEnum.S_160_SEQ_发放户数__还款方式___AND_0302002011
 
 
         //private BigDecimal loanbal不可为空_账户余额;
-        List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(localDate);
+        List<LN101_贷款明细账> ln101_贷款明细账_s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(localDate);
 
 
     }

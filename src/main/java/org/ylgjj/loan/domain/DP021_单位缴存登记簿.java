@@ -81,7 +81,7 @@ public class DP021_单位缴存登记簿 {
 
 
     @Column(name = "basenum")
-    private String basenum_缴存基数;
+    private double basenum_缴存基数;
     @Column(name = "regnum")
     private String regnum_登记号;
 
@@ -143,7 +143,8 @@ public class DP021_单位缴存登记簿 {
     @Column(name = "uprepayinamt")
     private String uprepayinamt_预缴户转入金额;
     @Column(name = "inaccstate")
-    private String inaccstate_入账状态; // 汇缴入账，预缴肯定入账了。，汇缴可能无入账。
+    private String inaccstate_入账状态; // 0-未入账,1-入账
+//    汇缴入账，预缴肯定入账了。，汇缴可能无入账。
 
 
 
@@ -270,11 +271,11 @@ public class DP021_单位缴存登记簿 {
         this.paymode_缴款方式 = paymode_缴款方式;
     }
 
-    public String getBasenum_缴存基数() {
+    public double getBasenum_缴存基数() {
         return basenum_缴存基数;
     }
 
-    public void setBasenum_缴存基数(String basenum_缴存基数) {
+    public void setBasenum_缴存基数(double basenum_缴存基数) {
         this.basenum_缴存基数 = basenum_缴存基数;
     }
 

@@ -43,7 +43,7 @@ public class ResourceServiceImpl {
     ResourceLoader resourceLoader;
 
 
-    //@PostConstruct
+    //
 
     public void S_83_SEQ_住房公积金使用率_AND_0301020501__() {
         Arrays.stream(E_银行编码_HX.values()).forEach(e->{

@@ -1,6 +1,7 @@
 package org.ylgjj.loan.api;
 
 
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,8 @@ import javax.validation.constraints.NotBlank;
  * Created by zohu on 6/29/2015.
  */
 @RestController
+
+@Api
 @RequestMapping("/JG/bbgl")
 public class H4业务统计Controller {
 

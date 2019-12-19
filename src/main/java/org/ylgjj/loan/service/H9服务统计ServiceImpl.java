@@ -4,19 +4,20 @@ package org.ylgjj.loan.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.api.H9服务统计Controller;
-import org.ylgjj.loan.domain.Data;
+import org.ylgjj.loan.apis.ApiServiceImpl;
 import org.ylgjj.loan.domain.Output;
-import org.ylgjj.loan.domain.ReturnResult;
 
+import org.ylgjj.loan.domain_sms.SmsYysNotice;
 import org.ylgjj.loan.domain_zongfu.Mi029_综合服务个人用户基础信息表;
 import org.ylgjj.loan.domain_zongfu.Mi0312_渠道用户登录ID辅助控制表;
 import org.ylgjj.loan.domain_zongfu.Mi107_业务日志;
+import org.ylgjj.loan.flow.ApiCacheAnalysisItem;
+import org.ylgjj.loan.flow.ApiCacheAnalysisTable;
 import org.ylgjj.loan.output.*;
-import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;
 import org.ylgjj.loan.outputenum.E_渠道_HX;
 import org.ylgjj.loan.pojo.*;
-import org.ylgjj.loan.repository.AN004Repository;
-import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
+import org.ylgjj.loan.repository_flow.ApiCacheAnalysisTableRepository;
+import org.ylgjj.loan.repository_sms.SmsYysNoticeRepository;
 import org.ylgjj.loan.repository_zhongfu.MI029_综合服务个人用户基础信息表_Repository;
 import org.ylgjj.loan.repository_zhongfu.Mi0312_渠道用户登录ID辅助控制表_Repository;
 import org.ylgjj.loan.repository_zhongfu.Mi107_业务日志_Repository;
@@ -26,8 +27,6 @@ import org.ylgjj.loan.repository_zhongfu.MI007_系统码表_Repository;
 import org.ylgjj.loan.repository_zhongfu.MI029_综合服务个人用户基础信息表_Repository;
 */
 
-import javax.annotation.PostConstruct;
-import java.io.OutputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,12 +44,21 @@ public class H9服务统计ServiceImpl {
     private MI007_系统码表_Repository mi007_系统码表_repository;
 */
 @Autowired
+private ApiCacheAnalysisTableRepository apiCacheAnalysisTableRepository;
+    @Autowired
+    private SmsYysNoticeRepository smsYysNoticeRepository;
+
+@Autowired
 private MI029_综合服务个人用户基础信息表_Repository mi029_综合服务个人用户基础信息表_repository;
     @Autowired
     private Mi0312_渠道用户登录ID辅助控制表_Repository mi0312_渠道用户登录ID辅助控制表_repository;
 
     @Autowired
     private Mi107_业务日志_Repository mi107_业务日志_repository;
+
+    @Autowired
+    private ApiServiceImpl apiService;
+
 
 
     public Output H_9_1_服务统计_信息推送量查询(H9服务统计Controller.QueryH_9_1_服务统计_信息推送量查询 query) {
@@ -81,6 +89,8 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
             return aa;
         }).collect(Collectors.toList()));
         return output;
+
+
 /*
         List<MI007_系统码表> mi007_系统码表s = mi007_系统码表_repository.findByUPDICID(402);
 
@@ -202,29 +212,91 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
         return output;
     }
 
-    public Output H_9_5_服务统计_短信发送量查询(H9服务统计Controller.QueryH_9_5_服务统计_短信发送量查询 query) {
-        return null;
+
+
+    public Output H_9_5_服务统计_短信发送量查询(QueryH_9_5_服务统计_短信发送量查询 query) {
+
+        List<SmsYysNotice> sm = smsYysNoticeRepository.findAll();
+        H9_5信息推送量查询_短信发送量查询 h9_5信息推送量查询_短信发送量查询_failnum = new H9_5信息推送量查询_短信发送量查询();
+        h9_5信息推送量查询_短信发送量查询_failnum.setCount_条数("发送成功");
+        h9_5信息推送量查询_短信发送量查询_failnum.setName_发送状态(Long.valueOf(sm.stream().mapToLong(e->e.getFailnum()).sum()).toString());
+
+        H9_5信息推送量查询_短信发送量查询 h9_5信息推送量查询_短信发送量查询_success = new H9_5信息推送量查询_短信发送量查询();
+        h9_5信息推送量查询_短信发送量查询_success.setCount_条数("发送失败");
+        h9_5信息推送量查询_短信发送量查询_success.setName_发送状态(Long.valueOf(sm.stream().mapToLong(e->e.getSuccessnum()).sum()).toString());
+
+        Output output = new Output();
+        output.setSuccess(true);
+        output.setData(Arrays.asList(h9_5信息推送量查询_短信发送量查询_failnum,h9_5信息推送量查询_短信发送量查询_success));
+        return output;
     }
 
     public Output H_9_6_服务统计_渠道登录次数查询(QueryH_9_6_服务统计_渠道登录次数查询 query) {
 
-        List<Mi0312_渠道用户登录ID辅助控制表> mi0312_渠道用户登录ID辅助控制表s = mi0312_渠道用户登录ID辅助控制表_repository.findAll();
+        ApiCacheAnalysisTable apiCacheAnalysisTable = apiCacheAnalysisTableRepository.findByIndexNo("090601");
+
+        List<ApiCacheAnalysisItem> apiCacheAnalysisItems = null;
+        if(apiCacheAnalysisTable.getLastId()== null){
+            List<Mi0312_渠道用户登录ID辅助控制表> mi0312_渠道用户登录ID辅助控制表s =
+                    mi0312_渠道用户登录ID辅助控制表_repository.findByOrderByDatemodifiedDesc();
+            Mi0312_渠道用户登录ID辅助控制表 mi0312_渠道用户登录ID辅助控制表 = mi0312_渠道用户登录ID辅助控制表s.get(0);
+            apiService.updateLastId(apiCacheAnalysisTable,mi0312_渠道用户登录ID辅助控制表.getDatemodified());
+
+
+            apiService.cacheItems(mi0312_渠道用户登录ID辅助控制表s.stream().collect(Collectors.groupingBy(e->{
+                return e.getChannel();
+            })).entrySet().stream().map(e->{
+
+                ApiCacheAnalysisItem apiCacheAnalysisItem = new ApiCacheAnalysisItem();
+                apiCacheAnalysisItem.setTableId(apiCacheAnalysisTable.getId());
+                apiCacheAnalysisItem.setName(E_渠道_HX.valueOf(e.getKey()).name());
+                apiCacheAnalysisItem.setLongValue(Long.valueOf(e.getValue().size()));
+                return apiCacheAnalysisItem;
+            }).collect(Collectors.toList()));
+
+            apiCacheAnalysisItems = apiService.get(apiCacheAnalysisTable);
+
+        }else{
+            List<Mi0312_渠道用户登录ID辅助控制表> mi0312_渠道用户登录ID辅助控制表s =
+                    mi0312_渠道用户登录ID辅助控制表_repository.findByDatemodifiedGreaterThanEqualOrderByDatemodifiedDesc(apiCacheAnalysisTable.getLastId());
+            Map<String, List<Mi0312_渠道用户登录ID辅助控制表>> stringListMap = mi0312_渠道用户登录ID辅助控制表s.stream().collect(Collectors.groupingBy(e->{
+                return e.getChannel();
+            }));
+
+
+           apiCacheAnalysisItems = apiService.get(apiCacheAnalysisTable).stream().map(e->{
+                        ApiCacheAnalysisItem apiCacheAnalysisItem = new ApiCacheAnalysisItem();
+                        apiCacheAnalysisItem.setName(e.getName());
+                        apiCacheAnalysisItem.setLongValue(stringListMap.get(e.getName()).size()+ e.getLongValue());
+                        return apiCacheAnalysisItem;
+                    }).collect(Collectors.toList());
+
+
+        }
+
+
+
+       // select * from MI0312 where DATEMODIFIED  >= '2019-09-10 10:10:10'
+
+       // List<Mi0312_渠道用户登录ID辅助控制表> mi0312_渠道用户登录ID辅助控制表s = mi0312_渠道用户登录ID辅助控制表_repository.findAll();
         Output output = new Output();
         output.setSuccess(true);
-        output.setData(mi0312_渠道用户登录ID辅助控制表s.stream().collect(Collectors.groupingBy(e->{
-            return e.getChannel();
-        })).entrySet().stream().map(e->{
+        output.setData(apiCacheAnalysisItems.stream().map(e->{
+
             H9_6信息推送量查询_渠道登录次数查询 h9_6信息推送量查询_渠道登录次数查询 = new H9_6信息推送量查询_渠道登录次数查询();
-            h9_6信息推送量查询_渠道登录次数查询.setName_渠道名称(E_渠道_HX.valueOf(e.getKey()).name());
-            h9_6信息推送量查询_渠道登录次数查询.setCount_条数(Integer.toString(e.getValue().size()));
+            h9_6信息推送量查询_渠道登录次数查询.setName_渠道名称(e.getName());
+            h9_6信息推送量查询_渠道登录次数查询.setCount_条数(e.getLongValue().toString());
             return h9_6信息推送量查询_渠道登录次数查询;
         }).collect(Collectors.toList()));
         return output;
     }
 
+
+
     public Output H_9_8_服务统计_各渠道API总量(QueryH_9_8_服务统计_各渠道API总量 query) {
 
 
+        ApiCacheAnalysisTable apiCacheAnalysisTable =apiService.getApiCacheAnalysisTable("090801");
 
         List<Mi107_业务日志> mi107_业务日志s = mi107_业务日志_repository.findAll();
 
@@ -240,7 +312,7 @@ private MI029_综合服务个人用户基础信息表_Repository mi029_综合服
     }
 
 
-//@PostConstruct
+//
     public void H_9_4_服务统计_用户性别查询() {
 
     List<Mi029_综合服务个人用户基础信息表> count = mi029_综合服务个人用户基础信息表_repository.findAll();

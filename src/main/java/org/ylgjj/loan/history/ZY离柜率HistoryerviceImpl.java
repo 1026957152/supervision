@@ -41,7 +41,7 @@ public class ZY离柜率HistoryerviceImpl {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -60,13 +60,13 @@ public class ZY离柜率HistoryerviceImpl {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
     private Mi107_业务日志_Repository mi107_业务日志_repository;
 
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
 
 
 
@@ -75,7 +75,7 @@ public class ZY离柜率HistoryerviceImpl {
     private LN101_贷款明细账_Repository ln101_贷款明细账_repository;
 
     @Autowired
-    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    private LN005_贷款分户信息_Repository lN005_贷款分户信息RepositoryLN005;
     @Autowired
     private LN004_合同状态信息Repository ln004_合同状态信息Repository;
 
@@ -86,10 +86,10 @@ public class ZY离柜率HistoryerviceImpl {
 
 
     boolean initComplte = false;
-    List<LN003_contract_info_合同信息> ln003_contract_info_合同信息s = null;
-    Map<String,LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息Map = null;
-    Map<String,LN0014_Trading_house_贷款房屋信息> ln0014_trading_house_贷款房屋信息Map = null;
-    Map<String,List<LN008_borrower_info_借款人信息>> ln008_borrower_info_借款人信息Map = null;
+    List<LN003_合同信息> ln003__合同信息s = null;
+    Map<String, LN005_贷款分户信息> ln005_lone_sub_account_贷款分户信息Map = null;
+    Map<String, LN014_贷款房屋信息> ln0014_trading_house_贷款房屋信息Map = null;
+    Map<String,List<LN008_借款人信息>> ln008_borrower_info_借款人信息Map = null;
 
 
 
@@ -100,11 +100,11 @@ public class ZY离柜率HistoryerviceImpl {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         if(!initComplte){
-            ln003_contract_info_合同信息s = ln003_contract_info_repository.findAll();
-            List<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息s = lN005_lone_sub_accountRepository.findAll().stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).collect(Collectors.toList());
-            ln005_lone_sub_account_贷款分户信息Map = ln005_lone_sub_account_贷款分户信息s.stream().collect(Collectors.toMap(e->e.getLoancontrcode合同代码(),e->e));
+            ln003__合同信息s = ln003_合同信息_repository.findAll();
+            List<LN005_贷款分户信息> ln005__贷款分户信息s = lN005_贷款分户信息RepositoryLN005.findAll().stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).collect(Collectors.toList());
+            ln005_lone_sub_account_贷款分户信息Map = ln005__贷款分户信息s.stream().collect(Collectors.toMap(e->e.getLoancontrcode合同代码(), e->e));
 
-            ln0014_trading_house_贷款房屋信息Map = ln014_tradingHouse_贷款房屋信息Repository.findAll().stream().collect(Collectors.toMap(e->e.getLoancontrcode0合同代码(),e->e));
+            ln0014_trading_house_贷款房屋信息Map = ln014__贷款房屋信息Repository.findAll().stream().collect(Collectors.toMap(e->e.getLoancontrcode0合同代码(), e->e));
 
             ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText()))
                     .collect(Collectors.groupingBy(e->e.getLoancontrcode合同代码()));
@@ -128,10 +128,10 @@ public class ZY离柜率HistoryerviceImpl {
          Double a = ln004_合同状态信息Repository.findAll().stream().map(e-> {
 
             //TODO        获得某一日的贷款余额;
-            List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(n);
-            Optional<LN101_贷款明细账_account> ln101_贷款明细账_account = ln101_贷款明细账_accounts.stream().findFirst();
+            List<LN101_贷款明细账> ln101_贷款明细账_s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(n);
+            Optional<LN101_贷款明细账> ln101_贷款明细账_account = ln101_贷款明细账_s.stream().findFirst();
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlan_贷款分期还款计划s = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码(e.getLoancontrcode());
+            List<LN006_贷款分期还款计划> ln006__贷款分期还款计划s = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码(e.getLoancontrcode());
 
 
             if(ln101_贷款明细账_account.isPresent()){
@@ -139,7 +139,7 @@ public class ZY离柜率HistoryerviceImpl {
                         ln005_lone_sub_account_贷款分户信息Map.get(e.getLoancontrcode()),
                         ln0014_trading_house_贷款房屋信息Map.get(e.getLoancontrcode()),
                         ln008_borrower_info_借款人信息Map.get(e.getLoancontrcode()),
-                        ln101_贷款明细账_accounts,ln006_repaymentPlan_贷款分期还款计划s);
+                        ln101_贷款明细账_s, ln006__贷款分期还款计划s);
             }else{
                 return null;
             }
@@ -171,10 +171,10 @@ public class ZY离柜率HistoryerviceImpl {
         a = ln004_合同状态信息Repository.findAll().stream().map(e-> {
 
             //TODO        获得某一日的贷款余额;
-            List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(n);
-            Optional<LN101_贷款明细账_account> ln101_贷款明细账_account = ln101_贷款明细账_accounts.stream().findFirst();
+            List<LN101_贷款明细账> ln101_贷款明细账_s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(n);
+            Optional<LN101_贷款明细账> ln101_贷款明细账_account = ln101_贷款明细账_s.stream().findFirst();
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlan_贷款分期还款计划s = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码(e.getLoancontrcode());
+            List<LN006_贷款分期还款计划> ln006__贷款分期还款计划s = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码(e.getLoancontrcode());
 
 
             if(ln101_贷款明细账_account.isPresent()){
@@ -182,7 +182,7 @@ public class ZY离柜率HistoryerviceImpl {
                         ln005_lone_sub_account_贷款分户信息Map.get(e.getLoancontrcode()),
                         ln0014_trading_house_贷款房屋信息Map.get(e.getLoancontrcode()),
                         ln008_borrower_info_借款人信息Map.get(e.getLoancontrcode()),
-                        ln101_贷款明细账_accounts,ln006_repaymentPlan_贷款分期还款计划s);
+                        ln101_贷款明细账_s, ln006__贷款分期还款计划s);
             }else{
                 return null;
             }
@@ -301,20 +301,13 @@ public class ZY离柜率HistoryerviceImpl {
 
         List<String> 业务s = Arrays.asList(E_业务类型_综服_HX.E_5367_物业费提取,
                 E_业务类型_综服_HX.E_5368_偿还公积金贷款提取,
-
-
                 E_业务类型_综服_HX.E_5372_租房提取,
                 E_业务类型_综服_HX.E_5373_其他住房消费类提取,
                 E_业务类型_综服_HX.E_5391_住宅专项维修基金提取,
                 E_业务类型_综服_HX.E_5392_贷款首付提取,
-
-
                 E_业务类型_综服_HX.E_5393_偿还商业贷提取
-
                 ).stream().map(e->e.get编码()).collect(Collectors.toList());
         mi107_业务日志s.stream().filter(e->业务s.contains(e.getTranstype())).collect(Collectors.toList());
-
-
 
     }
 
@@ -327,6 +320,11 @@ public class ZY离柜率HistoryerviceImpl {
 
     private int gtdkbs_柜台贷款笔数_NUMBER_18_0;
     private int wtdkbs_网上贷款笔数_NUMBER_18_0;
+
+
+
+
+
     public void 贷款(LocalDate localDate) {
 
 
@@ -357,6 +355,8 @@ public class ZY离柜率HistoryerviceImpl {
 
     private int gttqhkbs_柜台提前还款笔数_NUMBER_18_0;
     private int wttqhkbs_网上提取还款笔数_NUMBER_18_0;
+
+
     public void 提取还款(LocalDate localDate) {
 
 
@@ -373,11 +373,13 @@ public class ZY离柜率HistoryerviceImpl {
 
     }
 
-
+    @Autowired
+    private LN007_委托代扣协议信息Repository ln007_委托代扣协议信息Repository;
 
 
     private int gtchdjybs_柜台冲还贷笔数_NUMBER_18_0;
     private int wtchdjybs_网厅冲还贷总笔数_NUMBER_18_0;
+
     public void 冲还贷(LocalDate localDate) {
         List<Mi107_业务日志> mi107_业务日志s = mi107_业务日志_repository.findAll();
 
@@ -408,8 +410,6 @@ public class ZY离柜率HistoryerviceImpl {
                 E_业务类型_综服_HX.E_5486_预缴入账,
                 E_业务类型_综服_HX.E_5487_补缴入账,
                 E_业务类型_综服_HX.E_5858_单位暂存款登记,
-
-
                 E_业务类型_综服_HX.E_5859_单位缴存入账
 
 

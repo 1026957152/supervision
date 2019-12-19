@@ -99,5 +99,11 @@ public class DataSourceConfig {
     }
 
 
+    @Bean(name = "quaternaryDataSource")
+    @Qualifier("quaternaryDataSource")
+    @ConfigurationProperties(prefix="spring.datasourcequaternary")
+    public DataSource quaternaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
 
 }

@@ -29,11 +29,11 @@ public class H6抵押办理时间ServiceImpl {
     private LN009_抵押物信息_mortgager_goods_info_Repository ln009_抵押物信息_mortgager_goods_info_repository;
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
 
 
     @Autowired
-    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    private LN005_贷款分户信息_Repository lN005_贷款分户信息RepositoryLN005;
 
 
     @Autowired
@@ -73,36 +73,36 @@ public class H6抵押办理时间ServiceImpl {
             H6_2抵押办理时间_抵押物明细数据查询 h6_2抵押办理时间_抵押物明细数据查询 = new H6_2抵押办理时间_抵押物明细数据查询();
 
 
-            LN003_contract_info_合同信息 ln003_contract_info_合同信息 = ln003_contract_info_repository.findByLoancontrcode合同代码(e.getLoancontrcode_不可为空_合同代码());
+            LN003_合同信息 ln003__合同信息 = ln003_合同信息_repository.findByLoancontrcode合同代码(e.getLoancontrcode_不可为空_合同代码());
 
-            h6_2抵押办理时间_抵押物明细数据查询.setJkhtbh_借款人合同编号(ln003_contract_info_合同信息.getLoancontrnum_借款合同号());
+            h6_2抵押办理时间_抵押物明细数据查询.setJkhtbh_借款人合同编号(ln003__合同信息.getLoancontrnum_借款合同号());
 
 
 
-            List<LN008_borrower_info_借款人信息> borrower_info_借款人信息s = ln008_借款人类型Repository.findByloancontrcode合同代码(e.getLoancontrcode_不可为空_合同代码());
+            List<LN008_借款人信息> borrower_info_借款人信息s = ln008_借款人类型Repository.findByloancontrcode合同代码(e.getLoancontrcode_不可为空_合同代码());
 
-            LN008_borrower_info_借款人信息 borrower_info_借款人信息 = borrower_info_借款人信息s.stream().filter(bbb->bbb.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).findFirst().get();
+            LN008_借款人信息 borrower_info_借款人信息 = borrower_info_借款人信息s.stream().filter(bbb->bbb.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).findFirst().get();
 
             h6_2抵押办理时间_抵押物明细数据查询.setJkrgjjzh_借款人公积金账号(borrower_info_借款人信息.getAccnum1账号());
             h6_2抵押办理时间_抵押物明细数据查询.setJkrxm_借款人姓名(borrower_info_借款人信息.getAccname_0_个人姓名());
 
-            h6_2抵押办理时间_抵押物明细数据查询.setDkffe_贷款金额(ln003_contract_info_合同信息.getLoanamt_贷款金额().doubleValue());
+            h6_2抵押办理时间_抵押物明细数据查询.setDkffe_贷款金额(ln003__合同信息.getLoanamt_贷款金额().doubleValue());
 
 
 
-            List<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息s = lN005_lone_sub_accountRepository.findByloancontrcode合同代码(e.getLoancontrcode_不可为空_合同代码());
-            Optional<LN005_lone_sub_account_贷款分户信息> ln005_lone_sub_account_贷款分户信息_optional = ln005_lone_sub_account_贷款分户信息s.stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).findAny();
+            List<LN005_贷款分户信息> ln005__贷款分户信息s = lN005_贷款分户信息RepositoryLN005.findByloancontrcode合同代码(e.getLoancontrcode_不可为空_合同代码());
+            Optional<LN005_贷款分户信息> ln005_lone_sub_account_贷款分户信息_optional = ln005__贷款分户信息s.stream().filter(bb->bb.getLoanacctype_贷款分户类型().equals("01")).findAny();
 
             if(ln005_lone_sub_account_贷款分户信息_optional.isPresent()){
 
-                LN005_lone_sub_account_贷款分户信息 ln005_lone_sub_account_贷款分户信息 = ln005_lone_sub_account_贷款分户信息_optional.get();
-                h6_2抵押办理时间_抵押物明细数据查询.setDkll_贷款利率(ln005_lone_sub_account_贷款分户信息.getCurrate_执行利率());
+                LN005_贷款分户信息 ln005__贷款分户信息 = ln005_lone_sub_account_贷款分户信息_optional.get();
+                h6_2抵押办理时间_抵押物明细数据查询.setDkll_贷款利率(ln005__贷款分户信息.getCurrate_执行利率());
             }else{
                 //   h6_2抵押办理时间_抵押物明细数据查询.setDkll_贷款利率(ln005_lone_sub_account_贷款分户信息.getCurrate_执行利率());
 
             }
 
-            h6_2抵押办理时间_抵押物明细数据查询.setDksqnx_贷款年限(ln003_contract_info_合同信息.getLoanterm_贷款期限());
+            h6_2抵押办理时间_抵押物明细数据查询.setDksqnx_贷款年限(ln003__合同信息.getLoanterm_贷款期限());
 
 
             h6_2抵押办理时间_抵押物明细数据查询.setSprq_审批日期(e.getCeroutdate_可为空_出证日期());

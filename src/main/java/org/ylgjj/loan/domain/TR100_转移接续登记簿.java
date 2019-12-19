@@ -117,7 +117,7 @@ public class TR100_转移接续登记簿 {
 
 
     @Column(name = "amt")
-    private String amt_不可为空_金额;
+    private double amt_不可为空_金额;
 
 
     public String getYwlsh_不可为空_业务流水号() {
@@ -280,11 +280,11 @@ public class TR100_转移接续登记簿 {
         this.summarycode_不可为空_摘要码 = summarycode_不可为空_摘要码;
     }
 
-    public String getAmt_不可为空_金额() {
+    public double getAmt_不可为空_金额() {
         return amt_不可为空_金额;
     }
 
-    public void setAmt_不可为空_金额(String amt_不可为空_金额) {
+    public void setAmt_不可为空_金额(double amt_不可为空_金额) {
         this.amt_不可为空_金额 = amt_不可为空_金额;
     }
 

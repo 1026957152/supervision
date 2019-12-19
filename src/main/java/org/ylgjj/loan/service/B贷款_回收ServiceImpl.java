@@ -4,10 +4,13 @@ package org.ylgjj.loan.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.Output;
+import org.ylgjj.loan.flow.LoanHistory;
 import org.ylgjj.loan.outputenum.*;
 import org.ylgjj.loan.repository.*;
+import org.ylgjj.loan.repository_flow.LoanHistoryRepository;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by silence yuan on 2015/7/25.
@@ -27,7 +30,7 @@ public class B贷款_回收ServiceImpl {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -46,13 +49,13 @@ public class B贷款_回收ServiceImpl {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
 
 
     @Autowired
@@ -66,19 +69,24 @@ public class B贷款_回收ServiceImpl {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
     private PB017_public_flowing公共流水登记簿Repository public_flowing公共流水登记簿Repository;
+
+
+
+    @Autowired
+    private LoanHistoryRepository loanHistoryRepository;
 
 
     // TODO S_107_SEQ_回收额_AND_0302000201
@@ -204,7 +212,14 @@ public class B贷款_回收ServiceImpl {
         统计周期编码 A =统计周期编码.H__01_每日;
         Arrays.stream(E_银行编码_H.values()).forEach(e->{
         });
-        return null;
+
+        List<LoanHistory> loanHistories  = loanHistoryRepository.findByIndexNo(StatisticalIndexCodeEnum.S_118_SEQ_回收额__冲还贷___AND_0302000213.get指标编码());
+
+
+        Output output = new Output();
+      //  output.setData(mmmm);
+        output.setSuccess(true);
+        return output;
     }
 
 

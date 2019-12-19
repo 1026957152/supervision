@@ -26,6 +26,12 @@ public interface DP022_个人缴存登记薄Repository extends JpaRepository<DP0
 
     List<DP022_个人缴存登记簿> findByRegdate登记日期(LocalDate localDate);
 
+    List<DP022_个人缴存登记簿> findByRegdate登记日期Between(LocalDate ldt_jsrq, LocalDate ldt_ksrq);
+
+    List<DP022_个人缴存登记簿> findByAccnum个人账号In(List<String> dp);
+
+    List<DP022_个人缴存登记簿> findByInaccdate入账日期BetweenOrderByInaccdate入账日期Desc(LocalDate minusDays, LocalDate now);
+
 
     //   List<DP022_个人缴存登记簿> findByAccnum个人账号AfterBegym开始年月(String accnum个人账号);
 

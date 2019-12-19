@@ -1,6 +1,7 @@
 package org.ylgjj.loan.flow;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -21,14 +22,16 @@ import java.util.UUID;
 public class BaseDomain implements Serializable {
 
     @Id
-   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Integer id;
 
 
+    @JsonIgnore
     @Column(name = "create_by")
     @CreatedBy
     private Integer createBy;
-
+    @JsonIgnore
     @Column(name = "modify_by")
     @LastModifiedBy
     private Integer modifyBy;
@@ -37,15 +40,18 @@ public class BaseDomain implements Serializable {
     @CreatedDate
     //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     private LocalDateTime createDate;
 
     @Column(name = "modify_date")
     @LastModifiedDate
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonIgnore
     private LocalDateTime modifyDate;
 
     @Column(name = "version")
     @Version
+    @JsonIgnore
     private Integer version;
 
 

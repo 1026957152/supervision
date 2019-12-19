@@ -57,7 +57,7 @@ public class DP022_个人缴存登记簿 {
 
 
     @Column(name = "basenum")
-    private String basenum_缴存基数;
+    private double basenum_缴存基数;
 
     @Column(name = "unitprop")
     private String unitprop_单位比例;
@@ -76,7 +76,7 @@ public class DP022_个人缴存登记簿 {
     indiprop	0		0:不可为空	个人缴存比例*/
 
     @Column(name = "indipayamt")
-    private String indipayamt_个人月汇缴金额;
+    private double indipayamt_个人月汇缴金额;
 
     @Column(name = "payamt")
     private BigDecimal payamt_缴存金额;
@@ -132,7 +132,7 @@ public class DP022_个人缴存登记簿 {
 
 
     @Column(name = "inaccdate")
-    private LocalDateTime inaccdate_入账日期;
+    private LocalDate inaccdate入账日期;
 
 
 
@@ -230,11 +230,11 @@ public class DP022_个人缴存登记簿 {
         this.endym截止年月 = endym_截止年月;
     }
 
-    public String getBasenum_缴存基数() {
+    public double getBasenum_缴存基数() {
         return basenum_缴存基数;
     }
 
-    public void setBasenum_缴存基数(String basenum_缴存基数) {
+    public void setBasenum_缴存基数(double basenum_缴存基数) {
         this.basenum_缴存基数 = basenum_缴存基数;
     }
 
@@ -262,11 +262,11 @@ public class DP022_个人缴存登记簿 {
         this.indiprop_个人缴存比例 = indiprop_个人缴存比例;
     }
 
-    public String getIndipayamt_个人月汇缴金额() {
+    public double getIndipayamt_个人月汇缴金额() {
         return indipayamt_个人月汇缴金额;
     }
 
-    public void setIndipayamt_个人月汇缴金额(String indipayamt_个人月汇缴金额) {
+    public void setIndipayamt_个人月汇缴金额(double indipayamt_个人月汇缴金额) {
         this.indipayamt_个人月汇缴金额 = indipayamt_个人月汇缴金额;
     }
 
@@ -310,12 +310,12 @@ public class DP022_个人缴存登记簿 {
         this.inaccstate_入账状态 = inaccstate_入账状态;
     }
 
-    public LocalDateTime getInaccdate_入账日期() {
-        return inaccdate_入账日期;
+    public LocalDate getInaccdate入账日期() {
+        return inaccdate入账日期;
     }
 
-    public void setInaccdate_入账日期(LocalDateTime inaccdate_入账日期) {
-        this.inaccdate_入账日期 = inaccdate_入账日期;
+    public void setInaccdate入账日期(LocalDate inaccdate_入账日期) {
+        this.inaccdate入账日期 = inaccdate_入账日期;
     }
 
     public String getTimestamp_时间戳() {

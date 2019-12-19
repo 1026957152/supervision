@@ -2,18 +2,18 @@ package org.ylgjj.loan.outputenum;
 
 //import com.coalvalue.domain.pojo.ListItem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by silence on 2016/1/18.
  */
 public enum 住建部编码 {
 
 
-    H__每年("06","每年"),
-    H__半年("05","半年"),
-    H__每季("04","每季"),
-    H__每月("03","每月"),
-    H__每周("02","每周"),
-    H__每日("01","每日"),
+    H__每年(Arrays.asList(),"06","每年"),
+
 
 
 
@@ -35,7 +35,7 @@ public enum 住建部编码 {
 
 
 
-    住建部编码(String 编码, String 名称) {
+    住建部编码(List<String> s , String 编码, String 名称) {
         this.编码 = 编码;
         this.名称 = 名称;
 

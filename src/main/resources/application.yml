@@ -13,6 +13,14 @@ zf_db: webdb
 zf_username: miapp
 zf_password: miapp
 
+
+# 综服库，db2
+sms_ip: 10.22.30.22
+sms_port: 50020
+sms_db: webdb
+sms_username: sms
+sms_password: sms
+
 # 本地库，mysql
 local_ip: 192.168.10.90
 local_port: 3306
@@ -111,6 +119,17 @@ spring:
     password: ${zf_password}
     default-read-only: true
     read-only: true
+
+
+
+  datasourcequaternary:
+    jdbc-url: jdbc:db2://${sms_ip}:${sms_port}/${sms_db}
+    driverClassName: com.ibm.db2.jcc.DB2Driver
+    username: ${sms_username}
+    password: ${sms_password}
+    default-read-only: true
+    read-only: true
+
 
   jpa:
     database: db2

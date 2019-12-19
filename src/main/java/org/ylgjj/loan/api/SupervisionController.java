@@ -15,12 +15,16 @@ import org.ylgjj.loan.domain.Query;
 import org.ylgjj.loan.domain.ReturnResult;
 import org.ylgjj.loan.model.ApiUrl;
 import org.ylgjj.loan.service.CustomerService;
+import org.ylgjj.loan.web.WebController;
 
 import javax.validation.Valid;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 /**
  * Created by zohu on 6/29/2015.
@@ -33,70 +37,78 @@ public class SupervisionController {
 
     static public List<ApiUrl> api = new ArrayList<ApiUrl>();
 
-    static public ApiUrl H1_1 = new ApiUrl("1.1",
+    static public ApiUrl H1_1 = new ApiUrl("010101",
             "1监管主要指标查询",
             "1.1公积金年度查询",
-            "http://ip:port/JG/common/get_zbnd.service",true);
+            "/JG/common/get_zbnd.service",true);
 
-    static public ApiUrl H1_2 = new ApiUrl("1.1",
+    static public ApiUrl H1_2 = new ApiUrl("010201",
             "1监管主要指标查询",
             "1.2公积金中心主要运行情况查询",
-            "http://ip:port/JG/common/get_business_data.service", false);
+            "/JG/common/get_business_data.service", true);
 
 
 
-    static public ApiUrl H1_3 = new ApiUrl("1.1",
+    static public ApiUrl H1_3 = new ApiUrl("010301",
             "1监管主要指标查询",
             "1.3指标明细查询",
-            "http://ip:port/JG/dzbfx/more_grid_cx.service", false);
+            "/JG/dzbfx/more_grid_cx.service", true);
 
-    static public ApiUrl H1_4 = new ApiUrl("1.1",
+    {
+
+    }
+
+    static public ApiUrl H1_4 = new ApiUrl("010401",
             "1监管主要指标查询",
             "1.4离柜率明细查询",
-            "http://ip:port/JG/common/get_fwxl.service", false);
+            "/JG/common/get_fwxl.service", false);
 
     static {
+        String testPageUrl =  linkTo(methodOn(WebController.class).指标明细查询(null)).withSelfRel().getHref();
+
+
         api.add(H1_1);
+        H1_3.setTestPageUrl(testPageUrl);
         api.add(H1_2);
         api.add(H1_3);
         api.add(H1_4);
     }
 
-    static public ApiUrl H2_1 = new ApiUrl("1.1",
+    static public ApiUrl H2_1 = new ApiUrl("020101",
             "业务指标",
             "添加常用指标",
-            "http://ip:port/JG/dzbfx/more_target_add.service", true);
+            "/JG/dzbfx/more_target_add.service", true);
 
-    static public ApiUrl H2_2 = new ApiUrl("1.1",
+    static public ApiUrl H2_2 = new ApiUrl("020201",
             "2业务指标",
             "2.2查询常用指标",
-            "http://ip:port/JG/dzbfx/more_target_cx.service", true);
+            "/JG/dzbfx/more_target_cx.service", true);
 
-    static public ApiUrl H2_3 = new ApiUrl("1.1",
+    static public ApiUrl H2_3 = new ApiUrl("020301",
             "2业务指标",
             "2.3常用指标数据查询",
-            "http://ip:port/JG/dzbfx/more_target_value_cx.service", false);
+            "/JG/dzbfx/more_target_value_cx.service", false);
 
 
-    static public ApiUrl H2_4 = new ApiUrl("1.1",
+    static public ApiUrl H2_4 = new ApiUrl("020401",
             "2业务指标",
             "2.4多指标树查询",
-            "http://ip:port/JG/dzbfx/more_tree_cx.service", false);
+            "/JG/dzbfx/more_tree_cx.service", false);
 
-    static public ApiUrl H2_5 = new ApiUrl("1.1",
+    static public ApiUrl H2_5 = new ApiUrl("020501",
             "2业务指标",
             "2.5多维度查询",
-            "http://ip:port/JG/dzbfx/more_dimension_cx.service", false);
-    static public ApiUrl H2_6 = new ApiUrl("1.1",
+            "/JG/dzbfx/more_dimension_cx.service", false);
+    static public ApiUrl H2_6 = new ApiUrl("020601",
             "2业务指标",
             "2.6网格查询",
-            "http://ip:port/JG/dzbfx/more_grid_cx.service", false);
+            "/JG/dzbfx/more_grid_cx.service", false);
 
 
-    static public ApiUrl H2_7 = new ApiUrl("1.1",
+    static public ApiUrl H2_7 = new ApiUrl("020701",
             "2业务指标",
             "2.7表格查询",
-            "http://ip:port/JG/dzbfx/more_chart_cx.service", false);
+            "/JG/dzbfx/more_chart_cx.service", false);
 
     static {
         api.add(H2_1);
@@ -107,29 +119,29 @@ public class SupervisionController {
         api.add(H2_6);
         api.add(H2_7);
     }
-    static public ApiUrl H3_1 = new ApiUrl("1.1",
+    static public ApiUrl H3_1 = new ApiUrl("030101",
             "3结算监控",
             "3.1银行查询-查询所有关联银行，按总行区分",
-            "http://ip:port/JG/zjlxjk/get_all_bank.service", true);
+            "/JG/zjlxjk/get_all_bank.service", true);
 
-    static public ApiUrl H3_2 = new ApiUrl("1.1",
+    static public ApiUrl H3_2 = new ApiUrl("030201",
             "3银行余额查询",
             "3.2银行余额查询",
-            "http://ip:port/JG/zjlxjk/get_bank_ye.service", true);
+            "/JG/zjlxjk/get_bank_ye.service", true);
 
-    static public ApiUrl H3_3 = new ApiUrl("1.1",
+    static public ApiUrl H3_3 = new ApiUrl("030301",
             "3银行余额查询",
             "3.3银行实时交易",
-            "http://ip:port/JG/zjlxjk/get_all_bank_sszhmx.service", true);
-    static public ApiUrl H3_4 = new ApiUrl("1.1",
+            "/JG/zjlxjk/get_all_bank_sszhmx.service", true);
+    static public ApiUrl H3_4 = new ApiUrl("030401",
             "3银行余额查询",
             "3.4金结算流水查询-查询最近15条结算明细数据",
-            "http://ip:port/JG/zjlxjk/get_jymx.service", true);
+            "/JG/zjlxjk/get_jymx.service", true);
 
-    static public ApiUrl H3_5 = new ApiUrl("1.1",
+    static public ApiUrl H3_5 = new ApiUrl("030501",
             "3银行余额查询",
             "3.4资金结算流水查询-查询历史结算明细数据",
-            "http://ip:port/JG/zjlxjk/get_yhlsjymx.service", true);
+            "/JG/zjlxjk/get_yhlsjymx.service", true);
 
     static {
         api.add(H3_1);
@@ -139,33 +151,33 @@ public class SupervisionController {
         api.add(H3_5);
 
     }
-    static public ApiUrl H4_1 = new ApiUrl("1.1",
+    static public ApiUrl H4_1 = new ApiUrl("040101",
             "4业务统计",
             "4.1业务统计——获取各渠道业务统计数据",
-            "http://ip:port/JG/bbgl/ywtj_cx.service", true);
+            "/JG/bbgl/ywtj_cx.service", true);
     static {
         api.add(H4_1);
 
 
     }
-    static public ApiUrl H5_1 = new ApiUrl("1.1",
+    static public ApiUrl H5_1 = new ApiUrl("050101",
             "5离柜率",
             "5.1离柜率查询",
-            "http://ip:port/JG/zjlxjk/lgl_cx.service", false);
+            "/JG/zjlxjk/lgl_cx.service", true);
     static {
         api.add(H5_1);
     }
 
-    static public ApiUrl H6_1 = new ApiUrl("1.1",
+    static public ApiUrl H6_1 = new ApiUrl("060101",
             "6抵押办理时间",
             "6.1抵押物数据查询",
-            "http://ip:port/JG/dyw/get_dywData.service", false);
+            "/JG/dyw/get_dywData.service", false);
 
 
-    static public ApiUrl H6_2 = new ApiUrl("1.1",
+    static public ApiUrl H6_2 = new ApiUrl("060201",
             "6抵押办理时间",
             "6.2抵押物明细数据查询",
-            "http://ip:port/JG/dyw/get_dywmx.service", true);
+            "/JG/dyw/get_dywmx.service", true);
 
     static {
         api.add(H6_1);
@@ -173,73 +185,65 @@ public class SupervisionController {
     }
 
 
-    static public ApiUrl H7_1 = new ApiUrl("1.1",
+    static public ApiUrl H7_1 = new ApiUrl("070101",
             "7大额资金监控",
             "7.1监控数据明细查询",
-            "http://ip:port/JG/zjlxjk/dezjjk_cx.service", true);
+            "/JG/zjlxjk/dezjjk_cx.service", true);
 
-    static public ApiUrl H7_2 = new ApiUrl("1.1",
+    static public ApiUrl H7_2 = new ApiUrl("070201",
             "7大额资金监控",
             "7.2大额资金监控汇总数据查询",
-            "http://ip:port/JG/zjlxjk/dezjjk_chart_cx.service", true);
+            "/JG/zjlxjk/dezjjk_chart_cx.service", true);
     static {
         api.add(H7_1);
         api.add(H7_2);
     }
 
 
-    static public ApiUrl H8_1 = new ApiUrl("1.1",
+    static public ApiUrl H8_1 = new ApiUrl("080101",
             "8银行专户余额",
             "8.1银行专户余额查询",
-            "http://ip:port/JG/zjlxjk/yhzhye_table_cx.service", true);
+            "/JG/zjlxjk/yhzhye_table_cx.service", true);
 
     static {
         api.add(H8_1);
 
     }
-    static public ApiUrl H9_1 = new ApiUrl("1.1",
+    static public ApiUrl H9_1 = new ApiUrl("090101",
             "9服务统计",
             "9.1信息推送量查询",
-            "http://ip:port/JG/zhfwpt/xxtsl_cx.service", false);
-    static public ApiUrl H9_2 = new ApiUrl("1.1",
+            "/JG/zhfwpt/xxtsl_cx.service", false);
+    static public ApiUrl H9_2 = new ApiUrl("090201",
             "9服务统计",
             "9.2渠道访问总量查询",
 
-
-
-
-
-
-
-
-
-            "http://ip:port/JG/zhfwpt/qdfwzl_cx.service", false);
-    static public ApiUrl H9_3 = new ApiUrl("1.1",
+            "/JG/zhfwpt/qdfwzl_cx.service", true);
+    static public ApiUrl H9_3 = new ApiUrl("090301",
             "9服务统计",
             "9.3用户注册分布查询",
-            "http://ip:port/JG/zhfwpt/yhzcfb_cx.service", false);
-    static public ApiUrl H9_4 = new ApiUrl("1.1",
+            "/JG/zhfwpt/yhzcfb_cx.service", false);
+    static public ApiUrl H9_4 = new ApiUrl("090401",
             "9服务统计",
             "9.4用户性别查询",
-            "http://ip:port/JG/zhfwpt/yhxbxx_cx.service", true);
+            "/JG/zhfwpt/yhxbxx_cx.service", true);
 
-    static public ApiUrl H9_5 = new ApiUrl("1.1",
+    static public ApiUrl H9_5 = new ApiUrl("090504",
             "9服务统计",
             "9.5短信发送量查询",
-            "http://ip:port/JG/zhfwpt/sms_cx.service", false);
-    static public ApiUrl H9_6 = new ApiUrl("1.1",
+            "/JG/zhfwpt/sms_cx.service", true);
+    static public ApiUrl H9_6 = new ApiUrl("090604",
             "9服务统计",
             "9.6渠道登录次数查询",
-            "http://ip:port/JG/zhfwpt/qdlogin.service", true);
-    static public ApiUrl H9_7 = new ApiUrl("1.1",
+            "/JG/zhfwpt/qdlogin.service", true);
+    static public ApiUrl H9_7 = new ApiUrl("090704",
             "9服务统计",
             "9.7用户年龄信息查询",
-            "http://ip:port/JG/zhfwpt/yhnlxx_cx.service", true);
+            "/JG/zhfwpt/yhnlxx_cx.service", true);
 
-    static public ApiUrl H9_8 = new ApiUrl("1.1",
+    static public ApiUrl H9_8 = new ApiUrl("090801",
             "9服务统计",
             "9.8各渠道API总量",
-            "http://ip:port/JG/zhfwpt/lyqd_cx.service", true);
+            "/JG/zhfwpt/lyqd_cx.service", true);
 
     static {
         api.add(H9_1);
@@ -256,14 +260,14 @@ public class SupervisionController {
 
 
 
-    static public ApiUrl H10_1 = new ApiUrl("1.1",
+    static public ApiUrl H10_1 = new ApiUrl("100101",
             "10逾期监管",
             "10.1逾期监管汇总查询",
-            "http://ip:port/JG/yqqk/get_yqqk_DataCx.service", true);
-    static public ApiUrl H10_2 = new ApiUrl("1.1",
+            "/JG/yqqk/get_yqqk_DataCx.service", true);
+    static public ApiUrl H10_2 = new ApiUrl("100201",
             "10逾期监管",
             "10.2逾期监管明细查询",
-            "http://ip:port/JG/yqqk/jg_yqqk_gdyqqk_tc.service", true);
+            "/JG/yqqk/jg_yqqk_gdyqqk_tc.service", true);
 
     static {
         api.add(H10_1);
@@ -272,7 +276,7 @@ public class SupervisionController {
 
 
     static final String H_1_1_监管主要指标查询_公积金年度查询 = "/JG/common/get_zbnd.service";
-    static final String H_1_2_监管主要指标查询_指标明细查询 = "/JG/common/get_business_data.service";
+    static final String H_1_2_监管主要指标查询_公积金中心主要运行情况查询 = "/JG/common/get_business_data.service";
     static final String H_1_3_监管主要指标查询_指标明细查询 = "/JG/dzbfx/more_grid_cx.service";
     static final String H_1_3_监管主要指标查询_公积金年度查询 = "/JG/common/get_fwxl.service";
 
@@ -318,48 +322,48 @@ public class SupervisionController {
 
 
 
- /*   static final String H_1_1_监管主要指标查询_公积金年度查询 = "http://ip:port/JG/common/get_zbnd.service";
-    static final String H_1_2_监管主要指标查询_指标明细查询 = "http://ip:port/JG/common/get_business_data.service";
-    static final String H_1_3_监管主要指标查询_指标明细查询 = "http://ip:port/JG/dzbfx/more_grid_cx.service";
-    static final String H_1_3_监管主要指标查询_公积金年度查询 = "http://ip:port/JG/common/get_fwxl.service";
+ /*   static final String H_1_1_监管主要指标查询_公积金年度查询 = "/JG/common/get_zbnd.service";
+    static final String H_1_2_监管主要指标查询_指标明细查询 = "/JG/common/get_business_data.service";
+    static final String H_1_3_监管主要指标查询_指标明细查询 = "/JG/dzbfx/more_grid_cx.service";
+    static final String H_1_3_监管主要指标查询_公积金年度查询 = "/JG/common/get_fwxl.service";
 
-    static final String H_2_1_业务指标_添加常用指标 = "http://ip:port/JG/dzbfx/more_target_add.service";
-    static final String H_2_2_业务指标_查询常用指标 = "http://ip:port/JG/dzbfx/more_target_cx.service";
-    static final String H_2_3_业务指标_常用指标数据查询 = "http://ip:port/JG/dzbfx/more_target_value_cx.service";
-    static final String H_2_4_业务指标_多指标树查询 = "http://ip:port/JG/common/get_fwxl.service";
-    static final String H_2_5_业务指标_多维度查询 = "http://ip:port/JG/dzbfx/more_tree_cx.service";
-    static final String H_2_6_业务指标_网格查询 = "http://ip:port/JG/dzbfx/more_grid_cx.service";
-    static final String H_2_7_业务指标_表格查询 = "http://ip:port/JG/dzbfx/more_chart_cx.service";
+    static final String H_2_1_业务指标_添加常用指标 = "/JG/dzbfx/more_target_add.service";
+    static final String H_2_2_业务指标_查询常用指标 = "/JG/dzbfx/more_target_cx.service";
+    static final String H_2_3_业务指标_常用指标数据查询 = "/JG/dzbfx/more_target_value_cx.service";
+    static final String H_2_4_业务指标_多指标树查询 = "/JG/common/get_fwxl.service";
+    static final String H_2_5_业务指标_多维度查询 = "/JG/dzbfx/more_tree_cx.service";
+    static final String H_2_6_业务指标_网格查询 = "/JG/dzbfx/more_grid_cx.service";
+    static final String H_2_7_业务指标_表格查询 = "/JG/dzbfx/more_chart_cx.service";
 
-    static final String H_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分 = "http://ip:port/JG/zjlxjk/get_all_bank.service";
-    static final String H_3_2_银行余额查询_银行余额查询 = "http://ip:port/JG/zjlxjk/get_bank_ye.service";
-    static final String H_3_3_银行余额查询_银行实时交易 = "http://ip:port/JG/zjlxjk/get_all_bank_sszhmx.service";
-    static final String H_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据 = "http://ip:port/JG/zjlxjk/get_jymx.service";
-    static final String H_3_5_银行余额查询_资金结算流水查询_查询历史结算明细数据 = "http://ip:port/JG/zjlxjk/get_yhlsjymx.service";
+    static final String H_3_1_银行余额查询_银行查询_查询所有关联银行_按总行区分 = "/JG/zjlxjk/get_all_bank.service";
+    static final String H_3_2_银行余额查询_银行余额查询 = "/JG/zjlxjk/get_bank_ye.service";
+    static final String H_3_3_银行余额查询_银行实时交易 = "/JG/zjlxjk/get_all_bank_sszhmx.service";
+    static final String H_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据 = "/JG/zjlxjk/get_jymx.service";
+    static final String H_3_5_银行余额查询_资金结算流水查询_查询历史结算明细数据 = "/JG/zjlxjk/get_yhlsjymx.service";
 
-    static final String H_4_1_业务统计_获取各渠道业务统计数据 = "http://ip:port/JG/bbgl/ywtj_cx.service";
+    static final String H_4_1_业务统计_获取各渠道业务统计数据 = "/JG/bbgl/ywtj_cx.service";
 
-    static final String H_5_1_离柜率_离柜率查询 = "http://ip:port/JG/zjlxjk/lgl_cx.service";
+    static final String H_5_1_离柜率_离柜率查询 = "/JG/zjlxjk/lgl_cx.service";
 
-    static final String H_6_1_抵押办理时间_抵押物数据查询 = "http://ip:port/JG/dyw/get_dywData.service";
-    static final String H_6_2_抵押办理时间_抵押物明细数据查询 = "http://ip:port/JG/dyw/get_dywmx.service";
+    static final String H_6_1_抵押办理时间_抵押物数据查询 = "/JG/dyw/get_dywData.service";
+    static final String H_6_2_抵押办理时间_抵押物明细数据查询 = "/JG/dyw/get_dywmx.service";
 
-    static final String H_7_1_大额资金监控_监控数据明细查询 = "http://ip:port/JG/zjlxjk/dezjjk_cx.service";
-    static final String H_7_2_大额资金监控_大额资金监控汇总数据查询 = "http://ip:port/JG/zjlxjk/dezjjk_chart_cx.service";
+    static final String H_7_1_大额资金监控_监控数据明细查询 = "/JG/zjlxjk/dezjjk_cx.service";
+    static final String H_7_2_大额资金监控_大额资金监控汇总数据查询 = "/JG/zjlxjk/dezjjk_chart_cx.service";
 
-    static final String H_8_1_银行专户余额_银行专户余额查询 = "http://ip:port/JG/zjlxjk/yhzhye_table_cx.service";
+    static final String H_8_1_银行专户余额_银行专户余额查询 = "/JG/zjlxjk/yhzhye_table_cx.service";
 
-    static final String H_9_1_服务统计_信息推送量查询 = "http://ip:port/JG/zhfwpt/xxtsl_cx.service";
-    static final String H_9_2_服务统计_渠道访问总量查询 = "http://ip:port/JG/zhfwpt/qdfwzl_cx.service";
-    static final String H_9_3_服务统计_用户注册分布查询 = "http://ip:port/JG/zhfwpt/yhzcfb_cx.service";
-    static final String H_9_4_服务统计_用户性别查询 = "http://ip:port/JG/zhfwpt/yhxbxx_cx.service";
-    static final String H_9_5_服务统计_短信发送量查询 = "http://ip:port/JG/zhfwpt/sms_cx.service";
-    static final String H_9_6_服务统计_渠道登录次数查询 = "http://ip:port/JG/zhfwpt/qdlogin.service";
-    static final String H_9_7_服务统计_用户年龄信息查询 = "http://ip:port/JG/zhfwpt/yhnlxx_cx.service";
-    static final String H_9_8_服务统计_各渠道API总量 = "http://ip:port/JG/zhfwpt/lyqd_cx.service";
+    static final String H_9_1_服务统计_信息推送量查询 = "/JG/zhfwpt/xxtsl_cx.service";
+    static final String H_9_2_服务统计_渠道访问总量查询 = "/JG/zhfwpt/qdfwzl_cx.service";
+    static final String H_9_3_服务统计_用户注册分布查询 = "/JG/zhfwpt/yhzcfb_cx.service";
+    static final String H_9_4_服务统计_用户性别查询 = "/JG/zhfwpt/yhxbxx_cx.service";
+    static final String H_9_5_服务统计_短信发送量查询 = "/JG/zhfwpt/sms_cx.service";
+    static final String H_9_6_服务统计_渠道登录次数查询 = "/JG/zhfwpt/qdlogin.service";
+    static final String H_9_7_服务统计_用户年龄信息查询 = "/JG/zhfwpt/yhnlxx_cx.service";
+    static final String H_9_8_服务统计_各渠道API总量 = "/JG/zhfwpt/lyqd_cx.service";
 
-    static final String H_10_1_逾期监管_逾期监管汇总查询 = "http://ip:port/JG/yqqk/get_yqqk_DataCx.service";
-    static final String H_10_2_逾期监管_逾期监管明细查询 = "http://ip:port/JG/yqqk/jg_yqqk_gdyqqk_tc.service";*/
+    static final String H_10_1_逾期监管_逾期监管汇总查询 = "/JG/yqqk/get_yqqk_DataCx.service";
+    static final String H_10_2_逾期监管_逾期监管明细查询 = "/JG/yqqk/jg_yqqk_gdyqqk_tc.service";*/
     static final String a = "";
     enum ConstantEnum {
         SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY

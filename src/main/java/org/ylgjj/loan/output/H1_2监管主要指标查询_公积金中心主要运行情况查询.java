@@ -27,9 +27,14 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     private int ljjzhjdws_建制缓缴单位数_NUMBER_18_0;
     private double ljhbjzhjdws_环比建制缓缴单位数_NUMBER_18_0;
     private double ljsnjzhjdws_同比建制缓缴单位数_NUMBER_18_0;
+
+
+
     private int ljjzzrs_建制总人数_NUMBER_18_0;
     private double ljhbjzzrs_环比建制总人数_NUMBER_18_0;
     private double ljsnjzzrs_同比建制总人数_NUMBER_18_0;
+
+
     private int ljjzxhrs_建制销户人数_NUMBER_18_0;
     private double ljhbjzxhrs_环比建制销户人数_NUMBER_18_0;
     private double ljsnjzxhrs_同比建制销户人数_NUMBER_18_0;
@@ -57,18 +62,27 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     private int ljzldkbs_存量贷款笔数_NUMBER_18_0;
     private double ljhbzldkbs_环比存量贷款笔数_NUMBER_18_0;
     private double ljsnzldkbs_同比存量贷款笔数_NUMBER_18_0;
+
+
     private int ljthreeyqhs_三期以上笔数_NUMBER_18_0;
     private double ljhbthreeyqhs_环比三期以上笔数_NUMBER_18_0;
     private double ljsnthreeyqhs_同比三期以上笔数_NUMBER_18_0;
+
+
+
     private int ljsixyqhs_六期以上笔数_NUMBER_18_0;
     private double ljhbsixyqhs_环比六期以上笔数_NUMBER_18_0;
     private double ljsnsixyqhs_同比六期以上笔数_NUMBER_18_0;
+
     private int hslx_回收利息_NUMBER_18_2;
     private double hbhslx_环比回收利息_NUMBER_18_2;
     private double snhslx_同比回收利息_NUMBER_18_2;
+
     private int ljhslx_累计回收利息_NUMBER_18_2;
     private double ljhbhslx_累计环比回收利息_NUMBER_18_2;
     private double ljsnhslx_累计同比回收利息_NUMBER_18_2;
+
+
     private int nzjxje_结转利息额_NUMBER_18_2;
     private double hbnzjxje_环比结转利息额_NUMBER_18_2;
     private double snnzjxje_同比结转利息额_NUMBER_18_2;
@@ -105,16 +119,16 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     private int ljxkhzgs_累计新开户职工_NUMBER_18_0;
     private double ljhbxkhzgs_累计环比新开户职工_NUMBER_18_0;
     private double ljsnxkhzgs_累计同比新开户职工_NUMBER_18_0;
-    private int ljjce_累计缴存额_NUMBER_18_2;
+    private double ljjce_累计缴存额_NUMBER_18_2;
     private double ljhbjce_环比累计缴存额_NUMBER_18_2;
     private double ljsnjce_同比累计缴存额_NUMBER_18_2;
-    private int sjce_实缴存额_NUMBER_18_2;
+    private double sjce_实缴存额_NUMBER_18_2;
     private double hbsjce_环比实缴存额_NUMBER_18_2;
     private double snsjce_同比实缴存额_NUMBER_18_2;
-    private int ljsjce_累计实缴存额_NUMBER_18_2;
+    private double ljsjce_累计实缴存额_NUMBER_18_2;
     private double ljhbsjce_累计环比实缴存额_NUMBER_18_2;
     private double ljsnsjce_累计同比实缴存额_NUMBER_18_2;
-    private int ljtqe_历史累计提取额_提取原因_NUMBER_18_2;
+    private double ljtqe_历史累计提取额_提取原因_NUMBER_18_2;
     private double ljhbtqe_环比历史累计提取额_提取原因_NUMBER_18_2;
     private double ljsntqe_同比历史累计提取额_提取原因_NUMBER_18_2;
     private double tqje_提取金额_NUMBER_18_2;
@@ -129,15 +143,23 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     private double ljffje_累计发放金额_NUMBER_18_2;
     private double ljhbffje_累计环比发放金额_NUMBER_18_2;
     private double ljsnffje_累计同比发放金额_NUMBER_18_2;
+
+
+
     private double hsje_回收金额_NUMBER_18_2;
     private double hbhsje_环比回收金额_NUMBER_18_2;
     private double snhsje_同比回收金额_NUMBER_18_2;
+
     private double ljhsje_累计回收金额_NUMBER_18_2;
     private double ljhbhsje_累计环比回收金额_NUMBER_18_2;
     private double ljsnhsje_累计同比回收金额_NUMBER_18_2;
+
+
+
     private double ljffdkje_累计发放贷款金额_NUMBER_18_2;
     private double ljhbffdkje_累计环比发放贷款金额_NUMBER_18_2;
     private double ljsnffdkje_累计同比发放贷款金额_NUMBER_18_2;
+
     private double yqdkje_逾期贷款金额_NUMBER_18_2;
     private double dkye_贷款余额_NUMBER_18_2;
     private double hbdkye_环比贷款余额_NUMBER_18_2;
@@ -146,12 +168,15 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     private double hbffbs_环比发放笔数_NUMBER_18_0;
     private double snffbs_同比发放笔数_NUMBER_18_0;
     private double ljffbs_累计发放笔数_NUMBER_18_0;
-    private int ljhbffbs_累计环比发放笔数_NUMBER_18_0;
-    private int ljsnffbs_累计同比发放笔数_NUMBER_18_0;
+    private double ljhbffbs_累计环比发放笔数_NUMBER_18_0;
+    private double ljsnffbs_累计同比发放笔数_NUMBER_18_0;
     private double zzsyje_增长收益金额_NUMBER_18_2;
     private double xmdkye_项目贷款余额_NUMBER_18_2;
     private double gzye_国债金额_NUMBER_18_2;
+
     private double hqzhye_活期账户余额_NUMBER_18_2;
+
+
     private double ywsrje_业务收入金额_NUMBER_18_2;
     private double ywzcje_业务收出金额_NUMBER_18_2;
     private double sjlzzf_上缴的保障房建设资金_NUMBER_18_2;
@@ -981,11 +1006,11 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         this.ljsnxkhzgs_累计同比新开户职工_NUMBER_18_0 = ljsnxkhzgs_累计同比新开户职工_NUMBER_18_0;
     }
 
-    public int getLjjce_累计缴存额_NUMBER_18_2() {
+    public double getLjjce_累计缴存额_NUMBER_18_2() {
         return ljjce_累计缴存额_NUMBER_18_2;
     }
 
-    public void setLjjce_累计缴存额_NUMBER_18_2(int ljjce_累计缴存额_NUMBER_18_2) {
+    public void setLjjce_累计缴存额_NUMBER_18_2(double ljjce_累计缴存额_NUMBER_18_2) {
         this.ljjce_累计缴存额_NUMBER_18_2 = ljjce_累计缴存额_NUMBER_18_2;
     }
 
@@ -1005,11 +1030,11 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         this.ljsnjce_同比累计缴存额_NUMBER_18_2 = ljsnjce_同比累计缴存额_NUMBER_18_2;
     }
 
-    public int getSjce_实缴存额_NUMBER_18_2() {
+    public double getSjce_实缴存额_NUMBER_18_2() {
         return sjce_实缴存额_NUMBER_18_2;
     }
 
-    public void setSjce_实缴存额_NUMBER_18_2(int sjce_实缴存额_NUMBER_18_2) {
+    public void setSjce_实缴存额_NUMBER_18_2(double sjce_实缴存额_NUMBER_18_2) {
         this.sjce_实缴存额_NUMBER_18_2 = sjce_实缴存额_NUMBER_18_2;
     }
 
@@ -1029,11 +1054,11 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         this.snsjce_同比实缴存额_NUMBER_18_2 = snsjce_同比实缴存额_NUMBER_18_2;
     }
 
-    public int getLjsjce_累计实缴存额_NUMBER_18_2() {
+    public double getLjsjce_累计实缴存额_NUMBER_18_2() {
         return ljsjce_累计实缴存额_NUMBER_18_2;
     }
 
-    public void setLjsjce_累计实缴存额_NUMBER_18_2(int ljsjce_累计实缴存额_NUMBER_18_2) {
+    public void setLjsjce_累计实缴存额_NUMBER_18_2(double ljsjce_累计实缴存额_NUMBER_18_2) {
         this.ljsjce_累计实缴存额_NUMBER_18_2 = ljsjce_累计实缴存额_NUMBER_18_2;
     }
 
@@ -1053,11 +1078,11 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         this.ljsnsjce_累计同比实缴存额_NUMBER_18_2 = ljsnsjce_累计同比实缴存额_NUMBER_18_2;
     }
 
-    public int getLjtqe_历史累计提取额_提取原因_NUMBER_18_2() {
+    public double getLjtqe_历史累计提取额_提取原因_NUMBER_18_2() {
         return ljtqe_历史累计提取额_提取原因_NUMBER_18_2;
     }
 
-    public void setLjtqe_历史累计提取额_提取原因_NUMBER_18_2(int ljtqe_历史累计提取额_提取原因_NUMBER_18_2) {
+    public void setLjtqe_历史累计提取额_提取原因_NUMBER_18_2(double ljtqe_历史累计提取额_提取原因_NUMBER_18_2) {
         this.ljtqe_历史累计提取额_提取原因_NUMBER_18_2 = ljtqe_历史累计提取额_提取原因_NUMBER_18_2;
     }
 
@@ -1309,19 +1334,19 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         this.ljffbs_累计发放笔数_NUMBER_18_0 = ljffbs_累计发放笔数_NUMBER_18_0;
     }
 
-    public int getLjhbffbs_累计环比发放笔数_NUMBER_18_0() {
+    public double getLjhbffbs_累计环比发放笔数_NUMBER_18_0() {
         return ljhbffbs_累计环比发放笔数_NUMBER_18_0;
     }
 
-    public void setLjhbffbs_累计环比发放笔数_NUMBER_18_0(int ljhbffbs_累计环比发放笔数_NUMBER_18_0) {
+    public void setLjhbffbs_累计环比发放笔数_NUMBER_18_0(double ljhbffbs_累计环比发放笔数_NUMBER_18_0) {
         this.ljhbffbs_累计环比发放笔数_NUMBER_18_0 = ljhbffbs_累计环比发放笔数_NUMBER_18_0;
     }
 
-    public int getLjsnffbs_累计同比发放笔数_NUMBER_18_0() {
+    public double getLjsnffbs_累计同比发放笔数_NUMBER_18_0() {
         return ljsnffbs_累计同比发放笔数_NUMBER_18_0;
     }
 
-    public void setLjsnffbs_累计同比发放笔数_NUMBER_18_0(int ljsnffbs_累计同比发放笔数_NUMBER_18_0) {
+    public void setLjsnffbs_累计同比发放笔数_NUMBER_18_0(double ljsnffbs_累计同比发放笔数_NUMBER_18_0) {
         this.ljsnffbs_累计同比发放笔数_NUMBER_18_0 = ljsnffbs_累计同比发放笔数_NUMBER_18_0;
     }
 

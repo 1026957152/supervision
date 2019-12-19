@@ -53,7 +53,7 @@ public class DP008_institution_detail_单位明细账 {
 
 
     @Column(name = "unitaccnum")
-    private String unitaccnum_单位账号;
+    private String unitaccnum单位账号;
 
 
     @Column(name = "unitcustid")
@@ -130,12 +130,12 @@ public class DP008_institution_detail_单位明细账 {
         this.transdate不可为空交易日期 = transdate不可为空交易日期;
     }
 
-    public String getUnitaccnum_单位账号() {
-        return unitaccnum_单位账号;
+    public String getUnitaccnum单位账号() {
+        return unitaccnum单位账号;
     }
 
-    public void setUnitaccnum_单位账号(String unitaccnum_单位账号) {
-        this.unitaccnum_单位账号 = unitaccnum_单位账号;
+    public void setUnitaccnum单位账号(String unitaccnum单位账号) {
+        this.unitaccnum单位账号 = unitaccnum单位账号;
     }
 
     public String getUnitcustid_单位客户号() {

@@ -39,7 +39,7 @@ public class BFlowoutputServiceImpl {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -58,13 +58,13 @@ public class BFlowoutputServiceImpl {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
 
 
     @Autowired
@@ -78,15 +78,15 @@ public class BFlowoutputServiceImpl {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
@@ -99,7 +99,7 @@ public class BFlowoutputServiceImpl {
     private PB011_银行信息表Repository pb011_银行信息表_repository;
 
 
-   // @PostConstruct
+   //
    // @Transactional
     public void 日单位状态变更时间序列() {
 
@@ -166,7 +166,7 @@ public class BFlowoutputServiceImpl {
         return 0;
     }
 
-   // @PostConstruct
+   //
     //@Transactional
     public void 日归集时间序列() {
 
@@ -199,7 +199,7 @@ public class BFlowoutputServiceImpl {
 
 
 
-    //@PostConstruct
+    //
     //@Transactional
     public void 日提取时间序列() {
 
@@ -245,7 +245,7 @@ public class BFlowoutputServiceImpl {
 
 
 
-   // @PostConstruct
+   //
    // @Transactional
     public void 日个人变更数量() {
 
@@ -280,7 +280,7 @@ public class BFlowoutputServiceImpl {
 
 
             maps___.entrySet().stream().forEach(e->{
-                long ageSummary = e.getValue().stream().map(a->a.getAccnum_不可为空_个人账号()).count();
+                long ageSummary = e.getValue().stream().map(a->a.getAccnum不可为空个人账号()).count();
                 System.out.println(H个人缴存变更登记簿_变更类型.fromString(e.getKey()).getDisplayText()+"--统计"+ageSummary);
             });
 
@@ -298,7 +298,7 @@ public class BFlowoutputServiceImpl {
 
 
 
-  //  @PostConstruct
+  //
     // @Transactional
     public void 日个贷款信息数量() {
 
@@ -308,7 +308,7 @@ public class BFlowoutputServiceImpl {
         Map<String, String> map =  pb011_银行信息表s.stream().collect(Collectors.toMap(PB011_银行信息表::getBankcode, PB011_银行信息表::getSUPERBANKCODE));
 
 
-        long count = ln003_contract_info_repository.count();
+        long count = ln003_合同信息_repository.count();
         System.out.println("--日变更时间序列 DP204_个人缴存变更登记簿---"+count);
 
 
@@ -329,7 +329,7 @@ public class BFlowoutputServiceImpl {
 
             // findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(OffsetDateTime endDate, OffsetDateTime startDate);
 
-            List<LN003_contract_info_合同信息> dp204_个人缴存变更登记簿s = ln003_contract_info_repository.findByLoandate放款日期(n);
+            List<LN003_合同信息> dp204_个人缴存变更登记簿s = ln003_合同信息_repository.findByLoandate放款日期(n);
 
             System.out.println("--日变更时间序列 DP204_个人缴存变更登记簿---"+dp204_个人缴存变更登记簿s.size());
 
@@ -337,7 +337,7 @@ public class BFlowoutputServiceImpl {
                     Collectors.groupingBy(LN003_contract_info_合同信息::getAgentbankcode_经办银行)
             );*/
 
-            Map<String, List<LN003_contract_info_合同信息>> maps___ = dp204_个人缴存变更登记簿s.stream().collect(  // 机构分类
+            Map<String, List<LN003_合同信息>> maps___ = dp204_个人缴存变更登记簿s.stream().collect(  // 机构分类
                     Collectors.groupingBy(e->{
                         return map.get(e.getAgentbankcode_经办银行());
                     })
@@ -368,7 +368,7 @@ public class BFlowoutputServiceImpl {
 
 
 
-  //  @PostConstruct
+  //
     // @Transactional
     public void 日个还款数量() {
 
@@ -378,7 +378,7 @@ public class BFlowoutputServiceImpl {
         Map<String, String> map =  pb011_银行信息表s.stream().collect(Collectors.toMap(PB011_银行信息表::getBankcode, PB011_银行信息表::getSUPERBANKCODE));
 
 
-        long count = ln003_contract_info_repository.count();
+        long count = ln003_合同信息_repository.count();
         System.out.println("--日个还款数量 DP204_个人缴存变更登记簿---"+count);
 
 
@@ -399,15 +399,15 @@ public class BFlowoutputServiceImpl {
 
             // findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(OffsetDateTime endDate, OffsetDateTime startDate);
 
-            List<LN101_贷款明细账_account> ln101_贷款明细账_accounts = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(n);
+            List<LN101_贷款明细账> ln101_贷款明细账_s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(n);
 
-            System.out.println("--日个还款数量 LN101_贷款明细账_account---"+ln101_贷款明细账_accounts.size());
+            System.out.println("--日个还款数量 LN101_贷款明细账_account---"+ ln101_贷款明细账_s.size());
 
 /*            Map<String, List<LN003_contract_info_合同信息>> maps___ = dp204_个人缴存变更登记簿s.stream().collect(  // 机构分类
                     Collectors.groupingBy(LN003_contract_info_合同信息::getAgentbankcode_经办银行)
             );*/
 
-            Map<String, List<LN101_贷款明细账_account>> maps___ = ln101_贷款明细账_accounts.stream().collect(  // 机构分类
+            Map<String, List<LN101_贷款明细账>> maps___ = ln101_贷款明细账_s.stream().collect(  // 机构分类
                     Collectors.groupingBy(e->{
                         return map.get(e.getAccbankcode不可为空_账户银行());
                     })

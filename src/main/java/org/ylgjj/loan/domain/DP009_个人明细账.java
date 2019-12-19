@@ -36,7 +36,7 @@ public class DP009_个人明细账 {
     @Column(name = "transdate")
     private LocalDate transdate不可为空交易日期;
     @Column(name = "accnum")
-    private String accnum_不可为空_个人账号;
+    private String accnum不可为空个人账号;
 
     @Column(name = "unitaccnum")
     private String unitaccnum_不可为空_单位账号;
@@ -212,12 +212,12 @@ public class DP009_个人明细账 {
         this.transdate不可为空交易日期 = transdate不可为空交易日期;
     }
 
-    public String getAccnum_不可为空_个人账号() {
-        return accnum_不可为空_个人账号;
+    public String getAccnum不可为空个人账号() {
+        return accnum不可为空个人账号;
     }
 
-    public void setAccnum_不可为空_个人账号(String accnum_不可为空_个人账号) {
-        this.accnum_不可为空_个人账号 = accnum_不可为空_个人账号;
+    public void setAccnum不可为空个人账号(String accnum不可为空个人账号) {
+        this.accnum不可为空个人账号 = accnum不可为空个人账号;
     }
 
     public String getUnitaccnum_不可为空_单位账号() {

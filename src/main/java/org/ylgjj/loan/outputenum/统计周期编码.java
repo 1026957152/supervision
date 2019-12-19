@@ -67,16 +67,16 @@ public enum 统计周期编码 {
         return list;
 
     }
-/*
-    public static 银行编码 fromString(String text) {
-        for (银行编码 status : 银行编码.values()) {
-            if (status.getText().equals(text) ) {
+
+    public static 统计周期编码 fromString(String text) {
+        for (统计周期编码 status : 统计周期编码.values()) {
+            if (status.get编码().equals(text) ) {
                 return status;
             }
         }
         throw new RuntimeException("no customer status " + text);
     }
-
+/*
     public static 银行编码 fromInt(Integer text) {
         for (银行编码 status : 银行编码.values()) {
             if (status.getId().equals(text) ) {

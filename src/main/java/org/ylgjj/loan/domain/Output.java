@@ -1,5 +1,6 @@
 package org.ylgjj.loan.domain;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Output {
@@ -52,8 +53,8 @@ public class Output {
     public static Output 情况4_入参数格式错误(String msg) {
         Output returnResult = new Output();
 
-       // returnResult.setRet("3");
-        //returnResult.setMsg("入参数格式错误:"+msg);
+        returnResult.setSuccess(false);
+        returnResult.setData(Arrays.asList("入参数格式错误:"+msg));
 
         return returnResult;
     }

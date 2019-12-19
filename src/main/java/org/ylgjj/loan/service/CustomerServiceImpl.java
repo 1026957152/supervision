@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -63,17 +63,17 @@ public class CustomerServiceImpl implements CustomerService {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
-
-
-    @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
-    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
+
+
+    @Autowired
+    private LN005_贷款分户信息_Repository lN005_贷款分户信息RepositoryLN005;
     @Autowired
     private DW145_提取结算登记薄_Repository dw145_提取结算登记薄_repository;
 
@@ -83,10 +83,10 @@ public class CustomerServiceImpl implements CustomerService {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
@@ -113,7 +113,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
 
-    public Page<LN008_borrower_info_借款人信息> queryLoanee(Pageable pageable) {
+    public Page<LN008_借款人信息> queryLoanee(Pageable pageable) {
         return null;
     }
 
@@ -196,7 +196,7 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-   // @PostConstruct
+   //
     public void queryLoanee() {
         try{
             Data[] date = queryLoanee("612724198409210339  ");
@@ -319,17 +319,17 @@ public class CustomerServiceImpl implements CustomerService {
         LocalDate start18月 = LocalDate.now().minusMonths(20).with(firstDayOfMonth());
 
 
-        DP006_Payment_个人缴存信息表 dp006_payment_个人缴存信息表 = dp006_payment_个人缴存信息表_repository.findByCustid个人客户号(cm002.getCustid_个人客户号());
-        if(dp006_payment_个人缴存信息表 == null){
+        DP006_个人缴存信息表 dp006__个人缴存信息表 = dp006__个人缴存信息表_repository.findByCustid个人客户号(cm002.getCustid_个人客户号());
+        if(dp006__个人缴存信息表 == null){
             throw new MyBusinessException("没有找到缴存信息,客户号："+ cm002.getCustid_个人客户号() + " 身份证号："+ cm002.getCertinum()
                     ,ErrorCodeEnum.操作失败);
 
         }
 
 
-        DP007_individual_sub_account_个人分户账 dp007_individual_sub_account_个人分户账 = dp007_individual_sub_account个人分户账Repository.findByAccnum个人账号(dp006_payment_个人缴存信息表.getAccnum个人账号());
-        if(dp007_individual_sub_account_个人分户账 == null){
-            throw new MyBusinessException("没有找到缴存信息,缴存帐号："+ dp006_payment_个人缴存信息表.getAccnum个人账号() + " 身份证号："+ cm002.getCertinum()
+        DP007_个人分户账 dp007__个人分户账 = dp007_individual_sub_account个人分户账Repository.findByAccnum个人账号(dp006__个人缴存信息表.getAccnum个人账号());
+        if(dp007__个人分户账 == null){
+            throw new MyBusinessException("没有找到缴存信息,缴存帐号："+ dp006__个人缴存信息表.getAccnum个人账号() + " 身份证号："+ cm002.getCertinum()
                     ,ErrorCodeEnum.操作失败);
 
         }
@@ -344,14 +344,14 @@ public class CustomerServiceImpl implements CustomerService {
         data.setXb(cm002.getSex_性别());
 
         //String grzh; //个人帐号/公积金帐号
-        data.setGrzh(dp006_payment_个人缴存信息表.getAccnum个人账号());
+        data.setGrzh(dp006__个人缴存信息表.getAccnum个人账号());
 
         //String grbh; //个人编号
-        data.setGrbh(dp006_payment_个人缴存信息表.getCustid个人客户号());
+        data.setGrbh(dp006__个人缴存信息表.getCustid个人客户号());
 
 
         //String zjhlx; // 证件类型
-        data.setZjhlx(证件类型.from(dp007_individual_sub_account_个人分户账.getCertitype_证件类型()).getText());
+        data.setZjhlx(证件类型.from(dp007__个人分户账.getCertitype_证件类型()).getText());
 
         //String csrq; // 出生日期
         data.setCsrq(cm002.getBirthday_出生日期());
@@ -360,14 +360,14 @@ public class CustomerServiceImpl implements CustomerService {
       //  data.setCjgzsj(DateUtils.getDate(dp007_individual_sub_account_个人分户账.getOpnaccdate_开户日期()));
 
         //String grzhzt; //个人账户状态
-        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007_individual_sub_account_个人分户账.getIndiaccstate_个人账户状态()).getText());
+        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007__个人分户账.getIndiaccstate_个人账户状态()).getText());
 
 
         //BigDecimal sqgzze; //税前工资总额
-        data.setSqgzze(dp006_payment_个人缴存信息表.getBasenum_缴存基数());
+        data.setSqgzze(dp006__个人缴存信息表.getBasenum_缴存基数());
 
         //BigDecimal gjjye; //公积金余额
-        data.setGjjye(dp007_individual_sub_account_个人分户账.getBal_余额());
+        data.setGjjye(dp007__个人分户账.getBal_余额());
 
 
 
@@ -377,7 +377,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         //String sjh; //手机号;
 
-        List<CM081_sms_短信密码签订登记簿> cm081_sms_短信密码签订登记簿s = cm081_sms_短信密码签订登记簿_repository.findByPubaccnum通用帐号0(dp006_payment_个人缴存信息表.getAccnum个人账号());
+        List<CM081_sms_短信密码签订登记簿> cm081_sms_短信密码签订登记簿s = cm081_sms_短信密码签订登记簿_repository.findByPubaccnum通用帐号0(dp006__个人缴存信息表.getAccnum个人账号());
         Optional<CM081_sms_短信密码签订登记簿> cm081_sms_短信密码签订登记簿_optional = cm081_sms_短信密码签订登记簿s.stream().filter(e->e.getType业务类型0().equals("1")).findFirst();
 
         if(cm081_sms_短信密码签订登记簿_optional.isPresent()){
@@ -397,26 +397,26 @@ public class CustomerServiceImpl implements CustomerService {
         data.setJtdz(cm002.getFamaddr_家庭住址());
 
 
-        DP004_unit_payment_info_单位缴存信息表 dp004_unit_payment_info_单位缴存信息表 = dp004_unit_payment_info单位缴存信息表Repository.findByUnitaccnum单位账号(dp007_individual_sub_account_个人分户账.getUnitaccnum_单位账号());
-        if(dp004_unit_payment_info_单位缴存信息表 == null){
-            throw new MyBusinessException("找不到单位信息"+ dp007_individual_sub_account_个人分户账.getUnitaccnum_单位账号(),ErrorCodeEnum.操作失败);
+        DP004_单位缴存信息表 dp004__单位缴存信息表 = dp004_unit_payment_info单位缴存信息表Repository.findByUnitaccnum单位账号(dp007__个人分户账.getUnitaccnum_单位账号());
+        if(dp004__单位缴存信息表 == null){
+            throw new MyBusinessException("找不到单位信息"+ dp007__个人分户账.getUnitaccnum_单位账号(),ErrorCodeEnum.操作失败);
         }
 
-        DP005_work_unit_单位分户账 dp005_work_unit_单位分户账 = dp005_workUnit_单位分户账_repository.findByUnitaccnum单位账号(dp007_individual_sub_account_个人分户账.getUnitaccnum_单位账号());
+        DP005_单位分户账 dp005__单位分户账 = dp005__单位分户账_repository.findByUnitaccnum单位账号(dp007__个人分户账.getUnitaccnum_单位账号());
 
         //String dwmc; //单位名称;
-        data.setDwmc(dp005_work_unit_单位分户账.getUnitaccname_单位名称());
+        data.setDwmc(dp005__单位分户账.getUnitaccname_单位名称());
 
         //String dwdjh; //单位登记号（单位帐号）
-        data.setDwdjh(dp005_work_unit_单位分户账.getUnitaccnum单位账号());
+        data.setDwdjh(dp005__单位分户账.getUnitaccnum单位账号());
 
         //String khglbbh; //开户管理部编号
-        data.setKhglbbh(dp005_work_unit_单位分户账.getAccinstcode_账户机构());
+        data.setKhglbbh(dp005__单位分户账.getAccinstcode_账户机构());
 
 
 
 
-        CM001_单位基本资料表 cm001_单位基本资料表 = cm001单位基本资料表Repository.findByUnitcustid单位客户号(dp004_unit_payment_info_单位缴存信息表.getUnitcustid_单位客户号());
+        CM001_单位基本资料表 cm001_单位基本资料表 = cm001单位基本资料表Repository.findByUnitcustid单位客户号(dp004__单位缴存信息表.getUnitcustid_单位客户号());
 
 
 
@@ -427,7 +427,7 @@ public class CustomerServiceImpl implements CustomerService {
         data.setYyzz(cm001_单位基本资料表.getLicensenum_营业执照号码());
 
         //String xzbm ; // 单位性质编码
-        data.setXzbm(PaymentUnitTypeEnum_单位性质.from(cm001_单位基本资料表.getUnitkind_单位性质()).getText());
+        data.setXzbm(E_CM001_单位基本资料表_单位性质.from(cm001_单位基本资料表.getUnitkind_单位性质()).getText());
 
         //String dwdz; // 单位地址
         data.setDwdz(cm001_单位基本资料表.getUnitaddr_单位地址());
@@ -439,22 +439,22 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         //String dwjezt; // 单位缴存状态
-        if(dp005_work_unit_单位分户账.getUnitaccstate_单位账户状态().equals(单位账户状态Enum.封存.getText())){
+        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.封存.getText())){
             data.setDwjezt(单位账户状态Enum_银行.封存.getText());
         }else
-        if(dp005_work_unit_单位分户账.getUnitaccstate_单位账户状态().equals(单位账户状态Enum.正常.getText())){
+        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.正常.getText())){
             data.setDwjezt(单位账户状态Enum_银行.正常.getText());
         }else
-        if(dp005_work_unit_单位分户账.getUnitaccstate_单位账户状态().equals(单位账户状态Enum.销户.getText())){
+        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.销户.getText())){
             data.setDwjezt(单位账户状态Enum_银行.销户.getText());
         }else
-        if(dp005_work_unit_单位分户账.getUnitaccstate_单位账户状态().equals(单位账户状态Enum.空账.getText())){
+        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.空账.getText())){
             data.setDwjezt(单位账户状态Enum_银行.其他.getText());
         }
 
 
         // String dwjczjy; // 单位缴存资金来源
-        data.setDwjczjy(dp004_unit_payment_info_单位缴存信息表.getFundsouflag_资金来源标志());
+        data.setDwjczjy(dp004__单位缴存信息表.getFundsouflag_资金来源标志());
 
         // String dwlxfs; // 单位联系方式
         data.setDwlxfs(cm001_单位基本资料表.getUnitlinkphone_联系电话());
@@ -467,7 +467,7 @@ public class CustomerServiceImpl implements CustomerService {
         data.setFxr(StringUtils.isBlank(cm001_单位基本资料表.getSalday_发薪日())?"01":cm001_单位基本资料表.getSalday_发薪日());
 
         //String dwkhrq ; // 单位开户日期（单位登记日期）
-        data.setDwkhrq(DateUtils.getDate(dp005_work_unit_单位分户账.getOpnaccdate__开户日期()));
+        //data.setDwkhrq(DateUtils.getDate(dp005__单位分户账.getOpnaccdate开户日期()));
 
         //String dwfdrdbr; // 单位法定代表人
         data.setDwfdrdbr(cm001_单位基本资料表.getLeglaccname_单位法人代表());
@@ -495,10 +495,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         // String cjnyr; // 初缴年月
-        data.setCjnyr(dp004_unit_payment_info_单位缴存信息表.getBegpayym_起始汇缴年月());
+        data.setCjnyr(dp004__单位缴存信息表.getBegpayym_起始汇缴年月());
 
         //String jznyr; // 缴至年月
-        data.setJznyr(dp004_unit_payment_info_单位缴存信息表.getLpaym_缴至年月());
+        data.setJznyr(dp004__单位缴存信息表.getLpaym_缴至年月());
 
 
 
@@ -589,7 +589,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-        List<DP022_个人缴存登记簿> dp022_个人缴存登记簿s = dp022_个人缴存登记薄Repository.findByAccnum个人账号(dp006_payment_个人缴存信息表.getAccnum个人账号());
+        List<DP022_个人缴存登记簿> dp022_个人缴存登记簿s = dp022_个人缴存登记薄Repository.findByAccnum个人账号(dp006__个人缴存信息表.getAccnum个人账号());
 
         // String lccs; // 累计缴存次数
         data.setJccs(dp022_个人缴存登记簿s.size());
@@ -598,7 +598,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-        DP022_个人缴存登记簿 最近一次缴存日期s = dp022_个人缴存登记薄Repository.findTop1ByAccnum个人账号OrderByRegdate登记日期Desc(dp006_payment_个人缴存信息表.getAccnum个人账号());
+        DP022_个人缴存登记簿 最近一次缴存日期s = dp022_个人缴存登记薄Repository.findTop1ByAccnum个人账号OrderByRegdate登记日期Desc(dp006__个人缴存信息表.getAccnum个人账号());
         //String zhycjcrq ; // 最近一次缴存日期
         data.setZhycjcrq(最近一次缴存日期s.getRegdate登记日期().toString());
 
@@ -677,15 +677,14 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-                        List<String> temps = dP022_个人缴存登记簿Optional.stream().map(e-> e.getIndipayamt_个人月汇缴金额()).collect(Collectors.toList());
 
-                        近18个自然月个人缴存额_list.add(temps.get(0));
+                    //    近18个自然月个人缴存额_list.add(temps.get(0));
 
                         List<String> temps_getUnitpayamt_单位月汇缴金额0 = dP022_个人缴存登记簿Optional.stream().map(e->e.getUnitpayamt_单位月汇缴金额0().toString()).collect(Collectors.toList());
 
                         近18个自然月单位缴存额_list.add(temps_getUnitpayamt_单位月汇缴金额0.get(0));
 
-                        当月缴存单位名称_list.add(dp005_work_unit_单位分户账.getUnitaccname_单位名称());
+                        当月缴存单位名称_list.add(dp005__单位分户账.getUnitaccname_单位名称());
 
                     }else{
                         近18个月单位缴存比例_list.add(null);
@@ -781,26 +780,26 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-        List<LN008_borrower_info_借款人信息> ln008_borrower_info_借款人信息s = lN008_借款人类型Repository.findByAccnum1账号(dp006_payment_个人缴存信息表.getAccnum个人账号());
-        List<LN008_borrower_info_借款人信息> ln008_borrower_info_借款人信息_借款人_s =  ln008_borrower_info_借款人信息s.stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).collect(Collectors.toList());
-        if(ln008_borrower_info_借款人信息_借款人_s.size()!= 0){
+        List<LN008_借款人信息> ln008__借款人信息s = lN008_借款人类型Repository.findByAccnum1账号(dp006__个人缴存信息表.getAccnum个人账号());
+        List<LN008_借款人信息> ln008__借款人信息_借款人_s =  ln008__借款人信息s.stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).collect(Collectors.toList());
+        if(ln008__借款人信息_借款人_s.size()!= 0){
 
-            LN008_borrower_info_借款人信息 ln008_borrower_info_借款人信息_借款人 = ln008_borrower_info_借款人信息_借款人_s.get(0);
+            LN008_借款人信息 ln008__借款人信息_借款人 = ln008__借款人信息_借款人_s.get(0);
 
 //
-            LN003_contract_info_合同信息 ln003_contract_info_合同信息 = ln003_contract_info_repository.findByLoancontrcode合同代码(ln008_borrower_info_借款人信息_借款人.getLoancontrcode合同代码());
+            LN003_合同信息 ln003__合同信息 = ln003_合同信息_repository.findByLoancontrcode合同代码(ln008__借款人信息_借款人.getLoancontrcode合同代码());
 
             //公积金贷款编号
-            data.setDkbh(ln003_contract_info_合同信息.getLoancontrnum_借款合同号());
+            data.setDkbh(ln003__合同信息.getLoancontrnum_借款合同号());
 
             //公积金贷款金额
-            data.setDkje(ln003_contract_info_合同信息.getLoanamt_贷款金额());
+            data.setDkje(ln003__合同信息.getLoanamt_贷款金额());
 
             //公积金贷款期限
-            data.setDkqx(ln003_contract_info_合同信息.getLoanterm_贷款期限().toString());
+            data.setDkqx(ln003__合同信息.getLoanterm_贷款期限().toString());
 
             //String 公积金贷款还款方式  输出	3.2.4贷款还款方式
-            data.setDkhkfs(E_还款方式Enum_HX.from(ln003_contract_info_合同信息.getRepaymode_还款方式()).getText());
+            data.setDkhkfs(E_还款方式Enum_HX.from(ln003__合同信息.getRepaymode_还款方式()).getText());
 
           //  LN005_lone_sub_account_贷款分户信息 ln005_lone_sub_account_贷款分户信息 = lN005_lone_sub_accountRepository.findByloancontrcode合同代码(ln008_borrower_info_借款人信息_借款人.getLoancontrcode合同代码());
 
@@ -811,10 +810,10 @@ public class CustomerServiceImpl implements CustomerService {
           //  data.setDkqsrq(DateUtils.getDate(ln003_contract_info_合同信息.getLoandate_放款日期()));
 
             //公积金贷款到期日期	date	输出	格式：yyyy-mm-dd
-            data.setDkdqrq(DateUtils.getDate(ln003_contract_info_合同信息.getEnddate_到期日期()));
+            data.setDkdqrq(DateUtils.getDate(ln003__合同信息.getEnddate_到期日期()));
 
             //公积金贷款结清日期	date	输出	格式：yyyy-mm-dd
-            data.setDkjqrq(DateUtils.getDate(ln003_contract_info_合同信息.getCleardate_结清日期()));
+            data.setDkjqrq(DateUtils.getDate(ln003__合同信息.getCleardate_结清日期()));
 
 
 
@@ -822,11 +821,11 @@ public class CustomerServiceImpl implements CustomerService {
             //BigDecimal 	公积金贷款余额	decimal(12,2)	输出
           //  data.setDkye(ln005_lone_sub_account_贷款分户信息.getCurbal_当前余额());
 
-            List<LN008_borrower_info_借款人信息> ln008_borrower_info_借款人信息_共同借款人_s  =
-                    ln008_borrower_info_借款人信息_借款人_s.stream().filter(e-> e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.共同借款人.getText())).collect(Collectors.toList());
+            List<LN008_借款人信息> ln008__借款人信息_共同借款人_s =
+                    ln008__借款人信息_借款人_s.stream().filter(e-> e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.共同借款人.getText())).collect(Collectors.toList());
 
-            if(ln008_borrower_info_借款人信息_共同借款人_s.size() != 0){
-                LN008_borrower_info_借款人信息 e= ln008_borrower_info_借款人信息_共同借款人_s.get(0);
+            if(ln008__借款人信息_共同借款人_s.size() != 0){
+                LN008_借款人信息 e= ln008__借款人信息_共同借款人_s.get(0);
 
                 //String gtdkrxm;//	共同贷款人姓名
                 data.setGtdkrxm(e.getAccname_0_个人姓名());
@@ -855,36 +854,36 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-            LoanContractStatusEnum loanContractStatusEnum = LoanContractStatusEnum.fromString(ln003_contract_info_合同信息.getLoancontrstate_合同状态());
+            E_LN003_合同信息_合同状态 ELN003合同信息合同状态 = E_LN003_合同信息_合同状态.fromString(ln003__合同信息.getLoancontrstate_合同状态());
 
-            if(loanContractStatusEnum.getText().equals(LoanContractStatusEnum.放款.getText())){
+            if(ELN003合同信息合同状态.getText().equals(E_LN003_合同信息_合同状态.放款.getText())){
                 //String dkzt;//	贷款状态	char	输出	00-结清；01-未发放；02-正常；03-逾期
                 data.setDkzt("02");
             }
 
-            if(loanContractStatusEnum.getText().equals(LoanContractStatusEnum.合同终止.getText())){
+            if(ELN003合同信息合同状态.getText().equals(E_LN003_合同信息_合同状态.合同终止.getText())){
                 //String dkzt;//	贷款状态	char	输出	00-结清；01-未发放；02-正常；03-逾期
                 data.setDkzt("00");
             }
 
 
             //String dklsyqcs;//	公积金贷款历史逾期次数
-            data.setDklsyqcs(ln003_contract_info_合同信息.getTolowecnt_累计欠还次数());
+            data.setDklsyqcs(ln003__合同信息.getTolowecnt_累计欠还次数());
 
 
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlans = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码AndBegdate0开始日期After(ln003_contract_info_合同信息.getLoancontrcode合同代码(),start18月);
+            List<LN006_贷款分期还款计划> ln006_repaymentPlans = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码AndBegdate0开始日期After(ln003__合同信息.getLoancontrcode合同代码(),start18月);
             //TODO data.setDkzt(ln003_contract_info_合同信息.getOwecnt_欠还次数());
 
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlans1 =  ln006_repaymentPlans.stream().filter(e->e.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期.getText())
-                    || e.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期归还.getText())).collect(Collectors.toList());
+            List<LN006_贷款分期还款计划> ln006_repaymentPlans1 =  ln006_repaymentPlans.stream().filter(e->e.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.逾期.getText())
+                    || e.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.逾期归还.getText())).collect(Collectors.toList());
 
 
-            LN006_RepaymentPlan_贷款分期还款计划 pre_LN006_RepaymentPlan = null;
+            LN006_贷款分期还款计划 pre_LN006_RepaymentPlan = null;
             Integer 最大连续逾期次数 = 0;
             Integer 连续逾期次数 = 0;
-            for(LN006_RepaymentPlan_贷款分期还款计划 e:ln006_repaymentPlans1){
+            for(LN006_贷款分期还款计划 e:ln006_repaymentPlans1){
                 if(pre_LN006_RepaymentPlan != null){
 
                     if(Math.abs(pre_LN006_RepaymentPlan.getTermnum0第N期()-e.getTermnum0第N期()) ==1){
@@ -904,14 +903,14 @@ public class CustomerServiceImpl implements CustomerService {
             // String zdlxyqcs;//	最大连续逾期次数	char	输出
             data.setZdlxyqcs(最大连续逾期次数.toString());
 
-            LN0014_Trading_house_贷款房屋信息 ln0014_trading_house_贷款房屋信息 = ln014_tradingHouse_贷款房屋信息Repository.findByLoancontrcode0合同代码(ln003_contract_info_合同信息.getLoancontrcode合同代码());
-            if(ln0014_trading_house_贷款房屋信息!= null){
+            LN014_贷款房屋信息 ln0014__贷款房屋信息 = ln014__贷款房屋信息Repository.findByLoancontrcode0合同代码(ln003__合同信息.getLoancontrcode合同代码());
+            if(ln0014__贷款房屋信息 != null){
 
                 //String grgfdz;//	个人购房地址	char	输出  ln014
-                data.setGrgfdz(ln0014_trading_house_贷款房屋信息.getHouseaddr_1_房屋坐落());
+                data.setGrgfdz(ln0014__贷款房屋信息.getHouseaddr_1_房屋坐落());
 
                 //BigDecimal fwgmjszj;//	房屋购买计税价格	decimal(12,2)	输出  房屋够吗价格 LN014
-                data.setFwgmjszj(ln0014_trading_house_贷款房屋信息.getBuyhouseamt_0_购房房款总额_成交价());
+                data.setFwgmjszj(ln0014__贷款房屋信息.getBuyhouseamt_0_购房房款总额_成交价());
             }
 
         }
@@ -932,17 +931,17 @@ public class CustomerServiceImpl implements CustomerService {
         LocalDate start18月 = LocalDate.now().minusMonths(20).with(firstDayOfMonth());
 
 
-        DP006_Payment_个人缴存信息表 dp006_payment_个人缴存信息表 = dp006_payment_个人缴存信息表_repository.findByCustid个人客户号(cm002.getCustid_个人客户号());
-        if(dp006_payment_个人缴存信息表 == null){
+        DP006_个人缴存信息表 dp006__个人缴存信息表 = dp006__个人缴存信息表_repository.findByCustid个人客户号(cm002.getCustid_个人客户号());
+        if(dp006__个人缴存信息表 == null){
             throw new MyBusinessException("没有找到缴存信息,客户号："+ cm002.getCustid_个人客户号() + " 身份证号："+ cm002.getCertinum()
                     ,ErrorCodeEnum.操作失败);
 
         }
 
 
-        DP007_individual_sub_account_个人分户账 dp007_individual_sub_account_个人分户账 = dp007_individual_sub_account个人分户账Repository.findByAccnum个人账号(dp006_payment_个人缴存信息表.getAccnum个人账号());
-        if(dp007_individual_sub_account_个人分户账 == null){
-            throw new MyBusinessException("没有找到缴存信息,缴存帐号："+ dp006_payment_个人缴存信息表.getAccnum个人账号() + " 身份证号："+ cm002.getCertinum()
+        DP007_个人分户账 dp007__个人分户账 = dp007_individual_sub_account个人分户账Repository.findByAccnum个人账号(dp006__个人缴存信息表.getAccnum个人账号());
+        if(dp007__个人分户账 == null){
+            throw new MyBusinessException("没有找到缴存信息,缴存帐号："+ dp006__个人缴存信息表.getAccnum个人账号() + " 身份证号："+ cm002.getCertinum()
                     ,ErrorCodeEnum.操作失败);
 
         }
@@ -957,14 +956,14 @@ public class CustomerServiceImpl implements CustomerService {
         data.setXb(cm002.getSex_性别());
 
         //String grzh; //个人帐号/公积金帐号
-        data.setGrzh(dp006_payment_个人缴存信息表.getAccnum个人账号());
+        data.setGrzh(dp006__个人缴存信息表.getAccnum个人账号());
 
         //String grbh; //个人编号
-        data.setGrbh(dp006_payment_个人缴存信息表.getCustid个人客户号());
+        data.setGrbh(dp006__个人缴存信息表.getCustid个人客户号());
 
 
         //String zjhlx; // 证件类型
-        data.setZjhlx(证件类型.from(dp007_individual_sub_account_个人分户账.getCertitype_证件类型()).getText());
+        data.setZjhlx(证件类型.from(dp007__个人分户账.getCertitype_证件类型()).getText());
 
         //String csrq; // 出生日期
         data.setCsrq(cm002.getBirthday_出生日期());
@@ -973,14 +972,14 @@ public class CustomerServiceImpl implements CustomerService {
       //  data.setCjgzsj(DateUtils.getDate(dp007_individual_sub_account_个人分户账.getOpnaccdate_开户日期()));
 
         //String grzhzt; //个人账户状态
-        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007_individual_sub_account_个人分户账.getIndiaccstate_个人账户状态()).getText());
+        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007__个人分户账.getIndiaccstate_个人账户状态()).getText());
 
         Double coefficient = 1.55;
         //BigDecimal sqgzze; //税前工资总额
-        data.setSqgzze(dp006_payment_个人缴存信息表.getBasenum_缴存基数().multiply(BigDecimal.valueOf(coefficient)).setScale(2,BigDecimal.ROUND_CEILING));
+        data.setSqgzze(dp006__个人缴存信息表.getBasenum_缴存基数().multiply(BigDecimal.valueOf(coefficient)).setScale(2,BigDecimal.ROUND_CEILING));
 
         //BigDecimal gjjye; //公积金余额
-        data.setGjjye(dp007_individual_sub_account_个人分户账.getBal_余额().add(BigDecimal.valueOf(90000)));
+        data.setGjjye(dp007__个人分户账.getBal_余额().add(BigDecimal.valueOf(90000)));
 
 
 
@@ -990,7 +989,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         //String sjh; //手机号;
 
-        List<CM081_sms_短信密码签订登记簿> cm081_sms_短信密码签订登记簿s = cm081_sms_短信密码签订登记簿_repository.findByPubaccnum通用帐号0(dp006_payment_个人缴存信息表.getAccnum个人账号());
+        List<CM081_sms_短信密码签订登记簿> cm081_sms_短信密码签订登记簿s = cm081_sms_短信密码签订登记簿_repository.findByPubaccnum通用帐号0(dp006__个人缴存信息表.getAccnum个人账号());
         Optional<CM081_sms_短信密码签订登记簿> cm081_sms_短信密码签订登记簿_optional = cm081_sms_短信密码签订登记簿s.stream().filter(e->e.getType业务类型0().equals("1")).findFirst();
 
         if(cm081_sms_短信密码签订登记簿_optional.isPresent()){
@@ -1010,26 +1009,26 @@ public class CustomerServiceImpl implements CustomerService {
         data.setJtdz(cm002.getFamaddr_家庭住址());
 
 
-        DP004_unit_payment_info_单位缴存信息表 dp004_unit_payment_info_单位缴存信息表 = dp004_unit_payment_info单位缴存信息表Repository.findByUnitaccnum单位账号(dp007_individual_sub_account_个人分户账.getUnitaccnum_单位账号());
-        if(dp004_unit_payment_info_单位缴存信息表 == null){
-            throw new MyBusinessException("找不到单位信息"+ dp007_individual_sub_account_个人分户账.getUnitaccnum_单位账号(),ErrorCodeEnum.操作失败);
+        DP004_单位缴存信息表 dp004__单位缴存信息表 = dp004_unit_payment_info单位缴存信息表Repository.findByUnitaccnum单位账号(dp007__个人分户账.getUnitaccnum_单位账号());
+        if(dp004__单位缴存信息表 == null){
+            throw new MyBusinessException("找不到单位信息"+ dp007__个人分户账.getUnitaccnum_单位账号(),ErrorCodeEnum.操作失败);
         }
 
-        DP005_work_unit_单位分户账 dp005_work_unit_单位分户账 = dp005_workUnit_单位分户账_repository.findByUnitaccnum单位账号(dp007_individual_sub_account_个人分户账.getUnitaccnum_单位账号());
+        DP005_单位分户账 dp005__单位分户账 = dp005__单位分户账_repository.findByUnitaccnum单位账号(dp007__个人分户账.getUnitaccnum_单位账号());
 
         //String dwmc; //单位名称;
-        data.setDwmc(dp005_work_unit_单位分户账.getUnitaccname_单位名称());
+        data.setDwmc(dp005__单位分户账.getUnitaccname_单位名称());
 
         //String dwdjh; //单位登记号（单位帐号）
-        data.setDwdjh(dp005_work_unit_单位分户账.getUnitaccnum单位账号());
+        data.setDwdjh(dp005__单位分户账.getUnitaccnum单位账号());
 
         //String khglbbh; //开户管理部编号
-        data.setKhglbbh(dp005_work_unit_单位分户账.getAccinstcode_账户机构());
+        data.setKhglbbh(dp005__单位分户账.getAccinstcode_账户机构());
 
 
 
 
-        CM001_单位基本资料表 cm001_单位基本资料表 = cm001单位基本资料表Repository.findByUnitcustid单位客户号(dp004_unit_payment_info_单位缴存信息表.getUnitcustid_单位客户号());
+        CM001_单位基本资料表 cm001_单位基本资料表 = cm001单位基本资料表Repository.findByUnitcustid单位客户号(dp004__单位缴存信息表.getUnitcustid_单位客户号());
 
 
 
@@ -1040,7 +1039,7 @@ public class CustomerServiceImpl implements CustomerService {
         data.setYyzz(cm001_单位基本资料表.getLicensenum_营业执照号码());
 
         //String xzbm ; // 单位性质编码
-        data.setXzbm(PaymentUnitTypeEnum_单位性质.from(cm001_单位基本资料表.getUnitkind_单位性质()).getText());
+        data.setXzbm(E_CM001_单位基本资料表_单位性质.from(cm001_单位基本资料表.getUnitkind_单位性质()).getText());
 
         //String dwdz; // 单位地址
         data.setDwdz(cm001_单位基本资料表.getUnitaddr_单位地址());
@@ -1052,22 +1051,22 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         //String dwjezt; // 单位缴存状态
-        if(dp005_work_unit_单位分户账.getUnitaccstate_单位账户状态().equals(单位账户状态Enum.封存.getText())){
+        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.封存.getText())){
             data.setDwjezt(单位账户状态Enum_银行.封存.getText());
         }else
-        if(dp005_work_unit_单位分户账.getUnitaccstate_单位账户状态().equals(单位账户状态Enum.正常.getText())){
+        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.正常.getText())){
             data.setDwjezt(单位账户状态Enum_银行.正常.getText());
         }else
-        if(dp005_work_unit_单位分户账.getUnitaccstate_单位账户状态().equals(单位账户状态Enum.销户.getText())){
+        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.销户.getText())){
             data.setDwjezt(单位账户状态Enum_银行.销户.getText());
         }else
-        if(dp005_work_unit_单位分户账.getUnitaccstate_单位账户状态().equals(单位账户状态Enum.空账.getText())){
+        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.空账.getText())){
             data.setDwjezt(单位账户状态Enum_银行.其他.getText());
         }
 
 
         // String dwjczjy; // 单位缴存资金来源
-        data.setDwjczjy(dp004_unit_payment_info_单位缴存信息表.getFundsouflag_资金来源标志());
+        data.setDwjczjy(dp004__单位缴存信息表.getFundsouflag_资金来源标志());
 
         // String dwlxfs; // 单位联系方式
         data.setDwlxfs(cm001_单位基本资料表.getUnitlinkphone_联系电话());
@@ -1080,7 +1079,7 @@ public class CustomerServiceImpl implements CustomerService {
         data.setFxr(StringUtils.isBlank(cm001_单位基本资料表.getSalday_发薪日())?"01":cm001_单位基本资料表.getSalday_发薪日());
 
         //String dwkhrq ; // 单位开户日期（单位登记日期）
-        data.setDwkhrq(DateUtils.getDate(dp005_work_unit_单位分户账.getOpnaccdate__开户日期()));
+     //   data.setDwkhrq(DateUtils.getDate(dp005__单位分户账.getOpnaccdate开户日期()));
 
         //String dwfdrdbr; // 单位法定代表人
         data.setDwfdrdbr(cm001_单位基本资料表.getLeglaccname_单位法人代表());
@@ -1108,10 +1107,10 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         // String cjnyr; // 初缴年月
-        data.setCjnyr(dp004_unit_payment_info_单位缴存信息表.getBegpayym_起始汇缴年月());
+        data.setCjnyr(dp004__单位缴存信息表.getBegpayym_起始汇缴年月());
 
         //String jznyr; // 缴至年月
-        data.setJznyr(dp004_unit_payment_info_单位缴存信息表.getLpaym_缴至年月());
+        data.setJznyr(dp004__单位缴存信息表.getLpaym_缴至年月());
 
 
 
@@ -1203,7 +1202,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-        List<DP022_个人缴存登记簿> dp022_个人缴存登记簿s = dp022_个人缴存登记薄Repository.findByAccnum个人账号(dp006_payment_个人缴存信息表.getAccnum个人账号());
+        List<DP022_个人缴存登记簿> dp022_个人缴存登记簿s = dp022_个人缴存登记薄Repository.findByAccnum个人账号(dp006__个人缴存信息表.getAccnum个人账号());
 
         // String lccs; // 累计缴存次数
         data.setJccs(dp022_个人缴存登记簿s.size());
@@ -1212,7 +1211,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-        DP022_个人缴存登记簿 最近一次缴存日期s = dp022_个人缴存登记薄Repository.findTop1ByAccnum个人账号OrderByRegdate登记日期Desc(dp006_payment_个人缴存信息表.getAccnum个人账号());
+        DP022_个人缴存登记簿 最近一次缴存日期s = dp022_个人缴存登记薄Repository.findTop1ByAccnum个人账号OrderByRegdate登记日期Desc(dp006__个人缴存信息表.getAccnum个人账号());
         //String zhycjcrq ; // 最近一次缴存日期
         data.setZhycjcrq(最近一次缴存日期s.getRegdate登记日期().toString());
 
@@ -1291,15 +1290,15 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-                List<String> temps = dP022_个人缴存登记簿Optional.stream().map(e-> e.getIndipayamt_个人月汇缴金额()).collect(Collectors.toList());
+               // List<String> temps = dP022_个人缴存登记簿Optional.stream().map(e-> e.getIndipayamt_个人月汇缴金额()).collect(Collectors.toList());
 
-                近18个自然月个人缴存额_list.add((new BigDecimal(temps.get(0))).multiply(BigDecimal.valueOf(coefficient)).setScale(2,BigDecimal.ROUND_CEILING).toString());
+               // 近18个自然月个人缴存额_list.add((new BigDecimal(temps.get(0))).multiply(BigDecimal.valueOf(coefficient)).setScale(2,BigDecimal.ROUND_CEILING).toString());
 
                 List<String> temps_getUnitpayamt_单位月汇缴金额0 = dP022_个人缴存登记簿Optional.stream().map(e->e.getUnitpayamt_单位月汇缴金额0().toString()).collect(Collectors.toList());
 
                 近18个自然月单位缴存额_list.add((new BigDecimal(temps_getUnitpayamt_单位月汇缴金额0.get(0))).multiply(BigDecimal.valueOf(coefficient)).setScale(2,BigDecimal.ROUND_CEILING).toString());
 
-                当月缴存单位名称_list.add(dp005_work_unit_单位分户账.getUnitaccname_单位名称());
+                当月缴存单位名称_list.add(dp005__单位分户账.getUnitaccname_单位名称());
 
             }else{
                 近18个月单位缴存比例_list.add(null);
@@ -1402,26 +1401,26 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-        List<LN008_borrower_info_借款人信息> ln008_borrower_info_借款人信息s = lN008_借款人类型Repository.findByAccnum1账号(dp006_payment_个人缴存信息表.getAccnum个人账号());
-        List<LN008_borrower_info_借款人信息> ln008_borrower_info_借款人信息_借款人_s =  ln008_borrower_info_借款人信息s.stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).collect(Collectors.toList());
-        if(ln008_borrower_info_借款人信息_借款人_s.size()!= 0){
+        List<LN008_借款人信息> ln008__借款人信息s = lN008_借款人类型Repository.findByAccnum1账号(dp006__个人缴存信息表.getAccnum个人账号());
+        List<LN008_借款人信息> ln008__借款人信息_借款人_s =  ln008__借款人信息s.stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).collect(Collectors.toList());
+        if(ln008__借款人信息_借款人_s.size()!= 0){
 
-            LN008_borrower_info_借款人信息 ln008_borrower_info_借款人信息_借款人 = ln008_borrower_info_借款人信息_借款人_s.get(0);
+            LN008_借款人信息 ln008__借款人信息_借款人 = ln008__借款人信息_借款人_s.get(0);
 
 //
-            LN003_contract_info_合同信息 ln003_contract_info_合同信息 = ln003_contract_info_repository.findByLoancontrcode合同代码(ln008_borrower_info_借款人信息_借款人.getLoancontrcode合同代码());
+            LN003_合同信息 ln003__合同信息 = ln003_合同信息_repository.findByLoancontrcode合同代码(ln008__借款人信息_借款人.getLoancontrcode合同代码());
 
             //公积金贷款编号
-            data.setDkbh(ln003_contract_info_合同信息.getLoancontrnum_借款合同号());
+            data.setDkbh(ln003__合同信息.getLoancontrnum_借款合同号());
 
             //公积金贷款金额
-            data.setDkje(ln003_contract_info_合同信息.getLoanamt_贷款金额());
+            data.setDkje(ln003__合同信息.getLoanamt_贷款金额());
 
             //公积金贷款期限
-            data.setDkqx(ln003_contract_info_合同信息.getLoanterm_贷款期限().toString());
+            data.setDkqx(ln003__合同信息.getLoanterm_贷款期限().toString());
 
             //String 公积金贷款还款方式  输出	3.2.4贷款还款方式
-            data.setDkhkfs(E_还款方式Enum_HX.from(ln003_contract_info_合同信息.getRepaymode_还款方式()).getText());
+            data.setDkhkfs(E_还款方式Enum_HX.from(ln003__合同信息.getRepaymode_还款方式()).getText());
 
            // LN005_lone_sub_account_贷款分户信息 ln005_lone_sub_account_贷款分户信息 = lN005_lone_sub_accountRepository.findByloancontrcode合同代码(ln008_borrower_info_借款人信息_借款人.getLoancontrcode合同代码());
 
@@ -1432,10 +1431,10 @@ public class CustomerServiceImpl implements CustomerService {
           //  data.setDkqsrq(DateUtils.getDate(ln003_contract_info_合同信息.getLoandate_放款日期()));
 
             //公积金贷款到期日期	date	输出	格式：yyyy-mm-dd
-            data.setDkdqrq(DateUtils.getDate(ln003_contract_info_合同信息.getEnddate_到期日期()));
+            data.setDkdqrq(DateUtils.getDate(ln003__合同信息.getEnddate_到期日期()));
 
             //公积金贷款结清日期	date	输出	格式：yyyy-mm-dd
-            data.setDkjqrq(DateUtils.getDate(ln003_contract_info_合同信息.getCleardate_结清日期()));
+            data.setDkjqrq(DateUtils.getDate(ln003__合同信息.getCleardate_结清日期()));
 
 
 
@@ -1443,11 +1442,11 @@ public class CustomerServiceImpl implements CustomerService {
             //BigDecimal 	公积金贷款余额	decimal(12,2)	输出
          //   data.setDkye(ln005_lone_sub_account_贷款分户信息.getCurbal_当前余额());
 
-            List<LN008_borrower_info_借款人信息> ln008_borrower_info_借款人信息_共同借款人_s  =
-                    ln008_borrower_info_借款人信息_借款人_s.stream().filter(e-> e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.共同借款人.getText())).collect(Collectors.toList());
+            List<LN008_借款人信息> ln008__借款人信息_共同借款人_s =
+                    ln008__借款人信息_借款人_s.stream().filter(e-> e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.共同借款人.getText())).collect(Collectors.toList());
 
-            if(ln008_borrower_info_借款人信息_共同借款人_s.size() != 0){
-                LN008_borrower_info_借款人信息 e= ln008_borrower_info_借款人信息_共同借款人_s.get(0);
+            if(ln008__借款人信息_共同借款人_s.size() != 0){
+                LN008_借款人信息 e= ln008__借款人信息_共同借款人_s.get(0);
 
                 //String gtdkrxm;//	共同贷款人姓名
                 data.setGtdkrxm(e.getAccname_0_个人姓名());
@@ -1476,36 +1475,36 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
-            LoanContractStatusEnum loanContractStatusEnum = LoanContractStatusEnum.fromString(ln003_contract_info_合同信息.getLoancontrstate_合同状态());
+            E_LN003_合同信息_合同状态 ELN003合同信息合同状态 = E_LN003_合同信息_合同状态.fromString(ln003__合同信息.getLoancontrstate_合同状态());
 
-            if(loanContractStatusEnum.getText().equals(LoanContractStatusEnum.放款.getText())){
+            if(ELN003合同信息合同状态.getText().equals(E_LN003_合同信息_合同状态.放款.getText())){
                 //String dkzt;//	贷款状态	char	输出	00-结清；01-未发放；02-正常；03-逾期
                 data.setDkzt("02");
             }
 
-            if(loanContractStatusEnum.getText().equals(LoanContractStatusEnum.合同终止.getText())){
+            if(ELN003合同信息合同状态.getText().equals(E_LN003_合同信息_合同状态.合同终止.getText())){
                 //String dkzt;//	贷款状态	char	输出	00-结清；01-未发放；02-正常；03-逾期
                 data.setDkzt("00");
             }
 
 
             //String dklsyqcs;//	公积金贷款历史逾期次数
-            data.setDklsyqcs(ln003_contract_info_合同信息.getTolowecnt_累计欠还次数());
+            data.setDklsyqcs(ln003__合同信息.getTolowecnt_累计欠还次数());
 
 
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlans = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码AndBegdate0开始日期After(ln003_contract_info_合同信息.getLoancontrcode合同代码(),start18月);
+            List<LN006_贷款分期还款计划> ln006_repaymentPlans = ln006_贷款分期还款计划Repository.findByLoancontrcode0合同代码AndBegdate0开始日期After(ln003__合同信息.getLoancontrcode合同代码(),start18月);
             //TODO data.setDkzt(ln003_contract_info_合同信息.getOwecnt_欠还次数());
 
 
-            List<LN006_RepaymentPlan_贷款分期还款计划> ln006_repaymentPlans1 =  ln006_repaymentPlans.stream().filter(e->e.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期.getText())
-                    || e.getCurseqstate本期状态().equals(E_LN_CurrentSequencePaymentStatusEnum.逾期归还.getText())).collect(Collectors.toList());
+            List<LN006_贷款分期还款计划> ln006_repaymentPlans1 =  ln006_repaymentPlans.stream().filter(e->e.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.逾期.getText())
+                    || e.getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.逾期归还.getText())).collect(Collectors.toList());
 
 
-            LN006_RepaymentPlan_贷款分期还款计划 pre_LN006_RepaymentPlan = null;
+            LN006_贷款分期还款计划 pre_LN006_RepaymentPlan = null;
             Integer 最大连续逾期次数 = 0;
             Integer 连续逾期次数 = 0;
-            for(LN006_RepaymentPlan_贷款分期还款计划 e:ln006_repaymentPlans1){
+            for(LN006_贷款分期还款计划 e:ln006_repaymentPlans1){
                 if(pre_LN006_RepaymentPlan != null){
 
                     if(Math.abs(pre_LN006_RepaymentPlan.getTermnum0第N期()-e.getTermnum0第N期()) ==1){
@@ -1525,14 +1524,14 @@ public class CustomerServiceImpl implements CustomerService {
             // String zdlxyqcs;//	最大连续逾期次数	char	输出
             data.setZdlxyqcs(最大连续逾期次数.toString());
 
-            LN0014_Trading_house_贷款房屋信息 ln0014_trading_house_贷款房屋信息 = ln014_tradingHouse_贷款房屋信息Repository.findByLoancontrcode0合同代码(ln003_contract_info_合同信息.getLoancontrcode合同代码());
-            if(ln0014_trading_house_贷款房屋信息!= null){
+            LN014_贷款房屋信息 ln0014__贷款房屋信息 = ln014__贷款房屋信息Repository.findByLoancontrcode0合同代码(ln003__合同信息.getLoancontrcode合同代码());
+            if(ln0014__贷款房屋信息 != null){
 
                 //String grgfdz;//	个人购房地址	char	输出  ln014
-                data.setGrgfdz(ln0014_trading_house_贷款房屋信息.getHouseaddr_1_房屋坐落());
+                data.setGrgfdz(ln0014__贷款房屋信息.getHouseaddr_1_房屋坐落());
 
                 //BigDecimal fwgmjszj;//	房屋购买计税价格	decimal(12,2)	输出  房屋够吗价格 LN014
-                data.setFwgmjszj(ln0014_trading_house_贷款房屋信息.getBuyhouseamt_0_购房房款总额_成交价());
+                data.setFwgmjszj(ln0014__贷款房屋信息.getBuyhouseamt_0_购房房款总额_成交价());
             }
 
         }

@@ -8,10 +8,19 @@ public class ApiUrl {
     private String 服务名称;
     private String 服务地址;
     private boolean 是否完成;
+    private String testPageUrl;
 
-    public ApiUrl(String s, String 监管主要指标查询, String 公积金年度查询, String s1, boolean b) {
+    public String getTestPageUrl() {
+        return testPageUrl;
+    }
 
-        服务编号 = s;
+    public void setTestPageUrl(String testPageUrl) {
+        this.testPageUrl = testPageUrl;
+    }
+
+    public ApiUrl(String 服务编号, String 监管主要指标查询, String 公积金年度查询, String s1, boolean b) {
+
+        this.服务编号 = 服务编号;
         服务名称 = 监管主要指标查询+"-"+公积金年度查询;
         服务地址 = s1;
         是否完成 = b;

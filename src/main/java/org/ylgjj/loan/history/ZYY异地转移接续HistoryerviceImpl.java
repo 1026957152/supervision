@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.ylgjj.loan.domain.*;
-import org.ylgjj.loan.enumT.E_HX_机构_Institution_info_instCodeEnum;
 import org.ylgjj.loan.enumT.H_TR100_转移接续登记簿_交易类型;
 import org.ylgjj.loan.flow.LoanHistory;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
@@ -15,12 +14,10 @@ import org.ylgjj.loan.repository_flow.LoanHistoryRepository;
 import org.ylgjj.loan.repository_flow.YourHistoryRepository;
 import org.ylgjj.loan.util.DateUtilsss;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static java.lang.Math.abs;
 
@@ -42,7 +39,7 @@ public class ZYY异地转移接续HistoryerviceImpl {
     private LN008_借款人类型Repository lN008_借款人类型Repository;
 
     @Autowired
-    private LN014_TradingHouse_贷款房屋信息Repository ln014_tradingHouse_贷款房屋信息Repository;
+    private LN014_贷款房屋信息Repository ln014__贷款房屋信息Repository;
     @Autowired
     private LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
 
@@ -59,13 +56,13 @@ public class ZYY异地转移接续HistoryerviceImpl {
     private DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
 
     @Autowired
-    private DP007_individual_sub_account_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
+    private DP007_个人分户账_Repository dp007_individual_sub_account个人分户账Repository;
     @Autowired
-    private DP006_Payment_个人缴存信息表_Repository dp006_payment_个人缴存信息表_repository;
+    private DP006_个人缴存信息表_Repository dp006__个人缴存信息表_repository;
 
 
     @Autowired
-    private LN003_Contract_info_Repository ln003_contract_info_repository;
+    private LN003_合同信息_Repository ln003_合同信息_repository;
 
 
     @Autowired
@@ -78,15 +75,15 @@ public class ZYY异地转移接续HistoryerviceImpl {
     private CM081_sms_短信密码签订登记簿_Repository cm081_sms_短信密码签订登记簿_repository;
 
     @Autowired
-    private DP004_unit_payment_info_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
+    private DP004_单位缴存信息表_Repository dp004_unit_payment_info单位缴存信息表Repository;
 
     @Autowired
-    private DP005_WorkUnit_单位分户账_Repository dp005_workUnit_单位分户账_repository;
+    private DP005_单位分户账_Repository dp005__单位分户账_repository;
 
     @Autowired
     private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
     @Autowired
-    private DP008_institution_detail_单位明细账_Repository dp008_institution_detail_单位明细账_repository;
+    private DP008_单位明细账_Repository dp008__单位明细账_repository;
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
@@ -97,7 +94,7 @@ public class ZYY异地转移接续HistoryerviceImpl {
     private LN101_贷款明细账_Repository ln101_贷款明细账_repository;
 
     @Autowired
-    private LN005_lone_sub_accountRepository lN005_lone_sub_accountRepository;
+    private LN005_贷款分户信息_Repository lN005_贷款分户信息RepositoryLN005;
 
 
     @Autowired
@@ -131,13 +128,13 @@ public class ZYY异地转移接续HistoryerviceImpl {
 
     Map<String, List<TR077_转移接续临时表>> tr077_转移接续临时表Map = null;
 
-    Map<String, DP005_work_unit_单位分户账> dp005_work_unit_单位分户账Map = null;
-    List<DP004_unit_payment_info_单位缴存信息表> dp004_unit_payment_info_单位缴存信息表s = null;
+    Map<String, DP005_单位分户账> dp005_work_unit_单位分户账Map = null;
+    List<DP004_单位缴存信息表> dp004__单位缴存信息表s = null;
 
     Map<String, CM001_单位基本资料表> cm001_单位基本资料表Map = null;
     //TODO 历史倒推
     List<TR003_转移人账户信息> tr003_转移人账户信息s = null;
-    Map<String,DP007_individual_sub_account_个人分户账> dp007_individual_sub_account_个人分户账Map = null;
+    Map<String, DP007_个人分户账> dp007_individual_sub_account_个人分户账Map = null;
    // List<TR100_转移接续登记簿> tr100_转移接续登记簿Stream = tr100_转移接续登记簿s.stream().filter(e->e.getJyrq_不可为空_交易日期().equals(loca));
 
 
@@ -159,7 +156,7 @@ public class ZYY异地转移接续HistoryerviceImpl {
             tr003_转移人账户信息Map = tr003_转移人账户信息s.stream().collect(Collectors.toMap(e -> e.getLxhbh_不可为空_联系函编号(), a -> a));
             tr002_联系函基础信息Map = tr002_联系函基础信息s.stream().collect(Collectors.toMap(e -> e.getLxhbh_不可为空_联系函编号(), a -> a));
 
-            dp004_unit_payment_info_单位缴存信息表s = dp004_unit_payment_info单位缴存信息表Repository.findAll();
+            dp004__单位缴存信息表s = dp004_unit_payment_info单位缴存信息表Repository.findAll();
             cm001_单位基本资料表Map = cm001单位基本资料表Repository.findAll().stream().collect(Collectors.toMap(e -> e.getUnitcustid单位客户号(), a -> a));
 
 
@@ -177,7 +174,7 @@ public class ZYY异地转移接续HistoryerviceImpl {
 
 
 
-            dp005_work_unit_单位分户账Map = dp005_workUnit_单位分户账_repository.findAll().stream().collect(Collectors.toMap(e -> e.getUnitaccnum单位账号(), a -> a));
+            dp005_work_unit_单位分户账Map = dp005__单位分户账_repository.findAll().stream().collect(Collectors.toMap(e -> e.getUnitaccnum单位账号(), a -> a));
 
             initComplte = true;
         }
@@ -198,14 +195,14 @@ DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
 
 
                     CM001_单位基本资料表 cm001_单位基本资料表 = null;
-            DP005_work_unit_单位分户账 dp005_work_unit_单位分户账 = null;
+            DP005_单位分户账 dp005__单位分户账 = null;
                     if(tr002_联系函基础信息.getJylx_不可为空_交易类型().equals(H_TR100_转移接续登记簿_交易类型.转入_1.getText())){
-                        dp005_work_unit_单位分户账 = dp005_work_unit_单位分户账Map.get(tr002_联系函基础信息.getDwzh_可为空_单位账号());
+                        dp005__单位分户账 = dp005_work_unit_单位分户账Map.get(tr002_联系函基础信息.getDwzh_可为空_单位账号());
 
 
             }else{
                         tr002_联系函基础信息.getYgrzh_不可为空_原个人账号();
-                        DP007_individual_sub_account_个人分户账 dp007_individual_sub_account_个人分户账 = dp007_individual_sub_account_个人分户账Map.
+                        DP007_个人分户账 dp007__个人分户账 = dp007_individual_sub_account_个人分户账Map.
                                 get(tr002_联系函基础信息.getYgrzh_不可为空_原个人账号().trim());
                        // dp007_individual_sub_account_个人分户账 = dp007_individual_sub_account个人分户账Repository.findByAccnum个人账号(tr002_联系函基础信息.getYgrzh_不可为空_原个人账号());
                     //    System.out.println("getYgrzh_不可为空_原个人账号 :"+ tr002_联系函基础信息.getYgrzh_不可为空_原个人账号()+":");
@@ -213,12 +210,12 @@ DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
                        // System.out.println("getUnitaccnum_单位账号 :"+ dp007_individual_sub_account_个人分户账.getUnitaccnum_单位账号()+":");
 
 
-                        dp005_work_unit_单位分户账 = dp005_work_unit_单位分户账Map.get(dp007_individual_sub_account_个人分户账.getUnitaccnum_单位账号());
+                        dp005__单位分户账 = dp005_work_unit_单位分户账Map.get(dp007__个人分户账.getUnitaccnum_单位账号());
 
 
 
                     }
-            cm001_单位基本资料表 = cm001_单位基本资料表Map.get(dp005_work_unit_单位分户账.getUnitcustid_单位客户号());
+            cm001_单位基本资料表 = cm001_单位基本资料表Map.get(dp005__单位分户账.getUnitcustid_单位客户号());
 
      /*               if(tr002_联系函基础信息.getJylx_不可为空_交易类型().equals(H_TR100_转移接续登记簿_交易类型.转出_2)){
                         dp005_work_unit_单位分户账 = dp005_work_unit_单位分户账Map.get(tr002_联系函基础信息.getYdw());
@@ -380,7 +377,7 @@ DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMMdd");
     }
 
 
-   // @PostConstruct
+   //
     public void run() {
         saveHistorySpan(LocalDate.now().minusDays(20), LocalDate.now());
     }

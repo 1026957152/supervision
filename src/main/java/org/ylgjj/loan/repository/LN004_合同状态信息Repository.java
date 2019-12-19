@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.ylgjj.loan.domain.AN004_单位基本资料表;
 import org.ylgjj.loan.domain.LN004_合同状态信息;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -15,4 +16,8 @@ public interface LN004_合同状态信息Repository extends JpaRepository<LN004_
 
 
     List<LN004_合同状态信息> findByLoancontrcode(String loancontrcode合同代码);
+
+    List<LN004_合同状态信息> findByTransdateBetween(LocalDate minusDays, LocalDate now);
+
+    List<LN004_合同状态信息> findByTransdateBetweenOrderByTransdateDesc(LocalDate minusDays, LocalDate now);
 }

@@ -6,12 +6,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Created by yuan zhao  on 08/10/2015.
  */
-@IdClass(LN004_contract_state_key.class)
+@IdClass(LN004_key.class)
 @Entity
 @Table(name = "LN004")
 
@@ -31,10 +31,17 @@ public class LN004_合同状态信息 {
 
     private String settleop;
 
-    private Date transdate;
+    private LocalDate transdate;
     private Integer hostsernum;
     private String agentinstcode;
 
+    public LocalDate getTransdate() {
+        return transdate;
+    }
+
+    public void setTransdate(LocalDate transdate) {
+        this.transdate = transdate;
+    }
 
     public String getLoancontrcode() {
         return loancontrcode;
@@ -68,13 +75,6 @@ public class LN004_合同状态信息 {
         this.settleop = settleop;
     }
 
-    public Date getTransdate() {
-        return transdate;
-    }
-
-    public void setTransdate(Date transdate) {
-        this.transdate = transdate;
-    }
 
     public Integer getHostsernum() {
         return hostsernum;

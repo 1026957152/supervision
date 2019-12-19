@@ -6,6 +6,7 @@ import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -16,7 +17,7 @@ import java.util.Date;
 @Entity
 @Table(name = "Loan_History")
 
-public class LoanHistory extends BaseFlowDomain{
+public class LoanHistory extends BaseDomain{
 
     @Column(name = "no")
     private String no;
@@ -52,6 +53,10 @@ public class LoanHistory extends BaseFlowDomain{
     private double doubleValue;
     private String index资金来源;
     private Integer index逾期次数;
+    private Double index缴存基数;
+    private double index实归集额;
+    private Double index月缴存额;
+    private Long seqNum;
 
     public LoanHistory(LocalDate n) {
         this.date = n;
@@ -269,5 +274,38 @@ public class LoanHistory extends BaseFlowDomain{
 
     public Integer getIndex逾期次数() {
         return index逾期次数;
+    }
+
+    public void setIndex缴存基数(Double index缴存基数) {
+        this.index缴存基数 = index缴存基数;
+    }
+
+    public Double getIndex缴存基数() {
+        return index缴存基数;
+    }
+
+    public void setIndex实归集额(double index实归集额) {
+        this.index实归集额 = index实归集额;
+    }
+
+    public double getIndex实归集额() {
+        return index实归集额;
+    }
+
+    public void setIndex月缴存额(Double index月缴存额) {
+
+        this.index月缴存额 = index月缴存额;
+    }
+
+    public Double getIndex月缴存额() {
+        return index月缴存额;
+    }
+
+    public void setSeqNum(Long seqNum) {
+        this.seqNum = seqNum;
+    }
+
+    public Long getSeqNum() {
+        return seqNum;
     }
 }

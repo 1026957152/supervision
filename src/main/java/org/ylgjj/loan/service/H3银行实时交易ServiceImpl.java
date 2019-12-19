@@ -65,9 +65,9 @@ public class H3银行实时交易ServiceImpl  {
         });
 
 
-        List<PB010_bank_info_大行信息表> pb010_bank_info_大行信息表s = pb010_bank_info_大行信息表Repository.findAll();
+        List<PB010_大行信息表> pb010__大行信息表s = pb010_bank_info_大行信息表Repository.findAll();
         Output output = new Output();
-        output.setData(pb010_bank_info_大行信息表s.stream().map(e->{
+        output.setData(pb010__大行信息表s.stream().map(e->{
             H3_1结算监控_银行查询 object = new H3_1结算监控_银行查询();
 
             object.setMc_银行名称(e.getBanknam1_不可为空_银行简称());
@@ -166,7 +166,7 @@ public class H3银行实时交易ServiceImpl  {
 
         Map<String, PB011_银行信息表> pb011_bank_infoMap = pb011_银行信息表s.stream().collect(Collectors.toMap(e->e.getBankcode(), h->h));
         DecimalFormat df = new DecimalFormat("0.0000");
-        Map<String,PB010_bank_info_大行信息表> pb010_bank_info_大行信息表Map = pb010_bank_info_大行信息表Repository.findAll().stream().collect(Collectors.toMap(e->e.getBankcode_不可为空_银行代码(),h->h));
+        Map<String, PB010_大行信息表> pb010_bank_info_大行信息表Map = pb010_bank_info_大行信息表Repository.findAll().stream().collect(Collectors.toMap(e->e.getBankcode_不可为空_银行代码(), h->h));
 
 
 
