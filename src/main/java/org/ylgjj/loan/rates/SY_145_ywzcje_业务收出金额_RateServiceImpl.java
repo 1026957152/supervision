@@ -158,7 +158,7 @@ public class SY_145_ywzcje_业务收出金额_RateServiceImpl extends RateServic
                 .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
         List<RateHistory> rateHistories_同比 = rateHistoryRepository
                 .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
+        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
         Double rateHistory_同比 = rateHistories_同比.stream().mapToDouble(e->e.getDoubleValue()).sum();;*/
 
 
@@ -168,14 +168,26 @@ public class SY_145_ywzcje_业务收出金额_RateServiceImpl extends RateServic
 
         h1.setYwzcje_业务收出金额_NUMBER_18_2(rateHistory);
 
-/*        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/rateHistory_环比.intValue());
+/*        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
 
         h1.setLjhbffdkje_累计环比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/rateHistory_同比.intValue());
+        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
 
         h1.setLjsnffdkje_累计同比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());*/
 
     }
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
 
+
+        Double rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDoubleValue()).sum();
+
+        h1.setYwzcje_业务收出金额_NUMBER_18_2(rateHistory);
+
+
+
+    }
 }

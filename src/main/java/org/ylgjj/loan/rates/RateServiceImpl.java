@@ -69,7 +69,7 @@ public class RateServiceImpl {
 
 
 
-    @Scheduled(fixedRate = 1000*60*118)
+   // @Scheduled(fixedRate = 1000*60*118)
     public void process() {
 
         sy_137_ljffbs_累计发放笔数_rateService.update();

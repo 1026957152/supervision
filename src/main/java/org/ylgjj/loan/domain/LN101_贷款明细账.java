@@ -53,7 +53,7 @@ public class LN101_贷款明细账 {
     @Column(name = "entrytranscode")
     private String entrytranscode不可为空_分录代码;
     @Column(name = "summarycode")
-    private String summarycode不可为空_摘要码;
+    private String summarycode不可为空摘要码;
 /*    summarycode	"(摘要码待定)应该包括:贷款发放
     正常归还
             逾期归还
@@ -229,12 +229,12 @@ public class LN101_贷款明细账 {
         this.entrytranscode不可为空_分录代码 = entrytranscode不可为空_分录代码;
     }
 
-    public String getSummarycode不可为空_摘要码() {
-        return summarycode不可为空_摘要码;
+    public String getSummarycode不可为空摘要码() {
+        return summarycode不可为空摘要码;
     }
 
-    public void setSummarycode不可为空_摘要码(String summarycode不可为空_摘要码) {
-        this.summarycode不可为空_摘要码 = summarycode不可为空_摘要码;
+    public void setSummarycode不可为空摘要码(String summarycode不可为空_摘要码) {
+        this.summarycode不可为空摘要码 = summarycode不可为空_摘要码;
     }
 
     public String getDcflag不可为空_借贷标志() {

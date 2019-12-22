@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.time.StopWatch;
 /**
@@ -32,6 +33,7 @@ import org.apache.commons.lang3.time.StopWatch;
 
 @Service
 public class SY_137_ljffbs_累计发放笔数_RateServiceImpl extends RateServiceBaseImpl{
+    E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_137_ljffbs_累计发放笔数;
 
 
     @Autowired
@@ -55,7 +57,7 @@ public class SY_137_ljffbs_累计发放笔数_RateServiceImpl extends RateServic
 
 
     public void process() {
-        RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(E_指标_RATE_SY.SY_137_ljffbs_累计发放笔数.get编码());
+        RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
             return;
@@ -69,7 +71,7 @@ public class SY_137_ljffbs_累计发放笔数_RateServiceImpl extends RateServic
     public RateAnalysisStream update() {
 
 
-        RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(E_指标_RATE_SY.SY_137_ljffbs_累计发放笔数.get编码());
+        RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable.getUpdateTime() == null){
             return null;
@@ -185,7 +187,7 @@ public class SY_137_ljffbs_累计发放笔数_RateServiceImpl extends RateServic
         triplets.stream().forEach(e->{
 
             RateHistory rateHistory = new RateHistory();
-            rateHistory.setIndexNo(E_指标_RATE_SY.SY_137_ljffbs_累计发放笔数.get编码());
+            rateHistory.setIndexNo(e_指标_rate_sy.get编码());
             rateHistory.setLongValue(e.getValue2());
             rateHistory.setDate(e.getValue0());
             rateHistoryRepository.save(rateHistory);
@@ -214,12 +216,12 @@ public class SY_137_ljffbs_累计发放笔数_RateServiceImpl extends RateServic
 
 
         List<RateHistory> rateHistories = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(E_指标_RATE_SY.SY_137_ljffbs_累计发放笔数.get编码(),ldt_ksrq,ldt_jsrq);
+                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq,ldt_jsrq);
 
         List<RateHistory> rateHistories_环比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(E_指标_RATE_SY.SY_137_ljffbs_累计发放笔数.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
+                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
         List<RateHistory> rateHistories_同比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(E_指标_RATE_SY.SY_137_ljffbs_累计发放笔数.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
+                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
         RateHistory rateHistory_环比 = rateHistories_环比.get(0);
         RateHistory rateHistory_同比 = rateHistories_同比.get(0);
         RateHistory rateHistory = rateHistories.get(0);
@@ -235,4 +237,91 @@ public class SY_137_ljffbs_累计发放笔数_RateServiceImpl extends RateServic
 
         h1.setLjsnffbs_累计同比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
+
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
+
+        Optional<RateHistory> rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+
+        Optional<RateHistory> rateHistory_同比 = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+
+        Optional<RateHistory> rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+
+
+        if(rateHistory.isPresent())
+            h1.setLjffbs_累计发放笔数_NUMBER_18_0(rateHistory.get().getLongValue());
+        if(rateHistory.isPresent() && rateHistory_环比.isPresent()){
+            BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory.get().getLongValue().intValue()-rateHistory_环比.get().getLongValue().intValue()+0D)/rateHistory_环比.get().getLongValue().intValue());
+            h1.setLjhbffbs_累计环比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+        }
+
+
+
+        if(rateHistory.isPresent() && rateHistory_同比.isPresent()){
+            BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory.get().getLongValue().intValue()-rateHistory_同比.get().getLongValue().intValue()+0D)/rateHistory_同比.get().getLongValue().intValue());
+
+            h1.setLjsnffbs_累计同比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+        }
+
+
+
+
+    }
+
+/*
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
+
+        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDoubleValue()).sum();
+
+        Double rateHistory_同比 = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDoubleValue()).sum();;
+        Double rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDoubleValue()).sum();
+
+*/
+/*        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();
+        Long rateHistory_同比 = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();;
+        Long rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();*//*
+
+
+
+        h1.setDkye_贷款余额_NUMBER_18_2(rateHistory);
+
+        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
+
+        h1.setHbdkye_环比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
+
+        h1.setSndkye_同比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+    }
+*/
+
 }

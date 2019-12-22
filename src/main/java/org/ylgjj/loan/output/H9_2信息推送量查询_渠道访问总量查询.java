@@ -1,14 +1,23 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H9_2信息推送量查询_渠道访问总量查询 {
 
 
-    
+    @JsonProperty("bm")
+    @JSONField(name="bm")
     private String bm_渠道分类编码;
+
+    @JsonProperty("mc")
+    @JSONField(name="mc")
     private String mc_渠道分类名称;
+
+    @JsonProperty("count")
+    @JSONField(name="count")
     private int count_数量;
 
     public String getBm_渠道分类编码() {

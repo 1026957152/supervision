@@ -1,6 +1,8 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H9_7信息推送量查询_用户年龄信息查询 {
@@ -11,11 +13,21 @@ public class H9_7信息推送量查询_用户年龄信息查询 {
 
 
 
-
+    @JsonProperty("nl1")
+    @JSONField(name="nl1")
 
     private String nl1_年龄_小于20岁;
+
+    @JsonProperty("nl2")
+    @JSONField(name="nl2")
     private String nl2_年龄_20_40;
+
+    @JsonProperty("nl3")
+    @JSONField(name="nl3")
     private String nl3_年龄_40_60;
+
+    @JsonProperty("nl4")
+    @JSONField(name="nl4")
     private String nl4_年龄_60岁以上;
 
     public String getNl1_年龄_小于20岁() {

@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.LN003_合同信息;
 import org.ylgjj.loan.domain_flow.RateHistory;
+import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
 import org.ylgjj.loan.repository.LN004_合同状态信息Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class SY_140_zzsyje_增长收益金额_RateServiceImpl {
+    E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_140_zzsyje_增长收益金额;
 
 
     @Autowired
@@ -85,6 +88,32 @@ public class SY_140_zzsyje_增长收益金额_RateServiceImpl {
 
     }
 
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
+
+
+        Double rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDoubleValue()).sum();
+
+/*        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();
+        Long rateHistory_同比 = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();;
+        Long rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();*/
+
+
+        h1.setZzsyje_增长收益金额_NUMBER_18_2(rateHistory);
+
+
+    }
 
 
 

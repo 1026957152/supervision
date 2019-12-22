@@ -165,7 +165,7 @@ public class SY_t_170_tqlgl_提取离柜率_RateServiceImpl extends RateServiceB
                 .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
         List<RateHistory> rateHistories_同比 = rateHistoryRepository
                 .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        Long rateHistory_环比 = rateHistories_环比.stream().mapToLong(e->e.getLongValue()).sum();
+        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比.stream().mapToLong(e->e.getLongValue()).sum();
         Long rateHistory_同比 = rateHistories_同比.stream().mapToLong(e->e.getLongValue()).sum();;
         Long rateHistory = rateHistories.stream().mapToLong(e->e.getLongValue()).sum();
 

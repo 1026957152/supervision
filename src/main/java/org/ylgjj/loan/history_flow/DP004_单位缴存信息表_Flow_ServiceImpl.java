@@ -265,17 +265,21 @@ public class DP004_单位缴存信息表_Flow_ServiceImpl {
                 loanHistory.setIndex单位性质(o.getKey()); // 银行名称
                 loanHistory.setIntValue(result.get(E_DP202_单位缴存变更登记簿_变更类型.E_5_正常状态销户.getText()).size()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
+
+
                 loanHistory = new LoanHistory(beginDate,StatisticalIndexCodeEnum.S_15_SEQ_正常总单位数_AND_0301002301);
                 loanHistory.setIndex机构编码(机构编码); // 机构名称
                 loanHistory.setIndex单位性质(o.getKey()); // 银行名称
                 loanHistory.setIntValue(result.get(E_DP202_单位缴存变更登记簿_变更类型.E_3_转入后正常状态.getText()).size()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
 
+
                 loanHistory = new LoanHistory(beginDate,StatisticalIndexCodeEnum.S_16_SEQ_封存总单位数_AND_0301002401);
                 loanHistory.setIndex机构编码(机构编码); // 机构名称
                 loanHistory.setIndex单位性质(o.getKey()); // 银行名称
                 loanHistory.setIntValue(result.get(E_DP202_单位缴存变更登记簿_变更类型.E_4_封存.getText()).size()); // 银行名称
                 loanHistoryRepository.save(loanHistory);
+
 
 
 

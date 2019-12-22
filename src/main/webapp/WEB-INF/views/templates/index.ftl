@@ -77,7 +77,7 @@
             <li role="presentation"><a href="#apis" aria-controls="coalDeals" role="tab"
                                        data-toggle="tab">API，完成率<span class="label label-success">${rate}</span></a></li>
             <li role="presentation"><a href="#rates" aria-controls="rates" role="tab"
-                                       data-toggle="tab">rates，完成率<span class="label label-success">${rate}</span></a></li>
+                                       data-toggle="tab">rates，完成率<span class="label label-success">${ratesRate}</span></a></li>
 
             <li role="presentation"><a href="#idea" aria-controls="idea" role="tab"
                                        data-toggle="tab">设计思路</a></li>
@@ -123,7 +123,7 @@
                                     <td>${category.createDate!''}</td>
                                     <td>${category.modifyDate!''}</td>
 
-                                    <td><a href="${category.url}">json返回</a></td>
+                                    <td><a href="${category.url!''}">json返回</a></td>
                                 </tr>
 
                             </#list>
@@ -200,17 +200,17 @@
 
                                     <td>
 
-  <#--                                      <#if category.completed>
+                                     <#if category.completed>
                                             <span class="label label-success">成功标签</span>
 
                                         <#else>
                                             <span class="label label-default">默认标签</span>
 
-                                        </#if>-->
+                                        </#if>
 
                                     </td>
                                     <td>${category.id}</td>
-                                    <td><a href="${category.url}">json返回</a></td>
+                                    <td><a href="${category.url!''}">json返回</a></td>
                                 </tr>
 
                             </#list>

@@ -1,16 +1,22 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H3_1结算监控_银行查询 {
 
 
-
+    @JsonProperty("bm")
+    @JSONField(name="bm")
     private String bm_银行编码;
+    @JsonProperty("mc")
+    @JSONField(name="mc")
     private String mc_银行名称;
+
+    @JsonProperty("id")
+    @JSONField(name="id")
     private String id_银行logo图片;
 
     public String getBm_银行编码() {

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_LN006_贷款分期还款计划_curseqStatusEnum;
 import org.ylgjj.loan.enumT.H_LN101_贷款明细_结算方式;
-import org.ylgjj.loan.enumT.LoaneeTypeEnum;
+import org.ylgjj.loan.enumT.E_LN008_借款人信息_借款人类型;
 import org.ylgjj.loan.domain_flow.LoanHistory;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.*;
@@ -140,7 +140,7 @@ public class ZYLoan还款明细HistoryerviceImpl {
 
             ln0014_trading_house_贷款房屋信息Map = ln014__贷款房屋信息Repository.findAll().stream().collect(Collectors.toMap(e->e.getLoancontrcode0合同代码(), e->e));
 
-            ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText()))
+            ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e->e.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText()))
                     .collect(Collectors.groupingBy(e->e.getLoancontrcode合同代码()));
             initComplte= true;
         }
@@ -760,7 +760,7 @@ public class ZYLoan还款明细HistoryerviceImpl {
 
             ln0014_trading_house_贷款房屋信息Map = ln014__贷款房屋信息Repository.findAll().stream().collect(Collectors.toMap(e->e.getLoancontrcode0合同代码(), e->e));
 
-            ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText()))
+            ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e->e.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText()))
                     .collect(Collectors.groupingBy(e->e.getLoancontrcode合同代码()));
             initComplte= true;
         }
@@ -867,7 +867,7 @@ public class ZYLoan还款明细HistoryerviceImpl {
 
             ln0014_trading_house_贷款房屋信息Map = ln014__贷款房屋信息Repository.findAll().stream().collect(Collectors.toMap(e -> e.getLoancontrcode0合同代码(), e -> e));
 
-            ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e -> e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText()))
+            ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e -> e.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText()))
                     .collect(Collectors.groupingBy(e -> e.getLoancontrcode合同代码()));
             initComplte = true;
         }

@@ -331,7 +331,7 @@ public class ZYmygdw每一个单位HistoryerviceImpl {
                        // S_2_SEQ_实缴单位数_AND_0301000201("0301","0301000201","实缴单位数"," ","01","03","bm_khjg","机构","bm_dwjjlx","经济类型"," "," ","0","02",false),
                           //      S_3_SEQ_实缴单位数__按年___AND_0301000202("0301","0301000202","实缴单位数(按年)"," ","01","06","bm_khjg","机构","bm_dwjjlx","经济类型"," "," ","0"," ",false),
 
-                                LoanHistory loanHistory  = new LoanHistory(localDate,StatisticalIndexCodeEnum.S_2_SEQ_实缴单位数_AND_0301000201);
+                        LoanHistory loanHistory  = new LoanHistory(localDate,StatisticalIndexCodeEnum.S_2_SEQ_实缴单位数_AND_0301000201);
 
 
                         loanHistory.setIndex机构编码(eee.getKey()); // 机构名称

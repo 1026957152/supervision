@@ -2,16 +2,13 @@ package org.ylgjj.loan.domain;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 /**
  * Created by yuan zhao  on 08/10/2015.
  */
-
+@IdClass(LN005_key.class)
 @Entity
 
 @Table(name = "LN005")
@@ -37,7 +34,7 @@ public class LN005_贷款分户信息 {
     @Id
     @Column(name = "loancontrcode")
     private String loancontrcode合同代码;
-
+    @Id
     @Column(name = "loanacctype")
     private String loanacctype_贷款分户类型;
 /*
@@ -46,7 +43,7 @@ public class LN005_贷款分户信息 {
             03-应收利息(表内),
 13-应收利息(表外),
 18-表外罚息"	0:不可为空	贷款分户类型*/
-
+@Id
     @Column(name = "loanaccnum")
     private String loanaccnum_贷款账号;
 

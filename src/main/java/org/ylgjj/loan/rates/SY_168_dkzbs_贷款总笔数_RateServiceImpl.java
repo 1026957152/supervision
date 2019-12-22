@@ -164,11 +164,11 @@ public class SY_168_dkzbs_贷款总笔数_RateServiceImpl extends RateServiceBas
 
 
 /*
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/rateHistory_环比.intValue());
+        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
 
         h1.setLjhbffdkje_累计环比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/rateHistory_同比.intValue());
+        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
 
         h1.setLjsnffdkje_累计同比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 */
@@ -176,7 +176,18 @@ public class SY_168_dkzbs_贷款总笔数_RateServiceImpl extends RateServiceBas
     }
 
 
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
 
+
+        Long rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();
+
+        h1.setDkzbs_贷款总笔数_NUMBER_18_0(rateHistory.intValue());
+        h1.setWtdkzbs_网厅贷款总笔数_NUMBER_18_0(rateHistory.intValue());
+
+    }
 
 
 }

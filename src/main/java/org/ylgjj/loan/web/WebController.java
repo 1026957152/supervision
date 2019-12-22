@@ -122,6 +122,9 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
             System.out.println("apis.get(true).size()");
             modelAndView.addObject("rate", nf.format((apis.get(true).size()+0d)/SupervisionController.api.size()));
 
+
+            modelAndView.addObject("ratesRate", nf.format(Arrays.stream(E_指标_RATE_SY.values())
+                    .filter(e->e.getOnline()).count()/(E_指标_RATE_SY.values().length+0d)));
             modelAndView.addObject("version", git.get("build.version"));
 
             modelAndView.addObject("git", git.toString()+git.get("build.version")+"--"+git.get("branch"));
@@ -189,7 +192,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
         List<Map> indexes__url = items.stream().map(e->{
 
 
-            String userUrl =  linkTo(methodOn(H2业务指标Controller.class).H_2_5_业务指标_多维度查询((String)e.get("指标编码"),null,null)).withSelfRel().getHref();
+            String userUrl =  linkTo(methodOn(H2业务指标Controller.class).H_2_5_业务指标_多维度查询(null,null)).withSelfRel().getHref();
             e.put("url",userUrl);
             return e;
         }).collect(Collectors.toList());

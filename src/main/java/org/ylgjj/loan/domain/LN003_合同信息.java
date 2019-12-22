@@ -91,7 +91,8 @@ public class LN003_合同信息 {
 
 
     @Column(name = "clearstate")
-    private String clearstate_结清日期;
+    private String clearstate不可为空结清标志;
+
 
 
     @Column(name = "owecnt")
@@ -137,7 +138,7 @@ public class LN003_合同信息 {
     }
 
     @Column(name = "cleardate")
-    private Date cleardate_结清日期;
+    private LocalDate cleardate_结清日期;
 
     @Column(name = "repaymode")
     private String repaymode_还款方式;
@@ -146,8 +147,23 @@ public class LN003_合同信息 {
     @Column(name = "repayday")
     private String repayday_还款日;
 
+    @Column(name = "loanstate")
+    private String loanstate不可为空贷款账户状态;
+/*    		"1-正常,
+            2-逾期,
+            3-部分逾期,
+            4-停息挂账,
+            5-清户,
+            6-销户,
+            7-核销"	0:	*/
 
+    public String getLoanstate不可为空贷款账户状态() {
+        return loanstate不可为空贷款账户状态;
+    }
 
+    public void setLoanstate不可为空贷款账户状态(String loanstate不可为空贷款账户状态) {
+        this.loanstate不可为空贷款账户状态 = loanstate不可为空贷款账户状态;
+    }
 
     public BigDecimal getApploanamt_贷款申请金额() {
         return apploanamt_贷款申请金额;
@@ -221,12 +237,12 @@ public class LN003_合同信息 {
         this.loaneenum_借款人人数 = loaneenum_借款人人数;
     }
 
-    public String getClearstate_结清日期() {
-        return clearstate_结清日期;
+    public String getClearstate不可为空结清标志() {
+        return clearstate不可为空结清标志;
     }
 
-    public void setClearstate_结清日期(String clearstate_结清日期) {
-        this.clearstate_结清日期 = clearstate_结清日期;
+    public void setClearstate不可为空结清标志(String clearstate_结清日期) {
+        this.clearstate不可为空结清标志 = clearstate_结清日期;
     }
 
     private String loanflag;
@@ -388,11 +404,11 @@ public class LN003_合同信息 {
         this.owecnt欠还次数 = owecnt欠还次数;
     }
 
-    public Date getCleardate_结清日期() {
+    public LocalDate getCleardate_结清日期() {
         return cleardate_结清日期;
     }
 
-    public void setCleardate_结清日期(Date cleardate_结清日期) {
+    public void setCleardate_结清日期(LocalDate cleardate_结清日期) {
         this.cleardate_结清日期 = cleardate_结清日期;
     }
 

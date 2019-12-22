@@ -5,17 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_LN004_合同状态信息_合同状态;
-import org.ylgjj.loan.enumT.LoaneeTypeEnum;
 import org.ylgjj.loan.output.H6_1抵押办理时间_抵押物数据查询;
-import org.ylgjj.loan.output.H6_2抵押办理时间_抵押物明细数据查询;
-import org.ylgjj.loan.pojo.QueryH6_2抵押办理时间_抵押物明细数据查询;
 import org.ylgjj.loan.repository.*;
 
-import javax.validation.Valid;
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 

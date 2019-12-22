@@ -1,25 +1,67 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H8_1银行专户余额_银行专户余额查询 {
 
 
-
+    @JsonProperty("bm")
+    @JSONField(name="bm")
     private String bm_银行编码;
+
+    @JsonProperty("mc")
+    @JSONField(name="mc")
     private String mc_银行名称;
+
+    @JsonProperty("id")
+    @JSONField(name="id")
     private String id_银行logo图片;
+
+    @JsonProperty("zjbmc")
+    @JSONField(name="zjbmc")
     private String zjbmc_住建部中心编码_String;
+
+    @JsonProperty("zjbbm")
+    @JSONField(name="zjbbm")
     private String zjbbm_住建部中心名称_String;
+
+    @JsonProperty("sszh")
+    @JSONField(name="sszh")
     private String sszh_总行编码_String;
+
+    @JsonProperty("zhmc")
+    @JSONField(name="zhmc")
     private String zhmc_总行名称_String;
+
+    @JsonProperty("gjzhye")
+    @JSONField(name="gjzhye")
     private String gjzhye_活期归集账户余额_String;
+
+    @JsonProperty("dkzhye")
+    @JSONField(name="dkzhye")
     private String dkzhye_活期贷款账户余额_String;
+
+    @JsonProperty("zzsyzhye")
+    @JSONField(name="zzsyzhye")
     private String zzsyzhye_活期增值收益账户余额_String;
+
+    @JsonProperty("dqgjzhye")
+    @JSONField(name="dqgjzhye")
     private String dqgjzhye_定期归集账户余额_String;
+
+    @JsonProperty("dqdkzhye")
+    @JSONField(name="dqdkzhye")
     private String dqdkzhye_定期贷款账户余额_String;
+
+    @JsonProperty("dqzzsyzhye")
+    @JSONField(name="dqzzsyzhye")
     private String dqzzsyzhye_定期增值收益账户余额_String;
+
+    @JsonProperty("hj")
+    @JSONField(name="hj")
     private String hj_合计余额_String;
 
     public String getBm_银行编码() {

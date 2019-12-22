@@ -1,8 +1,8 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H6_2抵押办理时间_抵押物明细数据查询 {
@@ -12,14 +12,35 @@ public class H6_2抵押办理时间_抵押物明细数据查询 {
    // LN010	抵押人信息				管理公积金贷款的抵押人信息、及其变更履历。
 
 
-
+    @JsonProperty("jkhtbh")
+    @JSONField(name="jkhtbh")
     private String jkhtbh_借款人合同编号;
+
+    @JsonProperty("jkrgjjzh")
+    @JSONField(name="jkrgjjzh")
     private String jkrgjjzh_借款人公积金账号;
+
+    @JsonProperty("jkrxm")
+    @JSONField(name="jkrxm")
     private String jkrxm_借款人姓名;
+
+    @JsonProperty("dkffe")
+    @JSONField(name="dkffe")
     private double dkffe_贷款金额;
+
+    @JsonProperty("dksqnx")
+    @JSONField(name="dksqnx")
     private int dksqnx_贷款年限;
+
+    @JsonProperty("dkll")
+    @JSONField(name="dkll")
     private double dkll_贷款利率;
+    @JsonProperty("sprq")
+    @JSONField(name="sprq")
     private String sprq_审批日期;
+
+    @JsonProperty("dkffrq")
+    @JSONField(name="dkffrq")
     private String dkffrq_发放日期;
 
 

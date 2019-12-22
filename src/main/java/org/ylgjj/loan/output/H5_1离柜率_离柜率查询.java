@@ -1,29 +1,78 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H5_1离柜率_离柜率查询 {
 
-
+    @JsonProperty("jgbm")
+    @JSONField(name="jgbm")
     private String jgbm_管理机构编码_String;
+
+    @JsonProperty("jgmc")
+    @JSONField(name="jgmc")
     private String jgmc_管理机构_String;
+
+    @JsonProperty("ksrq")
+    @JSONField(name="ksrq")
     private String ksrq_汇总日期_date;
+
+    @JsonProperty("qd")
+    @JSONField(name="qd")
     private String qd_渠道_varchar_6;
+
+    @JsonProperty("lgl")
+    @JSONField(name="lgl")
     private double lgl_离柜率_Double;
+
+    @JsonProperty("wthdbs")
+    @JSONField(name="wthdbs")
     private int wthdbs_核定笔数_Int;
 
-
+    @JsonProperty("wtxxbgbs")
+    @JSONField(name="wtxxbgbs")
     private int wtxxbgbs_信息变更笔数_Int;
+
+    @JsonProperty("wtztbgbs")
+    @JSONField(name="wtztbgbs")
     private int wtztbgbs_账户状态变更笔数_Int;
+
+    @JsonProperty("wtjcjsbs")
+    @JSONField(name="wtjcjsbs")
     private int wtjcjsbs_缴存基数笔数_Int;
+
+    @JsonProperty("wttqbs")
+    @JSONField(name="wttqbs")
     private int wttqbs_提取笔数_Int;
+
+    @JsonProperty("wtdkbs")
+    @JSONField(name="wtdkbs")
     private int wtdkbs_贷款笔数_Int;
+
+    @JsonProperty("wttqhkbs")
+    @JSONField(name="wttqhkbs")
     private int wttqhkbs_提前还款笔数_Int;
+
+    @JsonProperty("wtchdjybs")
+    @JSONField(name="wtchdjybs")
     private int wtchdjybs_对冲签约笔数_Int;
+
+    @JsonProperty("gzlgl")
+    @JSONField(name="gzlgl")
     private double gzlgl_缴存离柜率_Double;
+
+    @JsonProperty("dklgl")
+    @JSONField(name="dklgl")
     private double dklgl_贷款离柜率_Double;
+
+    @JsonProperty("zqlgl")
+    @JSONField(name="zqlgl")
     private double zqlgl_提取离柜率_Double;
+
+    @JsonProperty("zxlgl")
+    @JSONField(name="zxlgl")
     private double zxlgl_中心离柜率_Double;
 
 

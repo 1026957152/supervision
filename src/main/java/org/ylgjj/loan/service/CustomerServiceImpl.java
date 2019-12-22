@@ -781,7 +781,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         List<LN008_借款人信息> ln008__借款人信息s = lN008_借款人类型Repository.findByAccnum1账号(dp006__个人缴存信息表.getAccnum个人账号());
-        List<LN008_借款人信息> ln008__借款人信息_借款人_s =  ln008__借款人信息s.stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).collect(Collectors.toList());
+        List<LN008_借款人信息> ln008__借款人信息_借款人_s =  ln008__借款人信息s.stream().filter(e->e.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText())).collect(Collectors.toList());
         if(ln008__借款人信息_借款人_s.size()!= 0){
 
             LN008_借款人信息 ln008__借款人信息_借款人 = ln008__借款人信息_借款人_s.get(0);
@@ -813,7 +813,7 @@ public class CustomerServiceImpl implements CustomerService {
             data.setDkdqrq(DateUtils.getDate(ln003__合同信息.getEnddate_到期日期()));
 
             //公积金贷款结清日期	date	输出	格式：yyyy-mm-dd
-            data.setDkjqrq(DateUtils.getDate(ln003__合同信息.getCleardate_结清日期()));
+         //   data.setDkjqrq(DateUtils.getDate(ln003__合同信息.getCleardate_结清日期()));
 
 
 
@@ -822,7 +822,7 @@ public class CustomerServiceImpl implements CustomerService {
           //  data.setDkye(ln005_lone_sub_account_贷款分户信息.getCurbal_当前余额());
 
             List<LN008_借款人信息> ln008__借款人信息_共同借款人_s =
-                    ln008__借款人信息_借款人_s.stream().filter(e-> e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.共同借款人.getText())).collect(Collectors.toList());
+                    ln008__借款人信息_借款人_s.stream().filter(e-> e.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.共同借款人.getText())).collect(Collectors.toList());
 
             if(ln008__借款人信息_共同借款人_s.size() != 0){
                 LN008_借款人信息 e= ln008__借款人信息_共同借款人_s.get(0);
@@ -1402,7 +1402,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         List<LN008_借款人信息> ln008__借款人信息s = lN008_借款人类型Repository.findByAccnum1账号(dp006__个人缴存信息表.getAccnum个人账号());
-        List<LN008_借款人信息> ln008__借款人信息_借款人_s =  ln008__借款人信息s.stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).collect(Collectors.toList());
+        List<LN008_借款人信息> ln008__借款人信息_借款人_s =  ln008__借款人信息s.stream().filter(e->e.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText())).collect(Collectors.toList());
         if(ln008__借款人信息_借款人_s.size()!= 0){
 
             LN008_借款人信息 ln008__借款人信息_借款人 = ln008__借款人信息_借款人_s.get(0);
@@ -1434,7 +1434,7 @@ public class CustomerServiceImpl implements CustomerService {
             data.setDkdqrq(DateUtils.getDate(ln003__合同信息.getEnddate_到期日期()));
 
             //公积金贷款结清日期	date	输出	格式：yyyy-mm-dd
-            data.setDkjqrq(DateUtils.getDate(ln003__合同信息.getCleardate_结清日期()));
+         //  data.setDkjqrq(DateUtils.getDate(ln003__合同信息.getCleardate_结清日期()));
 
 
 
@@ -1443,7 +1443,7 @@ public class CustomerServiceImpl implements CustomerService {
          //   data.setDkye(ln005_lone_sub_account_贷款分户信息.getCurbal_当前余额());
 
             List<LN008_借款人信息> ln008__借款人信息_共同借款人_s =
-                    ln008__借款人信息_借款人_s.stream().filter(e-> e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.共同借款人.getText())).collect(Collectors.toList());
+                    ln008__借款人信息_借款人_s.stream().filter(e-> e.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.共同借款人.getText())).collect(Collectors.toList());
 
             if(ln008__借款人信息_共同借款人_s.size() != 0){
                 LN008_借款人信息 e= ln008__借款人信息_共同借款人_s.get(0);

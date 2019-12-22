@@ -1,29 +1,62 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H4_1业务统计_获取各渠道业务统计数据 {
 
 
 
-
+    @JsonProperty("blqdmc")
+    @JSONField(name="blqdmc")
     private String blqdmc_办理渠道_varchar_20;
+    @JsonProperty("gjbs")
+    @JSONField(name="gjbs")
     private int gjbs_归集_Int;
+    @JsonProperty("gjje")
+    @JSONField(name="gjje")
     private double gjje_归集金额_Double;
+    @JsonProperty("gjzb")
+    @JSONField(name="gjzb")
     private double gjzb_归集占比_Double;
+    @JsonProperty("tqbs")
+    @JSONField(name="tqbs")
     private int tqbs_提取笔数_Int;
+    @JsonProperty("tqje")
+    @JSONField(name="tqje")
     private double tqje_提取金额_Double;
+    @JsonProperty("tqzb")
+    @JSONField(name="tqzb")
     private double tqzb_提取占比_Double;
+    @JsonProperty("dkbs")
+    @JSONField(name="dkbs")
     private int dkbs_贷款笔数_Int;
+    @JsonProperty("dkje")
+    @JSONField(name="dkje")
     private double dkje_贷款金额_Double;
+    @JsonProperty("dkzb")
+    @JSONField(name="dkzb")
     private double dkzb_贷款占比_Double;
+    @JsonProperty("dktqhkbs")
+    @JSONField(name="dktqhkbs")
     private int dktqhkbs_提前还贷笔数_Int;
+    @JsonProperty("dktqhkje")
+    @JSONField(name="dktqhkje")
     private double dktqhkje_提前还贷金额_Double;
+    @JsonProperty("dktqhkzb")
+    @JSONField(name="dktqhkzb")
     private double dktqhkzb_提前还贷占比_Double;
+    @JsonProperty("tqywchdbs")
+    @JSONField(name="tqywchdbs")
 
     private int tqywchdbs_提取业务偿还贷笔数_Int;
+    @JsonProperty("Tqywchdje")
+    @JSONField(name="Tqywchdje")
     private double Tqywchdje_提取业务偿还贷金额_Double;
+    @JsonProperty("tqywchdzb")
+    @JSONField(name="tqywchdzb")
     private double tqywchdzb_提取业务偿还贷占比_Double;
 
     public String getBlqdmc_办理渠道_varchar_20() {

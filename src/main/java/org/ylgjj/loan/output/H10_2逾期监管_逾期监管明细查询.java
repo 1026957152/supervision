@@ -7,88 +7,88 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H10_2逾期监管_逾期监管明细查询 {
 
-    // @JsonProperty("jkhtbh")
-    // @JSONField(name="jkhtbh")
+    @JsonProperty("jkhtbh")
+    @JSONField(name="jkhtbh")
     private String jkhtbh_合同编号_String;
 
-    // @JsonProperty("dkffrq")
+    @JsonProperty("dkffrq")
 
-    // @JSONField(name="dkffrq")
+    @JSONField(name="dkffrq")
     private String dkffrq_发放日期_String;
-    // @JsonProperty("dkffe")
-    // @JSONField(name="dkffe")
+    @JsonProperty("dkffe")
+    @JSONField(name="dkffe")
     private double dkffe_发放金额_double;
-    // @JsonProperty("dkye")
-    // @JSONField(name="dkye")
+    @JsonProperty("dkye")
+    @JSONField(name="dkye")
     private double dkye_贷款余额_double;
 
-    // @JsonProperty("dqyqbj")
-    // @JSONField(name="dqyqbj")
+    @JsonProperty("dqyqbj")
+    @JSONField(name="dqyqbj")
     private double dqyqbj_当前逾期本金_double;
 
-    // @JsonProperty("dqyqcs")
-    // @JSONField(name="dqyqcs")
+    @JsonProperty("dqyqcs")
+    @JSONField(name="dqyqcs")
     private int dqyqcs_当前逾期次数_int;
 
-    // @JsonProperty("ljyqqs")
-    // @JSONField(name="ljyqqs")
+    @JsonProperty("ljyqqs")
+    @JSONField(name="ljyqqs")
     private int ljyqqs_累计逾期次数_int;
 
-    // @JsonProperty("yqkssj")
-    // @JSONField(name="yqkssj")
+    @JsonProperty("yqkssj")
+    @JSONField(name="yqkssj")
     private String yqkssj_逾期开始日期_String;
 
 
-    // @JsonProperty("yqts")
-    // @JSONField(name="yqts")
+    @JsonProperty("yqts")
+    @JSONField(name="yqts")
     private int yqts_逾期天数_int;
 
-    // @JsonProperty("grjcjs")
-    // @JSONField(name="grjcjs")
+    @JsonProperty("grjcjs")
+    @JSONField(name="grjcjs")
     private double grjcjs_主借款人月缴存基数_double;
 
-    // @JsonProperty("grztmc")
-    // @JSONField(name="grztmc")
+    @JsonProperty("grztmc")
+    @JSONField(name="grztmc")
     private String grztmc_主借款人账户状态_String;
 
-    // @JsonProperty("dqjhhkje")
-    // @JSONField(name="dqjhhkje")
+    @JsonProperty("dqjhhkje")
+    @JSONField(name="dqjhhkje")
     private double dqjhhkje_月还款额_double;
 
-    // @JsonProperty("spczyxm")
-    // @JSONField(name="spczyxm")
+    @JsonProperty("spczyxm")
+    @JSONField(name="spczyxm")
     private String spczyxm_审批人_String;
 
-    // @JsonProperty("dwmc")
-    // @JSONField(name="dwmc")
+    @JsonProperty("dwmc")
+    @JSONField(name="dwmc")
     private String dwmc_单位名称_String;
 
-    // @JsonProperty("jkrgjjzh")
-    // @JSONField(name="jkrgjjzh")
+    @JsonProperty("jkrgjjzh")
+    @JSONField(name="jkrgjjzh")
     private String jkrgjjzh_借款人公积金账号_String;
 
-    // @JsonProperty("jkrxm")
-    // @JSONField(name="jkrxm")
+    @JsonProperty("jkrxm")
+    @JSONField(name="jkrxm")
     private String jkrxm_借款人姓名_String;
 
-    // @JsonProperty("jkrzjh")
-    // @JSONField(name="jkrzjh")
+    @JsonProperty("jkrzjh")
+    @JSONField(name="jkrzjh")
     private String jkrzjh_借款人证件号码_String;
 
-    // @JsonProperty("dblxmc")
-    // @JSONField(name="dblxmc")
+    @JsonProperty("dblxmc")
+    @JSONField(name="dblxmc")
     private String dblxmc_担保类型_String;
 
-    // @JsonProperty("fwzl")
-    // @JSONField(name="fwzl")
+    @JsonProperty("fwzl")
+    @JSONField(name="fwzl")
     private String fwzl_房屋地址_String;
 
-    // @JsonProperty("hkfsmc")
-    // @JSONField(name="hkfsmc")
+    @JsonProperty("hkfsmc")
+    @JSONField(name="hkfsmc")
     private String hkfsmc_还款方式_String;
 
-    // @JsonProperty("fwxzmc")
-    // @JSONField(name="fwxzmc")
+    @JsonProperty("fwxzmc")
+    @JSONField(name="fwxzmc")
     private String fwxzmc_房屋性质_String;
 
 

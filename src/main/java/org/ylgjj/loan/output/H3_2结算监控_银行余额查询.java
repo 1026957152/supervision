@@ -1,17 +1,32 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H3_2结算监控_银行余额查询 {
 
 
 
-
+    @JsonProperty("bm")
+    @JSONField(name="bm")
     private String bm_银行编码;
+
+    @JsonProperty("mc")
+    @JSONField(name="mc")
     private String mc_银行名称;
+
+    @JsonProperty("fse")
+    @JSONField(name="fse")
     private double fse_发生额;
+
+    @JsonProperty("sre")
+    @JSONField(name="sre")
     private double sre_收入额;
+
+    @JsonProperty("zce")
+    @JSONField(name="zce")
     private double zce_支出额;
 
     public String getBm_银行编码() {

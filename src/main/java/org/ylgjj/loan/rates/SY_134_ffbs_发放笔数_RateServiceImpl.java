@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -162,14 +163,48 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
 
         h1.setFfbs_发放笔数_NUMBER_18_0(rateHistory);
 
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/rateHistory_环比.intValue());
+        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
 
 
         h1.setHbffbs_环比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/rateHistory_同比.intValue());
+        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
 
         h1.setSnffbs_同比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
+        Optional<RateHistory> rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+
+        Optional<RateHistory> rateHistory_同比 = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+
+        Optional<RateHistory> rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+
+
+        if(rateHistory.isPresent())
+            h1.setFfbs_发放笔数_NUMBER_18_0(rateHistory.get().getLongValue());
+        if(rateHistory.isPresent() && rateHistory_环比.isPresent()){
+            BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory.get().getLongValue().intValue()-rateHistory_环比.get().getLongValue().intValue()+0D)/rateHistory_环比.get().getLongValue().intValue());
+            h1.setHbffbs_环比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+        }
+
+
+
+        if(rateHistory.isPresent() && rateHistory_同比.isPresent()){
+            BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory.get().getLongValue().intValue()-rateHistory_同比.get().getLongValue().intValue()+0D)/rateHistory_同比.get().getLongValue().intValue());
+            h1.setSnffbs_同比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+        }
+
+    }
 }

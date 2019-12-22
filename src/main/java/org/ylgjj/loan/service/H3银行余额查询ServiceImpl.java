@@ -15,7 +15,7 @@ import java.util.Date;
  * Created by silence yuan on 2015/7/25.
  */
 
-@Service("H3银行余额查询ServiceImpl")
+@Service
 public class H3银行余额查询ServiceImpl {
 
     @Autowired

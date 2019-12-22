@@ -173,7 +173,7 @@ public class SY_177_dkpjspts_贷款平均审批天数_RateServiceImpl extends Ra
                 .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
         List<RateHistory> rateHistories_同比 = rateHistoryRepository
                 .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        Long rateHistory_环比 = rateHistories_环比.stream().mapToLong(e->e.getLongValue()).sum();
+        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比.stream().mapToLong(e->e.getLongValue()).sum();
         Long rateHistory_同比 = rateHistories_同比.stream().mapToLong(e->e.getLongValue()).sum();;
         Long rateHistory = rateHistories.stream().mapToLong(e->e.getLongValue()).sum();
 
@@ -183,5 +183,14 @@ public class SY_177_dkpjspts_贷款平均审批天数_RateServiceImpl extends Ra
 
 
     }
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
 
+
+        Long rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();
+        h1.setDkpjspts_贷款平均审批天数_NUMBER_18_2(rateHistory.intValue());
+
+    }
 }

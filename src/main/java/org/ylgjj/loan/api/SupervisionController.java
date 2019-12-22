@@ -87,28 +87,28 @@ public class SupervisionController {
     static public ApiUrl H2_3 = new ApiUrl("020301",
             "2业务指标",
             "2.3常用指标数据查询",
-            "/JG/dzbfx/more_target_value_cx.service", false);
+            "/JG/dzbfx/more_target_value_cx.service", true);
 
 
     static public ApiUrl H2_4 = new ApiUrl("020401",
             "2业务指标",
             "2.4多指标树查询",
-            "/JG/dzbfx/more_tree_cx.service", false);
+            "/JG/dzbfx/more_tree_cx.service", true);
 
     static public ApiUrl H2_5 = new ApiUrl("020501",
             "2业务指标",
             "2.5多维度查询",
-            "/JG/dzbfx/more_dimension_cx.service", false);
+            "/JG/dzbfx/more_dimension_cx.service", true);
     static public ApiUrl H2_6 = new ApiUrl("020601",
             "2业务指标",
             "2.6网格查询",
-            "/JG/dzbfx/more_grid_cx.service", false);
+            "/JG/dzbfx/more_grid_cx.service", true);
 
 
     static public ApiUrl H2_7 = new ApiUrl("020701",
             "2业务指标",
             "2.7表格查询",
-            "/JG/dzbfx/more_chart_cx.service", false);
+            "/JG/dzbfx/more_chart_cx.service", true);
 
     static {
         api.add(H2_1);
@@ -154,7 +154,7 @@ public class SupervisionController {
     static public ApiUrl H4_1 = new ApiUrl("040101",
             "4业务统计",
             "4.1业务统计——获取各渠道业务统计数据",
-            "/JG/bbgl/ywtj_cx.service", true);
+            "/JG/bbgl/ywtj_cx.service", false);
     static {
         api.add(H4_1);
 
@@ -171,7 +171,7 @@ public class SupervisionController {
     static public ApiUrl H6_1 = new ApiUrl("060101",
             "6抵押办理时间",
             "6.1抵押物数据查询",
-            "/JG/dyw/get_dywData.service", false);
+            "/JG/dyw/get_dywData.service", true);
 
 
     static public ApiUrl H6_2 = new ApiUrl("060201",

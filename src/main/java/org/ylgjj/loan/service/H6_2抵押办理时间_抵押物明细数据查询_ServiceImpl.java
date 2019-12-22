@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.apis.ApiServiceImpl;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_LN004_合同状态信息_合同状态;
-import org.ylgjj.loan.enumT.LoaneeTypeEnum;
+import org.ylgjj.loan.enumT.E_LN008_借款人信息_借款人类型;
 import org.ylgjj.loan.domain_flow.ApiCacheAnalysisTable;
 import org.ylgjj.loan.domain_flow.MortgagerCache;
 import org.ylgjj.loan.output.H6_2抵押办理时间_抵押物明细数据查询;
@@ -159,7 +159,7 @@ public class H6_2抵押办理时间_抵押物明细数据查询_ServiceImpl {
 
             List<LN008_借款人信息> borrower_info_借款人信息s = ln008_借款人类型Map.getOrDefault(e.getLoancontrcode_不可为空_合同代码(),new ArrayList<>());
 
-            LN008_借款人信息 borrower_info_借款人信息 = borrower_info_借款人信息s.stream().filter(bbb->bbb.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).findFirst().get();
+            LN008_借款人信息 borrower_info_借款人信息 = borrower_info_借款人信息s.stream().filter(bbb->bbb.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText())).findFirst().get();
 
             h6_2抵押办理时间_抵押物明细数据查询.setJkrgjjzh_借款人公积金账号(borrower_info_借款人信息.getAccnum1账号());
             h6_2抵押办理时间_抵押物明细数据查询.setJkrxm_借款人姓名(borrower_info_借款人信息.getAccname_0_个人姓名());

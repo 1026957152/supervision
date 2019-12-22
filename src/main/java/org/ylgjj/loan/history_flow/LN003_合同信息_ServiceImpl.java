@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_LN006_贷款分期还款计划_curseqStatusEnum;
-import org.ylgjj.loan.enumT.LoaneeTypeEnum;
+import org.ylgjj.loan.enumT.E_LN008_借款人信息_借款人类型;
 import org.ylgjj.loan.domain_flow.LoanHistory;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.*;
@@ -131,7 +131,7 @@ public class LN003_合同信息_ServiceImpl {
 
             ln0014_trading_house_贷款房屋信息Map = ln014__贷款房屋信息Repository.findAll().stream().collect(Collectors.toMap(e->e.getLoancontrcode0合同代码(), e->e));
 
-            ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e->e.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText()))
+            ln008_borrower_info_借款人信息Map = lN008_借款人类型Repository.findAll().stream().filter(e->e.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText()))
                     .collect(Collectors.groupingBy(e->e.getLoancontrcode合同代码()));
             initComplte= true;
         }
@@ -203,7 +203,7 @@ public class LN003_合同信息_ServiceImpl {
             loanHistory_.setValue贷款金额(eee.getValue().stream().mapToDouble(j->{
 
                 return  j.getValue3().stream()
-                        .filter(o-> o.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.共同借款人.getText()))
+                        .filter(o-> o.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.共同借款人.getText()))
                         .count();
             }).sum());  //
             loanHistoryRepository.save(loanHistory_);
@@ -278,7 +278,7 @@ public class LN003_合同信息_ServiceImpl {
                     // TODO 按照 收入水平 S_238_SEQ_贷款职工人数__收入水平___AND_0302040001
                     eee.getValue().stream().collect(Collectors.groupingBy(a->{
                         return a.getValue3().stream()
-                                .filter(j->j.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人))
+                                .filter(j->j.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人))
                                 .findFirst().get().getBasenum_0_缴存基数();
                     })).entrySet()
                             .stream().forEach(uuu->{
@@ -296,7 +296,7 @@ public class LN003_合同信息_ServiceImpl {
 
             // TODO 按照 收入水平 S_238_SEQ_贷款职工人数__收入水平___AND_0302040001
             eee.getValue().stream().collect(Collectors.groupingBy(a->{
-                return a.getValue2().getHousetype_0_房屋类型().equals(LoaneeTypeEnum.借款人.getText());
+                return a.getValue2().getHousetype_0_房屋类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText());
 
             })).entrySet()
                     .stream().forEach(uuu->{

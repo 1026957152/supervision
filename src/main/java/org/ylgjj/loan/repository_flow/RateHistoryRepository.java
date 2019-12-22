@@ -18,4 +18,5 @@ public interface RateHistoryRepository extends JpaRepository<RateHistory, Intege
 
     List<RateHistory> findByIndexNoAndDateBetweenOrderByDateDesc(String 编码, LocalDate ldt_ksrq, LocalDate ldt_jsrq);
 
+    List<RateHistory> findByDateBetweenOrderByDateDesc(LocalDate ldt_ksrq, LocalDate ldt_jsrq);
 }

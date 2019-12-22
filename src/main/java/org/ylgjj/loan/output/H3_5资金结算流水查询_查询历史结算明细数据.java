@@ -1,24 +1,32 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H3_5资金结算流水查询_查询历史结算明细数据 {
 
 
-    private String input_zjbzxbm_住建部中心编码;
-    private String input_ksrq_开始日期;
 
-    private	String input_jsrq_结束日期;
-    private	String input_pagesize_分页每页显示条数;
-    private	String input_pagenum_页数;
-
-
-
+    @JsonProperty("id")
+    @JSONField(name="id")
     private String id_序号;
+
+    @JsonProperty("blqd")
+    @JSONField(name="blqd")
     private String blqd_办理渠道;
+
+    @JsonProperty("yhmc")
+    @JSONField(name="yhmc")
     private String yhmc_银行名称;
+
+    @JsonProperty("jysj")
+    @JSONField(name="jysj")
     private String jysj_交易时间;
+
+    @JsonProperty("zhaiyao")
+    @JSONField(name="zhaiyao")
     private String zhaiyao_摘要;
 
 

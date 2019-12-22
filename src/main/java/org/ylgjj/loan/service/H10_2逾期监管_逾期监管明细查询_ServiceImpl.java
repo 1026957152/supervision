@@ -182,7 +182,7 @@ public class H10_2逾期监管_逾期监管明细查询_ServiceImpl {
 
             List<LN008_借款人信息> borrower_info_借款人信息s = ln008_借款人类型Repository.findByloancontrcode合同代码(e.getLoancontrcode合同代码());
 
-            LN008_借款人信息 borrower_info_借款人信息 = borrower_info_借款人信息s.stream().filter(bbb->bbb.getLoaneetype_借款人类型().equals(LoaneeTypeEnum.借款人.getText())).findFirst().get();
+            LN008_借款人信息 borrower_info_借款人信息 = borrower_info_借款人信息s.stream().filter(bbb->bbb.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText())).findFirst().get();
 
             h10_2逾期监管_逾期监管明细查询.setGrztmc_主借款人账户状态_String(borrower_info_借款人信息.getIndiaccstate_1_个人账户状态());
             h10_2逾期监管_逾期监管明细查询.setGrjcjs_主借款人月缴存基数_double(borrower_info_借款人信息.getBasenum_0_缴存基数().doubleValue());

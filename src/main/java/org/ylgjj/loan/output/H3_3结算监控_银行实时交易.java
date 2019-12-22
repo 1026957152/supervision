@@ -1,6 +1,8 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
 
@@ -8,13 +10,24 @@ import java.math.BigDecimal;
 public class H3_3结算监控_银行实时交易 {
 
 
-
+    @JsonProperty("id")
+    @JSONField(name="id")
     private String id_唯一标识;
-    private String fsefx_发生额方向; //01：转入，02：支出
-    private double fse_发生额;
-    private double ye_余额;
-    private String sszh_银行编码;
 
+    @JsonProperty("fsefx")
+    @JSONField(name="fsefx")
+    private String fsefx_发生额方向; //01：转入，02：支出
+    @JsonProperty("fse")
+    @JSONField(name="fse")
+    private Double fse_发生额;
+
+    @JsonProperty("ye")
+    @JSONField(name="ye")
+    private Double ye_余额;
+
+    @JsonProperty("sszh")
+    @JSONField(name="sszh")
+    private String sszh_银行编码;
     private String bm;
 
     private String mc;
@@ -59,11 +72,11 @@ public class H3_3结算监控_银行实时交易 {
         this.fse_发生额 = fse_发生额;
     }
 
-    public double getYe_余额() {
+    public Double getYe_余额() {
         return ye_余额;
     }
 
-    public void setYe_余额(double ye_余额) {
+    public void setYe_余额(Double ye_余额) {
         this.ye_余额 = ye_余额;
     }
 

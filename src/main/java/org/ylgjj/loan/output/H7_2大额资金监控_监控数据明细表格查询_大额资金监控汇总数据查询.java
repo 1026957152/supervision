@@ -1,26 +1,72 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H7_2大额资金监控_监控数据明细表格查询_大额资金监控汇总数据查询 {
 
 
     // fd045	资金划转业务登记文件				存放中心各银行专户间互相划转资金的相关信息。		ac045，主要取消了财务日期、账套。
+    @JsonProperty("jgmc")
+    @JSONField(name="jgmc")
     private String jgmc_机构名称;
+
+    @JsonProperty("sprq")
+    @JSONField(name="sprq")
     private String sprq_审批日期;
+
+    @JsonProperty("zjytbm")
+    @JSONField(name="zjytbm")
     private String zjytbm_业务类型编码;
+
+    @JsonProperty("zjytmc")
+    @JSONField(name="zjytmc")
     private String zjytmc_业务类型;
+
+    @JsonProperty("syje")
+    @JSONField(name="syje")
     private String syje_金额_万元;
+
+    @JsonProperty("skzhhm")
+    @JSONField(name="skzhhm")
     private String skzhhm_收款户名;
+
+    @JsonProperty("skkhyh")
+    @JSONField(name="skkhyh")
     private String skkhyh_收款银行;
+
+    @JsonProperty("zrzh")
+    @JSONField(name="zrzh")
     private String zrzh_收款账号;
+
+    @JsonProperty("fkzhhm")
+    @JSONField(name="fkzhhm")
     private String fkzhhm_付款户名;
+
+    @JsonProperty("fkkhyh")
+    @JSONField(name="fkkhyh")
     private String fkkhyh_付款银行;
+
+    @JsonProperty("yhzh")
+    @JSONField(name="yhzh")
     private String yhzh_付款账号;
+
+    @JsonProperty("squname")
+    @JSONField(name="squname")
     private String squname_发起人;
+
+    @JsonProperty("spczy")
+    @JSONField(name="spczy")
     private String spczy_审批人;
+
+    @JsonProperty("bz")
+    @JSONField(name="bz")
     private String bz_备注;
+
+    @JsonProperty("zjbzxbm")
+    @JSONField(name="zjbzxbm")
     private String zjbzxbm_住建部中心编码;
 
 

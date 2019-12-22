@@ -36,7 +36,7 @@ import static java.lang.Math.abs;
  * Created by silence yuan on 2015/7/25.
  */
 //TODO 患有 两个
-@Service("H3银行实时交易ServiceImpl")
+@Service
 public class H3银行实时交易ServiceImpl  {
 
     @Autowired

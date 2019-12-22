@@ -1,25 +1,39 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H3_4资金结算流水查询_查询最近15条结算明细数据 {
 
 
-    private String input_zjbzxbm_住建部中心编码;
+
+
+    @JsonProperty("id")
+    @JSONField(name="id")
     private String id_序号;
+
+
+    @JsonProperty("id")
+    @JSONField(name="id")
     private String blqd_办理渠道;
+
+
+    @JsonProperty("yhmc")
+    @JSONField(name="yhmc")
     private String yhmc_银行名称;
+
+
+    @JsonProperty("jysj")
+    @JSONField(name="jysj")
     private String jysj_交易时间;
+
+
+    @JsonProperty("zhaiyao")
+    @JSONField(name="zhaiyao")
     private String zhaiyao_摘要;
 
-    public String getInput_zjbzxbm_住建部中心编码() {
-        return input_zjbzxbm_住建部中心编码;
-    }
-
-    public void setInput_zjbzxbm_住建部中心编码(String input_zjbzxbm_住建部中心编码) {
-        this.input_zjbzxbm_住建部中心编码 = input_zjbzxbm_住建部中心编码;
-    }
 
     public String getId_序号() {
         return id_序号;

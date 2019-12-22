@@ -1,221 +1,717 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H1_2监管主要指标查询_公积金中心主要运行情况查询 {
 
 
-
+    @JsonProperty("zjbbm")
+    @JSONField(name="zjbbm")
     private int zjbbm_住建部编码_VARCHAR6;
+
+    @JsonProperty("tjrq")
+    @JSONField(name="tjrq")
     private int tjrq_统计日期_String;
+
+    @JsonProperty("ljjzzdws")
+    @JSONField(name="ljjzzdws")
     private int ljjzzdws_建制总单位数_NUMBER_18_2;
+
+    @JsonProperty("ljhbjzzdws")
+    @JSONField(name="ljhbjzzdws")
     private double ljhbjzzdws_环比建制总单位数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzzdws")
+    @JSONField(name="ljsnjzzdws")
     private double ljsnjzzdws_同比建制总单位数_NUMBER_18_0;
+
+    @JsonProperty("ljjzxhdws")
+    @JSONField(name="ljjzxhdws")
     private int ljjzxhdws_建制销户单位数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzxhdws")
+    @JSONField(name="ljhbjzxhdws")
     private double ljhbjzxhdws_环比建制销户单位数_NUMBER_18_0;
+    @JsonProperty("ljsnjzxhdws")
+    @JSONField(name="ljsnjzxhdws")
     private double ljsnjzxhdws_同比建制销户单位数_NUMBER_18_0;
+    @JsonProperty("ljjzfxhdws")
+    @JSONField(name="ljjzfxhdws")
     private int ljjzfxhdws_建制非销户单位数_NUMBER_18_0;
+    @JsonProperty("ljhbjzfxhdws")
+    @JSONField(name="ljhbjzfxhdws")
     private double ljhbjzfxhdws_环比建制非销户单位数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzfxhdws")
+    @JSONField(name="ljsnjzfxhdws")
     private double ljsnjzfxhdws_同比建制非销户单位数_NUMBER_18_0;
+
+    @JsonProperty("ljjzfcdws")
+    @JSONField(name="ljjzfcdws")
     private int ljjzfcdws_建制封存单位数_NUMBER_18_0;
+    @JsonProperty("ljhbjzfcdws")
+    @JSONField(name="ljhbjzfcdws")
     private double ljhbjzfcdws_环比建制封存单位数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzfcdws")
+    @JSONField(name="ljsnjzfcdws")
     private double ljsnjzfcdws_同比建制封存单位数_NUMBER_18_0;
+
+    @JsonProperty("ljjzzcdws")
+    @JSONField(name="ljjzzcdws")
     private int ljjzzcdws_建制正常单位数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzzcdws")
+    @JSONField(name="ljhbjzzcdws")
     private double ljhbjzzcdws_环比建制正常单位数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzzcdws")
+    @JSONField(name="ljsnjzzcdws")
     private double ljsnjzzcdws_同比建制正常单位数_NUMBER_18_0;
+
+    @JsonProperty("ljjzhjdws")
+    @JSONField(name="ljjzhjdws")
     private int ljjzhjdws_建制缓缴单位数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzhjdws")
+    @JSONField(name="ljhbjzhjdws")
     private double ljhbjzhjdws_环比建制缓缴单位数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzhjdws")
+    @JSONField(name="ljsnjzhjdws")
     private double ljsnjzhjdws_同比建制缓缴单位数_NUMBER_18_0;
 
 
-
+    @JsonProperty("ljjzzrs")
+    @JSONField(name="ljjzzrs")
     private int ljjzzrs_建制总人数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzzrs")
+    @JSONField(name="ljhbjzzrs")
     private double ljhbjzzrs_环比建制总人数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzzrs")
+    @JSONField(name="ljsnjzzrs")
     private double ljsnjzzrs_同比建制总人数_NUMBER_18_0;
 
-
+    @JsonProperty("ljjzxhrs")
+    @JSONField(name="ljjzxhrs")
     private int ljjzxhrs_建制销户人数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzxhrs")
+    @JSONField(name="ljhbjzxhrs")
     private double ljhbjzxhrs_环比建制销户人数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzxhrs")
+    @JSONField(name="ljsnjzxhrs")
     private double ljsnjzxhrs_同比建制销户人数_NUMBER_18_0;
+
+    @JsonProperty("ljjzfxhrs")
+    @JSONField(name="ljjzfxhrs")
     private int ljjzfxhrs_建制非销户人数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzfxhrs")
+    @JSONField(name="ljhbjzfxhrs")
     private double ljhbjzfxhrs_环比建制非销户人数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzfxhrs")
+    @JSONField(name="ljsnjzfxhrs")
     private double ljsnjzfxhrs_同比建制非销户人数_NUMBER_18_0;
+
+    @JsonProperty("ljjzfcrs")
+    @JSONField(name="ljjzfcrs")
     private int ljjzfcrs_建制封存人数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzfcrs")
+    @JSONField(name="ljhbjzfcrs")
     private double ljhbjzfcrs_环比建制封存人数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzfcrs")
+    @JSONField(name="ljsnjzfcrs")
     private double ljsnjzfcrs_同比建制封存人数_NUMBER_18_0;
+
+    @JsonProperty("ljjzzcrs")
+    @JSONField(name="ljjzzcrs")
     private int ljjzzcrs_建制正常人数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzzcrs")
+    @JSONField(name="ljhbjzzcrs")
     private double ljhbjzzcrs_环比建制正常人数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzzcrs")
+    @JSONField(name="ljsnjzzcrs")
     private double ljsnjzzcrs_同比建制正常人数_NUMBER_18_0;
+
+    @JsonProperty("ljjzdjrs")
+    @JSONField(name="ljjzdjrs")
     private int ljjzdjrs_建制冻结人数_NUMBER_18_0;
+
+    @JsonProperty("ljhbjzdjrs")
+    @JSONField(name="ljhbjzdjrs")
     private double ljhbjzdjrs_环比建制冻结人数_NUMBER_18_0;
+
+    @JsonProperty("ljsnjzdjrs")
+    @JSONField(name="ljsnjzdjrs")
     private double ljsnjzdjrs_同比建制冻结人数_NUMBER_18_0;
+
+    @JsonProperty("ljhse")
+    @JSONField(name="ljhse")
     private int ljhse_累计回收额_NUMBER_18_2;
+
+    @JsonProperty("ljhbhse")
+    @JSONField(name="ljhbhse")
     private double ljhbhse_环比累计回收额_NUMBER_18_2;
+
+    @JsonProperty("ljsnhse")
+    @JSONField(name="ljsnhse")
     private double ljsnhse_同比累计回收额_NUMBER_18_2;
+
+    @JsonProperty("ljhsdkje")
+    @JSONField(name="ljhsdkje")
     private int ljhsdkje_历史累计回收额_NUMBER_18_2;
+
+    @JsonProperty("ljhbhsdkje")
+    @JSONField(name="ljhbhsdkje")
     private double ljhbhsdkje_历史累计回收额环比_NUMBER_18_2;
+
+    @JsonProperty("ljsnhsdkje")
+    @JSONField(name="ljsnhsdkje")
     private double ljsnhsdkje_历史累计回收额同比_NUMBER_18_2;
+
+    @JsonProperty("ljyqdked")
+    @JSONField(name="ljyqdked")
     private int ljyqdked_逾期贷款额度_NUMBER_18_2;
+
+    @JsonProperty("ljhbyqdked")
+    @JSONField(name="ljhbyqdked")
     private double ljhbyqdked_环比逾期贷款额度_NUMBER_18_2;
+
+    @JsonProperty("ljsnyqdked")
+    @JSONField(name="ljsnyqdked")
     private double ljsnyqdked_同比逾期贷款额度_NUMBER_18_2;
+
+    @JsonProperty("ljzldkbs")
+    @JSONField(name="ljzldkbs")
     private int ljzldkbs_存量贷款笔数_NUMBER_18_0;
+    @JsonProperty("ljhbzldkbs")
+    @JSONField(name="ljhbzldkbs")
     private double ljhbzldkbs_环比存量贷款笔数_NUMBER_18_0;
+
+    @JsonProperty("ljsnzldkbs")
+    @JSONField(name="ljsnzldkbs")
     private double ljsnzldkbs_同比存量贷款笔数_NUMBER_18_0;
 
-
+    @JsonProperty("ljthreeyqhs")
+    @JSONField(name="ljthreeyqhs")
     private int ljthreeyqhs_三期以上笔数_NUMBER_18_0;
+
+    @JsonProperty("ljhbthreeyqhs")
+    @JSONField(name="ljhbthreeyqhs")
     private double ljhbthreeyqhs_环比三期以上笔数_NUMBER_18_0;
+
+    @JsonProperty("ljsnthreeyqhs")
+    @JSONField(name="ljsnthreeyqhs")
     private double ljsnthreeyqhs_同比三期以上笔数_NUMBER_18_0;
 
 
-
+    @JsonProperty("ljsixyqhs")
+    @JSONField(name="ljsixyqhs")
     private int ljsixyqhs_六期以上笔数_NUMBER_18_0;
+
+    @JsonProperty("ljhbsixyqhs")
+    @JSONField(name="ljhbsixyqhs")
     private double ljhbsixyqhs_环比六期以上笔数_NUMBER_18_0;
+
+    @JsonProperty("ljsnsixyqhs")
+    @JSONField(name="ljsnsixyqhs")
     private double ljsnsixyqhs_同比六期以上笔数_NUMBER_18_0;
 
+    @JsonProperty("hslx")
+    @JSONField(name="hslx")
     private int hslx_回收利息_NUMBER_18_2;
+    @JsonProperty("hbhslx")
+    @JSONField(name="hbhslx")
     private double hbhslx_环比回收利息_NUMBER_18_2;
+    @JsonProperty("snhslx")
+    @JSONField(name="snhslx")
     private double snhslx_同比回收利息_NUMBER_18_2;
 
+
+    @JsonProperty("ljhslx")
+    @JSONField(name="ljhslx")
     private int ljhslx_累计回收利息_NUMBER_18_2;
+    @JsonProperty("ljhbhslx")
+    @JSONField(name="ljhbhslx")
     private double ljhbhslx_累计环比回收利息_NUMBER_18_2;
+    @JsonProperty("ljsnhslx")
+    @JSONField(name="ljsnhslx")
     private double ljsnhslx_累计同比回收利息_NUMBER_18_2;
 
 
+    @JsonProperty("nzjxje")
+    @JSONField(name="nzjxje")
     private int nzjxje_结转利息额_NUMBER_18_2;
+    @JsonProperty("hbnzjxje")
+    @JSONField(name="hbnzjxje")
     private double hbnzjxje_环比结转利息额_NUMBER_18_2;
+    @JsonProperty("snnzjxje")
+    @JSONField(name="snnzjxje")
     private double snnzjxje_同比结转利息额_NUMBER_18_2;
+    @JsonProperty("wbzrje")
+    @JSONField(name="wbzrje")
     private int wbzrje_外部转入金额_NUMBER_18_2;
+
+    @JsonProperty("hbwbzrje")
+    @JSONField(name="hbwbzrje")
     private double hbwbzrje_环比外部转入金额_NUMBER_18_2;
+
+    @JsonProperty("snwbzrje")
+    @JSONField(name="snwbzrje")
     private double snwbzrje_同比外部转入金额_NUMBER_18_2;
+
+    @JsonProperty("ljwbzrje")
+    @JSONField(name="ljwbzrje")
     private double ljwbzrje_外部转入金额_NUMBER_18_2;
+
+    @JsonProperty("ljhbwbzrje")
+    @JSONField(name="ljhbwbzrje")
     private double ljhbwbzrje_环比外部转入金额_NUMBER_18_2;
+
+    @JsonProperty("ljsnwbzrje")
+    @JSONField(name="ljsnwbzrje")
     private double ljsnwbzrje_同比外部转入金额_NUMBER_18_2;
+    @JsonProperty("wbzcje")
+    @JSONField(name="wbzcje")
     private double wbzcje_外部转出金额_NUMBER_18_2;
+    @JsonProperty("hbwbzcje")
+    @JSONField(name="hbwbzcje")
     private double hbwbzcje_环比外部转出金额_NUMBER_18_2;
+    @JsonProperty("snwbzcje")
+    @JSONField(name="snwbzcje")
     private double snwbzcje_同比外部转出金额_NUMBER_18_2;
+    @JsonProperty("ljwbzcje")
+    @JSONField(name="ljwbzcje")
     private double ljwbzcje_累计外部转出金额_NUMBER_18_2;
+    @JsonProperty("ljhbwbzcje")
+    @JSONField(name="ljhbwbzcje")
     private double ljhbwbzcje_累计环比外部转出金额_NUMBER_18_2;
+    @JsonProperty("ljsnwbzcje")
+    @JSONField(name="ljsnwbzcje")
     private double ljsnwbzcje_累计环比外部转出金额_NUMBER_18_2;
+    @JsonProperty("sjdws")
+    @JSONField(name="sjdws")
     private int sjdws_实缴单位数_NUMBER_18_0;
+    @JsonProperty("hbsjdws")
+    @JSONField(name="hbsjdws")
     private double hbsjdws_环比实缴单位数_NUMBER_18_0;
+    @JsonProperty("snsjdws")
+    @JSONField(name="snsjdws")
     private double snsjdws_同比实缴单位数_NUMBER_18_0;
+    @JsonProperty("sjzgs")
+    @JSONField(name="sjzgs")
     private int sjzgs_实缴职工数_NUMBER_18_0;
+    @JsonProperty("hbsjzgs")
+    @JSONField(name="hbsjzgs")
     private double hbsjzgs_环比实缴职工数_NUMBER_18_0;
+
+    @JsonProperty("snsjzgs")
+    @JSONField(name="snsjzgs")
     private double snsjzgs_同比实缴职工数_NUMBER_18_0;
+
+    @JsonProperty("jcye")
+    @JSONField(name="jcye")
     private double jcye_缴存余额_NUMBER_18_2;
+
+    @JsonProperty("hbjcye")
+    @JSONField(name="hbjcye")
     private double hbjcye_环比缴存余额_NUMBER_18_2;
+
+    @JsonProperty("snjcye")
+    @JSONField(name="snjcye")
     private double snjcye_同比缴存余额_NUMBER_18_2;
+
+    @JsonProperty("xkhdws")
+    @JSONField(name="xkhdws")
     private int xkhdws_新开户单位_NUMBER_18_0;
+
+    @JsonProperty("hbxkhdws")
+    @JSONField(name="hbxkhdws")
     private double hbxkhdws_环比新开户单位_NUMBER_18_0;
+
+    @JsonProperty("snxkhdws")
+    @JSONField(name="snxkhdws")
     private double snxkhdws_同比新开户单位_NUMBER_18_0;
+
+    @JsonProperty("ljxkhdws")
+    @JSONField(name="ljxkhdws")
     private int ljxkhdws_累计新开户单位_NUMBER_18_0;
+
+    @JsonProperty("ljhbxkhdws")
+    @JSONField(name="ljhbxkhdws")
     private double ljhbxkhdws_累计环比新开户单位_NUMBER_18_0;
+
+    @JsonProperty("ljsnxkhdws")
+    @JSONField(name="ljsnxkhdws")
     private double ljsnxkhdws_累计同比新开户单位_NUMBER_18_0;
+
+    @JsonProperty("xkhzgs")
+    @JSONField(name="xkhzgs")
     private int xkhzgs_新开户职工_NUMBER_18_0;
+
+    @JsonProperty("hbxkhzgs")
+    @JSONField(name="hbxkhzgs")
     private double hbxkhzgs_环比新开户职工_NUMBER_18_0;
+
+    @JsonProperty("snxkhzgs")
+    @JSONField(name="snxkhzgs")
     private double snxkhzgs_同比新开户职工_NUMBER_18_0;
+
+    @JsonProperty("ljxkhzgs")
+    @JSONField(name="ljxkhzgs")
     private int ljxkhzgs_累计新开户职工_NUMBER_18_0;
+
+    @JsonProperty("ljhbxkhzgs")
+    @JSONField(name="ljhbxkhzgs")
     private double ljhbxkhzgs_累计环比新开户职工_NUMBER_18_0;
+
+    @JsonProperty("ljsnxkhzgs")
+    @JSONField(name="ljsnxkhzgs")
     private double ljsnxkhzgs_累计同比新开户职工_NUMBER_18_0;
+
+    @JsonProperty("ljjce")
+    @JSONField(name="ljjce")
     private double ljjce_累计缴存额_NUMBER_18_2;
+
+    @JsonProperty("ljhbjce")
+    @JSONField(name="ljhbjce")
     private double ljhbjce_环比累计缴存额_NUMBER_18_2;
+
+    @JsonProperty("ljsnjce")
+    @JSONField(name="ljsnjce")
     private double ljsnjce_同比累计缴存额_NUMBER_18_2;
+
+
+
+    @JsonProperty("sjce")
+    @JSONField(name="sjce")
     private double sjce_实缴存额_NUMBER_18_2;
+
+    @JsonProperty("hbsjce")
+    @JSONField(name="hbsjce")
     private double hbsjce_环比实缴存额_NUMBER_18_2;
+
+    @JsonProperty("snsjce")
+    @JSONField(name="snsjce")
     private double snsjce_同比实缴存额_NUMBER_18_2;
+
+    @JsonProperty("ljsjce")
+    @JSONField(name="ljsjce")
     private double ljsjce_累计实缴存额_NUMBER_18_2;
+
+    @JsonProperty("ljhbsjce")
+    @JSONField(name="ljhbsjce")
     private double ljhbsjce_累计环比实缴存额_NUMBER_18_2;
+
+    @JsonProperty("ljsnsjce")
+    @JSONField(name="ljsnsjce")
     private double ljsnsjce_累计同比实缴存额_NUMBER_18_2;
+
+    @JsonProperty("ljtqe_")
+    @JSONField(name="ljtqe_")
     private double ljtqe_历史累计提取额_提取原因_NUMBER_18_2;
+
+    @JsonProperty("ljhbtqe")
+    @JSONField(name="ljhbtqe")
     private double ljhbtqe_环比历史累计提取额_提取原因_NUMBER_18_2;
+    @JsonProperty("ljsntqe")
+    @JSONField(name="ljsntqe")
+
     private double ljsntqe_同比历史累计提取额_提取原因_NUMBER_18_2;
+
+    @JsonProperty("tqje_")
+    @JSONField(name="tqje_")
     private double tqje_提取金额_NUMBER_18_2;
+
+    @JsonProperty("hbtqje")
+    @JSONField(name="hbtqje")
     private double hbtqje_环比提取金额_NUMBER_18_2;
+
+    @JsonProperty("sntqje")
+    @JSONField(name="sntqje")
     private double sntqje_同比提取金额_NUMBER_18_2;
+
+    @JsonProperty("ljtqje")
+    @JSONField(name="ljtqje")
     private double ljtqje_累计提取金额_NUMBER_18_2;
+
+    @JsonProperty("ljhbtqje")
+    @JSONField(name="ljhbtqje")
     private double ljhbtqje_累计环比提取金额_NUMBER_18_2;
+
+    @JsonProperty("ljsntqje")
+    @JSONField(name="ljsntqje")
     private double ljsntqje_累计同比提取金额_NUMBER_18_2;
+
+
+    @JsonProperty("ffje")
+    @JSONField(name="ffje")
     private double ffje_发放金额_NUMBER_18_2;
+
+    @JsonProperty("hbffje")
+    @JSONField(name="hbffje")
     private double hbffje_环比发放金额_NUMBER_18_2;
+
+    @JsonProperty("snffje")
+    @JSONField(name="snffje")
     private double snffje_同比发放金额_NUMBER_18_2;
+
+    @JsonProperty("ljffje")
+    @JSONField(name="ljffje")
     private double ljffje_累计发放金额_NUMBER_18_2;
+
+    @JsonProperty("ljhbffje")
+    @JSONField(name="ljhbffje")
     private double ljhbffje_累计环比发放金额_NUMBER_18_2;
+
+    @JsonProperty("ljsnffje")
+    @JSONField(name="ljsnffje")
     private double ljsnffje_累计同比发放金额_NUMBER_18_2;
 
-
+    @JsonProperty("hsje")
+    @JSONField(name="hsje")
 
     private double hsje_回收金额_NUMBER_18_2;
-    private double hbhsje_环比回收金额_NUMBER_18_2;
-    private double snhsje_同比回收金额_NUMBER_18_2;
 
+    @JsonProperty("hbhsje")
+    @JSONField(name="hbhsje")
+    private double hbhsje_环比回收金额_NUMBER_18_2;
+    @JsonProperty("snhsje")
+    @JSONField(name="snhsje")
+
+    private double snhsje_同比回收金额_NUMBER_18_2;
+    @JsonProperty("ljhsje")
+    @JSONField(name="ljhsje")
     private double ljhsje_累计回收金额_NUMBER_18_2;
+    @JsonProperty("ljhbhsje")
+    @JSONField(name="ljhbhsje")
+
     private double ljhbhsje_累计环比回收金额_NUMBER_18_2;
+
+    @JsonProperty("ljsnhsje")
+    @JSONField(name="ljsnhsje")
     private double ljsnhsje_累计同比回收金额_NUMBER_18_2;
 
 
-
+    @JsonProperty("ljffdkje")
+    @JSONField(name="ljffdkje")
     private double ljffdkje_累计发放贷款金额_NUMBER_18_2;
+
+    @JsonProperty("ljhbffdkje")
+    @JSONField(name="ljhbffdkje")
     private double ljhbffdkje_累计环比发放贷款金额_NUMBER_18_2;
+
+    @JsonProperty("ljsnffdkje")
+    @JSONField(name="ljsnffdkje")
     private double ljsnffdkje_累计同比发放贷款金额_NUMBER_18_2;
-
+    @JsonProperty("yqdkje")
+    @JSONField(name="yqdkje")
     private double yqdkje_逾期贷款金额_NUMBER_18_2;
-    private double dkye_贷款余额_NUMBER_18_2;
-    private double hbdkye_环比贷款余额_NUMBER_18_2;
-    private double sndkye_同比贷款余额_NUMBER_18_2;
-    private double ffbs_发放笔数_NUMBER_18_0;
-    private double hbffbs_环比发放笔数_NUMBER_18_0;
-    private double snffbs_同比发放笔数_NUMBER_18_0;
-    private double ljffbs_累计发放笔数_NUMBER_18_0;
-    private double ljhbffbs_累计环比发放笔数_NUMBER_18_0;
-    private double ljsnffbs_累计同比发放笔数_NUMBER_18_0;
-    private double zzsyje_增长收益金额_NUMBER_18_2;
-    private double xmdkye_项目贷款余额_NUMBER_18_2;
-    private double gzye_国债金额_NUMBER_18_2;
 
+    @JsonProperty("dkye")
+    @JSONField(name="dkye")
+    private double dkye_贷款余额_NUMBER_18_2;
+
+    @JsonProperty("hbdkye")
+    @JSONField(name="hbdkye")
+    private double hbdkye_环比贷款余额_NUMBER_18_2;
+
+    @JsonProperty("sndkye")
+    @JSONField(name="sndkye")
+    private double sndkye_同比贷款余额_NUMBER_18_2;
+
+
+
+    @JsonProperty("ffbs")
+    @JSONField(name="ffbs")
+    private double ffbs_发放笔数_NUMBER_18_0;
+
+    @JsonProperty("hbffbs")
+    @JSONField(name="hbffbs")
+    private double hbffbs_环比发放笔数_NUMBER_18_0;
+
+    @JsonProperty("snffbs")
+    @JSONField(name="snffbs")
+    private double snffbs_同比发放笔数_NUMBER_18_0;
+
+    @JsonProperty("ljffbs")
+    @JSONField(name="ljffbs")
+    private double ljffbs_累计发放笔数_NUMBER_18_0;
+
+    @JsonProperty("ljhbffbs")
+    @JSONField(name="ljhbffbs")
+    private double ljhbffbs_累计环比发放笔数_NUMBER_18_0;
+
+    @JsonProperty("ljsnffbs")
+    @JSONField(name="ljsnffbs")
+    private double ljsnffbs_累计同比发放笔数_NUMBER_18_0;
+
+    @JsonProperty("zzsyje")
+    @JSONField(name="zzsyje")
+    private double zzsyje_增长收益金额_NUMBER_18_2;
+
+    @JsonProperty("xmdkye")
+    @JSONField(name="xmdkye")
+    private double xmdkye_项目贷款余额_NUMBER_18_2;
+
+    @JsonProperty("gzye")
+    @JSONField(name="gzye")
+    private double gzye_国债金额_NUMBER_18_2;
+    @JsonProperty("hqzhye")
+    @JSONField(name="hqzhye")
     private double hqzhye_活期账户余额_NUMBER_18_2;
 
-
+    @JsonProperty("ywsrje")
+    @JSONField(name="ywsrje")
     private double ywsrje_业务收入金额_NUMBER_18_2;
+
+    @JsonProperty("ywzcje")
+    @JSONField(name="ywzcje")
     private double ywzcje_业务收出金额_NUMBER_18_2;
+
+    @JsonProperty("sjlzzf")
+    @JSONField(name="sjlzzf")
     private double sjlzzf_上缴的保障房建设资金_NUMBER_18_2;
+
+    @JsonProperty("fplzzf")
+    @JSONField(name="fplzzf")
     private double fplzzf_计提的保障房建设资金_NUMBER_18_2;
+
+    @JsonProperty("gthdbs")
+    @JSONField(name="gthdbs")
     private int gthdbs_柜台核定笔数_NUMBER_18_0;
+
+    @JsonProperty("wthdbs")
+    @JSONField(name="wthdbs")
     private int wthdbs_网上核定笔数_NUMBER_18_0;
+
+    @JsonProperty("gtxxbgbs")
+    @JSONField(name="gtxxbgbs")
     private int gtxxbgbs_柜台信息变更笔数_NUMBER_18_0;
+
+    @JsonProperty("wtxxbgbs")
+    @JSONField(name="wtxxbgbs")
     private int wtxxbgbs_网上信息变更笔数_NUMBER_18_0;
+
+    @JsonProperty("gtztbgbs")
+    @JSONField(name="gtztbgbs")
     private int gtztbgbs_柜台状态变更笔数_NUMBER_18_0;
+
+    @JsonProperty("wtztbgbs")
+    @JSONField(name="wtztbgbs")
     private int wtztbgbs_网上状态变更笔数_NUMBER_18_0;
+
+    @JsonProperty("gtjcjsbs")
+    @JSONField(name="gtjcjsbs")
     private int gtjcjsbs_柜台缴存基数变更笔数_NUMBER_18_0;
+
+    @JsonProperty("wtjcjsbs")
+    @JSONField(name="wtjcjsbs")
     private int wtjcjsbs_网上缴存基数变更笔数_NUMBER_18_0;
+
+    @JsonProperty("gttqbs")
+    @JSONField(name="gttqbs")
     private int gttqbs_柜台提取笔数_NUMBER_18_0;
+
+    @JsonProperty("wttqbs")
+    @JSONField(name="wttqbs")
     private int wttqbs_网上提取笔数_NUMBER_18_0;
+
+    @JsonProperty("gtdkbs")
+    @JSONField(name="gtdkbs")
     private int gtdkbs_柜台贷款笔数_NUMBER_18_0;
+
+    @JsonProperty("wtdkbs")
+    @JSONField(name="wtdkbs")
     private int wtdkbs_网上贷款笔数_NUMBER_18_0;
+
+    @JsonProperty("gttqhkbs")
+    @JSONField(name="gttqhkbs")
     private int gttqhkbs_柜台提前还款笔数_NUMBER_18_0;
+
+    @JsonProperty("wttqhkbs")
+    @JSONField(name="wttqhkbs")
     private int wttqhkbs_网上提取还款笔数_NUMBER_18_0;
+
+    @JsonProperty("gtchdjybs")
+    @JSONField(name="gtchdjybs")
     private int gtchdjybs_柜台冲还贷笔数_NUMBER_18_0;
+
+    @JsonProperty("wtchdjybs")
+    @JSONField(name="wtchdjybs")
     private int wtchdjybs_网厅冲还贷总笔数_NUMBER_18_0;
+
+    @JsonProperty("gjzbs")
+    @JSONField(name="gjzbs")
     private int gjzbs_归集总笔数_NUMBER_18_0;
+
+    @JsonProperty("wtgjzbs")
+    @JSONField(name="wtgjzbs")
     private int wtgjzbs_网厅归集总笔数_NUMBER_18_0;
+
+    @JsonProperty("tqzbs")
+    @JSONField(name="tqzbs")
     private int tqzbs_提取总笔数_NUMBER_18_0;
+
+    @JsonProperty("wttqzbs")
+    @JSONField(name="wttqzbs")
     private int wttqzbs_网厅提取总笔数_NUMBER_18_0;
+
+    @JsonProperty("dkzbs")
+    @JSONField(name="dkzbs")
+
     private int dkzbs_贷款总笔数_NUMBER_18_0;
+
+    @JsonProperty("wtdkzbs")
+    @JSONField(name="wtdkzbs")
     private int wtdkzbs_网厅贷款总笔数_NUMBER_18_0;
+
+    @JsonProperty("tqlgl")
+    @JSONField(name="tqlgl")
     private double tqlgl_提取离柜率_NUMBER_18_2;
+
+    @JsonProperty("gjlgl")
+    @JSONField(name="gjlgl")
     private double gjlgl_归集离柜率_NUMBER_18_2;
+
+
+
+    @JsonProperty("dklgl")
+    @JSONField(name="dklgl")
     private double dklgl_贷款离柜率_NUMBER_18_2;
+
+    @JsonProperty("zxlgl")
+    @JSONField(name="zxlgl")
     private double zxlgl_中心离柜率_NUMBER_18_2;
+
+    @JsonProperty("tqcsbs")
+    @JSONField(name="tqcsbs")
     private int tqcsbs_提取超时笔数_NUMBER_18_0;
 
 
-
+    @JsonProperty("dkcsbs")
+    @JSONField(name="dkcsbs")
     private int dkcsbs_贷款超时笔数_NUMBER_18_0;
 
 
-
+    @JsonProperty("dkzcspsj")
+    @JSONField(name="dkzcspsj")
     private int dkzcspsj_贷款最长审批时间_NUMBER_18_2;
+
+    @JsonProperty("dkpjspts")
+    @JSONField(name="dkpjspts")
     private int dkpjspts_贷款平均审批天数_NUMBER_18_2;
 
 

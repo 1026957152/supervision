@@ -10,7 +10,7 @@ public class Output {
 /*    private String ret;
     private String msg;*/
     private boolean success;
-
+    Object data_;
     public List<Object> getData() {
         return result;
     }
@@ -19,7 +19,13 @@ public class Output {
         this.result = data;
     }
 
+    public Object getData_() {
+        return data_;
+    }
 
+    public void setData_(Object data_) {
+        this.data_ = data_;
+    }
 
     public static Output 情况1_返回成功(List<Object> data) {
         Output returnResult = new Output();

@@ -203,7 +203,7 @@ public class SY_131_dkye_贷款余额_RateServiceImpl extends RateServiceBaseImp
                 .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
         List<RateHistory> rateHistories_同比 = rateHistoryRepository
                 .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
+        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
         Double rateHistory_同比 = rateHistories_同比.stream().mapToDouble(e->e.getDoubleValue()).sum();;
         Double rateHistory = rateHistories.stream().mapToDouble(e->e.getDoubleValue()).sum();
 
@@ -213,15 +213,57 @@ public class SY_131_dkye_贷款余额_RateServiceImpl extends RateServiceBaseImp
         private double sndkye_同比贷款余额_NUMBER_18_2;*/
         h1.setDkye_贷款余额_NUMBER_18_2(rateHistory);
 
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/rateHistory_环比.intValue());
+        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
 
         h1.setHbdkye_环比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/rateHistory_同比.intValue());
+        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
 
         h1.setSndkye_同比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
     }
 
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
+
+        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDoubleValue()).sum();
+
+        Double rateHistory_同比 = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDoubleValue()).sum();;
+        Double rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDoubleValue()).sum();
+
+        System.out.println(rateHistory_环比+":::"+rateHistory_同比+":::"+rateHistory);
+/*        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();
+        Long rateHistory_同比 = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();;
+        Long rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getLongValue()).sum();*/
+
+
+        h1.setDkye_贷款余额_NUMBER_18_2(rateHistory);
+
+        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
+
+        h1.setHbdkye_环比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
+
+        h1.setSndkye_同比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+    }
 
 }

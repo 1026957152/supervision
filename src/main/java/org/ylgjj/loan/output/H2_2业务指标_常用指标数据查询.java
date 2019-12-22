@@ -1,12 +1,22 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H2_2业务指标_常用指标数据查询 {
 
+    @JsonProperty("zjbzxbm")
+    @JSONField(name="zjbzxbm")
     private String zjbzxbm_住建部中心编码_String_输出;
+
+    @JsonProperty("xmbm")
+    @JSONField(name="xmbm")
     private String xmbm_指标编码_String_输出;
+
+    @JsonProperty("xmmc")
+    @JSONField(name="xmmc")
     private String xmmc_指标名称_String_输出;
 
     public String getZjbzxbm_住建部中心编码_String_输出() {

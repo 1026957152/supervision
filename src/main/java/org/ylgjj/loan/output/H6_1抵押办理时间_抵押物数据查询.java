@@ -1,16 +1,30 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H6_1抵押办理时间_抵押物数据查询 {
 
+    @JsonProperty("day1")
+    @JSONField(name="day1")
     private String day1_7天以内_varchar__20___输出;
+
+    @JsonProperty("day2")
+    @JSONField(name="day2")
     private String day2_7__15天_varchar__20___输出;
+
+    @JsonProperty("day3")
+    @JSONField(name="day3")
     private String day3_15__30天_varchar__20___输出;
+
+    @JsonProperty("day4")
+    @JSONField(name="day4")
     private String day4_30天以上_varchar__20___输出;
+
+    @JsonProperty("zjbzxbm")
+    @JSONField(name="zjbzxbm")
     private String zjbzxbm_住建部中心编码_varchar__60___输出;
 
 

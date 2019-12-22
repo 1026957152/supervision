@@ -1,20 +1,39 @@
 package org.ylgjj.loan.output;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H7_1大额资金监控_监控数据明细查询 {
 
 
-
+    @JsonProperty("zjytbm")
+    @JSONField(name="zjytbm")
     private String zjytbm_业务类型编码;
+
+    @JsonProperty("zjytmc")
+    @JSONField(name="zjytmc")
     private String zjytmc_业务类型;
+
+    @JsonProperty("je1")
+    @JSONField(name="je1")
     private String je1_金额_500_1000;
 
-
+    @JsonProperty("je2")
+    @JSONField(name="je2")
     private String je2_金额_1000_1500;
+
+    @JsonProperty("je3")
+    @JSONField(name="je3")
     private String je3_金额_1500_2000;
+
+    @JsonProperty("je4")
+    @JSONField(name="je4")
     private String je4_金额_2000以上;
+
+    @JsonProperty("zjbzxbm")
+    @JSONField(name="zjbzxbm")
     private String zjbzxbm_住建部中心编码;
 
     public String getZjytbm_业务类型编码() {
