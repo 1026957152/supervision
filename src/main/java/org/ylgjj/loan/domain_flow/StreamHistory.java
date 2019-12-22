@@ -27,7 +27,7 @@ public class StreamHistory extends BaseDomain{
 
     private LocalDate endDate;
 
-    private String indexNo;
+    private String targetNo;
     private Integer intValue;
     private double doubleValue;
 
@@ -49,7 +49,7 @@ public class StreamHistory extends BaseDomain{
 
     public StreamHistory(LocalDate beginDate, LocalDate endDate, StatisticalIndexCodeEnum s1Seq暂存款笔数And0301000101) {
         this.date = beginDate;
-        indexNo = s1Seq暂存款笔数And0301000101.get指标编码();
+        targetNo = s1Seq暂存款笔数And0301000101.get指标编码();
         this.endDate = endDate;
     }
 
@@ -72,12 +72,12 @@ public class StreamHistory extends BaseDomain{
         this.date = date;
     }
 
-    public String getIndexNo() {
-        return indexNo;
+    public String getTargetNo() {
+        return targetNo;
     }
 
-    public void setIndexNo(String indexNo) {
-        this.indexNo = indexNo;
+    public void setTargetNo(String indexNo) {
+        this.targetNo = indexNo;
     }
 
     public Integer getIntValue() {

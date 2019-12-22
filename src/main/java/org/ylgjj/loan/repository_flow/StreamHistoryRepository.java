@@ -5,6 +5,7 @@ package org.ylgjj.loan.repository_flow;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.ylgjj.loan.domain_flow.StreamHistory;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -14,4 +15,7 @@ public interface StreamHistoryRepository extends JpaRepository<StreamHistory, In
 
 
     List<StreamHistory> findByIndexNo(String 指标编码);
+
+    List<StreamHistory> findByTargetNoAndDateBetweenOrderByDateDesc(String 指标编码, LocalDate localDate_begin, LocalDate localDate_end);
+
 }

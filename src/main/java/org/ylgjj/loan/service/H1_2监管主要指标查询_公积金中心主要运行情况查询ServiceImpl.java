@@ -27,7 +27,7 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
 
         Output output = new Output();
 
-        output.setData(IntStream.of(1,2,4).mapToObj(e->{
+        output.setData(IntStream.of(0,1,2,4).mapToObj(e->{
             H1_1监管主要指标查询_公积金年度查询 h1_1监管主要指标查询_公积金年度查询 = new H1_1监管主要指标查询_公积金年度查询();
             h1_1监管主要指标查询_公积金年度查询.setBbmc_年度名称(localDate.minusYears(e).getYear()+"");
             h1_1监管主要指标查询_公积金年度查询.setBbxm_年度编码(localDate.minusYears(e).getYear()+"");

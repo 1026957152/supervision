@@ -1,30 +1,34 @@
 package org.ylgjj.loan.service;
 
 
+import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.ylgjj.loan.domain.Output;
-import org.ylgjj.loan.domain.ReturnResult;
-import org.ylgjj.loan.domain_flow.Target_业务指标记录;
-import org.ylgjj.loan.output.H2_2业务指标_常用指标数据查询;
+import org.ylgjj.loan.domain_flow.StreamHistory;
+import org.ylgjj.loan.history_stream.HistoryServiceImpl;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.outputenum.统计周期编码;
 import org.ylgjj.loan.pojo.*;
-import org.ylgjj.loan.repository_flow.Target_业务指标记录Repository;
+import org.ylgjj.loan.repository_flow.StreamHistoryRepository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by silence yuan on 2015/7/25.
  */
 
 @Service
-public class H2_6_业务指标_网格查询_ServiceImpl {
+public class H2_6_业务指标_网格查询_ServiceImpl extends HistoryServiceImpl {
 
     @Autowired
-    private Target_业务指标记录Repository Target_业务指标记录Repository;
+    private StreamHistoryRepository StreamHistoryRepository;
 
     @Autowired
     B归集ServiceImpl b归集Service;
@@ -44,8 +48,42 @@ public class H2_6_业务指标_网格查询_ServiceImpl {
         query.setJsrq("2019-11-28");
         query.setKsrq("2019-10-01");
         System.out.println("----------------- "+ query.toString());
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df);
+        LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df);
 
 
+        StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.fromString指标编码(query.getTarget());
+
+
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(ldt_ksrq,ldt_jsrq,统计周期编码.fromString(statisticalIndexCodeEnum.get统计周期()));
+     
+        LocalDate localDate_begin = triplets.stream().sorted(Comparator.comparingLong(e->-e.getValue2().toEpochDay())).map(e->e.getValue2()).findFirst().get();
+        LocalDate localDate_end = triplets.stream().sorted(Comparator.comparingLong(e->e.getValue1().toEpochDay())).map(e->e.getValue2()).findFirst().get();
+        
+        List<StreamHistory> targetHistories = StreamHistoryRepository.findByTargetNoAndDateBetweenOrderByDateDesc(statisticalIndexCodeEnum.get指标编码(),localDate_begin,localDate_end);
+
+        targetHistories
+                .stream()
+                .filter(e->{
+
+                    if(query.getDimension1()!= null){
+                        Stream< String > stream = Arrays.stream( query.getDimension1().split( "," ) );
+                        return stream.anyMatch(x -> x.equals(e.getDimension1()));
+                    }
+                    if(query.getDimension1()!= null && query.getDimension2()!= null){
+                        Stream< String > stream_1 = Arrays.stream( query.getDimension1().split( "," ) );
+                        Stream< String > stream_2 = Arrays.stream( query.getDimension2().split( "," ) );
+
+                        Boolean bool_1 = stream_1.anyMatch(x -> x.equals(e.getDimension1()));
+                        Boolean bool_2 = stream_2.anyMatch(x -> x.equals(e.getDimension2()));
+                    }
+
+                    return true;
+                }).collect(Collectors.toList());
+
+
+        
         if(StatisticalIndexCodeEnum.S_6_SEQ_新增单位数_AND_0301000501.get指标编码().equals(query.getTarget())){
             return b归集Service.S_6_SEQ_新增单位数_AND_0301000501("","",null,
                     null,StatisticalIndexCodeEnum.fromString指标编码(query.getTarget()),query.getKsrq(),query.getJsrq());
