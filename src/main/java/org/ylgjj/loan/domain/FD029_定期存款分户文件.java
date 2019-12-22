@@ -4,6 +4,7 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * Created by yuan zhao  on 08/10/2015.
@@ -30,7 +31,7 @@ public class FD029_定期存款分户文件 {
     private String depocode_不可为空_存单编码;
 
     @Column(name = "transdate")
-    private java.sql.Date transdate_不可为空_交易日期;
+    private LocalDate transdate不可为空交易日期;
 
     @Column(name = "hostsernum")
     private long hostsernum_不可为空_主机流水号;
@@ -202,12 +203,12 @@ public class FD029_定期存款分户文件 {
         this.depocode_不可为空_存单编码 = depocode_不可为空_存单编码;
     }
 
-    public Date getTransdate_不可为空_交易日期() {
-        return transdate_不可为空_交易日期;
+    public LocalDate getTransdate不可为空交易日期() {
+        return transdate不可为空交易日期;
     }
 
-    public void setTransdate_不可为空_交易日期(Date transdate_不可为空_交易日期) {
-        this.transdate_不可为空_交易日期 = transdate_不可为空_交易日期;
+    public void setTransdate不可为空交易日期(LocalDate transdate_不可为空_交易日期) {
+        this.transdate不可为空交易日期 = transdate_不可为空_交易日期;
     }
 
     public long getHostsernum_不可为空_主机流水号() {

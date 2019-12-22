@@ -29,4 +29,7 @@ public interface FN090_账户变动通知文件_Repository extends JpaRepository
     Page<FN090_账户变动通知文件> findByBankaccnum不可为空账号OrderByTransdate不可为空写入日期DescBankhostsernum不可为空银行主机流水号Desc(String bankaccnum_不可为空_银行账号, Pageable of);
 
     List<FN090_账户变动通知文件> findByTransdate不可为空写入日期Between(LocalDate ldt_ksrq, LocalDate ldt_jsrq);
+
+    Page<FN090_账户变动通知文件> findByTransdate不可为空写入日期AndBankaccnum不可为空账号OrderByTransdate不可为空写入日期DescBankhostsernum不可为空银行主机流水号Desc(LocalDate plusDays, String bankaccnum_不可为空_银行账号, Pageable of);
+
 }

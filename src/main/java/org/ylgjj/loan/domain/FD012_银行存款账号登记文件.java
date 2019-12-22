@@ -45,7 +45,7 @@ public class FD012_银行存款账号登记文件 {
 
 
     @Column(name = "transdate")
-    private LocalDate TRANSDATE_不可为空_交易日期;
+    private LocalDate TRANSDATE不可为空交易日期;
 
 
 
@@ -130,12 +130,12 @@ public class FD012_银行存款账号登记文件 {
         this.BANKACCNUM_不可为空_银行账号 = BANKACCNUM_不可为空_银行账号;
     }
 
-    public LocalDate getTRANSDATE_不可为空_交易日期() {
-        return TRANSDATE_不可为空_交易日期;
+    public LocalDate getTRANSDATE不可为空交易日期() {
+        return TRANSDATE不可为空交易日期;
     }
 
-    public void setTRANSDATE_不可为空_交易日期(LocalDate TRANSDATE_不可为空_交易日期) {
-        this.TRANSDATE_不可为空_交易日期 = TRANSDATE_不可为空_交易日期;
+    public void setTRANSDATE不可为空交易日期(LocalDate TRANSDATE_不可为空_交易日期) {
+        this.TRANSDATE不可为空交易日期 = TRANSDATE_不可为空_交易日期;
     }
 
     public String getFUNDKIND_不可为空_资金性质() {

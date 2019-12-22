@@ -75,9 +75,15 @@ public class PrimaryConfig {
         spring.jpa.database=db2*/
 
         //org.hibernate.dialect.DB2390Dialect or . This is a FAQ. –
-        properties.put("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.DB2400Dialect");
+    //    properties.put("spring.jpa.properties.hibernate.dialect", "org.hibernate.dialect.DB2400Dialect");
         properties.put("spring.jpa.database", "db2");
         properties.put("spring.jpa.show-sql", "true");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.DB2400Dialect");
+        properties.put("hibernate.show_sql", "true");
+/*        #
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.DB2400Dialect*/
 /*  jpa: #统一JPA配置
     database: MYSQL
     show-sql: true
