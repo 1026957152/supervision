@@ -14,7 +14,7 @@ import java.util.List;
 public interface StreamHistoryRepository extends JpaRepository<StreamHistory, Integer> {
 
 
-    List<StreamHistory> findByIndexNo(String 指标编码);
+    List<StreamHistory> findByTargetNo(String 指标编码);
 
     List<StreamHistory> findByTargetNoAndDateBetweenOrderByDateDesc(String 指标编码, LocalDate localDate_begin, LocalDate localDate_end);
 

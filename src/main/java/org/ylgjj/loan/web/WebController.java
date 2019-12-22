@@ -289,7 +289,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
        // StatisticalIndexCodeEnum.S_118_SEQ_回收额__冲还贷___AND_0302000213.get指标编码()
 
-        List<StreamHistory> loanHistories  = streamHistoryRepository.findByIndexNo(StatisticalIndexCodeEnum.fromString指标编码(query.getTarget()).get指标编码());
+        List<StreamHistory> loanHistories  = streamHistoryRepository.findByTargetNo(StatisticalIndexCodeEnum.fromString指标编码(query.getTarget()).get指标编码());
 
 
         Output output = new Output();
