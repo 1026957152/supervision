@@ -38,7 +38,7 @@ public class H1_3监管主要指标查询_指标明细查询ServiceImpl {
     private PB010_bank_info_大行信息表Repository pb010_bank_info_大行信息表Repository;
 
     @Autowired
-    private PB017_public_flowing公共流水登记簿Repository pb017_public_flowing公共流水登记簿Repository;
+    private PB017_公共流水登记簿_Repository pb017_公共流水登记簿Repository;
 
 
     @Autowired

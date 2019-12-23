@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_flow.Config;
-import org.ylgjj.loan.enumT.E_LN005_贷款分户信息_贷款分户类型;
-import org.ylgjj.loan.enumT.E_LN008_借款人信息_借款人类型;
+import org.ylgjj.loan.enumT.*;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.outputenum.统计周期编码;
 import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.CollectHistoryRepository;
 import org.ylgjj.loan.repository_flow.ConfigRepository;
+import org.ylgjj.loan.repository_flow.StreamHistoryRepository;
 import org.ylgjj.loan.repository_flow.TargetHistoryRepository;
 
 import javax.persistence.EntityManager;
@@ -52,6 +52,9 @@ public class HistoryServiceImpl {
 
 
     @Autowired
+    protected StreamHistoryRepository streamHistoryRepository;
+
+    @Autowired
     protected DP008_单位明细账_Repository dp008__单位明细账_repository;
 
     @Autowired
@@ -65,6 +68,12 @@ public class HistoryServiceImpl {
     protected DP204_个人缴存变更登记簿_Repository dp204_个人缴存变更登记簿_repository;
     @Autowired
     protected LN006_贷款分期还款计划Repository ln006_贷款分期还款计划Repository;
+
+    @Autowired
+    protected DP093_冻结解冻登记簿_Repository dp093_冻结解冻登记簿_repository;
+    @Autowired
+    protected DP034_公积金开销户登记簿_Repository dp034_公积金开销户登记簿_repository;
+
 
 
 
@@ -428,7 +437,7 @@ public class HistoryServiceImpl {
 
 
     @Autowired
-    protected DW025_公积金提取审核登记表_Repository dW025__公积金提取审核登记表_Repository;
+    protected DW025_公积金提取审核登记表_Repository dw025_公积金提取审核登记表_repository;
 
     @Autowired
     protected DP007_个人分户账_Repository dp007_个人分户账_repository;
@@ -465,7 +474,7 @@ public class HistoryServiceImpl {
     protected DP008_单位明细账_Repository dp008_单位明细账_repository;
 
     @Autowired
-    protected PB017_public_flowing公共流水登记簿Repository public_flowing公共流水登记簿Repository;
+    protected PB017_公共流水登记簿_Repository public_flowing公共流水登记簿Repository;
 
 
     @Autowired
@@ -502,6 +511,35 @@ public class HistoryServiceImpl {
         }
         return parts;
     }
+
+
+
+
+
+
+    Map<String, DP005_单位分户账> dp005_单位分户账Map = null;
+    public Map<String, DP005_单位分户账> dp005_单位分户账MapAll() {
+
+
+        if(dp005_单位分户账Map == null){
+
+            dp005_单位分户账Map =  dp005__单位分户账_repository.findAll()
+                    .stream()
+                    .filter(e->e.getUnitacctype_单位账户类型().equals(E_DP005_单位分户账_单位账户类型.普通.getText()))
+                    .collect(Collectors.toMap(e -> e.getUnitaccnum单位账号(),e->e));
+        }
+        return dp005_单位分户账Map;
+    }
+
+    Map<String, CM001_单位基本资料表> cm001_单位基本资料表Map = null;
+    public Map<String, CM001_单位基本资料表> cm001_单位基本资料表MapAll() {
+        if(cm001_单位基本资料表Map == null){
+
+            cm001_单位基本资料表Map =  cm001单位基本资料表Repository.findAll().stream().collect(Collectors.toMap(e -> e.getUnitcustid单位客户号(),e->e));
+        }
+        return cm001_单位基本资料表Map;
+    }
+
     public Map<String, DP005_单位分户账> dp005_单位分户账Map(List<String> dp) {
 
 
@@ -518,6 +556,23 @@ public class HistoryServiceImpl {
 
 
     }
+
+
+    Map<String, DP007_个人分户账> dp007_个人分户账Map = null;
+    public Map<String, DP007_个人分户账> dp007_个人分户账MapAll() {
+
+
+        if(dp007_个人分户账Map == null){
+
+            dp007_个人分户账Map =  dp007_个人分户账_repository.findAll()
+                    .stream()
+                    .filter(e->e.getIndiacctype_个人账户类型().equals(E_dp007_个人分户账_类型.E_1_正常.getText()))
+                    .collect(Collectors.toMap(e -> e.getAccnum_个人账号(),e->e));
+        }
+        return dp007_个人分户账Map;
+    }
+
+
 
     public Map<String, DP007_个人分户账> dp007_个人分户账Map(List<String> dp) {
 
@@ -560,7 +615,7 @@ public class HistoryServiceImpl {
 
     public Map<String, List<DW025_公积金提取审核登记表>> dw025_公积金提取审核登记表Map(List<String> dp) {
 
-        return              dW025__公积金提取审核登记表_Repository.findByUnitaccnum单位账号In(dp)
+        return              dw025_公积金提取审核登记表_repository.findByUnitaccnum单位账号In(dp)
                 .stream().collect(Collectors.groupingBy(x -> x.getUnitaccnum单位账号()));
     }
 

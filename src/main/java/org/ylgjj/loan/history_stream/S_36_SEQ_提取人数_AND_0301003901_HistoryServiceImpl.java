@@ -13,7 +13,6 @@ import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.CM001_单位基本资料表Repository;
 import org.ylgjj.loan.repository.DP005_单位分户账_Repository;
 import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
-import org.ylgjj.loan.util.NativePlace;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -160,7 +159,7 @@ public class S_36_SEQ_提取人数_AND_0301003901_HistoryServiceImpl extends His
 
 
 
-        List<DW025_公积金提取审核登记表> dw025_公积金提取审核登记表s1 = dW025__公积金提取审核登记表_Repository.findAll();
+        List<DW025_公积金提取审核登记表> dw025_公积金提取审核登记表s1 = dw025_公积金提取审核登记表_repository.findAll();
 
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 

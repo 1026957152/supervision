@@ -14,9 +14,6 @@ import org.ylgjj.loan.repository.DP005_单位分户账_Repository;
 import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -163,7 +160,7 @@ public class S_23_SEQ_提取金额__非本市缴存职工___AND_0301003207_Histo
 
 
 
-        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dW025__公积金提取审核登记表_Repository.findAll();
+        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dw025_公积金提取审核登记表_repository.findAll();
 
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 

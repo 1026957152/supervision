@@ -46,7 +46,7 @@ public class DP005_单位分户账 {
 
     @Column(name = "unitacctype")
     private String unitacctype_单位账户类型;
-
+// 1－普通4－自由5－军转6－托管7－执法8－久悬未取 9－预缴户
 
     @Column(name = "lastbal")
     private BigDecimal lastbal_上日余额;

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_flow.CollectHistory;
+import org.ylgjj.loan.domain_flow.StreamHistory;
 import org.ylgjj.loan.domain_flow.TargetHistory;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
 import org.ylgjj.loan.enumT.E_LN008_借款人信息_借款人类型;
@@ -69,70 +70,54 @@ public class S_240_SEQ_共同借款人人数_AND_0302040003_HistoryServiceImpl e
 
 
     public void 流水_单位缴存spanTimeSpan(LocalDate beginDateTotal, LocalDate endDateTotal) {
-        Map<String, CM001_单位基本资料表> cm001_单位基本资料表Map = null;
-        Map<String, DP005_单位分户账> dp005_work_unit_单位分户账Map = null;
 
-        List<DP021_单位缴存登记簿> dp021_单位缴存登记簿s = dp021_单位缴存登记薄Repository.findByRegdate不可为空登记日期Between(beginDateTotal.minusDays(1),endDateTotal.plusDays(1));
+
+        List<LN003_合同信息> ln003__合同信息s = ln003_合同信息_repository.findAll();
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 
-        List<String> dp = dp021_单位缴存登记簿s.stream().map(e->e.getUnitaccnum单位账号()).distinct().collect(Collectors.toList());
 
-
-
-            cm001_单位基本资料表Map = cm001_单位基本资料表Map(dp);
-
-        dp005_work_unit_单位分户账Map = dp005_单位分户账Map(dp);
 
 
         List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(beginDateTotal,endDateTotal,statisticalIndexCodeEnum);
-        Map<String, CM001_单位基本资料表> finalCm001_单位基本资料表Map = cm001_单位基本资料表Map;
-        Map<String, DP005_单位分户账> finalDp005_work_unit_单位分户账Map = dp005_work_unit_单位分户账Map;
+
         triplets.stream().forEach(t->{
 
             LocalDate beginDate = t.getValue1();
             LocalDate endDate = t.getValue2();
 
-            dp021_单位缴存登记簿s
+            ln003__合同信息s
                     .stream()
-                    .filter(x->x.getInaccdate不可为空入账日期().isAfter(beginDate) && x.getInaccdate不可为空入账日期().isBefore(endDate))
+                    .filter(x->x.getLoandate放款日期().isAfter(beginDate) && x.getLoandate放款日期().isBefore(endDate))
                     .collect(Collectors.toList()).stream().map(e -> {
                 //TODO        获得某一日的缴存列表;
 
-                DP005_单位分户账 dp005_单位分户账 = finalDp005_work_unit_单位分户账Map.get(e.getUnitaccnum单位账号());
-                CM001_单位基本资料表 cm001_单位基本资料表 = finalCm001_单位基本资料表Map.get(dp005_单位分户账.getUnitcustid_单位客户号());
 
-
-                return Triplet.with(e,
-                        cm001_单位基本资料表,
-                        dp005_单位分户账);
+                return Quartet.with(e,
+                        ln005_贷款分户信息MapAll().get(e.getLoancontrnum_借款合同号()),
+                        ln014_贷款房屋信息MapAll(null).get(e.getLoancontrnum_借款合同号()),
+                        ln008_借款人信息MapAll(null).get(e.getLoancontrnum_借款合同号()));
             })
-                    .collect(Collectors.groupingBy(e -> e.getValue1().getAgentinstcode_经办机构())).entrySet().forEach(eee -> {
+                    .collect(Collectors.groupingBy(e -> e.getValue0().getInstcode_机构代码())).entrySet().forEach(eee -> {
 
                 // TODO 按照 经济类型
-                eee.getValue().stream().collect(Collectors.groupingBy(e -> e.getValue1().getUnitkind_单位性质())).entrySet().forEach(o -> {
-
-                    CollectHistory loanHistory  = new CollectHistory(beginDate,statisticalIndexCodeEnum);
+                eee.getValue().stream().collect(Collectors.groupingBy(e -> e.getValue0().getAgentbankcode_经办银行())).entrySet().forEach(x -> {
 
 
-                    loanHistory.setIndexNo(eee.getKey()); // 机构名称
+                    StreamHistory loanHistory  = new StreamHistory(beginDate,endDate,statisticalIndexCodeEnum);
                     loanHistory.setDimension1(eee.getKey()); // 机构名称
-                    loanHistory.setDimension2(o.getKey()); // 银行名称
+                    loanHistory.setDimension2(x.getKey()); // 机构名称
 
-                    loanHistory.setBeginDate(beginDate);
-                    loanHistory.setEndDate(endDate);
                     loanHistory.setSeqNum(t.getValue0());
 
+                    Double value = eee.getValue().stream().mapToDouble(j->{
+                        return  j.getValue3().stream()
+                                .filter(o-> o.getLoaneetype_借款人类型().equals(E_LN008_借款人信息_借款人类型.共同借款人.getText()))
+                                .count();
+                    }).sum();
 
 
-                    loanHistory.setLongValue(o.getValue().stream()
-                           // .filter(x->x.getValue0().getEndym_截止年月().equals(beginDate.with(TemporalAdjusters.firstDayOfMonth())))
-                       //     .filter(x->x.getValue0().getBegym_开始年月().equals(beginDate.with(TemporalAdjusters.lastDayOfMonth())))
-                            .filter(x->x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.预缴.getText()))
-                            .count());  //
-                    collectHistoryRepository.save(loanHistory);
-
-
-
+                    loanHistory.setDeltaLongValue(value.longValue());
+                    streamHistoryRepository.save(loanHistory);
                 });
 
 

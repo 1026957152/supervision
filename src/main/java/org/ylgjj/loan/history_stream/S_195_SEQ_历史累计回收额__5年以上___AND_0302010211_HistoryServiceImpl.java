@@ -161,7 +161,7 @@ public class S_195_SEQ_历史累计回收额__5年以上___AND_0302010211_Histor
 
 
 
-        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dW025__公积金提取审核登记表_Repository.findAll();
+        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dw025_公积金提取审核登记表_repository.findAll();
 
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 

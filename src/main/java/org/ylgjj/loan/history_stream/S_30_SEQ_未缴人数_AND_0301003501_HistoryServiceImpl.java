@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class S_30_SEQ_未缴人数_AND_0301003501_HistoryServiceImpl extends HistoryServiceImpl{
+    StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.S_30_SEQ_未缴人数_AND_0301003501;
 
     @Autowired
     private DP021_单位缴存登记薄Repository dp021_单位缴存登记薄Repository;
@@ -113,8 +114,6 @@ public class S_30_SEQ_未缴人数_AND_0301003501_HistoryServiceImpl extends His
                     loanHistory.setDimension1(eee.getKey()); // 机构名称
                     loanHistory.setDimension2(o.getKey()); // 银行名称
 
-                    loanHistory.setBeginDate(beginDate);
-                    loanHistory.setEndDate(endDate);
                     loanHistory.setSeqNum(t.getValue0());
 
 

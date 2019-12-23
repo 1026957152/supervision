@@ -160,7 +160,7 @@ public class S_20_SEQ_提取金额__收入水平___AND_0301003204_HistoryService
 
 
 
-        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dW025__公积金提取审核登记表_Repository.findAll();
+        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dw025_公积金提取审核登记表_repository.findAll();
 
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 

@@ -160,7 +160,7 @@ public class S_19_SEQ_提取人数__非本市缴存职工___AND_0301003203_Histo
 
 
 
-        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dW025__公积金提取审核登记表_Repository.findAll();
+        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dw025_公积金提取审核登记表_repository.findAll();
 
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 

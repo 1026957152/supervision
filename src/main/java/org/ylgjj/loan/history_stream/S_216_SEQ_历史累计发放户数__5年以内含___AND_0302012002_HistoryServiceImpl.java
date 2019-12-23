@@ -161,7 +161,7 @@ public class S_216_SEQ_历史累计发放户数__5年以内含___AND_0302012002_
 
 
 
-        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dW025__公积金提取审核登记表_Repository.findAll();
+        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dw025_公积金提取审核登记表_repository.findAll();
 
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 

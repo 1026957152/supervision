@@ -80,7 +80,7 @@ public class B贷款_发放ServiceImpl {
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
-    private PB017_public_flowing公共流水登记簿Repository public_flowing公共流水登记簿Repository;
+    private PB017_公共流水登记簿_Repository public_flowing公共流水登记簿Repository;
 
 
 

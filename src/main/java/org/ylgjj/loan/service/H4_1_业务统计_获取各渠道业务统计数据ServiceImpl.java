@@ -3,16 +3,21 @@ package org.ylgjj.loan.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ylgjj.loan.config.Constants;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_zongfu.Mi107_业务日志;
 import org.ylgjj.loan.enumT.H单位公积金缴存登记簿_入账状态;
 import org.ylgjj.loan.output.H4_1业务统计_获取各渠道业务统计数据;
+import org.ylgjj.loan.output.H5_1离柜率_离柜率查询;
 import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;
+import org.ylgjj.loan.outputenum.E_交易码_HX;
+import org.ylgjj.loan.outputenum.E_渠道_核心_调整_HX;
 import org.ylgjj.loan.outputenum.HX摘要码信息表;
 import org.ylgjj.loan.pojo.QueryH_4_1_业务统计_获取各渠道业务统计数据;
 import org.ylgjj.loan.repository.DP008单位明细账Repository;
 import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
+import org.ylgjj.loan.repository.PB017_公共流水登记簿_Repository;
 import org.ylgjj.loan.repository_zhongfu.Mi107_业务日志_Repository;
 
 import java.time.LocalDate;
@@ -30,7 +35,7 @@ import static java.util.stream.Collectors.summarizingDouble;
 public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
     @Autowired
-    private DP021_单位缴存登记薄Repository dp021_单位缴存登记薄Repository;
+    private PB017_公共流水登记簿_Repository pb017_公共流水登记簿_repository;
 
 
     @Autowired
@@ -40,8 +45,111 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
 
-    public Output H_4_1_业务统计_获取各渠道业务统计数据(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
 
+    public Output H_4_1_业务统计_获取各渠道业务统计数据(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df);
+        LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df);
+
+
+
+        List<PB017_公共流水登记簿_Repository.PB017公共流水登记簿Dto> objects = pb017_公共流水登记簿_repository.findByChannel(ldt_ksrq,ldt_jsrq);
+
+
+
+        Output output = new Output();
+        output.setData(objects.stream().collect(Collectors.groupingBy(e->e.getFirstname())).entrySet()
+                            .stream().map(e->{
+
+
+                                H4_1业务统计_获取各渠道业务统计数据 h4_1业务统计_获取各渠道业务统计数据 = new H4_1业务统计_获取各渠道业务统计数据();
+                             //   DoubleSummaryStatistics 归集 = 归集(query);
+                                h4_1业务统计_获取各渠道业务统计数据.setBlqdmc_办理渠道_varchar_20(E_渠道_核心_调整_HX.fromOld(e.getKey()).get名称());
+
+
+                                Integer count = e.getValue().stream().filter(x->{
+                                    return 归集_核心(null).contains(x.getLastname());
+                                }).mapToInt(x->x.getCc().intValue()).sum();
+                                Double value = e.getValue().stream().filter(x->{
+                                    return 归集_核心(null).contains(x.getLastname());
+                                }).mapToInt(x->x.getCc().intValue()).sum()+0d;
+
+                                h4_1业务统计_获取各渠道业务统计数据.setGjbs_归集_Int(count);
+                                h4_1业务统计_获取各渠道业务统计数据.setGjje_归集金额_Double(value);
+                                h4_1业务统计_获取各渠道业务统计数据.setGjzb_归集占比_Double(1.0d);
+
+
+                                Integer count_贷款 = e.getValue().stream().filter(x->{
+                                    return 归集_核心(null).contains(x.getLastname());
+                                }).mapToInt(x->x.getCc().intValue()).sum();
+                                Double value_贷款 = e.getValue().stream().filter(x->{
+                                    return 归集_核心(null).contains(x.getLastname());
+                                }).mapToInt(x->x.getCc().intValue()).sum()+0d;
+
+                                h4_1业务统计_获取各渠道业务统计数据.setDkbs_贷款笔数_Int(count_贷款);
+                                h4_1业务统计_获取各渠道业务统计数据.setDkje_贷款金额_Double(value_贷款);
+                                h4_1业务统计_获取各渠道业务统计数据.setDkzb_贷款占比_Double(1.0D);
+
+
+                                Integer count_提前还贷 = e.getValue().stream().filter(x->{
+                                    return 归集_核心(null).contains(x.getLastname());
+                                }).mapToInt(x->x.getCc().intValue()).sum();
+                                Double value_提前还贷 = e.getValue().stream().filter(x->{
+                                    return 归集_核心(null).contains(x.getLastname());
+                                }).mapToInt(x->x.getCc().intValue()).sum()+0d;
+
+                                h4_1业务统计_获取各渠道业务统计数据.setDktqhkbs_提前还贷笔数_Int(count_提前还贷);
+                                h4_1业务统计_获取各渠道业务统计数据.setDktqhkje_提前还贷金额_Double(value_提前还贷);
+                                h4_1业务统计_获取各渠道业务统计数据.setDktqhkzb_提前还贷占比_Double(1.0D);
+
+                                Integer count_提取业务偿还贷 = e.getValue().stream().filter(x->{
+                                    return 归集_核心(null).contains(x.getLastname());
+                                }).mapToInt(x->x.getCc().intValue()).sum();
+                                Double value_提取业务偿还贷 = e.getValue().stream().filter(x->{
+                                    return 归集_核心(null).contains(x.getLastname());
+                                }).mapToInt(x->x.getCc().intValue()).sum()+0d;
+                                h4_1业务统计_获取各渠道业务统计数据.setTqywchdbs_提取业务偿还贷笔数_Int(count_提取业务偿还贷);
+                                h4_1业务统计_获取各渠道业务统计数据.setTqywchdje_提取业务偿还贷金额_Double(value_提取业务偿还贷);
+                                h4_1业务统计_获取各渠道业务统计数据.setTqywchdzb_提取业务偿还贷占比_Double(1.0D);
+
+                                return h4_1业务统计_获取各渠道业务统计数据;
+
+
+
+                }).collect(Collectors.toList()));
+
+        ;
+
+
+
+        output.setSuccess(true);
+        return output;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public Output H_4_1_业务统计_获取各渠道业务统计数据_BACK(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df);
         LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df);
@@ -63,7 +171,6 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
 
-
         List<DP008_单位明细账> dp021_单位缴存登记簿s = dp008单位明细账Repository.findBySummarycode不可为空摘要代码In(aa);
 
 
@@ -72,9 +179,7 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
         double 比例_提取 = dp021_单位缴存登记簿s_peried.size() / dp021_单位缴存登记簿s.size();
 
-
-
-
+        List<PB017_公共流水登记簿_Repository.PB017公共流水登记簿Dto> objects = pb017_公共流水登记簿_repository.findByChannel(ldt_ksrq,ldt_jsrq);
 
 
         List<H4_1业务统计_获取各渠道业务统计数据> contents =  mi107_业务日志s.stream().collect(Collectors.groupingBy(e->e.getChanneltype())).entrySet()
@@ -129,6 +234,15 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
 
+
+
+
+
+
+
+
+
+
     public DoubleSummaryStatistics 贷款(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
 
         List<DP021_单位缴存登记簿> dp021_单位缴存登记簿s = null;//dp021_单位缴存登记薄Repository.findByUnitaccnum单位账号(query.getKsrq(),query.getJsrq());
@@ -146,6 +260,9 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
                 .collect(summarizingDouble(e->e.getFactpayamt_实际缴款金额().doubleValue()));
 
     }
+
+
+
 
 
     public Output cache(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
@@ -282,6 +399,107 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
         return output;
     }
 
+    public List<String> 冲还贷_核心(LocalDate localDate) {
+        //   List<Mi107_业务日志> mi107_业务日志s = mi107_业务日志_repository.findAll();
 
+        List<String> 业务s = Arrays.asList(
+                E_业务类型_综服_HX.E_5368_偿还公积金贷款提取
+
+        ).stream().map(e->e.get编码()).collect(Collectors.toList());
+        return 业务s;
+
+    }
+    public  List<String> 归集_核心(LocalDate localDate) {
+
+        List<String> 业务s = Arrays.asList(
+                E_业务类型_综服_HX.E_5875_灵活就业人员缴存,
+                E_业务类型_综服_HX.E_5351_缴存预约,
+                E_业务类型_综服_HX.E_5486_预缴入账,
+                E_业务类型_综服_HX.E_5487_补缴入账,
+                E_业务类型_综服_HX.E_5858_单位暂存款登记,
+                E_业务类型_综服_HX.E_5859_单位缴存入账
+
+
+        ).stream().map(e->e.get编码()).collect(Collectors.toList());
+        return 业务s;
+
+    }
+    public List<String> 提取还款_提前还款(LocalDate localDate) {
+
+        List<String> 业务s = Arrays.asList(
+                E_交易码_HX.HX__120805_提前还款登记撤销_ln_10011000
+
+
+        ).stream().map(e->e.getPF03TRANCODE()).collect(Collectors.toList());
+        return 业务s;
+
+
+
+    }
+    public List<String> 提取_核心(LocalDate localDate) {
+        List<String> 业务s = Arrays.asList(E_业务类型_综服_HX.E_5367_物业费提取,
+                E_业务类型_综服_HX.E_5368_偿还公积金贷款提取,
+                E_业务类型_综服_HX.E_5372_租房提取,
+                E_业务类型_综服_HX.E_5373_其他住房消费类提取,
+                E_业务类型_综服_HX.E_5391_住宅专项维修基金提取,
+                E_业务类型_综服_HX.E_5392_贷款首付提取,
+                E_业务类型_综服_HX.E_5393_偿还商业贷提取
+        ).stream().map(e->e.get编码()).collect(Collectors.toList());
+        return 业务s;
+    }
+    public List<String> 信息变更_核心(LocalDate localDate) {
+
+        List<String> 业务s = Arrays.asList(
+
+                E_交易码_HX.HX__122030_借款人基本信息变更_ln_10000000,
+                E_交易码_HX.HX__160006_变更单位全部基本资料_cm_10111000,
+                E_交易码_HX.HX__160011_变更单位常用基本资料_cm_10111000,
+                E_交易码_HX.HX__160015_变更个人基本资料_cm_10111000,
+                E_交易码_HX.HX__160115_网厅个人基本资料变更_cm_10000000,
+                E_交易码_HX.HX__168010_网厅单位基本资料变更_cm_10111000,
+                E_交易码_HX.HX__168110_新网厅单位资料变更_cm_10000000,
+                E_交易码_HX.HX__430006_个人查询密码变更_qr_10111000,
+                E_交易码_HX.HX__430010_单位查询密码变更_qr_10111000,
+                E_交易码_HX.HX__430207_查询机单位密码变更_qr_10000000,
+                E_交易码_HX.HX__110069_网厅缴存基数变更_dp_10100000,
+                E_交易码_HX.HX__111020_个人基数变更_dp_10111000,
+                E_交易码_HX.HX__111036_自由职业者协议变更_dp_10111000,
+                E_交易码_HX.HX__111039_军转干部协议变更_dp_10111000,
+                E_交易码_HX.HX__115022_网厅单位比例变更_dp_10000000,
+                E_交易码_HX.HX__111041_委托收款合同变更_dp_10111000,
+                E_交易码_HX.HX__116002_灵活就业人员缴存基数变更_dp_11111000,
+                E_交易码_HX.HX__116003_灵活就业人员缴存比例变更_dp_11111000,
+
+                E_交易码_HX.HX__120100_抵押人变更_ln_10000000,
+                E_交易码_HX.HX__120101_抵押物变更_ln_10000000,
+
+                E_交易码_HX.HX__120108_质押人变更_ln_10100000,
+                E_交易码_HX.HX__120109_质押物变更_ln_10000000,
+                E_交易码_HX.HX__120149_借款人变更_ln_10111000,
+                E_交易码_HX.HX__120153_还款方式变更_ln_10111000,
+
+
+                E_交易码_HX.HX__121401_担保方式变更_ln_10111000,
+                E_交易码_HX.HX__121501_公积金担保变更_ln_10111000,
+                E_交易码_HX.HX__121502_保人关系变更_ln_10000000,
+                E_交易码_HX.HX__121023_开发商保证金开户银行信息变更_ln_10111000,
+                E_交易码_HX.HX__122030_借款人基本信息变更_ln_10000000,
+                E_交易码_HX.HX__120385_贷后信息变更查询_ln_10011000
+
+
+
+        ).stream().map(e->e.getPF03TRANCODE()).collect(Collectors.toList());
+
+
+
+        return 业务s;
+    }
+    public List<String> 缴存基数_核心(LocalDate localDate) {
+
+        List<String> 业务s = Arrays.asList(
+                E_业务类型_综服_HX.E_5813_缴存基数调整
+        ).stream().map(e->e.get编码()).collect(Collectors.toList());
+        return 业务s;
+    }
 
 }

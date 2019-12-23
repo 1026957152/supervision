@@ -34,6 +34,8 @@ public class StreamHistory extends BaseDomain{
     private Long seqNum;
     private String dimension1;
     private String dimension2;
+    private Long deltaLongValue;
+    private String dimension3;
 
     public StreamHistory(LocalDate n) {
         this.date = n;
@@ -118,5 +120,21 @@ public class StreamHistory extends BaseDomain{
 
     public String getDimension2() {
         return dimension2;
+    }
+
+    public void setDeltaLongValue(Long deltaLongValue) {
+        this.deltaLongValue = deltaLongValue;
+    }
+
+    public Long getDeltaLongValue() {
+        return deltaLongValue;
+    }
+
+    public void setDimension3(String dimension3) {
+        this.dimension3 = dimension3;
+    }
+
+    public String getDimension3() {
+        return dimension3;
     }
 }

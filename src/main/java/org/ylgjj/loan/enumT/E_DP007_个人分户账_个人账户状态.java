@@ -8,6 +8,7 @@ package org.ylgjj.loan.enumT;
 public enum E_DP007_个人分户账_个人账户状态 {
 
 
+
     正常 ("0", "正常",0,""),
     封存 ("1", "封存",1,""),
 

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_flow.CollectHistory;
+import org.ylgjj.loan.domain_flow.StreamHistory;
 import org.ylgjj.loan.domain_flow.TargetHistory;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
@@ -14,6 +15,9 @@ import org.ylgjj.loan.repository.DP005_单位分户账_Repository;
 import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +29,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class S_29_SEQ_补缴人数_AND_0301003401_HistoryServiceImpl extends HistoryServiceImpl{
+    StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.S_29_SEQ_补缴人数_AND_0301003401;
 
     @Autowired
     private DP021_单位缴存登记薄Repository dp021_单位缴存登记薄Repository;
@@ -61,8 +66,6 @@ public class S_29_SEQ_补缴人数_AND_0301003401_HistoryServiceImpl extends His
     }
 
 
-
-
     public void 流水_单位缴存spanTimeSpan(LocalDate beginDateTotal, LocalDate endDateTotal) {
         Map<String, CM001_单位基本资料表> cm001_单位基本资料表Map = null;
         Map<String, DP005_单位分户账> dp005_work_unit_单位分户账Map = null;
@@ -74,7 +77,7 @@ public class S_29_SEQ_补缴人数_AND_0301003401_HistoryServiceImpl extends His
 
 
 
-            cm001_单位基本资料表Map = cm001_单位基本资料表Map(dp);
+        cm001_单位基本资料表Map = cm001_单位基本资料表Map(dp);
 
         dp005_work_unit_单位分户账Map = dp005_单位分户账Map(dp);
 
@@ -106,27 +109,51 @@ public class S_29_SEQ_补缴人数_AND_0301003401_HistoryServiceImpl extends His
                 // TODO 按照 经济类型
                 eee.getValue().stream().collect(Collectors.groupingBy(e -> e.getValue1().getUnitkind_单位性质())).entrySet().forEach(o -> {
 
-                    CollectHistory loanHistory  = new CollectHistory(beginDate,StatisticalIndexCodeEnum.S_1_SEQ_暂存款笔数_AND_0301000101);
+                    StreamHistory loanHistory  = new StreamHistory(beginDate,endDate,statisticalIndexCodeEnum);
 
 
-                    loanHistory.setIndexNo(eee.getKey()); // 机构名称
+                    loanHistory.setTargetNo(eee.getKey()); // 机构名称
                     loanHistory.setDimension1(eee.getKey()); // 机构名称
                     loanHistory.setDimension2(o.getKey()); // 银行名称
-
-                    loanHistory.setBeginDate(beginDate);
-                    loanHistory.setEndDate(endDate);
                     loanHistory.setSeqNum(t.getValue0());
 
 
-
-                    loanHistory.setLongValue(o.getValue().stream()
-                           // .filter(x->x.getValue0().getEndym_截止年月().equals(beginDate.with(TemporalAdjusters.firstDayOfMonth())))
-                       //     .filter(x->x.getValue0().getBegym_开始年月().equals(beginDate.with(TemporalAdjusters.lastDayOfMonth())))
-                            .filter(x->x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.预缴.getText()))
-                            .count());  //
-                    collectHistoryRepository.save(loanHistory);
+                    Integer value= o.getValue().stream()
+                            .filter(x->{
+                                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyyMM");
 
 
+                                LocalDate startA = beginDate.with(TemporalAdjusters.firstDayOfYear());
+                                LocalDate stopA = beginDate.with(TemporalAdjusters.lastDayOfYear());
+
+                                YearMonth localDate_begin = YearMonth.parse(x.getValue0().getBegym_开始年月(),df);
+                                YearMonth localDate_end = YearMonth.parse(x.getValue0().getEndym_截止年月(),df);
+                                LocalDate startB = localDate_begin.atDay(1);
+                                LocalDate stopB = localDate_end.atEndOfMonth();
+
+
+
+
+                                Boolean overlaps = (
+                                        ( startA.isBefore( stopB ) )
+                                                &&
+                                                ( stopA.isAfter( startB ) )
+                                ) ;
+
+                                //   YearMonth myYearMonth = YearMonth.from(beginDate);
+
+                                return overlaps;
+
+                            })
+                            .filter(x->x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.正常差额补缴.getText()) ||
+                                            x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.正常全额补缴.getText()) ||
+                                    x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.不定额补缴.getText())
+                            )
+                            .mapToInt(x->x.getValue0().getCmpaynum_本月汇缴人数())
+                            .sum();
+
+                    loanHistory.setDeltaLongValue(value.longValue());
+                    streamHistoryRepository.save(loanHistory);
 
                 });
 

@@ -159,7 +159,7 @@ public class S_231_SEQ_历史累计结清户数__逾期___AND_0302012204_History
         Map<String, CM001_单位基本资料表> cm001_单位基本资料表Map = null;
         Map<String, DP005_单位分户账> dp005_work_unit_单位分户账Map = null;
 
-        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dW025__公积金提取审核登记表_Repository.findAll();
+        List<DW025_公积金提取审核登记表> dw145_提取结算登记簿s = dw025_公积金提取审核登记表_repository.findAll();
 
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 

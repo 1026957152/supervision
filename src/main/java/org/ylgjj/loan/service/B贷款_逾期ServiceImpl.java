@@ -81,7 +81,7 @@ public class B贷款_逾期ServiceImpl {
     @Autowired
     private DP202_单位缴存变更登记簿_Repository dp202_单位缴存变更登记簿_repository;
     @Autowired
-    private PB017_public_flowing公共流水登记簿Repository public_flowing公共流水登记簿Repository;
+    private PB017_公共流水登记簿_Repository public_flowing公共流水登记簿Repository;
 
     // TODO
     public Output S_137_SEQ_逾期本息__本期发生___AND_0302000701(String dimension1, String dimension2, String dimension3, 统计周期编码 valueOf, StatisticalIndexCodeEnum valueOf1, String ksrq, String jsrq) {

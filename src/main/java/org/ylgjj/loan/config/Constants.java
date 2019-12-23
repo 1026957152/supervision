@@ -6,6 +6,8 @@ public final class Constants {
     private Constants() {}
 
     public static final String zjbzxbm_住建部中心编码 = "C61080"; //C61080;00091200
- //   public static final int ConstantB = 100;
+   // public static final String zjbzxbm_住建部中心编码 = "C61080"; //C61080;00091200
+
+    //   public static final int ConstantB = 100;
 
 }

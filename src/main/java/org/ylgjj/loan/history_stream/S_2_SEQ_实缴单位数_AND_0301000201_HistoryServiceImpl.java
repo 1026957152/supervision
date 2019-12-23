@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class S_2_SEQ_实缴单位数_AND_0301000201_HistoryServiceImpl extends HistoryServiceImpl{
+    StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.S_2_SEQ_实缴单位数_AND_0301000201;
 
     @Autowired
     private DP021_单位缴存登记薄Repository dp021_单位缴存登记薄Repository;
