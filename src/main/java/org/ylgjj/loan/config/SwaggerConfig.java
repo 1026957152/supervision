@@ -61,7 +61,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
 
 
 
-     String a=   "接口已设置为生产输出；渠道业务统计和离柜率存在较多问题，暂未上线；177项数据暂未上线，244指标暂未上线，需要稍作调整" ;
+     String a=   "接口已设置为生产输出；渠道业务统计和离柜率接口开放，但数据未配置；177项数据暂未上线，244指标暂未上线，需要稍作调整" ;
         return new ApiInfoBuilder()
                 .title("榆林住房公积金省监管平台 API "+git.get("build.version"))  //设置文档的标题
                 .description("\n"+a) //设置文档的描述
