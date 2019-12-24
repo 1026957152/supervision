@@ -160,7 +160,7 @@ public class Index_11_SEQ_缴暂存款净额_AND_0301001001 extends BaseServiceI
 
         Config config = configMap().get("aa");
 
-        AnalysisTable analysisTable = analysisTableRepository.findByIndexNo(StatisticalIndexCodeEnum.S_66_SEQ_暂存款余额_AND_0301008102.get指标编码());
+        AnalysisTable analysisTable = analysisTableRepository.findByTargetNo(StatisticalIndexCodeEnum.S_66_SEQ_暂存款余额_AND_0301008102.get指标编码());
 
         try{
             index(LocalDate.now().minusDays(10),LocalDate.now());
@@ -181,7 +181,7 @@ public class Index_11_SEQ_缴暂存款净额_AND_0301001001 extends BaseServiceI
 
     public void update() {
 
-        AnalysisTable analysisTable = analysisTableRepository.findByIndexNo(StatisticalIndexCodeEnum.S_66_SEQ_暂存款余额_AND_0301008102.get指标编码());
+        AnalysisTable analysisTable = analysisTableRepository.findByTargetNo(StatisticalIndexCodeEnum.S_66_SEQ_暂存款余额_AND_0301008102.get指标编码());
         try{
             index(analysisTable.getModifyDate().toLocalDate(),LocalDate.now());
             logger.info("update"+statisticalIndexCodeEnum);

@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "withdraw")
 
-public class withdraw extends BaseFlowDomain{
+public class withdraw extends BaseDomain{
 
     @Column(name = "no")
     private String no;

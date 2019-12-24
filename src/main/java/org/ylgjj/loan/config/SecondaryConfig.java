@@ -80,7 +80,9 @@ public class SecondaryConfig {
         Map<String, String> properties = jpaProperties.getProperties();
         properties.put("hibernate.hbm2ddl.auto", "update");
         properties.put("hibernate.show_sql", "true");
+        properties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
 
+       // spring.jpa.hibernate.hbm2ddl.auto=update
       //  properties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto_mysql"));
      //   properties.put("hibernate.dialect", env.getProperty("spring.jpa.properties.hibernate.dialect_mysql"));
       //  properties.put("hibernate.show_sql", env.getProperty("spring.jpa.show-sql"));

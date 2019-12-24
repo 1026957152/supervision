@@ -21,6 +21,7 @@ public class Target_业务指标记录 extends BaseDomain {
 
     @Column(name = "userid")
     private String userid;
+    private String addBy;
 
     @Override
     public String toString() {
@@ -43,4 +44,11 @@ public class Target_业务指标记录 extends BaseDomain {
         this.userid = userid;
     }
 
+    public void setAddBy(String addBy) {
+        this.addBy = addBy;
+    }
+
+    public String getAddBy() {
+        return addBy;
+    }
 }

@@ -28,6 +28,8 @@ public class AnalysisStream extends BaseDomain {
     private LocalDate endDate;
     private LocalDate beginDate
             ;
+    private long duration;
+    private String stockOrAdditional;
 
 
     @Override
@@ -90,5 +92,23 @@ public class AnalysisStream extends BaseDomain {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    public void setDuration(long duration) {
+
+
+        this.duration = duration;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setStockOrAdditional(String stockOrAdditional) {
+        this.stockOrAdditional = stockOrAdditional;
+    }
+
+    public String getStockOrAdditional() {
+        return stockOrAdditional;
     }
 }

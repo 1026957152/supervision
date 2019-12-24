@@ -15,6 +15,7 @@ import org.ylgjj.loan.repository_flow.AnalysisStreamRepository;
 import org.ylgjj.loan.repository_flow.AnalysisTableRepository;
 import org.ylgjj.loan.repository_flow.ConfigRepository;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -44,7 +45,7 @@ public class AnalysisServiceImpl {
     @Autowired
     private Index_2_SEQ_实缴单位数_AND_0301000201 index_2_seq_实缴单位数_and_0301000201;
 
-    //
+    @PostConstruct
     @Transactional
     public void S_83_SEQ_住房公积金使用率_AND_0301020501__() {
         List<StatisticalIndexCodeEnum> statisticalIndexCodeEnums = Arrays.stream(StatisticalIndexCodeEnum.values()).collect(Collectors.toList());
@@ -53,12 +54,12 @@ public class AnalysisServiceImpl {
         IntStream.range(0,statisticalIndexCodeEnums.size()).forEach(e->{
 
             StatisticalIndexCodeEnum statisticalIndexCodeEnum=    statisticalIndexCodeEnums.get(e);
-            AnalysisTable analysisTable = analysisTableRepository.findByIndexNo(statisticalIndexCodeEnum.get指标编码());
+            AnalysisTable analysisTable = analysisTableRepository.findByTargetNo(statisticalIndexCodeEnum.get指标编码());
 
 
             if(analysisTable== null){
                 analysisTable = new AnalysisTable();
-                analysisTable.setIndexNo(statisticalIndexCodeEnum.get指标编码());
+                analysisTable.setTargetNo(statisticalIndexCodeEnum.get指标编码());
                 analysisTable.setSeq(e);
 
                 analysisTableRepository.save(analysisTable);
@@ -106,7 +107,7 @@ public class AnalysisServiceImpl {
         analysisStream.setBeginDateTime(analysisTable);
         analysisStream.setBeginDate(beginDate);
         analysisStream.setEndDate(endDate);
-        analysisStream.setIndexNo(table.getIndexNo());
+        analysisStream.setIndexNo(table.getTargetNo());
         analysisStream.setStatus("正在处理");
         analysisStream.setNo(s);
         analysisStreamRepository.save(analysisStream);

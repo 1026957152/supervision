@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "collect")
 
-public class Collect extends BaseFlowDomain {
+public class Collect extends BaseDomain {
 
     @Column(name = "UnitNo")
     private String UnitNo;

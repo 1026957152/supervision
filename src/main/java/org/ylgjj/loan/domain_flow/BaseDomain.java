@@ -12,6 +12,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * Created by Peter Xu on 12/08/2014.
  */
@@ -20,16 +22,17 @@ import java.time.LocalDateTime;
 public class BaseDomain implements Serializable {
 
     @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
+  // @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @GeneratedValue
+
     private Integer id;
 
 
-    @JsonIgnore
+   // @JsonIgnore
     @Column(name = "create_by")
     @CreatedBy
     private Integer createBy;
-    @JsonIgnore
+ //   @JsonIgnore
     @Column(name = "modify_by")
     @LastModifiedBy
     private Integer modifyBy;
@@ -37,19 +40,19 @@ public class BaseDomain implements Serializable {
     @Column(name = "create_date")
     @CreatedDate
     //@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonIgnore
+   // @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  //  @JsonIgnore
     private LocalDateTime createDate;
 
     @Column(name = "modify_date")
     @LastModifiedDate
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonIgnore
+  //  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+  //  @JsonIgnore
     private LocalDateTime modifyDate;
 
     @Column(name = "version")
     @Version
-    @JsonIgnore
+  //  @JsonIgnore
     private Integer version;
 
 

@@ -23,10 +23,10 @@ sms_password: sms
 
 # 本地库，mysql
 local_ip: 192.168.10.90
-local_port: 3306
+local_port: 3307
 local_db: supervision
 local_username: root
-local_password: 123456
+local_password: 9aU5CKHUpN
 
 
 

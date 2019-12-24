@@ -13,6 +13,6 @@ import java.util.List;
 public interface Target_业务指标记录Repository extends JpaRepository<Target_业务指标记录, Integer> {
 
 
-    List<Target_业务指标记录> findByXmbm(String xmbm);
+    Target_业务指标记录 findByXmbm(String xmbm);
 
 }

@@ -87,7 +87,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
             modelAndView.addObject("apis", SupervisionController.api);
 
-            Map<String,AnalysisTable> analysisTables = analysisTableRepository.findAll().stream().collect(Collectors.toMap(e->e.getIndexNo(),e->e));
+            Map<String,AnalysisTable> analysisTables = analysisTableRepository.findAll().stream().collect(Collectors.toMap(e->e.getTargetNo(), e->e));
 
             List<Map> indexes__url = Arrays.stream(StatisticalIndexCodeEnum.values()).map(e->{
 
@@ -318,13 +318,13 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
                 ObjectMapper m = new ObjectMapper();
                 Map<String,Object> map = m.convertValue(collaborator,Map.class);
 
-                StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.fromString指标编码(collaborator.getIndexNo());
+                StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.fromString指标编码(collaborator.getTargetNo());
                 map.put("id", collaborator.getId());
                 map.put("createDate", collaborator.getCreateDate());
                 map.put("modifyDate",collaborator.getModifyDate());
                 map.put("name",statisticalIndexCodeEnum.get指标名称());
                 map.put("period",统计周期编码.fromString(statisticalIndexCodeEnum.get统计周期()).get名称());
-                String producerUrl  = linkTo(methodOn(WebController.class).index_detail(collaborator.getIndexNo(), null)).toUri().getRawPath();
+                String producerUrl  = linkTo(methodOn(WebController.class).index_detail(collaborator.getTargetNo(), null)).toUri().getRawPath();
                 map.put("url",producerUrl);
 
 
@@ -339,21 +339,21 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
     //@GetMapping("/index_detail")
     public ModelAndView index_detail(@PathVariable("type") String type,HttpServletRequest request) {
 
-        AnalysisTable analysisTable  = analysisTableRepository.findByIndexNo(type);
+        AnalysisTable analysisTable  = analysisTableRepository.findByTargetNo(type);
 
         ;
 
 
         ModelAndView modelAndView = new ModelAndView("/index_detail");
-        String producerUrl  = linkTo(methodOn(WebController.class).analysisStream(analysisTable.getIndexNo(), null)).toUri().getRawPath();
+        String producerUrl  = linkTo(methodOn(WebController.class).analysisStream(analysisTable.getTargetNo(), null)).toUri().getRawPath();
 
 
         modelAndView.addObject("streamUrl",producerUrl);
-        String updateImmediatelyUrl  = linkTo(methodOn(WebController.class).updateImmediatelyUrl(analysisTable.getIndexNo(), null)).toUri().getRawPath();
+        String updateImmediatelyUrl  = linkTo(methodOn(WebController.class).updateImmediatelyUrl(analysisTable.getTargetNo(), null)).toUri().getRawPath();
 
         modelAndView.addObject("updateImmediatelyUrl",updateImmediatelyUrl);
 
-        String historyImmediatelyUrl  = linkTo(methodOn(WebController.class).historyImmediatelyUrl(analysisTable.getIndexNo(), null)).toUri().getRawPath();
+        String historyImmediatelyUrl  = linkTo(methodOn(WebController.class).historyImmediatelyUrl(analysisTable.getTargetNo(), null)).toUri().getRawPath();
 
         modelAndView.addObject("historyImmediatelyUrl",historyImmediatelyUrl);
 
@@ -367,7 +367,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
         ObjectMapper m = new ObjectMapper();
         Map<String,Object> map = m.convertValue(analysisTable,Map.class);
 
-        StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.fromString指标编码(analysisTable.getIndexNo());
+        StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.fromString指标编码(analysisTable.getTargetNo());
         map.put("id", analysisTable.getId());
         map.put("createDate", analysisTable.getCreateDate());
         map.put("modifyDate",analysisTable.getModifyDate());

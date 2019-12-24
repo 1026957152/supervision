@@ -15,22 +15,28 @@ import java.time.LocalDate;
 @Table(name = "analysis_table")
 public class AnalysisTable extends BaseDomain {
 
-    @Column(name = "index_no")
-    private String indexNo;
+    @Column(name = "target_no")
+    private String targetNo;
+
+    @Column(name = "update_Date")
     private LocalDate updateTime;
+
+    @Column(name = "seq_no")
     private Integer seq;
+    private LocalDate analysedBeginDate;
+    private LocalDate analysedEndDate;
 
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }
 
-    public String getIndexNo() {
-        return indexNo;
+    public String getTargetNo() {
+        return targetNo;
     }
 
-    public void setIndexNo(String indexNo) {
-        this.indexNo = indexNo;
+    public void setTargetNo(String indexNo) {
+        this.targetNo = indexNo;
     }
 
     public void setUpdateTime(LocalDate updateTime) {
@@ -48,5 +54,21 @@ public class AnalysisTable extends BaseDomain {
 
     public Integer getSeq() {
         return seq;
+    }
+
+    public void setAnalysedBeginDate(LocalDate analysedBeginDate) {
+        this.analysedBeginDate = analysedBeginDate;
+    }
+
+    public LocalDate getAnalysedBeginDate() {
+        return analysedBeginDate;
+    }
+
+    public void setAnalysedEndDate(LocalDate analysedEndDate) {
+        this.analysedEndDate = analysedEndDate;
+    }
+
+    public LocalDate getAnalysedEndDate() {
+        return analysedEndDate;
     }
 }

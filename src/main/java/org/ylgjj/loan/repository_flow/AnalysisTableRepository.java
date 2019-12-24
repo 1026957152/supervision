@@ -13,7 +13,9 @@ import org.ylgjj.loan.domain_flow.AnalysisTable;
 public interface AnalysisTableRepository extends JpaRepository<AnalysisTable, Integer> {
 
 
-    AnalysisTable findByIndexNo(String 指标编码);
+    AnalysisTable findByTargetNo(String 指标编码);
 
     Page<AnalysisTable> findByOrderBySeqAsc(Pageable pageable);
+
+    void deleteByTargetNo(String targetNo);
 }

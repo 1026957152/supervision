@@ -4,9 +4,10 @@ package org.ylgjj.loan.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
+import org.ylgjj.loan.domain_flow.BaseDomain;
 import org.ylgjj.loan.enumT.E_HX_机构_Institution_info_instCodeEnum;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
-import org.ylgjj.loan.domain_flow.BaseFlowDomain;
+
 import org.ylgjj.loan.domain_flow.Collect;
 import org.ylgjj.loan.domain_flow.CollectPlan;
 import org.ylgjj.loan.domain_flow.UnitManagementAccount;
@@ -117,7 +118,7 @@ public class B归集ServiceImpl  {
     @Autowired
     private CollectRepository collectRepository;
 
-    void partion周期分割(List<BaseFlowDomain> list, 统计周期编码 统计周期编码){
+    void partion周期分割(List<BaseDomain> list, 统计周期编码 统计周期编码){
 
     }
 
@@ -287,7 +288,7 @@ public class B归集ServiceImpl  {
 
 
         Map<String, List<CollectPlan>> maps___ = collectPlans.stream().collect(  // 机构分类
-                Collectors.groupingBy(CollectPlan::getAgencyId)
+                Collectors.groupingBy(CollectPlan::toString)
         );
 
         List maps_ = maps___.entrySet().stream().map(e->{
@@ -299,24 +300,26 @@ public class B归集ServiceImpl  {
    /*                     Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
                         });*/
                 Map<String, List<CollectPlan>> maps3 = e2.getValue().stream().collect( // 二维度分类
-                        Collectors.groupingBy(CollectPlan::getAgencyId单位经济类型)
+                        Collectors.groupingBy(CollectPlan::toString)
                 );
 
 
 
                 maps3.entrySet().stream().forEach(e3 -> {
+/*
                     map_result_element.put("dimension2", e3.getKey());
                     //partion周期分割(e3.getValue(),统计周期编码.H__03_每月);
                     Map<DateRange, List<CollectPlan>> maps4 = e3.getValue().stream().collect( // 二维度分类
-                            Collectors.groupingBy(CollectPlan::getDateRange)
+                            Collectors.groupingBy(CollectPlan::toString)
                     );
+*/
 
                     Integer indexCount = 0;
-                    maps4.entrySet().stream().forEach(e5 -> {
+/*                    maps4.entrySet().stream().forEach(e5 -> {
                         String valueIndex = "value"+indexCount;
                         map_result_element.put(valueIndex, e5.getValue().stream().count());
 
-                    });
+                    });*/
                 });
 
             });
@@ -358,7 +361,7 @@ public class B归集ServiceImpl  {
 
 
         Map<String, List<CollectPlan>> maps___ = collectPlans.stream().collect(  // 机构分类
-                Collectors.groupingBy(CollectPlan::getAgencyId)
+                Collectors.groupingBy(CollectPlan::toString)
         );
 
         List maps_ = maps___.entrySet().stream().map(e->{
@@ -371,7 +374,7 @@ public class B归集ServiceImpl  {
    /*                     Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
                         });*/
                 Map<String, List<CollectPlan>> maps3 = e2.getValue().stream().collect( // 二维度分类
-                        Collectors.groupingBy(CollectPlan::getAgencyId单位经济类型)
+                        Collectors.groupingBy(CollectPlan::toString)
                 );
 
 
@@ -383,16 +386,18 @@ public class B归集ServiceImpl  {
                       //  partion周期分割(e3.getValue(),H__03_每月 == null?统计周期编码.H__03_每月:H__03_每月);
 
 
+/*
                     Map<DateRange, List<CollectPlan>> maps4 = e3.getValue().stream().collect( // 二维度分类
-                            Collectors.groupingBy(CollectPlan::getDateRange)
+                            Collectors.groupingBy(CollectPlan::toString)
                     );
+*/
 
                     Integer indexCount = 0;
-                    maps4.entrySet().stream().forEach(e5 -> {
+/*                    maps4.entrySet().stream().forEach(e5 -> {
                         String valueIndex = "value"+indexCount;
                         map_result_element.put(valueIndex, e5.getValue().stream().count());
 
-                    });
+                    });*/
                 });
 
             });
@@ -436,7 +441,7 @@ public class B归集ServiceImpl  {
 
 
         Map<String, List<Collect>> maps___ = collectPlans.stream().collect(  // 机构分类
-                Collectors.groupingBy(Collect::getAgencyId)
+                Collectors.groupingBy(Collect::toString)
         );
 
         List maps_ = maps___.entrySet().stream().map(e->{
@@ -449,7 +454,7 @@ public class B归集ServiceImpl  {
    /*                     Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
                         });*/
                 Map<String, List<Collect>> maps3 = e2.getValue().stream().collect( // 二维度分类
-                        Collectors.groupingBy(Collect::getAgencyId单位经济类型)
+                        Collectors.groupingBy(Collect::toString)
                 );
 
 
@@ -461,7 +466,7 @@ public class B归集ServiceImpl  {
                    // partion周期分割(e3.getValue(),valueOf == null?统计周期编码.H__01_每日:valueOf);
 
 
-                    Map<DateRange, List<Collect>> maps4 = e3.getValue().stream().collect( // 二维度分类
+/*                    Map<DateRange, List<Collect>> maps4 = e3.getValue().stream().collect( // 二维度分类
                             Collectors.groupingBy(Collect::getDateRange)
                     );
 
@@ -470,7 +475,7 @@ public class B归集ServiceImpl  {
                         String valueIndex = "value"+indexCount;
                         map_result_element.put(valueIndex, e5.getValue().stream().count());
 
-                    });
+                    });*/
                 });
 
             });
@@ -679,8 +684,8 @@ public class B归集ServiceImpl  {
         List<UnitManagementAccount> collectPlans = unitManagementAccountRepository.findByCreateDateBetween(ldt_ksrq,ldt_jsrq);
 
 
-        Map<String, List<BaseFlowDomain>> maps___ = collectPlans.stream().collect(  // 机构分类
-                Collectors.groupingBy(BaseFlowDomain::getAgencyId)
+        Map<String, List<BaseDomain>> maps___ = collectPlans.stream().collect(  // 机构分类
+                Collectors.groupingBy(BaseDomain::toString)
         );
 
         List maps_ = maps___.entrySet().stream().map(e->{
@@ -691,8 +696,8 @@ public class B归集ServiceImpl  {
 
    /*                     Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
                         });*/
-                Map<String, List<BaseFlowDomain>> maps3 = e2.getValue().stream().collect( // 二维度分类
-                        Collectors.groupingBy(BaseFlowDomain::getAgencyId单位经济类型)
+                Map<String, List<BaseDomain>> maps3 = e2.getValue().stream().collect( // 二维度分类
+                        Collectors.groupingBy(BaseDomain::toString)
                 );
 
 
@@ -701,18 +706,20 @@ public class B归集ServiceImpl  {
                     map_result_element.put("dimension2", e3.getKey());
                     partion周期分割(e3.getValue(),valueOf == null?统计周期编码.H__01_每日:valueOf);
 
-                    Map<DateRange, List<BaseFlowDomain>> maps4 = e3.getValue().stream().collect( // 二维度分类
-                            Collectors.groupingBy(BaseFlowDomain::getDateRange)
+/*
+                    Map<DateRange, List<BaseDomain>> maps4 = e3.getValue().stream().collect( // 二维度分类
+                            Collectors.groupingBy(BaseDomain::toString)
                     );
+*/
 
 
                     Integer indexCount = 0;
-                    maps4.entrySet().stream().forEach(e5 -> {
+/*                    maps4.entrySet().stream().forEach(e5 -> {
                         String valueIndex = "value"+indexCount;
                         List<UnitManagementAccount> childs2 = (List)(e5.getValue());
                         map_result_element.put(valueIndex, childs2.stream().count());
 
-                    });
+                    });*/
                 });
 
             });
@@ -754,8 +761,8 @@ public class B归集ServiceImpl  {
         List<UnitManagementAccount> collectPlans = unitManagementAccountRepository.findByCreateDateBetween(ldt_ksrq,ldt_jsrq);
 
 
-        Map<String, List<BaseFlowDomain>> maps___ = collectPlans.stream().collect(  // 机构分类
-                Collectors.groupingBy(BaseFlowDomain::getAgencyId)
+        Map<String, List<BaseDomain>> maps___ = collectPlans.stream().collect(  // 机构分类
+                Collectors.groupingBy(BaseDomain::toString)
         );
 
         List maps_ = maps___.entrySet().stream().map(e->{
@@ -766,8 +773,8 @@ public class B归集ServiceImpl  {
 
    /*                     Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
                         });*/
-                Map<String, List<BaseFlowDomain>> maps3 = e2.getValue().stream().collect( // 二维度分类
-                        Collectors.groupingBy(BaseFlowDomain::getAgencyId单位经济类型)
+                Map<String, List<BaseDomain>> maps3 = e2.getValue().stream().collect( // 二维度分类
+                        Collectors.groupingBy(BaseDomain::toString)
                 );
 
 
@@ -776,18 +783,18 @@ public class B归集ServiceImpl  {
                     map_result_element.put("dimension2", e3.getKey());
                     partion周期分割(e3.getValue(),valueOf == null?统计周期编码.H__01_每日:valueOf);
 
-                    Map<DateRange, List<BaseFlowDomain>> maps4 = e3.getValue().stream().collect( // 二维度分类
-                            Collectors.groupingBy(BaseFlowDomain::getDateRange)
-                    );
+/*                    Map<DateRange, List<BaseDomain>> maps4 = e3.getValue().stream().collect( // 二维度分类
+                            Collectors.groupingBy(BaseDomain::getDateRange)
+                    );*/
 
 
                     Integer indexCount = 0;
-                    maps4.entrySet().stream().forEach(e5 -> {
+/*                    maps4.entrySet().stream().forEach(e5 -> {
                         String valueIndex = "value"+indexCount;
                         List<UnitManagementAccount> childs2 = (List)(e5.getValue());
                         map_result_element.put(valueIndex, childs2.stream().count());
 
-                    });
+                    });*/
                 });
 
             });
@@ -823,8 +830,8 @@ public class B归集ServiceImpl  {
         List<UnitManagementAccount> collectPlans = unitManagementAccountRepository.findByCreateDateBetween(ldt_ksrq,ldt_jsrq);
 
 
-        Map<String, List<BaseFlowDomain>> maps___ = collectPlans.stream().collect(  // 机构分类
-                Collectors.groupingBy(BaseFlowDomain::getAgencyId)
+        Map<String, List<BaseDomain>> maps___ = collectPlans.stream().collect(  // 机构分类
+                Collectors.groupingBy(BaseDomain::toString)
         );
 
         List maps_ = maps___.entrySet().stream().map(e->{
@@ -835,18 +842,20 @@ public class B归集ServiceImpl  {
 
    /*                     Arrays.stream(住建部编码_单位经济类型.values()).forEach(e->{
                         });*/
-                Map<String, List<BaseFlowDomain>> maps3 = e2.getValue().stream().collect( // 二维度分类
-                        Collectors.groupingBy(BaseFlowDomain::getAgencyId单位经济类型)
+/*
+                Map<String, List<BaseDomain>> maps3 = e2.getValue().stream().collect( // 二维度分类
+                        Collectors.groupingBy(BaseDomain::getAgencyId单位经济类型)
                 );
 
+*/
 
 
-                maps3.entrySet().stream().forEach(e3 -> {
+/*                maps3.entrySet().stream().forEach(e3 -> {
                     map_result_element.put("dimension2", e3.getKey());
-                    partion周期分割(e3.getValue(),valueOf == null?统计周期编码.H__01_每日:valueOf);
+                    partion周期分割(e3.getValue(),valueOf == null?统计周期编码.H__01_每日:valueOf);*/
 
-                    Map<DateRange, List<BaseFlowDomain>> maps4 = e3.getValue().stream().collect( // 二维度分类
-                            Collectors.groupingBy(BaseFlowDomain::getDateRange)
+           /*         Map<DateRange, List<BaseDomain>> maps4 = e3.getValue().stream().collect( // 二维度分类
+                            Collectors.groupingBy(BaseDomain::getDateRange)
                     );
 
 
@@ -856,8 +865,8 @@ public class B归集ServiceImpl  {
                         List<UnitManagementAccount> childs2 = (List)(e5.getValue());
                         map_result_element.put(valueIndex, childs2.stream().count());
 
-                    });
-                });
+                    });*/
+              //  });
 
             });
             return map_result_element;
@@ -920,8 +929,8 @@ public class B归集ServiceImpl  {
         List<Collect> collectPlans = collectRepository.findByCreateDateBetween(ldt_ksrq,ldt_jsrq);
 
 
-        Map<String, List<BaseFlowDomain>> maps___ = collectPlans.stream().collect(  // 机构分类
-                Collectors.groupingBy(BaseFlowDomain::getAgencyId)
+        Map<String, List<BaseDomain>> maps___ = collectPlans.stream().collect(  // 机构分类
+                Collectors.groupingBy(BaseDomain::toString)
         );
 
         List maps_ = maps___.entrySet().stream().map(e->{
@@ -933,8 +942,8 @@ public class B归集ServiceImpl  {
                         });*/
 
 
-                Map<String, List<BaseFlowDomain>> maps3 = e2.getValue().stream().collect( // 二维度分类
-                        Collectors.groupingBy(BaseFlowDomain::getAgencyId单位经济类型)
+                Map<String, List<BaseDomain>> maps3 = e2.getValue().stream().collect( // 二维度分类
+                        Collectors.groupingBy(BaseDomain::toString)
                 );
 
 
@@ -943,19 +952,19 @@ public class B归集ServiceImpl  {
                     map_result_element.put("dimension2", e3.getKey());
                     partion周期分割(e3.getValue(),valueOf == null?统计周期编码.H__01_每日:valueOf);
 
-                    Map<DateRange, List<BaseFlowDomain>> maps4 = e3.getValue().stream().collect( // 二维度分类
-                            Collectors.groupingBy(BaseFlowDomain::getDateRange)
-                    );
+      /*              Map<DateRange, List<BaseDomain>> maps4 = e3.getValue().stream().collect( // 二维度分类
+                            Collectors.groupingBy(BaseDomain::getDateRange)
+                    );*/
 
 
 
                     Integer indexCount = 0;
-                    maps4.entrySet().stream().forEach(e5 -> {
+/*                    maps4.entrySet().stream().forEach(e5 -> {
                         String valueIndex = "value"+indexCount;
                         List<Collect> childs2 = (List)(e5.getValue());
                         map_result_element.put(valueIndex, childs2.stream().count());
 
-                    });
+                    });*/
                 });
 
             });

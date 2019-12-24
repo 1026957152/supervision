@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @Table(name = "overdue")
 
-public class IndividualAccount extends BaseFlowDomain {
+public class IndividualAccount extends BaseDomain {
 
     @Column(name = "no")
     private String settletranscode__交易码_两位序号渠道号码_不可为空_交易渠道码;

@@ -8,19 +8,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
-import org.ylgjj.loan.domain_flow.Config;
+import org.ylgjj.loan.domain_flow.*;
 import org.ylgjj.loan.enumT.*;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.outputenum.统计周期编码;
 import org.ylgjj.loan.repository.*;
-import org.ylgjj.loan.repository_flow.CollectHistoryRepository;
-import org.ylgjj.loan.repository_flow.ConfigRepository;
-import org.ylgjj.loan.repository_flow.StreamHistoryRepository;
-import org.ylgjj.loan.repository_flow.TargetHistoryRepository;
+import org.ylgjj.loan.repository_flow.*;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
@@ -49,6 +48,8 @@ public class HistoryServiceImpl {
 
     @Autowired
     protected TargetHistoryRepository targetHistoryRepository;
+    @Autowired
+    protected AnalysisTableRepository analysisTableRepository;
 
 
     @Autowired
@@ -74,7 +75,12 @@ public class HistoryServiceImpl {
     @Autowired
     protected DP034_公积金开销户登记簿_Repository dp034_公积金开销户登记簿_repository;
 
+    @Autowired
+    protected AnalysisStreamRepository analysisStreamRepository;
 
+
+    @Autowired
+    protected TargetAnalysisTableRepository targetAnalysisTableRepository;
 
 
     public static List<Triplet<Long,LocalDate,LocalDate>> run统计周期编码(LocalDate beginDate, LocalDate endDate, StatisticalIndexCodeEnum statisticalIndexCodeEnum) {
@@ -774,6 +780,20 @@ public class HistoryServiceImpl {
         return configMap;
     }
 
+    @Transactional
+    public void updateRateTable(AnalysisTable rateAnalysisTable, AnalysisStream rateAnalysisStream) {
+        rateAnalysisStream.setIndexNo(rateAnalysisTable.getTargetNo());
+        analysisStreamRepository.save(rateAnalysisStream);
+
+        rateAnalysisTable.setUpdateTime(LocalDateTime.now().toLocalDate());
+        analysisTableRepository.save(rateAnalysisTable);
+
+    }
 
 
+
+    @Transactional
+    protected void delete(String targetNo) {
+        analysisTableRepository.deleteByTargetNo(targetNo);
+    }
 }

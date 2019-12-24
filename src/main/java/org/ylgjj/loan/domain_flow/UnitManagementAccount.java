@@ -12,7 +12,7 @@ import java.util.Date;
 @Entity
 @Table(name = "unitManagementAccount")
 
-public class UnitManagementAccount  extends BaseFlowDomain{
+public class UnitManagementAccount  extends BaseDomain{
 
     @Column(name = "no")
     private String no;

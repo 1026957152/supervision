@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "overdue")
 
-public class overdueMonthSet extends BaseFlowDomain{
+public class overdueMonthSet extends BaseDomain{
 
     @Column(name = "settletranscode")
     private String settletranscode__交易码_两位序号渠道号码_不可为空_交易渠道码;

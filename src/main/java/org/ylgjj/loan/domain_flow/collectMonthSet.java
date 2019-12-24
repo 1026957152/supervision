@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "collect")
 
-public class collectMonthSet extends BaseFlowDomain {
+public class collectMonthSet extends BaseDomain {
 
     @Column(name = "UnitNo")
     private String UnitNo;
