@@ -1,7 +1,7 @@
 plugins {
 	id "com.gorylenko.gradle-git-properties" version "2.2.0"
 
-	id 'org.springframework.boot' version '2.1.11.RELEASE'
+	id 'org.springframework.boot' version '2.1.09.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
 
@@ -65,7 +65,7 @@ implementation 'org.springframework.boot:spring-boot-starter-actuator'
 */
 //	implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
 	//runtimeOnly 'mysql:mysql-connector-java'
-	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
+	compile group: 'mysql', name: 'mysql-connector-java'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 //	testImplementation 'org.springframework.security:spring-security-test'
