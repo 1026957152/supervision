@@ -181,7 +181,7 @@ public class Index_2_SEQ_实缴单位数_AND_0301000201 extends BaseServiceImpl 
         try{
             index(beginDate,endDate);
             logger.info("update"+statisticalIndexCodeEnum);
-            analysisTable.setUpdateTime(LocalDate.now());
+            analysisTable.setUpdateTime(LocalDateTime.now());
             analysisService.update(analysisTable);
         }catch (Exception e){
         }
@@ -201,7 +201,7 @@ public class Index_2_SEQ_实缴单位数_AND_0301000201 extends BaseServiceImpl 
         try{
             index(analysisTable.getModifyDate().toLocalDate(),LocalDate.now());
             logger.info("update"+statisticalIndexCodeEnum);
-            analysisTable.setUpdateTime(LocalDate.now());
+            analysisTable.setUpdateTime(LocalDateTime.now());
             analysisService.update(analysisTable);
         }catch (Exception e){
 

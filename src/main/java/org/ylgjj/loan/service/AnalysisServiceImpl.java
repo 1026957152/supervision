@@ -45,7 +45,7 @@ public class AnalysisServiceImpl {
     @Autowired
     private Index_2_SEQ_实缴单位数_AND_0301000201 index_2_seq_实缴单位数_and_0301000201;
 
-    @PostConstruct
+   // @PostConstruct
     @Transactional
     public void S_83_SEQ_住房公积金使用率_AND_0301020501__() {
         List<StatisticalIndexCodeEnum> statisticalIndexCodeEnums = Arrays.stream(StatisticalIndexCodeEnum.values()).collect(Collectors.toList());

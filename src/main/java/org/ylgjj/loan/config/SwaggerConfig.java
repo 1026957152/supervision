@@ -67,7 +67,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .title("榆林住房公积金省监管平台 API "+git.get("build.version"))  //设置文档的标题
                 .description("\n"+a) //设置文档的描述
             //    .termsOfServiceUrl("http://192.168.10.3/")
-                .contact(new Contact("神玥软件","","0311-85138610"))
+           //     .contact(new Contact("神玥软件","","0311-85138610"))
        // modelAndView.addObject("version", git.get("build.version"));
                 .version("1.0")
                 .build();

@@ -156,6 +156,16 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
             String analysisUrl =  linkTo(methodOn(WebController.class).analysis(null,null)).withSelfRel().getHref();
             modelAndView.addObject("analysisUrl",analysisUrl);
+
+
+
+
+
+
+            List<AnalysisTable> loanHistories  = analysisTableRepository.findAll();
+            modelAndView.addObject("targetOnlineRate",nf.format(loanHistories.stream()
+                    .filter(e->e.getAnalysedEndDate()!=null).count()/(loanHistories.size()+0d)));
+
             return modelAndView;
 
 
@@ -322,6 +332,11 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
                 map.put("id", collaborator.getId());
                 map.put("createDate", collaborator.getCreateDate());
                 map.put("modifyDate",collaborator.getModifyDate());
+                map.put("updateTime",collaborator.getUpdateTime());
+                map.put("updateTime",collaborator.getUpdateTime());
+                map.put("analysedBeginDate",collaborator.getAnalysedBeginDate());
+                map.put("analysedEndDate",collaborator.getAnalysedEndDate());
+
                 map.put("name",statisticalIndexCodeEnum.get指标名称());
                 map.put("period",统计周期编码.fromString(statisticalIndexCodeEnum.get统计周期()).get名称());
                 String producerUrl  = linkTo(methodOn(WebController.class).index_detail(collaborator.getTargetNo(), null)).toUri().getRawPath();

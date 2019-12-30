@@ -56,7 +56,7 @@ public class S_89_SEQ_发放额__5年以内含___AND_0302000102_HistoryServiceIm
 
 
 
-    @PostConstruct
+   // @PostConstruct
     public void process() {
 
 

@@ -785,7 +785,7 @@ public class HistoryServiceImpl {
         rateAnalysisStream.setIndexNo(rateAnalysisTable.getTargetNo());
         analysisStreamRepository.save(rateAnalysisStream);
 
-        rateAnalysisTable.setUpdateTime(LocalDateTime.now().toLocalDate());
+        rateAnalysisTable.setUpdateTime(LocalDateTime.now());
         analysisTableRepository.save(rateAnalysisTable);
 
     }

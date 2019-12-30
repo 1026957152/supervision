@@ -278,14 +278,17 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
 
-        List<String> 核心业务_归集  =  Arrays.asList(HX摘要码信息表.H_22_1213_预缴入账,
+        List<String> 核心业务_归集  =  Arrays.asList(
+                HX摘要码信息表.H_22_1213_预缴入账,
                 HX摘要码信息表.H_24_1219_汇缴入账,
                 HX摘要码信息表.H_169_9101_单位正常汇缴入账,
                 HX摘要码信息表.H_171_9103_单位预缴转汇缴入账,
                 HX摘要码信息表.H_25_1220_正常全额补缴入账,
                 HX摘要码信息表.H_26_1221_正常差额补缴入账,
                 HX摘要码信息表.H_27_1222_不定额补缴入账,
-                HX摘要码信息表.H_167_4005_财政单位汇补缴确认).stream().map(e->e.get编码()).collect(Collectors.toList());
+                HX摘要码信息表.H_167_4005_财政单位汇补缴确认
+
+        ).stream().map(e->e.get编码()).collect(Collectors.toList());
         List<String> 综服渠道_缴存 = Arrays.asList(
                 E_业务类型_综服_HX.E_5875_灵活就业人员缴存,
                 E_业务类型_综服_HX.E_5818_缴存比例调整,
@@ -437,7 +440,9 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
     }
     public List<String> 提取_核心(LocalDate localDate) {
-        List<String> 业务s = Arrays.asList(E_业务类型_综服_HX.E_5367_物业费提取,
+        List<String> 业务s = Arrays.asList(
+
+                E_业务类型_综服_HX.E_5367_物业费提取,
                 E_业务类型_综服_HX.E_5368_偿还公积金贷款提取,
                 E_业务类型_综服_HX.E_5372_租房提取,
                 E_业务类型_综服_HX.E_5373_其他住房消费类提取,

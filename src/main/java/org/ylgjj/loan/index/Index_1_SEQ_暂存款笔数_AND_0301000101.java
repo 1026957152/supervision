@@ -184,7 +184,7 @@ public class Index_1_SEQ_暂存款笔数_AND_0301000101 extends BaseServiceImpl 
         try{
             index(beginDate,endDate);
             logger.info("update"+statisticalIndexCodeEnum);
-            analysisTable.setUpdateTime(LocalDate.now());
+            analysisTable.setUpdateTime(LocalDateTime.now());
             analysisService.update(analysisTable);
         }catch (Exception e){
         }
@@ -202,7 +202,7 @@ public class Index_1_SEQ_暂存款笔数_AND_0301000101 extends BaseServiceImpl 
         try{
             index(analysisTable.getModifyDate().toLocalDate(),LocalDate.now());
             logger.info("update"+statisticalIndexCodeEnum);
-            analysisTable.setUpdateTime(LocalDate.now());
+            analysisTable.setUpdateTime(LocalDateTime.now());
             analysisService.update(analysisTable);
         }catch (Exception e){
 

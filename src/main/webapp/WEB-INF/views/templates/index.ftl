@@ -82,7 +82,7 @@
             <li role="presentation"><a href="#idea" aria-controls="idea" role="tab"
                                        data-toggle="tab">设计思路</a></li>
             <li role="presentation" ><a href="#index" aria-controls="coalDeals" role="tab"
-                                                      data-toggle="tab">统计指标编码</a></li>
+                                        data-toggle="tab">统计指标编码,上线率<span class="label label-success">${targetOnlineRate}</span></a></li>
 
         </ul>
         <div class="tab-content">
@@ -410,7 +410,7 @@
 
                             <th data-field="state" data-checkbox="true"></th>
 
-                            <th data-field="indexNo">编号</th>
+                            <th data-field="targetNo">编号</th>
                             <th data-field="name">名称</th>
                             <th data-field="period">周期</th>
 
@@ -418,10 +418,13 @@
 
                             <th data-field="status" >状态</th>
                             <th data-field="description" >描述</th>
+                            <th data-field="analysedBeginDate" >已分析开始时间</th>
+                            <th data-field="analysedEndDate" >已分析结束时间</th>
+
+
+                            <th data-field="" >存量or增量</th>
                             <th data-field="createDate" >建立时间</th>
-
-
-                            <th data-field="modifyDate" >更新时间</th>
+                            <th data-field="updateTime" >更新时间</th>
 
 
                             <th data-field=""  data-formatter="operationFormatter">操作</th>

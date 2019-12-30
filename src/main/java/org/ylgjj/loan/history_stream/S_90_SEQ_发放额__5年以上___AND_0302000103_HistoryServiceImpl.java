@@ -7,6 +7,7 @@ import org.javatuples.Triplet;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_flow.*;
+import org.ylgjj.loan.enumT.E_LN008_借款人信息_借款人类型;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 
 import javax.annotation.PostConstruct;

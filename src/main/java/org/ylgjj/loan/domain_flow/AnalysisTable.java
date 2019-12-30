@@ -1,11 +1,14 @@
 package org.ylgjj.loan.domain_flow;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by yuan zhao  on 08/10/2015.
@@ -19,11 +22,18 @@ public class AnalysisTable extends BaseDomain {
     private String targetNo;
 
     @Column(name = "update_Date")
-    private LocalDate updateTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updateTime;
 
     @Column(name = "seq_no")
     private Integer seq;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate analysedBeginDate;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate analysedEndDate;
 
     @Override
@@ -39,12 +49,12 @@ public class AnalysisTable extends BaseDomain {
         this.targetNo = indexNo;
     }
 
-    public void setUpdateTime(LocalDate updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
 
         this.updateTime = updateTime;
     }
 
-    public LocalDate getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 

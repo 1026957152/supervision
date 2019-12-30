@@ -36,6 +36,7 @@ public class StreamHistory extends BaseDomain{
     private String dimension2;
     private Long deltaLongValue;
     private String dimension3;
+    private Double deltaDoubleValue;
 
     public StreamHistory(LocalDate n) {
         this.date = n;
@@ -136,5 +137,13 @@ public class StreamHistory extends BaseDomain{
 
     public String getDimension3() {
         return dimension3;
+    }
+
+    public void setDeltaDoubleValue(Double deltaDoubleValue) {
+        this.deltaDoubleValue = deltaDoubleValue;
+    }
+
+    public Double getDeltaDoubleValue() {
+        return deltaDoubleValue;
     }
 }

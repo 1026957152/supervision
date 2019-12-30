@@ -19,6 +19,7 @@ import org.ylgjj.loan.repository_flow.LoanHistoryRepository;
 import org.ylgjj.loan.service.AnalysisServiceImpl;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Map;
@@ -165,7 +166,7 @@ public class Index_11_SEQ_缴暂存款净额_AND_0301001001 extends BaseServiceI
         try{
             index(LocalDate.now().minusDays(10),LocalDate.now());
             logger.info("update"+statisticalIndexCodeEnum);
-            analysisTable.setUpdateTime(LocalDate.now());
+            analysisTable.setUpdateTime(LocalDateTime.now());
             analysisService.update(analysisTable);
         }catch (Exception e){
 
@@ -185,7 +186,7 @@ public class Index_11_SEQ_缴暂存款净额_AND_0301001001 extends BaseServiceI
         try{
             index(analysisTable.getModifyDate().toLocalDate(),LocalDate.now());
             logger.info("update"+statisticalIndexCodeEnum);
-            analysisTable.setUpdateTime(LocalDate.now());
+            analysisTable.setUpdateTime(LocalDateTime.now());
             analysisService.update(analysisTable);
         }catch (Exception e){
 

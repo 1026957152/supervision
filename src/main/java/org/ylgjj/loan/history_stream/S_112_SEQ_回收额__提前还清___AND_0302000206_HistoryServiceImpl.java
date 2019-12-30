@@ -1,18 +1,22 @@
 package org.ylgjj.loan.history_stream;
 
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
-import org.ylgjj.loan.domain_flow.CollectHistory;
-import org.ylgjj.loan.domain_flow.TargetHistory;
+import org.ylgjj.loan.domain_flow.*;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
+import org.ylgjj.loan.enumT.E_LN006_贷款分期还款计划_curseqStatusEnum;
+import org.ylgjj.loan.enumT.E_LN008_借款人信息_借款人类型;
+import org.ylgjj.loan.outputenum.E_住建部编码_收入水平;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.CM001_单位基本资料表Repository;
 import org.ylgjj.loan.repository.DP005_单位分户账_Repository;
 import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 
+import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
@@ -55,78 +59,136 @@ public class S_112_SEQ_回收额__提前还清___AND_0302000206_HistoryServiceIm
 
 
 
+    @PostConstruct
     public void process() {
 
-       //流水_单位缴存spanTimeSpan( LocalDate.now().minusDays(20000),LocalDate.now());
-        targetHistory( LocalDate.now().minusDays(20000),LocalDate.now());
+
+
+        AnalysisTable rateAnalysisTable = analysisTableRepository.findByTargetNo(statisticalIndexCodeEnum.get指标编码());
+
+        if(rateAnalysisTable == null){
+            return;
+        }
+
+
+        if(rateAnalysisTable.getAnalysedEndDate()== null){
+            delete(statisticalIndexCodeEnum.get指标名称());
+
+            LocalDate beginDate =  LocalDate.now().minusDays(2000);
+            LocalDate endDate = LocalDate.now();
+
+            StopWatch timer = new StopWatch();
+            timer.start();
+
+            流水_单位缴存spanTimeSpan( beginDate,endDate);
+
+
+            rateAnalysisTable.setAnalysedBeginDate(beginDate);
+            rateAnalysisTable.setAnalysedEndDate(endDate);
+            AnalysisStream rateAnalysisStream = new AnalysisStream();
+            rateAnalysisStream.setBeginDate(beginDate);
+            rateAnalysisStream.setEndDate(endDate);
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisStream.setStockOrAdditional("Stock");
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+
+
+        }else{
+
+            LocalDate beginDate =  rateAnalysisTable.getAnalysedEndDate();
+            LocalDate endDate = LocalDate.now();
+
+            StopWatch timer = new StopWatch();
+            timer.start();
+
+            流水_单位缴存spanTimeSpan( beginDate,endDate);
+
+
+            rateAnalysisTable.setAnalysedEndDate(endDate);
+            AnalysisStream rateAnalysisStream = new AnalysisStream();
+            rateAnalysisStream.setBeginDate(beginDate);
+            rateAnalysisStream.setEndDate(endDate);
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisStream.setStockOrAdditional("Additional");
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }
+
+
+
+
+        //    targetHistory( LocalDate.now().minusDays(20000),LocalDate.now());
     }
-
-
-
 
     public void 流水_单位缴存spanTimeSpan(LocalDate beginDateTotal, LocalDate endDateTotal) {
         Map<String, CM001_单位基本资料表> cm001_单位基本资料表Map = null;
         Map<String, DP005_单位分户账> dp005_work_unit_单位分户账Map = null;
 
-        List<DP021_单位缴存登记簿> dp021_单位缴存登记簿s = dp021_单位缴存登记薄Repository.findByRegdate不可为空登记日期Between(beginDateTotal.minusDays(1),endDateTotal.plusDays(1));
+        //List<DP021_单位缴存登记簿> dp021_单位缴存登记簿s = dp021_单位缴存登记薄Repository.findByRegdate不可为空登记日期Between(beginDateTotal.minusDays(1),endDateTotal.plusDays(1));
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);
 
-        List<String> dp = dp021_单位缴存登记簿s.stream().map(e->e.getUnitaccnum单位账号()).distinct().collect(Collectors.toList());
+
+        List<LN006_贷款分期还款计划> ln006__贷款分期还款计划s = ln006_贷款分期还款计划Repository.findByRepaydate1还款日期Between(beginDateTotal.minusDays(1),endDateTotal.plusDays(1));
 
 
 
-            cm001_单位基本资料表Map = cm001_单位基本资料表Map(dp);
 
-        dp005_work_unit_单位分户账Map = dp005_单位分户账Map(dp);
 
 
         List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(beginDateTotal,endDateTotal,statisticalIndexCodeEnum);
-        Map<String, CM001_单位基本资料表> finalCm001_单位基本资料表Map = cm001_单位基本资料表Map;
-        Map<String, DP005_单位分户账> finalDp005_work_unit_单位分户账Map = dp005_work_unit_单位分户账Map;
+
         triplets.stream().forEach(t->{
 
             LocalDate beginDate = t.getValue1();
             LocalDate endDate = t.getValue2();
 
-            dp021_单位缴存登记簿s
+
+
+
+            ln006__贷款分期还款计划s
                     .stream()
-                    .filter(x->x.getInaccdate不可为空入账日期().isAfter(beginDate) && x.getInaccdate不可为空入账日期().isBefore(endDate))
+                    .filter(x->x.getRepaydate1还款日期().isAfter(beginDate) && x.getRepaydate1还款日期().isBefore(endDate))
                     .collect(Collectors.toList()).stream().map(e -> {
                 //TODO        获得某一日的缴存列表;
 
-                DP005_单位分户账 dp005_单位分户账 = finalDp005_work_unit_单位分户账Map.get(e.getUnitaccnum单位账号());
-                CM001_单位基本资料表 cm001_单位基本资料表 = finalCm001_单位基本资料表Map.get(dp005_单位分户账.getUnitcustid_单位客户号());
+                LN003_合同信息 ln003_合同信息 = ln003_合同信息_repository.findByLoancontrcode合同代码(e.getLoancontrcode0合同代码());
 
+                //    DP005_单位分户账 dp005_单位分户账 = finalDp005_work_unit_单位分户账Map.get(e.getCurseqstate本期状态());
+                //     CM001_单位基本资料表 cm001_单位基本资料表 = finalCm001_单位基本资料表Map.get(dp005_单位分户账.getUnitcustid_单位客户号());
 
-                return Triplet.with(e,
-                        cm001_单位基本资料表,
-                        dp005_单位分户账);
+                LN008_借款人信息 ln008_借款人信息 = ln008_借款人信息MapAll(null).get(e.getLoancontrcode0合同代码())
+                        .stream().filter(x->x.getIndiacctype_1_个人账户类型().equals(E_LN008_借款人信息_借款人类型.借款人.getText())).findFirst().get();
+
+                DP005_单位分户账 dp005_单位分户账 = dp005_单位分户账Map.get(ln008_借款人信息.getUnitaccnum_1_单位账号());
+                //   CM001_单位基本资料表 cm001_单位基本资料表 = cm001_单位基本资料表Map.get(dp005_单位分户账.getUnitcustid_单位客户号());
+
+                return Triplet.with(e,ln003_合同信息,ln008_借款人信息);
             })
-                    .collect(Collectors.groupingBy(e -> e.getValue1().getAgentinstcode_经办机构())).entrySet().forEach(eee -> {
-
+                    .collect(Collectors.groupingBy(e -> e.getValue1().getInstcode_机构代码())).entrySet().forEach(dimension1 -> {
                 // TODO 按照 经济类型
-                eee.getValue().stream().collect(Collectors.groupingBy(e -> e.getValue1().getUnitkind_单位性质())).entrySet().forEach(o -> {
+                dimension1.getValue().stream().collect(Collectors.groupingBy(e -> {
 
-                    CollectHistory loanHistory  = new CollectHistory(beginDate,statisticalIndexCodeEnum);
+                    return E_住建部编码_收入水平.from(2019,e.getValue2().getBasenum_0_缴存基数().doubleValue());
 
 
-                    loanHistory.setIndexNo(eee.getKey()); // 机构名称
-                    loanHistory.setDimension1(eee.getKey()); // 机构名称
-                    loanHistory.setDimension2(o.getKey()); // 银行名称
+                })).entrySet().forEach(dimension2 -> {
 
-                    loanHistory.setBeginDate(beginDate);
-                    loanHistory.setEndDate(endDate);
+
+                    StreamHistory loanHistory  = new StreamHistory(beginDate,endDate,statisticalIndexCodeEnum);
+                    loanHistory.setDimension1(dimension1.getKey()); // 机构名称
+                    loanHistory.setDimension2(dimension2.getKey().get名称()); // 机构名称
                     loanHistory.setSeqNum(t.getValue0());
 
 
 
-                    loanHistory.setLongValue(o.getValue().stream()
-                           // .filter(x->x.getValue0().getEndym_截止年月().equals(beginDate.with(TemporalAdjusters.firstDayOfMonth())))
-                       //     .filter(x->x.getValue0().getBegym_开始年月().equals(beginDate.with(TemporalAdjusters.lastDayOfMonth())))
-                            .filter(x->x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.预缴.getText()))
-                            .count());  //
-                    collectHistoryRepository.save(loanHistory);
+                    Double value = dimension2.getValue().stream()
+                            .filter(z->z.getValue0().getCurseqstate本期状态().equals(E_LN006_贷款分期还款计划_curseqStatusEnum.提前全部.getText()))
+                        //    .filter(z->z.getValue0().getInitialbal0期初余额().equals(z.getValue0().getPlanprin0本期应还本金()))
 
+                            .mapToDouble(cc->cc.getValue0().getPlanint本期应还利息0().add(cc.getValue0().getPlanprin0本期应还本金()).doubleValue()).sum();
+                    loanHistory.setDeltaDoubleValue(value);
+
+
+                    streamHistoryRepository.save(loanHistory);
 
 
                 });
@@ -152,7 +214,6 @@ public class S_112_SEQ_回收额__提前还清___AND_0302000206_HistoryServiceIm
 
 
     }
-
 
 
     public void targetHistory(LocalDate beginDateTotal, LocalDate endDateTotal) {

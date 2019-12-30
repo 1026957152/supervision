@@ -44,6 +44,19 @@ public enum E_住建部编码_收入水平 {
 
     }
 
+    public static E_住建部编码_收入水平 from(int i, double doubleValue) {
+        if(E_最低工资_HX.H_2019_1800.get名称() >= doubleValue){
+            return E_住建部编码_收入水平.H__中等收入;
+        }
+        if(E_最低工资_HX.H_2019_1800.get名称()*3 >= doubleValue && E_最低工资_HX.H_2019_1800.get名称() < doubleValue){
+            return E_住建部编码_收入水平.H__低收入;
+        }
+        if(E_最低工资_HX.H_2019_1800.get名称()*3 < doubleValue){
+            return E_住建部编码_收入水平.H__高收入;
+        }
+        return null;
+    }
+
     public String get编码() {
         return 编码;
     }

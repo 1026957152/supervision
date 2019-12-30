@@ -65,8 +65,7 @@ public class S_87_SEQ_当年缴存人数__收入水平___AND_0301020507_HistoryS
 
 
 
-            cm001_单位基本资料表Map = cm001_单位基本资料表Map(dp);
-
+        cm001_单位基本资料表Map = cm001_单位基本资料表Map(dp);
         dp005_work_unit_单位分户账Map = dp005_单位分户账Map(dp);
 
 
@@ -82,7 +81,7 @@ public class S_87_SEQ_当年缴存人数__收入水平___AND_0301020507_HistoryS
                     .stream()
                     .filter(x->x.getInaccdate入账日期().isAfter(beginDate.minusDays(1)) && x.getInaccdate入账日期().isBefore(endDate.plusDays(1)))
                     .collect(Collectors.toList()).stream().map(e -> {
-                //TODO        获得某一日的缴存列表;
+                //TODO  获得某一日的缴存列表;
 
                 DP005_单位分户账 dp005_单位分户账 = finalDp005_work_unit_单位分户账Map.get(e.getUnitaccnum_单位账号());
                 CM001_单位基本资料表 cm001_单位基本资料表 = finalCm001_单位基本资料表Map.get(dp005_单位分户账.getUnitcustid_单位客户号());
