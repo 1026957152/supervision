@@ -17,8 +17,6 @@ import java.time.LocalDate;
 
 public class RateHistory extends BaseDomain{
 
-/*    @Column(name = "no")
-    private String no;*/
 
     @Column(name = "date")
     private LocalDate date;
@@ -30,12 +28,12 @@ public class RateHistory extends BaseDomain{
     private String indexNo;
     private Integer intValue;
     private double doubleValue;
-
     private Long seqNum;
     private String dimension1;
     private String dimension2;
     private Long longValue;
-
+    private Long deltaLongValue;
+    private Double deltaDoubleValue;
     public RateHistory(LocalDate n) {
         this.date = n;
     }
@@ -127,5 +125,25 @@ public class RateHistory extends BaseDomain{
 
     public Long getLongValue() {
         return longValue;
+    }
+
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    public Long getDeltaLongValue() {
+        return deltaLongValue;
+    }
+
+    public void setDeltaLongValue(Long deltaLongValue) {
+        this.deltaLongValue = deltaLongValue;
+    }
+
+    public Double getDeltaDoubleValue() {
+        return deltaDoubleValue;
+    }
+
+    public void setDeltaDoubleValue(Double deltaDoubleValue) {
+        this.deltaDoubleValue = deltaDoubleValue;
     }
 }

@@ -83,6 +83,8 @@ public class HistoryServiceImpl {
     protected TargetAnalysisTableRepository targetAnalysisTableRepository;
     @Autowired
     protected PB008_clerk_info_Repository pb008_柜员信息表_repository;
+    @Autowired
+    protected FD012_银行存款账号登记文件Repository fd012_银行存款账号登记文件Repository;
 
 
     public static List<Triplet<Long,LocalDate,LocalDate>> run统计周期编码(LocalDate beginDate, LocalDate endDate, StatisticalIndexCodeEnum statisticalIndexCodeEnum) {
@@ -584,6 +586,23 @@ public class HistoryServiceImpl {
 
 
 
+
+
+
+    Map<String, DP006_个人缴存信息表> dp006_个人缴存信息表Map = null;
+    public Map<String, DP006_个人缴存信息表> dp006_个人缴存信息表MapAll() {
+
+
+        if(dp006_个人缴存信息表Map == null){
+
+            dp006_个人缴存信息表Map =  dp006_个人缴存信息表_repository.findAll()
+                    .stream()
+                    .collect(Collectors.toMap(e -> e.getAccnum个人账号(),e->e));
+        }
+        return dp006_个人缴存信息表Map;
+    }
+
+
     public Map<String, DP007_个人分户账> dp007_个人分户账Map(List<String> dp) {
 
 
@@ -793,6 +812,22 @@ public class HistoryServiceImpl {
         return pb008_柜员信息表Map;
     }
 
+    Map<String, FD012_银行存款账号登记文件> fd012_银行存款账号登记文件Map = null;
+
+    public Map<String, FD012_银行存款账号登记文件> fd012_银行存款账号登记文件Map() {
+
+        if(fd012_银行存款账号登记文件Map == null){
+
+            fd012_银行存款账号登记文件Map = fd012_银行存款账号登记文件Repository
+                    .findAll().stream().collect(Collectors.groupingBy(e->e.getBANKACCNUM_不可为空_银行账号().trim()))
+                    .entrySet()
+                    .stream()
+                    .collect(Collectors.toMap(e->e.getKey(),e->e.getValue().get(0)));
+        }
+        return fd012_银行存款账号登记文件Map;
+    }
+
+
 
 
 
@@ -821,5 +856,17 @@ public class HistoryServiceImpl {
     @Transactional
     protected void delete(String targetNo) {
         analysisTableRepository.deleteByTargetNo(targetNo);
+    }
+
+
+
+    protected void deleteSteam(String targetNo) {
+        streamHistoryRepository.deleteByTargetNo(targetNo);
+    }
+
+    @Transactional
+    protected void saveAll(List<StreamHistory> streamHistoriesResult) {
+        streamHistoryRepository.saveAll(streamHistoriesResult);
+
     }
 }

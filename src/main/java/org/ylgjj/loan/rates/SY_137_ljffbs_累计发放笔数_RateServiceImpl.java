@@ -16,6 +16,7 @@ import org.ylgjj.loan.repository_flow.RateAnalysisStreamRepository;
 import org.ylgjj.loan.repository_flow.RateAnalysisTableRepository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -56,6 +57,8 @@ public class SY_137_ljffbs_累计发放笔数_RateServiceImpl extends RateServic
    DecimalFormat df_ = new DecimalFormat("#.00");
 
 
+
+  // @PostConstruct
     public void process() {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 

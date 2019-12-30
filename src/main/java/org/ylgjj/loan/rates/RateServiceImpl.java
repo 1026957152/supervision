@@ -11,6 +11,7 @@ import org.ylgjj.loan.repository.LN003_合同信息_Repository;
 import org.ylgjj.loan.repository_flow.RateAnalysisStreamRepository;
 import org.ylgjj.loan.repository_flow.RateAnalysisTableRepository;
 
+import javax.annotation.PostConstruct;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
@@ -39,9 +40,9 @@ public class RateServiceImpl {
 
 
 
-  //
+  @PostConstruct
     @Transactional
-    public void S_83_SEQ_住房公积金使用率_AND_0301020501__() {
+    public void CONFIG() {
         List<E_指标_RATE_SY> statisticalIndexCodeEnums = Arrays.stream(E_指标_RATE_SY.values()).collect(Collectors.toList());
 
 

@@ -59,7 +59,6 @@ public class S_112_SEQ_回收额__提前还清___AND_0302000206_HistoryServiceIm
 
 
 
-    @PostConstruct
     public void process() {
 
 

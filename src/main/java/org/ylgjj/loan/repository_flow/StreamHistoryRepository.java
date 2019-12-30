@@ -3,6 +3,8 @@ package org.ylgjj.loan.repository_flow;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
 import org.ylgjj.loan.domain_flow.StreamHistory;
 
 import java.time.LocalDate;
@@ -18,4 +20,7 @@ public interface StreamHistoryRepository extends JpaRepository<StreamHistory, In
 
     List<StreamHistory> findByTargetNoAndDateBetweenOrderByDateDesc(String 指标编码, LocalDate localDate_begin, LocalDate localDate_end);
 
+    @Transactional
+    @Modifying
+    void deleteByTargetNo(String targetNo);
 }

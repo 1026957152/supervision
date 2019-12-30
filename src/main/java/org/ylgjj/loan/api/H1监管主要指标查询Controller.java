@@ -73,7 +73,7 @@ public class H1监管主要指标查询Controller {
         query.setJsrq("2019-11-30");
         System.out.println("----------------- "+ query.toString());
 
-        return h1_3监管主要指标查询_指标明细查询Service.H_1_2_监管主要指标查询_公积金中心主要运行情况查询(
+        return h1_2监管主要指标查询_公积金中心主要运行情况查询Service.H_1_2_监管主要指标查询_公积金中心主要运行情况查询(
                 query.getKsrq(),
                 query.getJsrq()
                 );
@@ -92,8 +92,17 @@ public class H1监管主要指标查询Controller {
         }
 
 
+        try{
+            return h1_3监管主要指标查询_指标明细查询Service.H_1_3_监管主要指标查询_指标明细查询(query);
+        }catch (Exception e){
 
-        return h1_3监管主要指标查询_指标明细查询Service.H_1_3_监管主要指标查询_指标明细查询(query);
+            Output output = new Output();
+            output.setSuccess(false);
+            output.setMessage(e.toString());
+            return output;
+        }
+
+
     }
     @ApiIgnore
     @RequestMapping(value = "/get_fwxl.service", method = RequestMethod.POST)

@@ -1,10 +1,13 @@
 package org.ylgjj.loan.history_stream;
 
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
+import org.ylgjj.loan.domain_flow.AnalysisStream;
+import org.ylgjj.loan.domain_flow.AnalysisTable;
 import org.ylgjj.loan.domain_flow.CollectHistory;
 import org.ylgjj.loan.domain_flow.TargetHistory;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
@@ -26,38 +29,63 @@ import java.util.stream.Collectors;
 @Service
 public class S_21_SEQ_新开户职工数__非本市缴存职工___AND_0301003205_HistoryServiceImpl extends HistoryServiceImpl{
 
-    @Autowired
-    private DP021_单位缴存登记薄Repository dp021_单位缴存登记薄Repository;
 
-
-    @Autowired
-    private DP005_单位分户账_Repository dp005__单位分户账_repository;
-
-    @Autowired
-    private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
-
-
-
-
-
-
-
-
-
-    public void test() {
-
-        List<Triplet<Long,LocalDate,LocalDate>> t = run统计周期编码( LocalDate.now().minusDays(3),LocalDate.now(),StatisticalIndexCodeEnum.S_66_SEQ_暂存款余额_AND_0301008102);
-
-        System.out.println( t+"dddddddddddddddddd");
-    }
-
-
+    StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.S_19_SEQ_提取人数__非本市缴存职工___AND_0301003203;
 
 
     public void process() {
 
-       //流水_单位缴存spanTimeSpan( LocalDate.now().minusDays(20000),LocalDate.now());
-        targetHistory( LocalDate.now().minusDays(20000),LocalDate.now());
+
+
+        AnalysisTable analysisTable = analysisTableRepository.findByTargetNo(statisticalIndexCodeEnum.get指标编码());
+
+        if(analysisTable == null){
+            return;
+        }
+
+
+        if(analysisTable.getAnalysedEndDate()== null){
+            deleteSteam(statisticalIndexCodeEnum.get指标编码());
+
+            LocalDate beginDate =  LocalDate.now().minusDays(2000);
+            LocalDate endDate = LocalDate.now();
+
+            StopWatch timer = new StopWatch();
+            timer.start();
+
+            流水_单位缴存spanTimeSpan( beginDate,endDate);
+
+
+            analysisTable.setAnalysedBeginDate(beginDate);
+            analysisTable.setAnalysedEndDate(endDate);
+            AnalysisStream analysisStream = new AnalysisStream();
+            analysisStream.setBeginDate(beginDate);
+            analysisStream.setEndDate(endDate);
+            analysisStream.setDuration(timer.getTime());
+            analysisStream.setStockOrAdditional("Stock");
+            updateRateTable(analysisTable,analysisStream);
+
+
+        }else{
+
+            LocalDate beginDate =  analysisTable.getAnalysedEndDate();
+            LocalDate endDate = LocalDate.now();
+
+            StopWatch timer = new StopWatch();
+            timer.start();
+
+            流水_单位缴存spanTimeSpan( beginDate,endDate);
+
+
+            analysisTable.setAnalysedEndDate(endDate);
+            AnalysisStream rateAnalysisStream = new AnalysisStream();
+            rateAnalysisStream.setBeginDate(beginDate);
+            rateAnalysisStream.setEndDate(endDate);
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisStream.setStockOrAdditional("Additional");
+            updateRateTable(analysisTable,rateAnalysisStream);
+        }
+
     }
 
 

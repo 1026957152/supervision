@@ -159,11 +159,11 @@ public class H3银行实时交易ServiceImpl extends HistoryServiceImpl {
     public Output H_3_3_银行余额查询_银行实时交易(QueryH_3_3_银行余额查询_银行实时交易 query) {
 
      //   List<FD012_银行存款账号登记文件> fd012_银行存款账号登记文件s = fd012_银行存款账号登记文件Repository.findAll();
-        Map<String,FD012_银行存款账号登记文件> fd012_银行存款账号登记文件Map = fd012_银行存款账号登记文件Repository
+/*        Map<String,FD012_银行存款账号登记文件> fd012_银行存款账号登记文件Map = fd012_银行存款账号登记文件Repository
                 .findAll().stream().collect(Collectors.groupingBy(e->e.getBANKACCNUM_不可为空_银行账号().trim()))
                 .entrySet()
                 .stream()
-                .collect(Collectors.toMap(e->e.getKey(),e->e.getValue().get(0)));
+                .collect(Collectors.toMap(e->e.getKey(),e->e.getValue().get(0)));*/
         DateTimeFormatter df_ = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df_);
         LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df_);
@@ -173,30 +173,38 @@ public class H3银行实时交易ServiceImpl extends HistoryServiceImpl {
         System.out.println("--------------"+fn090_账户变动通知文件s.size());
         Output output = new Output();
         output.setSuccess(true);
+
+        ;;
+
         output.setData(fn090_账户变动通知文件s
                 .stream()
                 .filter(e->{
-                    if(fd012_银行存款账号登记文件Map.get(e.getBankaccnum不可为空账号().trim())!= null){
+                    if(fd012_银行存款账号登记文件Map().get(e.getBankaccnum不可为空账号().trim())!= null){
                         return true;
                     }else{
                         System.out.println("-找不到银行账户-------------------"+e.getBankaccnum不可为空账号());
                         return false;
                     }
                 })
+                .collect(Collectors.groupingBy(e->{
+                    return pb011_银行信息表Map().get(fd012_银行存款账号登记文件Map().get(e.getBankaccnum不可为空账号()).getBANKCODE_不可为空_银行代码()).getSUPERBANKCODE();
+                }))
+                .entrySet()
+                .stream()
                 .map(e->{
-            H3_3结算监控_银行实时交易 object = new H3_3结算监控_银行实时交易();
+                    H3_3结算监控_银行实时交易 object = new H3_3结算监控_银行实时交易();
 
 
-           object.setId_唯一标识(e.getBankhostsernum不可为空银行主机流水号());
-            object.setFsefx_发生额方向(e.getAmt__不可为空__金额()>0?"01":"02") ;  //01：转入，02：支出
-            object.setFse_发生额(e.getAmt__不可为空__金额());  // TODO 要银行枚举
-            object.setYe_余额(e.getCurrbal__不可为空__余额());
-            object.setSszh_银行编码(fd012_银行存款账号登记文件Map.get(e.getBankaccnum不可为空账号().trim()).getBANKCODE_不可为空_银行代码());
-            object.setBm(fd012_银行存款账号登记文件Map.get(e.getBankaccnum不可为空账号()).getBANKCODE_不可为空_银行代码());
-            object.setMc(fd012_银行存款账号登记文件Map.get(e.getBankaccnum不可为空账号()).getBANKACCNM_不可为空_银行账户名称());
-            object.setSszh_银行编码(e.getBankaccnum不可为空账号());
-            return object;
-        }).collect(Collectors.toList()));
+                    // object.setId_唯一标识(e.getBankhostsernum不可为空银行主机流水号());
+                    //  object.setFsefx_发生额方向(e.getAmt__不可为空__金额()>0?"01":"02") ;  //01：转入，02：支出
+                    object.setFse_发生额(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x->x.getAmt__不可为空__金额()).sum()).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());//e.getValue().getAmt__不可为空__金额());  // TODO 要银行枚举
+                    object.setYe_余额(BigDecimal.valueOf(e.getValue().stream().sorted(Comparator.comparingLong(x -> -x.getTransdate不可为空写入日期().toEpochDay())).findFirst().get().getCurrbal__不可为空__余额()).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+                    //    object.setSszh_银行编码(fd012_银行存款账号登记文件Map.get(e.getBankaccnum不可为空账号().trim()).getBANKCODE_不可为空_银行代码());
+                    object.setBm(e.getKey());
+                    object.setMc(pb010_大行信息表Map().get(e.getKey()).getBANKNAME_不可为空_银行名称());
+                    object.setSszh_银行编码(e.getKey());
+                    return object;
+                }).collect(Collectors.toList()));
         return output;
     }
 
@@ -210,11 +218,8 @@ public class H3银行实时交易ServiceImpl extends HistoryServiceImpl {
 
         List<FD012_银行存款账号登记文件> fd012_银行存款账号登记文件s = fd012_银行存款账号登记文件Repository.findAll();
 
-        List<PB011_银行信息表> pb011_银行信息表s = pb011_银行信息表_repository.findAll();
 
-        Map<String, PB011_银行信息表> pb011_bank_infoMap = pb011_银行信息表s.stream().collect(Collectors.toMap(e->e.getBankcode(), h->h));
         DecimalFormat df = new DecimalFormat("0.0000");
-        Map<String, PB010_大行信息表> pb010_bank_info_大行信息表Map = pb010__大行信息表Repository.findAll().stream().collect(Collectors.toMap(e->e.getBankcode_不可为空_银行代码(), h->h));
 
 
 
@@ -266,9 +271,8 @@ public class H3银行实时交易ServiceImpl extends HistoryServiceImpl {
 
 
 
-
-       List<H3_2结算监控_银行余额查询> aaaaa =
-                fd012_银行存款账号登记文件s.stream().map(e->{
+        Output output = new Output();
+        output.setData(fd012_银行存款账号登记文件s.stream().map(e->{
 
 
             double 支出额= fn090_账户变动通知文件s.stream()
@@ -284,27 +288,22 @@ public class H3银行实时交易ServiceImpl extends HistoryServiceImpl {
             return Quartet.with(e,发生额,abs(收入额),abs(支出额));
 
 
-        }).collect(Collectors.groupingBy(e->pb011_bank_infoMap.get(e.getValue0().getBANKCODE_不可为空_银行代码()).getSUPERBANKCODE()))
+        }).collect(Collectors.groupingBy(e->pb011_银行信息表Map().get(e.getValue0().getBANKCODE_不可为空_银行代码()).getSUPERBANKCODE()))
 
-        .entrySet().stream()
-  .map(e->{
-      H3_2结算监控_银行余额查询 h8_1银行专户余额_银行专户余额查询 = new H3_2结算监控_银行余额查询();
-      h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getKey());
-      h8_1银行专户余额_银行专户余额查询.setMc_银行名称(pb010_bank_info_大行信息表Map.get(e.getKey()).getBANKNAME_不可为空_银行名称());
-      h8_1银行专户余额_银行专户余额查询
-              .setFse_发生额(Double.valueOf(df.format(e.getValue().stream().mapToDouble(x->x.getValue1()).sum())));
-      h8_1银行专户余额_银行专户余额查询
-              .setSre_收入额(Double.valueOf(df.format(e.getValue().stream().mapToDouble(x->x.getValue2()).sum())));
+                .entrySet().stream()
+                .map(e->{
+                    H3_2结算监控_银行余额查询 h8_1银行专户余额_银行专户余额查询 = new H3_2结算监控_银行余额查询();
+                    h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getKey());
+                    h8_1银行专户余额_银行专户余额查询.setMc_银行名称(pb010_大行信息表Map().get(e.getKey()).getBANKNAME_不可为空_银行名称());
+                    h8_1银行专户余额_银行专户余额查询
+                            .setFse_发生额(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x->x.getValue1()).sum()).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+                    h8_1银行专户余额_银行专户余额查询
+                            .setSre_收入额(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x->x.getValue2()).sum()).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
-      h8_1银行专户余额_银行专户余额查询
-              .setZce_支出额(Double.valueOf(df.format(e.getValue().stream().mapToDouble(x->x.getValue3()).sum())));
-      return h8_1银行专户余额_银行专户余额查询;
-  }).collect(Collectors.toList());
-
-
-
-        Output output = new Output();
-        output.setData(aaaaa);
+                    h8_1银行专户余额_银行专户余额查询
+                            .setZce_支出额(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x->x.getValue3()).sum()).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+                    return h8_1银行专户余额_银行专户余额查询;
+                }).collect(Collectors.toList()));
         return output;
     }
 }

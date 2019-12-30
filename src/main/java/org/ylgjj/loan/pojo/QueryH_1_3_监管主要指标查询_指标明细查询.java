@@ -1,27 +1,28 @@
 package org.ylgjj.loan.pojo;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class QueryH_1_3_监管主要指标查询_指标明细查询 {
 
-        @NotBlank
+
         String zjbzxbm; //zjbzxbm	住建部中心编码	String	输入(必传)	  长度：6，举例：C61010
 
-        @NotBlank
+        @NotNull
         String dimension1; //维度1	String	输入(必传)
-        @NotBlank
+        @NotNull
         String dimension2; //维度2	String	输入(必传)
         @NotBlank
         String dimension3; //维度3	String	输入(必传)
         @NotBlank
         String tjzq; //统计周期	String	输入(必传) 对应编码规则中统计周期编码的编码值
-        @NotBlank
+
         String rows; //行	String	输入(必传) 可以忽略
 
-        @NotBlank
+
         String order; //String	输入(必传) 举例：1,2,3,4或者4,3,2,1任意排序组合
 
-        @NotBlank
+        @NotNull
         String target; //目标	String	输入(必传) 对应编码规则中统计指标编码的指标编码，举例：0301000101
 
 

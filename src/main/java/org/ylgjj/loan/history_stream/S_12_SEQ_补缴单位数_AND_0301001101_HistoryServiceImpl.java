@@ -1,6 +1,7 @@
 package org.ylgjj.loan.history_stream;
 
 
+import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,8 +9,8 @@ import org.ylgjj.loan.domain.CM001_单位基本资料表;
 import org.ylgjj.loan.domain.DP005_单位分户账;
 import org.ylgjj.loan.domain.DP021_单位缴存登记簿;
 import org.ylgjj.loan.domain.DP202_单位缴存变更登记簿;
-import org.ylgjj.loan.domain_flow.CollectHistory;
-import org.ylgjj.loan.domain_flow.TargetHistory;
+import org.ylgjj.loan.domain_flow.*;
+import org.ylgjj.loan.enumT.E_CM001_单位基本资料表_单位性质;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
 import org.ylgjj.loan.repository.CM001_单位基本资料表Repository;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class S_12_SEQ_补缴单位数_AND_0301001101_HistoryServiceImpl extends HistoryServiceImpl{
+    StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.S_11_SEQ_缴暂存款净额_AND_0301001001;
 
     @Autowired
     private DP021_单位缴存登记薄Repository dp021_单位缴存登记薄Repository;
@@ -60,10 +62,58 @@ public class S_12_SEQ_补缴单位数_AND_0301001101_HistoryServiceImpl extends 
 
     public void process() {
 
-       //流水_单位缴存spanTimeSpan( LocalDate.now().minusDays(20000),LocalDate.now());
-        targetHistory( LocalDate.now().minusDays(20000),LocalDate.now());
-    }
 
+
+        AnalysisTable analysisTable = analysisTableRepository.findByTargetNo(statisticalIndexCodeEnum.get指标编码());
+
+        if(analysisTable == null){
+            return;
+        }
+
+
+        if(analysisTable.getAnalysedEndDate()== null){
+            deleteSteam(statisticalIndexCodeEnum.get指标编码());
+
+            LocalDate beginDate =  LocalDate.now().minusDays(2000);
+            LocalDate endDate = LocalDate.now();
+
+            StopWatch timer = new StopWatch();
+            timer.start();
+
+            流水_单位缴存spanTimeSpan( beginDate,endDate);
+
+
+            analysisTable.setAnalysedBeginDate(beginDate);
+            analysisTable.setAnalysedEndDate(endDate);
+            AnalysisStream analysisStream = new AnalysisStream();
+            analysisStream.setBeginDate(beginDate);
+            analysisStream.setEndDate(endDate);
+            analysisStream.setDuration(timer.getTime());
+            analysisStream.setStockOrAdditional("Stock");
+            updateRateTable(analysisTable,analysisStream);
+
+
+        }else{
+
+            LocalDate beginDate =  analysisTable.getAnalysedEndDate();
+            LocalDate endDate = LocalDate.now();
+
+            StopWatch timer = new StopWatch();
+            timer.start();
+
+            流水_单位缴存spanTimeSpan( beginDate,endDate);
+
+
+            analysisTable.setAnalysedEndDate(endDate);
+            AnalysisStream rateAnalysisStream = new AnalysisStream();
+            rateAnalysisStream.setBeginDate(beginDate);
+            rateAnalysisStream.setEndDate(endDate);
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisStream.setStockOrAdditional("Additional");
+            updateRateTable(analysisTable,rateAnalysisStream);
+        }
+
+    }
 
 
 
@@ -83,7 +133,7 @@ public class S_12_SEQ_补缴单位数_AND_0301001101_HistoryServiceImpl extends 
         dp005_work_unit_单位分户账Map = dp005_单位分户账Map(dp);
 
 
-        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(beginDateTotal,endDateTotal,StatisticalIndexCodeEnum.S_1_SEQ_暂存款笔数_AND_0301000101);
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(beginDateTotal,endDateTotal,statisticalIndexCodeEnum);
         Map<String, CM001_单位基本资料表> finalCm001_单位基本资料表Map = cm001_单位基本资料表Map;
         Map<String, DP005_单位分户账> finalDp005_work_unit_单位分户账Map = dp005_work_unit_单位分户账Map;
         triplets.stream().forEach(t->{
@@ -108,27 +158,28 @@ public class S_12_SEQ_补缴单位数_AND_0301001101_HistoryServiceImpl extends 
                     .collect(Collectors.groupingBy(e -> e.getValue1().getAgentinstcode_经办机构())).entrySet().forEach(eee -> {
 
                 // TODO 按照 经济类型
-                eee.getValue().stream().collect(Collectors.groupingBy(e -> e.getValue1().getUnitkind_单位性质())).entrySet().forEach(o -> {
+                eee.getValue().stream().collect(Collectors.groupingBy(e -> e.getValue1().getUnitkind_单位性质())).entrySet().forEach(dimension1 -> {
 
-                    CollectHistory loanHistory  = new CollectHistory(beginDate,StatisticalIndexCodeEnum.S_1_SEQ_暂存款笔数_AND_0301000101);
+                    // TODO 按照 经济类型
+                    dimension1.getValue().stream().collect(Collectors.groupingBy(e -> e.getValue1().getUnitkind_单位性质())).entrySet().forEach(dimension2 -> {
 
 
-                    loanHistory.setIndexNo(eee.getKey()); // 机构名称
-                    loanHistory.setDimension1(eee.getKey()); // 机构名称
-                    loanHistory.setDimension2(o.getKey()); // 银行名称
+                        StreamHistory loanHistory  = new StreamHistory(t.getValue0(),beginDate,endDate,statisticalIndexCodeEnum);
 
-                    loanHistory.setBeginDate(beginDate);
-                    loanHistory.setEndDate(endDate);
-                    loanHistory.setSeqNum(t.getValue0());
+                        loanHistory.setDimension1(pb007_机构信息表Map().get(dimension1.getKey()).getInstName()); // 机构名称
+                        loanHistory.setDimension2(E_CM001_单位基本资料表_单位性质.fromString(dimension2.getKey()).getDisplayText()); // 机构名称
 
 
 
-                    loanHistory.setLongValue(o.getValue().stream()
-                           // .filter(x->x.getValue0().getEndym_截止年月().equals(beginDate.with(TemporalAdjusters.firstDayOfMonth())))
-                       //     .filter(x->x.getValue0().getBegym_开始年月().equals(beginDate.with(TemporalAdjusters.lastDayOfMonth())))
-                            .filter(x->x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.预缴.getText()))
-                            .count());  //
-                    collectHistoryRepository.save(loanHistory);
+                        Integer value = dimension1.getValue().stream()
+                                .filter(x->x.getValue0().getRegdate不可为空登记日期().equals(beginDate))
+                                .filter(x->x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.不定额补缴))
+                                .filter(x->x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.正常全额补缴))
+                                .filter(x->x.getValue0().getDptype_缴存类型().equals(E_DP021_单位缴存登记簿_缴存类型.正常差额补缴))
+                                .collect(Collectors.groupingBy(x->x.getValue0().getUnitaccnum单位账号())).size();
+                        loanHistory.setDeltaLongValue(value.longValue());
+
+                        streamHistoryRepository.save(loanHistory);
 
 
 
@@ -145,6 +196,8 @@ public class S_12_SEQ_补缴单位数_AND_0301001101_HistoryServiceImpl extends 
 
         });
 
+
+        });
 
 
 

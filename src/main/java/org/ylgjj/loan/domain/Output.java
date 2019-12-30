@@ -1,5 +1,7 @@
 package org.ylgjj.loan.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,6 +12,9 @@ public class Output {
 /*    private String ret;
     private String msg;*/
     private boolean success;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String message;
 
     public List<Object> getData() {
         return result;
@@ -100,5 +105,13 @@ public class Output {
 
     public boolean getSuccess() {
         return success;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

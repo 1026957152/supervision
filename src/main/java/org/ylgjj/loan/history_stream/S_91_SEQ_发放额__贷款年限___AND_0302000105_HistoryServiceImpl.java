@@ -29,21 +29,6 @@ import java.util.stream.Collectors;
 public class S_91_SEQ_发放额__贷款年限___AND_0302000105_HistoryServiceImpl extends HistoryServiceImpl{
     StatisticalIndexCodeEnum statisticalIndexCodeEnum = StatisticalIndexCodeEnum.S_91_SEQ_发放额__贷款年限___AND_0302000105;
 
-    @Autowired
-    private DP021_单位缴存登记薄Repository dp021_单位缴存登记薄Repository;
-
-
-    @Autowired
-    private DP005_单位分户账_Repository dp005__单位分户账_repository;
-
-    @Autowired
-    private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
-
-
-
-
-
-
 
 
 

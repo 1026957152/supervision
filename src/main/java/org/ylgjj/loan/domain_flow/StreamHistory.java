@@ -37,12 +37,20 @@ public class StreamHistory extends BaseDomain{
     private Long deltaLongValue;
     private String dimension3;
     private Double deltaDoubleValue;
-
+    private Long longValue;
     public StreamHistory(LocalDate n) {
         this.date = n;
     }
     public StreamHistory(LocalDate n, StatisticalIndexCodeEnum index) {
 
+    }
+
+    public Long getLongValue() {
+        return longValue;
+    }
+
+    public void setLongValue(Long longValue) {
+        this.longValue = longValue;
     }
 
     public StreamHistory() {
@@ -53,6 +61,13 @@ public class StreamHistory extends BaseDomain{
     public StreamHistory(LocalDate beginDate, LocalDate endDate, StatisticalIndexCodeEnum s1Seq暂存款笔数And0301000101) {
         this.date = beginDate;
         targetNo = s1Seq暂存款笔数And0301000101.get指标编码();
+        this.endDate = endDate;
+    }
+
+    public StreamHistory(Long value0, LocalDate beginDate, LocalDate endDate, StatisticalIndexCodeEnum statisticalIndexCodeEnum) {
+        this.seqNum = value0;
+        this.date = beginDate;
+        targetNo = statisticalIndexCodeEnum.get指标编码();
         this.endDate = endDate;
     }
 

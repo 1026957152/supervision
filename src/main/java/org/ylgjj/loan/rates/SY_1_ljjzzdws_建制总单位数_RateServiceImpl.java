@@ -18,6 +18,7 @@ import org.ylgjj.loan.repository.DP005_单位分户账_Repository;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -52,6 +53,7 @@ public class SY_1_ljjzzdws_建制总单位数_RateServiceImpl extends RateServic
 
 
 
+    //@PostConstruct
     public void process() {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
@@ -107,13 +109,6 @@ public class SY_1_ljjzzdws_建制总单位数_RateServiceImpl extends RateServic
         triplets.stream().forEach(e->{
             System.out.println("-----------"+ e.toString());
         });
-
-
-/*        RateHistory rateHistory = new RateHistory();
-        rateHistory.setIndexNo(E_指标_RATE_SY.SY_177_dkpjspts_贷款平均审批天数.get编码());
-        rateHistoryRepository.save(rateHistory);*/
-
-
 
 
 
