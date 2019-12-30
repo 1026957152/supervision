@@ -10,6 +10,7 @@ import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.*;
 import org.ylgjj.loan.domain_flow.ApiCacheAnalysisTable;
 import org.ylgjj.loan.domain_flow.LoanCache;
+import org.ylgjj.loan.output.H10_2逾期监管_逾期监管明细查询;
 import org.ylgjj.loan.outputenum.E_逾期分类编码_SY;
 import org.ylgjj.loan.pojo.QueryH10_2逾期监管_逾期监管明细查询;
 import org.ylgjj.loan.repository.*;
@@ -128,7 +129,33 @@ public class H10_2逾期监管_逾期监管明细查询_ServiceImpl {
 */
 
         Output output = new Output();
-        output.setData(ln003_contract_info_合同信息s.getContent());
+
+        output.setData(ln003_contract_info_合同信息s.getContent().stream().map(e->{
+            H10_2逾期监管_逾期监管明细查询 h10_2逾期监管_逾期监管明细查询 = new H10_2逾期监管_逾期监管明细查询();
+            h10_2逾期监管_逾期监管明细查询.setDblxmc_担保类型_String(e.getDblxmc_担保类型_String());
+            h10_2逾期监管_逾期监管明细查询.setDwmc_单位名称_String(e.getDwmc_单位名称_String());
+            h10_2逾期监管_逾期监管明细查询.setFwxzmc_房屋性质_String(e.getFwxzmc_房屋性质_String());
+            h10_2逾期监管_逾期监管明细查询.setFwzl_房屋地址_String(e.getFwzl_房屋地址_String());
+            h10_2逾期监管_逾期监管明细查询.setGrztmc_主借款人账户状态_String(e.getGrztmc_主借款人账户状态_String());
+            h10_2逾期监管_逾期监管明细查询.setHkfsmc_还款方式_String(e.getHkfsmc_还款方式_String());
+            h10_2逾期监管_逾期监管明细查询.setJkhtbh_合同编号_String(e.getJkhtbh_合同编号_String());
+            h10_2逾期监管_逾期监管明细查询.setJkrgjjzh_借款人公积金账号_String(e.getJkrgjjzh_借款人公积金账号_String());
+            h10_2逾期监管_逾期监管明细查询.setJkrxm_借款人姓名_String(e.getJkrxm_借款人姓名_String());
+            h10_2逾期监管_逾期监管明细查询.setJkrzjh_借款人证件号码_String(e.getJkrzjh_借款人证件号码_String());
+            h10_2逾期监管_逾期监管明细查询.setSpczyxm_审批人_String(e.getSpczyxm_审批人_String());
+            h10_2逾期监管_逾期监管明细查询.setYqkssj_逾期开始日期_String(e.getYqkssj_逾期开始日期_String().toString());
+            h10_2逾期监管_逾期监管明细查询.setDkffrq_发放日期_String(e.getDkffrq发放日期String().toString());
+            h10_2逾期监管_逾期监管明细查询.setDkffe_发放金额_double(e.getDkffe_发放金额_double());
+            h10_2逾期监管_逾期监管明细查询.setDkye_贷款余额_double(e.getDkye_贷款余额_double());
+            h10_2逾期监管_逾期监管明细查询.setDqjhhkje_月还款额_double(e.getDqjhhkje_月还款额_double());
+            h10_2逾期监管_逾期监管明细查询.setDqyqbj_当前逾期本金_double(e.getDqyqbj_当前逾期本金_double());
+            h10_2逾期监管_逾期监管明细查询.setDqyqcs_当前逾期次数_int(e.getDqyqcs当前逾期次数int());
+            h10_2逾期监管_逾期监管明细查询.setYqts_逾期天数_int(e.getYqts_逾期天数_int());
+            h10_2逾期监管_逾期监管明细查询.setLjyqqs_累计逾期次数_int(e.getLjyqqs_累计逾期次数_int());
+            h10_2逾期监管_逾期监管明细查询.setGrjcjs_主借款人月缴存基数_double(e.getGrjcjs_主借款人月缴存基数_double());
+
+            return h10_2逾期监管_逾期监管明细查询;
+        }).collect(Collectors.toList()));
         output.setSuccess(true);
 
         return output;

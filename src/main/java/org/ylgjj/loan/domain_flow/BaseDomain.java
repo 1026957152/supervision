@@ -25,14 +25,15 @@ public class BaseDomain implements Serializable {
   // @GeneratedValue(strategy = GenerationType.IDENTITY)
    @GeneratedValue
 
+    @JsonIgnore
     private Integer id;
 
 
-   // @JsonIgnore
+    @JsonIgnore
     @Column(name = "create_by")
     @CreatedBy
     private Integer createBy;
- //   @JsonIgnore
+  @JsonIgnore
     @Column(name = "modify_by")
     @LastModifiedBy
     private Integer modifyBy;

@@ -4,6 +4,7 @@ package org.ylgjj.loan.service;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ylgjj.loan.config.Constants;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_flow.LoanCache;
 import org.ylgjj.loan.output.H10_1逾期监管_逾期监管汇总查询;
@@ -93,7 +94,7 @@ public class H10_1逾期监管_逾期监管汇总查询ServiceImpl {
 
 
         H10_1逾期监管_逾期监管汇总查询 h10_2逾期监管_逾期监管明细查询  = new H10_1逾期监管_逾期监管汇总查询();
-
+        h10_2逾期监管_逾期监管明细查询.setOutput_zxjgbm_办理渠道(Constants.zjbzxbm_住建部中心编码);
 
         Integer s = a.keySet().stream().filter(e->e >=1 && e <3).mapToInt(e-> a.get(e).size()).sum();
         Double 金额 = a.keySet().stream().filter(e->e >=1 && e <3).mapToDouble(e-> a.get(e).stream().mapToDouble(ddd->ddd.getValue1()).sum()).sum();
