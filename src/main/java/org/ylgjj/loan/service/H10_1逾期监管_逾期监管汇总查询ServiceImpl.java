@@ -94,7 +94,7 @@ public class H10_1逾期监管_逾期监管汇总查询ServiceImpl {
 
 
         H10_1逾期监管_逾期监管汇总查询 h10_2逾期监管_逾期监管明细查询  = new H10_1逾期监管_逾期监管汇总查询();
-        h10_2逾期监管_逾期监管明细查询.setOutput_zxjgbm_办理渠道(Constants.zjbzxbm_住建部中心编码);
+        h10_2逾期监管_逾期监管明细查询.setZjbzxbm_住建部中心编码(Constants.zjbzxbm_住建部中心编码);
 
         Integer s = a.keySet().stream().filter(e->e >=1 && e <3).mapToInt(e-> a.get(e).size()).sum();
         Double 金额 = a.keySet().stream().filter(e->e >=1 && e <3).mapToDouble(e-> a.get(e).stream().mapToDouble(ddd->ddd.getValue1()).sum()).sum();
@@ -146,7 +146,7 @@ public class H10_1逾期监管_逾期监管汇总查询ServiceImpl {
         h10_2逾期监管_逾期监管明细查询.setDkye_贷款余额(sum_余额.intValue());
         h10_2逾期监管_逾期监管明细查询.setYql_逾期率( BigDecimal.valueOf(((金额yqje2 + 金额ysdkye6 )/ sum_余额)*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
         h10_2逾期监管_逾期监管明细查询.setYqlbfb(BigDecimal.valueOf(((金额yqje2 + 金额ysdkye6) / sum_余额)*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
-        h10_2逾期监管_逾期监管明细查询.setOutput_zxjgbm_办理渠道("");
+
 
 
 

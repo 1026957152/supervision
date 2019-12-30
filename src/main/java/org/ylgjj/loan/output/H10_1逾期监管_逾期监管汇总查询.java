@@ -11,8 +11,15 @@ public class H10_1逾期监管_逾期监管汇总查询 {
 
     @JsonProperty("zxjgbm")
     @JSONField(name="zxjgbm")
-    private String output_zxjgbm_办理渠道 = Constants.zjbzxbm_住建部中心编码;
+    private String zjbzxbm_住建部中心编码;
 
+    public String getZxjgmc_中心机构名称() {
+        return zxjgmc_中心机构名称;
+    }
+
+    public void setZxjgmc_中心机构名称(String zxjgmc_中心机构名称) {
+        this.zxjgmc_中心机构名称 = zxjgmc_中心机构名称;
+    }
 
     @JsonProperty("zxjgmc")
     @JSONField(name="zxjgmc")
@@ -77,12 +84,12 @@ public class H10_1逾期监管_逾期监管汇总查询 {
     @JSONField(name="yqlbfb")
     private double yqlbfb; //((yqje2+ysdkye6)/dkye)*1000;
 
-    public String getOutput_zxjgbm_办理渠道() {
-        return output_zxjgbm_办理渠道;
+    public String getZjbzxbm_住建部中心编码() {
+        return zjbzxbm_住建部中心编码;
     }
 
-    public void setOutput_zxjgbm_办理渠道(String output_zxjgbm_办理渠道) {
-        this.output_zxjgbm_办理渠道 = output_zxjgbm_办理渠道;
+    public void setZjbzxbm_住建部中心编码(String zjbzxbm_住建部中心编码) {
+        this.zjbzxbm_住建部中心编码 = zjbzxbm_住建部中心编码;
     }
 
     public int getYq1_1个月_含_以上_3个月以下笔数() {
