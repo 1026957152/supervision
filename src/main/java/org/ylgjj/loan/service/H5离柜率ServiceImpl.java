@@ -1,8 +1,6 @@
 package org.ylgjj.loan.service;
 
 
-import org.apache.tomcat.util.bcel.Const;
-import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.config.Constants;
@@ -19,7 +17,6 @@ import org.ylgjj.loan.pojo.QueryH_5_1离柜率_离柜率查询;
 import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_zhongfu.Mi107_业务日志_Repository;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.time.LocalDate;
@@ -49,7 +46,7 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
 
 
     @Autowired
-    private PB010_bank_info_大行信息表Repository pb010_bank_info_大行信息表Repository;
+    private PB010_大行信息表Repository pb010__大行信息表Repository;
 
     @Autowired
     private LN003_合同信息_Repository ln003_合同信息_repository;

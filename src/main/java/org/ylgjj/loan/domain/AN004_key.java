@@ -25,7 +25,7 @@ public class AN004_key implements Serializable {
 
 
     @Column(name = "TRANSDATE")
-    private String transdate_不可为空_交易日期;
+    private String transdate不可为空交易日期;
 
 
     @Column(name = "hostsernum")

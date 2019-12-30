@@ -3,12 +3,12 @@ package org.ylgjj.loan.pojo;
 import javax.validation.constraints.NotBlank;
 
 public class QueryH_3_4_银行余额查询_金结算流水查询_查询最近15条结算明细数据 {
-        @NotBlank
+       // @NotBlank
         String zjbzxbm;
-        @NotBlank
+/*        @NotBlank
         String ksrq; //开始日期	String	输入(必传)	长度：10，举例：2019-07-03
         @NotBlank
-        String jsrq; //结束日期	String	输入(必传)	长度：10，举例：2019-07-03
+        String jsrq; //结束日期	String	输入(必传)	长度：10，举例：2019-07-03*/
         public String getZjbzxbm() {
             return zjbzxbm;
         }
@@ -16,19 +16,4 @@ public class QueryH_3_4_银行余额查询_金结算流水查询_查询最近15�
             this.zjbzxbm = zjbzxbm;
         }
 
-        public String getKsrq() {
-            return ksrq;
-        }
-
-        public void setKsrq(String ksrq) {
-            this.ksrq = ksrq;
-        }
-
-        public String getJsrq() {
-            return jsrq;
-        }
-
-        public void setJsrq(String jsrq) {
-            this.jsrq = jsrq;
-        }
     }

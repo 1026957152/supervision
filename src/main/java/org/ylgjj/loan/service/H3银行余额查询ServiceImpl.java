@@ -4,10 +4,9 @@ package org.ylgjj.loan.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.Data;
-import org.ylgjj.loan.domain.Query;
 import org.ylgjj.loan.domain.ReturnResult;
 import org.ylgjj.loan.repository.AN004Repository;
-import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
+import org.ylgjj.loan.repository.PB010_大行信息表Repository;
 
 import java.util.Date;
 
@@ -23,7 +22,7 @@ public class H3银行余额查询ServiceImpl {
 
 
     @Autowired
-    private PB010_bank_info_大行信息表Repository pb010_bank_info_大行信息表Repository;
+    private PB010_大行信息表Repository pb010__大行信息表Repository;
 
 
 

@@ -442,6 +442,8 @@ public class HistoryServiceImpl {
     protected PB007_机构信息表_Repository pb007_机构信息表_repository;
     @Autowired
     protected PB011_银行信息表Repository pb011_银行信息表Repository;
+    @Autowired
+    protected PB010_大行信息表Repository pb010_大行信息表Repository;
 
 
     @Autowired
@@ -770,7 +772,16 @@ public class HistoryServiceImpl {
         }
         return pb011_银行信息表Map;
     }
+    Map<String, PB010_大行信息表> pb010_大行信息表Map = null;
 
+    public Map<String, PB010_大行信息表> pb010_大行信息表Map() {
+
+        if(pb010_大行信息表Map == null){
+
+            pb010_大行信息表Map =  pb010_大行信息表Repository.findAll().stream().collect(Collectors.toMap(e -> e.getBankcode_不可为空_银行代码().trim(), e->e));
+        }
+        return pb010_大行信息表Map;
+    }
     Map<String, PB008_柜员信息表> pb008_柜员信息表Map = null;
 
     public Map<String, PB008_柜员信息表> pb008_柜员信息表Map() {

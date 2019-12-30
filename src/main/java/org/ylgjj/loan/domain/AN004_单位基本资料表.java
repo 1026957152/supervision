@@ -18,7 +18,7 @@ public class AN004_单位基本资料表 {
     @Id
 
     @Column(name = "TRANSDATE")
-    private String transdate_不可为空_交易日期;
+    private String transdate不可为空交易日期;
 
 
     @Id
@@ -116,12 +116,12 @@ public class AN004_单位基本资料表 {
     private String FREEUSE4备注4_可为空;
 
 
-    public String getTransdate_不可为空_交易日期() {
-        return transdate_不可为空_交易日期;
+    public String getTransdate不可为空交易日期() {
+        return transdate不可为空交易日期;
     }
 
-    public void setTransdate_不可为空_交易日期(String transdate_不可为空_交易日期) {
-        this.transdate_不可为空_交易日期 = transdate_不可为空_交易日期;
+    public void setTransdate不可为空交易日期(String transdate_不可为空_交易日期) {
+        this.transdate不可为空交易日期 = transdate_不可为空_交易日期;
     }
 
     public String getHostsernum_不可为空_业务流水号() {

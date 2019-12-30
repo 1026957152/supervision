@@ -3,12 +3,10 @@ package org.ylgjj.loan.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.ylgjj.loan.config.Constants;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_zongfu.Mi107_业务日志;
 import org.ylgjj.loan.enumT.H单位公积金缴存登记簿_入账状态;
 import org.ylgjj.loan.output.H4_1业务统计_获取各渠道业务统计数据;
-import org.ylgjj.loan.output.H5_1离柜率_离柜率查询;
 import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;
 import org.ylgjj.loan.outputenum.E_交易码_HX;
 import org.ylgjj.loan.outputenum.E_渠道_核心_调整_HX;
@@ -16,8 +14,6 @@ import org.ylgjj.loan.outputenum.HX摘要码信息表;
 import org.ylgjj.loan.pojo.Output_totalcount;
 import org.ylgjj.loan.pojo.QueryH_4_1_业务统计_获取各渠道业务统计数据;
 import org.ylgjj.loan.repository.DP008单位明细账Repository;
-import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
-import org.ylgjj.loan.repository.PB010_bank_info_大行信息表Repository;
 import org.ylgjj.loan.repository.PB017_公共流水登记簿_Repository;
 import org.ylgjj.loan.repository_zhongfu.Mi107_业务日志_Repository;
 
