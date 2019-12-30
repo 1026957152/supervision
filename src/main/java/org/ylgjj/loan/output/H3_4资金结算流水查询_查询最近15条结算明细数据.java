@@ -15,8 +15,8 @@ public class H3_4资金结算流水查询_查询最近15条结算明细数据 {
     private String id_序号;
 
 
-    @JsonProperty("id")
-    @JSONField(name="id")
+    @JsonProperty("blqd")
+    @JSONField(name="blqd")
     private String blqd_办理渠道;
 
 

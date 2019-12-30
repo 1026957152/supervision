@@ -13,6 +13,7 @@ import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;
 import org.ylgjj.loan.outputenum.E_交易码_HX;
 import org.ylgjj.loan.outputenum.E_渠道_核心_调整_HX;
 import org.ylgjj.loan.outputenum.HX摘要码信息表;
+import org.ylgjj.loan.pojo.Output_totalcount;
 import org.ylgjj.loan.pojo.QueryH_4_1_业务统计_获取各渠道业务统计数据;
 import org.ylgjj.loan.repository.DP008单位明细账Repository;
 import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
@@ -46,7 +47,7 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
 
-    public Output H_4_1_业务统计_获取各渠道业务统计数据(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
+    public Output_totalcount H_4_1_业务统计_获取各渠道业务统计数据(QueryH_4_1_业务统计_获取各渠道业务统计数据 query) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df);
         LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df);
@@ -57,7 +58,8 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
 
-        Output output = new Output();
+        Output_totalcount output = new Output_totalcount();
+        output.setTotalcount(1);
         output.setData(objects.stream().collect(Collectors.groupingBy(e->e.getFirstname())).entrySet()
                             .stream().map(e->{
 

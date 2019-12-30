@@ -3,7 +3,7 @@ package org.ylgjj.loan.pojo;
 import javax.validation.constraints.NotBlank;
 
 public class QueryH_5_1离柜率_离柜率查询 {
-        @NotBlank
+       // @NotBlank
         String zjbzxbm;
         @NotBlank
         String ksrq; //开始日期	String	输入(必传)	长度：10，举例：2019-07-03

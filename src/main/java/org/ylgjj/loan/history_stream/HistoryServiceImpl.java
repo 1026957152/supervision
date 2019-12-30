@@ -81,6 +81,8 @@ public class HistoryServiceImpl {
 
     @Autowired
     protected TargetAnalysisTableRepository targetAnalysisTableRepository;
+    @Autowired
+    protected PB008_clerk_info_Repository pb008_柜员信息表_repository;
 
 
     public static List<Triplet<Long,LocalDate,LocalDate>> run统计周期编码(LocalDate beginDate, LocalDate endDate, StatisticalIndexCodeEnum statisticalIndexCodeEnum) {
@@ -768,6 +770,19 @@ public class HistoryServiceImpl {
         }
         return pb011_银行信息表Map;
     }
+
+    Map<String, PB008_柜员信息表> pb008_柜员信息表Map = null;
+
+    public Map<String, PB008_柜员信息表> pb008_柜员信息表Map() {
+
+        if(pb008_柜员信息表Map == null){
+
+            pb008_柜员信息表Map =  pb008_柜员信息表_repository.findAll().stream().collect(Collectors.toMap(e -> e.getOpcode().trim(),e->e));
+        }
+        return pb008_柜员信息表Map;
+    }
+
+
 
 
     Map<String, Config> configMap = null;

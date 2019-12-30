@@ -151,12 +151,12 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                 }
                 if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_01_住房公积金存款.getText()) != null){
                     double sss= ssssss.get(E_DP029_定期存款分户文件_资金性质.E_01_住房公积金存款.getText()).stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
-                    h8_1银行专户余额_银行专户余额查询.setDqgjzhye_定期归集账户余额_String(sss+"");
+                    h8_1银行专户余额_银行专户余额查询.setDqgjzhye_定期归集账户余额_String(BigDecimal.valueOf(sss).toPlainString());
                 }
 
                 if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_03_增值收益存款.getText()) != null){
                     double sss= ssssss.get(E_DP029_定期存款分户文件_资金性质.E_03_增值收益存款.getText()).stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
-                    h8_1银行专户余额_银行专户余额查询.setDqzzsyzhye_定期增值收益账户余额_String(sss+"");
+                    h8_1银行专户余额_银行专户余额查询.setDqzzsyzhye_定期增值收益账户余额_String(BigDecimal.valueOf(sss).toPlainString());
                 }
             }
 
@@ -169,7 +169,7 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                 if(!fn090_账户变动通知文件s.getContent().isEmpty()){
                     System.out.println("账户余额："+fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额());
                     h8_1银行专户余额_银行专户余额查询
-                            .setGjzhye_活期归集账户余额_String(df.format(Double.valueOf(fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额())));
+                            .setGjzhye_活期归集账户余额_String(BigDecimal.valueOf(fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额()).toPlainString());
 
                 }else{
                     h8_1银行专户余额_银行专户余额查询
@@ -182,7 +182,7 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                 if(!fn090_账户变动通知文件s.getContent().isEmpty()){
                     System.out.println("账户余额："+fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额());
                     h8_1银行专户余额_银行专户余额查询
-                            .setDkzhye_活期贷款账户余额_String(df.format(Double.valueOf(fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额())));
+                            .setDkzhye_活期贷款账户余额_String(BigDecimal.valueOf(fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额()).toPlainString());
 
                 }else{
                        h8_1银行专户余额_银行专户余额查询.setDkzhye_活期贷款账户余额_String("0");
@@ -195,7 +195,7 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                 if(!fn090_账户变动通知文件s.getContent().isEmpty()){
                     System.out.println("账户余额："+fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额());
                     h8_1银行专户余额_银行专户余额查询
-                            .setZzsyzhye_活期增值收益账户余额_String(df.format(Double.valueOf(fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额())));
+                            .setZzsyzhye_活期增值收益账户余额_String(BigDecimal.valueOf(fn090_账户变动通知文件s.getContent().get(0).getCurrbal__不可为空__余额()).toPlainString());
 
                 }else{
                     h8_1银行专户余额_银行专户余额查询.setZzsyzhye_活期增值收益账户余额_String("0");

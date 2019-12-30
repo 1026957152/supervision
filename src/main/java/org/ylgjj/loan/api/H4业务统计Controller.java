@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.ylgjj.loan.domain.Output;
+import org.ylgjj.loan.pojo.Output_totalcount;
 import org.ylgjj.loan.pojo.QueryH_4_1_业务统计_获取各渠道业务统计数据;
 import org.ylgjj.loan.service.H4_1_业务统计_获取各渠道业务统计数据ServiceImpl;
 
@@ -30,10 +31,10 @@ public class H4业务统计Controller {
 
     @RequestMapping(value = "/ywtj_cx.service", method = RequestMethod.POST)
     @ResponseBody
-    public Output H_4_1_业务统计_获取各渠道业务统计数据(
+    public Output_totalcount H_4_1_业务统计_获取各渠道业务统计数据(
             @Valid @RequestBody QueryH_4_1_业务统计_获取各渠道业务统计数据 query, Errors errors)  {
         if (errors.hasErrors()) {
-            return Output.情况4_入参数格式错误(errors.toString());
+            return Output_totalcount.情况4_入参数格式错误(errors.toString());
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
         }
         System.out.println("----------------- "+ query.toString());
