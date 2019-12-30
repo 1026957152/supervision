@@ -3,6 +3,7 @@ package org.ylgjj.loan.output;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.ylgjj.loan.config.Constants;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class H10_1逾期监管_逾期监管汇总查询 {
@@ -10,8 +11,12 @@ public class H10_1逾期监管_逾期监管汇总查询 {
 
     @JsonProperty("zxjgbm")
     @JSONField(name="zxjgbm")
-    private String output_zxjgbm_办理渠道;
+    private String output_zxjgbm_办理渠道 = Constants.zjbzxbm_住建部中心编码;
 
+
+    @JsonProperty("zxjgmc")
+    @JSONField(name="zxjgmc")
+    private String zxjgmc_中心机构名称 = Constants.zxjgmc_中心机构名称;
     @JsonProperty("yq1")
     @JSONField(name="yq1")
     private int yq1_1个月_含_以上_3个月以下笔数;

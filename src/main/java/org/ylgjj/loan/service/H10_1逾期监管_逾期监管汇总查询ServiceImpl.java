@@ -10,6 +10,8 @@ import org.ylgjj.loan.output.H10_1逾期监管_逾期监管汇总查询;
 import org.ylgjj.loan.repository.*;
 import org.ylgjj.loan.repository_flow.LoanCacheRepository;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -138,11 +140,11 @@ public class H10_1逾期监管_逾期监管汇总查询ServiceImpl {
 
        // yql	逾期率	double	输出	((yqje2+ysdkye6)/dkye)*1000; #0.00数值格式化
      //   yqlbfb			输出	((yqje2+ysdkye6)/dkye)*1000;
-
+        NumberFormat nf = NumberFormat.getPercentInstance();
 
         h10_2逾期监管_逾期监管明细查询.setDkye_贷款余额(sum_余额.intValue());
-        h10_2逾期监管_逾期监管明细查询.setYql_逾期率((金额yqje2 + 金额ysdkye6 / sum_余额.intValue())*1000);
-        h10_2逾期监管_逾期监管明细查询.setYqlbfb((金额yqje2 + 金额ysdkye6 / sum_余额.intValue())*1000);
+        h10_2逾期监管_逾期监管明细查询.setYql_逾期率( BigDecimal.valueOf(((金额yqje2 + 金额ysdkye6 )/ sum_余额)*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
+        h10_2逾期监管_逾期监管明细查询.setYqlbfb(BigDecimal.valueOf(((金额yqje2 + 金额ysdkye6) / sum_余额)*1000).setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
         h10_2逾期监管_逾期监管明细查询.setOutput_zxjgbm_办理渠道("");
 
 

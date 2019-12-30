@@ -3,7 +3,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "MI029")
+@Table(name = "MI107")
 @Entity
 public class Mi107_业务日志 {
 
