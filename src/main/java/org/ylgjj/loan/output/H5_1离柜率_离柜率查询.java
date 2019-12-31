@@ -31,33 +31,129 @@ public class H5_1离柜率_离柜率查询 {
     @JSONField(name="wthdbs")
     private int wthdbs_核定笔数_Int;
 
+    @JsonProperty("gthdbs")
+    @JSONField(name="gthdbs")
+    private int gthdbs_柜台核定笔数_Int;
+    @JsonProperty("gtxxbgbs")
+    @JSONField(name="gtxxbgbs")
+    private int gtxxbgbs_信息变更笔数_Int;
     @JsonProperty("wtxxbgbs")
     @JSONField(name="wtxxbgbs")
     private int wtxxbgbs_信息变更笔数_Int;
+
+
+    @JsonProperty("gtztbgbs")
+    @JSONField(name="gtztbgbs")
+    private int gtztbgbs_账户状态变更笔数_Int;
 
     @JsonProperty("wtztbgbs")
     @JSONField(name="wtztbgbs")
     private int wtztbgbs_账户状态变更笔数_Int;
 
+
+    @JsonProperty("gtjcjsbs")
+    @JSONField(name="gtjcjsbs")
+    private int gtjcjsbs_缴存基数笔数_Int;
     @JsonProperty("wtjcjsbs")
     @JSONField(name="wtjcjsbs")
     private int wtjcjsbs_缴存基数笔数_Int;
 
+
+    @JsonProperty("gttqbs")
+    @JSONField(name="gttqbs")
+    private int gttqbs_提取笔数_Int;
     @JsonProperty("wttqbs")
     @JSONField(name="wttqbs")
     private int wttqbs_提取笔数_Int;
 
+
+    @JsonProperty("gtdkbs")
+    @JSONField(name="gtdkbs")
+    private int gtdkbs_贷款笔数_Int;
     @JsonProperty("wtdkbs")
     @JSONField(name="wtdkbs")
     private int wtdkbs_贷款笔数_Int;
 
+
+    @JsonProperty("gttqhkbs")
+    @JSONField(name="gttqhkbs")
+    private int gttqhkbs_提前还款笔数_Int;
     @JsonProperty("wttqhkbs")
     @JSONField(name="wttqhkbs")
     private int wttqhkbs_提前还款笔数_Int;
 
+    public int getGthdbs_柜台核定笔数_Int() {
+        return gthdbs_柜台核定笔数_Int;
+    }
+
+    public void setGthdbs_柜台核定笔数_Int(int gthdbs_柜台核定笔数_Int) {
+        this.gthdbs_柜台核定笔数_Int = gthdbs_柜台核定笔数_Int;
+    }
+
+    public int getGtxxbgbs_信息变更笔数_Int() {
+        return gtxxbgbs_信息变更笔数_Int;
+    }
+
+    public void setGtxxbgbs_信息变更笔数_Int(int gtxxbgbs_信息变更笔数_Int) {
+        this.gtxxbgbs_信息变更笔数_Int = gtxxbgbs_信息变更笔数_Int;
+    }
+
+    public int getGtztbgbs_账户状态变更笔数_Int() {
+        return gtztbgbs_账户状态变更笔数_Int;
+    }
+
+    public void setGtztbgbs_账户状态变更笔数_Int(int gtztbgbs_账户状态变更笔数_Int) {
+        this.gtztbgbs_账户状态变更笔数_Int = gtztbgbs_账户状态变更笔数_Int;
+    }
+
+    public int getGtjcjsbs_缴存基数笔数_Int() {
+        return gtjcjsbs_缴存基数笔数_Int;
+    }
+
+    public void setGtjcjsbs_缴存基数笔数_Int(int gtjcjsbs_缴存基数笔数_Int) {
+        this.gtjcjsbs_缴存基数笔数_Int = gtjcjsbs_缴存基数笔数_Int;
+    }
+
+    public int getGttqbs_提取笔数_Int() {
+        return gttqbs_提取笔数_Int;
+    }
+
+    public void setGttqbs_提取笔数_Int(int gttqbs_提取笔数_Int) {
+        this.gttqbs_提取笔数_Int = gttqbs_提取笔数_Int;
+    }
+
+    public int getGtdkbs_贷款笔数_Int() {
+        return gtdkbs_贷款笔数_Int;
+    }
+
+    public void setGtdkbs_贷款笔数_Int(int gtdkbs_贷款笔数_Int) {
+        this.gtdkbs_贷款笔数_Int = gtdkbs_贷款笔数_Int;
+    }
+
+    public int getGttqhkbs_提前还款笔数_Int() {
+        return gttqhkbs_提前还款笔数_Int;
+    }
+
+    public void setGttqhkbs_提前还款笔数_Int(int gttqhkbs_提前还款笔数_Int) {
+        this.gttqhkbs_提前还款笔数_Int = gttqhkbs_提前还款笔数_Int;
+    }
+
+    public int getGtchdjybs_对冲签约笔数_Int() {
+        return gtchdjybs_对冲签约笔数_Int;
+    }
+
+    public void setGtchdjybs_对冲签约笔数_Int(int gtchdjybs_对冲签约笔数_Int) {
+        this.gtchdjybs_对冲签约笔数_Int = gtchdjybs_对冲签约笔数_Int;
+    }
+
+    @JsonProperty("gtchdjybs")
+    @JSONField(name="gtchdjybs")
+    private int gtchdjybs_对冲签约笔数_Int;
     @JsonProperty("wtchdjybs")
     @JSONField(name="wtchdjybs")
     private int wtchdjybs_对冲签约笔数_Int;
+
+
 
     @JsonProperty("gzlgl")
     @JSONField(name="gzlgl")

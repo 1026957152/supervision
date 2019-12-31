@@ -58,8 +58,8 @@ public class H7大额资金监控ServiceImpl extends HistoryServiceImpl {
 
 
         Output output = new Output();
+        output.setSuccess(true);
         output.setData(fd045_资金划转业务登记文件s.stream().collect(Collectors.groupingBy(e->{
-
             return E_FD045_资金划转业务登记文件_划转原因.fromString(e.getTRANSFERREASON_可为空_划转原因());
         })).entrySet().stream().map(x->{
 
@@ -71,8 +71,6 @@ public class H7大额资金监控ServiceImpl extends HistoryServiceImpl {
 
                     .collect(Collectors.groupingBy(e->{
                         // e.getTRANSFERREASON_可为空_划转原因();
-
-
 
                         double a = e.getTRANSFERAMT不可为空划转金额();
 

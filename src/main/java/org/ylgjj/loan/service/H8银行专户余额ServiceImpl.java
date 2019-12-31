@@ -133,8 +133,8 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
 
         List<H8_1银行专户余额_银行专户余额查询> aaaaa = fd012_银行存款账号登记文件s.stream().map(e->{
             H8_1银行专户余额_银行专户余额查询 h8_1银行专户余额_银行专户余额查询 = new H8_1银行专户余额_银行专户余额查询();
-            h8_1银行专户余额_银行专户余额查询.setZjbbm_住建部中心名称_String(Constants.zxjgmc_中心机构名称);
-            h8_1银行专户余额_银行专户余额查询.setZjbmc_住建部中心编码_String(Constants.zjbzxbm_住建部中心编码);
+            h8_1银行专户余额_银行专户余额查询.setZjbbm_住建部中心名称_String(Constants.zjbzxbm_住建部中心编码);
+            h8_1银行专户余额_银行专户余额查询.setZjbmc_住建部中心编码_String(Constants.zxjgmc_中心机构名称);
 
         /*    h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getBANKCODE_不可为空_银行代码());
             h8_1银行专户余额_银行专户余额查询.setMc_银行名称(e.getBANKACCNM_不可为空_银行账户名称());*/
@@ -264,7 +264,12 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                     h8_1银行专户余额_银行专户余额查询.setDkzhye_活期贷款账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDkzhye_活期贷款账户余额_String()).doubleValue()).sum()).toPlainString());
                     h8_1银行专户余额_银行专户余额查询.setZzsyzhye_活期增值收益账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getZzsyzhye_活期增值收益账户余额_String()).doubleValue()).sum()).toPlainString());
                     h8_1银行专户余额_银行专户余额查询.setGjzhye_活期归集账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getGjzhye_活期归集账户余额_String()).doubleValue()).sum()).toPlainString());
-
+                    h8_1银行专户余额_银行专户余额查询.setHj_合计余额_String(new BigDecimal(h8_1银行专户余额_银行专户余额查询.getDqdkzhye_定期贷款账户余额_String())
+                            .add(new BigDecimal(h8_1银行专户余额_银行专户余额查询.getDqgjzhye_定期归集账户余额_String()))
+                            .add(new BigDecimal(h8_1银行专户余额_银行专户余额查询.getDqzzsyzhye_定期增值收益账户余额_String()))
+                            .add(new BigDecimal(h8_1银行专户余额_银行专户余额查询.getDkzhye_活期贷款账户余额_String()))
+                            .add(new BigDecimal(h8_1银行专户余额_银行专户余额查询.getZzsyzhye_活期增值收益账户余额_String()))
+                            .add(new BigDecimal(h8_1银行专户余额_银行专户余额查询.getGjzhye_活期归集账户余额_String())).toPlainString());
                     return h8_1银行专户余额_银行专户余额查询;
                 }).collect(Collectors.toList()));
         return output;

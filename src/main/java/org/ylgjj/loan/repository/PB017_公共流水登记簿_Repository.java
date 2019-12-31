@@ -32,7 +32,7 @@ public interface PB017_公共流水登记簿_Repository extends JpaRepository<PB
 
 
     @Query(
-            value = "select count(*) as cc,ACCINSTCODE as accinstcode, TRANSCHANNEL AS firstname,SUMMARYCODE AS lastname,(select SUMMARYDES from  pb002 where pb002.SUMMARYCODE=pb017.SUMMARYCODE) AS desciption   from pb017 where TRANSDATE >= :beginDate and TRANSDATE <= :endDate group by ACCINSTCODE,TRANSCHANNEL,SUMMARYCODE",
+            value = "select count(*) as cc,ACCINSTCODE as accinstcode, TRANSCHANNEL AS transchannel,SUMMARYCODE AS summarycode,(select SUMMARYDES from  pb002 where pb002.SUMMARYCODE=pb017.SUMMARYCODE) AS desciption   from pb017 where TRANSDATE >= :beginDate and TRANSDATE <= :endDate group by ACCINSTCODE,TRANSCHANNEL,SUMMARYCODE",
             nativeQuery = true)
     List<PB017公共流水登记簿Dto> findByChannel(@Param("beginDate") LocalDate beginDate,@Param("endDate") LocalDate endDate);
 
@@ -40,9 +40,9 @@ public interface PB017_公共流水登记簿_Repository extends JpaRepository<PB
 
         String getAccinstcode();
         Long getCc();
-        String getFirstname();
+        String getTranschannel();
 
-        String getLastname();
+        String getSummarycode();
         String getDesciption();
     }
 }

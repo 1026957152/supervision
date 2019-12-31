@@ -92,12 +92,15 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
     }
 
    // @PostConstruct
+/*
     public void H5_1离柜率_离柜率查询() {
 
 
+*/
 /*        String hql = "select count\(*\),TRANSCHANNEL,SUMMARYCODE,(select SUMMARYDES from  pb002 where pb002.SUMMARYCODE=pb017.SUMMARYCODE) where   from pb017 group by TRANSCHANNEL,SUMMARYCODE" ;
         javax.persistence.Query query_ = em.createQuery(hql);
-        List<Object> list = query_.getResultList();*/
+        List<Object> list = query_.getResultList();*//*
+
         List<PB017_公共流水登记簿_Repository.PB017公共流水登记簿Dto> objects = pb017_公共流水登记簿_repository.findByChannel(LocalDate.now(),LocalDate.now());
         //System.out.println("-----------"+objects.toString());
         objects.forEach(e->{
@@ -168,6 +171,7 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
 
 
 
+*/
 /*
         objects.stream().filter(e->{
             return 提取还款_提前还款(null).contains(e.getFirstname());
@@ -203,10 +207,12 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
             return Pair.with(e.getKey(),e.getValue().stream().mapToLong(x->x.getCc()).sum());
         });
 
- */
+ *//*
+
 
 
     }
+*/
 
 
 
@@ -231,8 +237,8 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
         //System.out.println("-----------"+objects.toString());
         objects.forEach(e->{
             System.out.println(e.getCc());
-            System.out.println(e.getFirstname());
-            System.out.println(e.getLastname());
+            System.out.println(e.getAccinstcode());
+            System.out.println(e.getTranschannel());
             System.out.println(e.getDesciption());
         });
 
@@ -240,59 +246,72 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
 
         Output_totalcount output = new Output_totalcount();
 
+
+ ;
+
         output.setData(objects.stream()
                 .collect(Collectors.groupingBy(e->e.getAccinstcode()))
                 .entrySet()
                 .stream().map(f->{
 
-                    return f.getValue().stream().collect(Collectors.groupingBy(e->e.getFirstname())).entrySet()
+                    return f.getValue().stream().collect(Collectors.groupingBy(e->e.getTranschannel())).entrySet()
                             .stream().map(e->{
                                 H5_1离柜率_离柜率查询 h5_1离柜率_离柜率查询 = new H5_1离柜率_离柜率查询();
                                 h5_1离柜率_离柜率查询.setJgbm_管理机构编码_String(Constants.zjbzxbm_住建部中心编码);
                                 h5_1离柜率_离柜率查询.setJgmc_管理机构_String(pb007_机构信息表Map().get(f.getKey()).getInstName());
 
-                                h5_1离柜率_离柜率查询.setKsrq_汇总日期_date(Constants.zjbzxbm_住建部中心编码);
+                                h5_1离柜率_离柜率查询.setKsrq_汇总日期_date(ldt_jsrq.toString());
+
                                 h5_1离柜率_离柜率查询.setQd_渠道_varchar_6(E_渠道_核心_调整_HX.fromOld(e.getKey()).get名称());
 
                                 h5_1离柜率_离柜率查询.setWtchdjybs_对冲签约笔数_Int(e.getValue().stream().filter(x->{
-                                    return 冲还贷_核心(null).contains(x.getLastname());
+                                    return 冲还贷_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum());
-
+                                h5_1离柜率_离柜率查询.setGtchdjybs_对冲签约笔数_Int(0);
 
                                 h5_1离柜率_离柜率查询.setWtdkbs_贷款笔数_Int(e.getValue().stream().filter(x->{
-                                    return 信息变更_核心(null).contains(x.getLastname());
+                                    return 信息变更_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum());
-                                h5_1离柜率_离柜率查询.setWthdbs_核定笔数_Int(e.getValue().stream().filter(x->{
-                                    return 信息变更_核心(null).contains(x.getLastname());
-                                }).mapToInt(x->x.getCc().intValue()).sum());
-                                h5_1离柜率_离柜率查询.setWtztbgbs_账户状态变更笔数_Int(e.getValue().stream().filter(x->{
-                                    return 信息变更_核心(null).contains(x.getLastname());
-                                }).mapToInt(x->x.getCc().intValue()).sum());
+                                h5_1离柜率_离柜率查询.setGtdkbs_贷款笔数_Int(0);
 
+                                h5_1离柜率_离柜率查询.setWthdbs_核定笔数_Int(e.getValue().stream().filter(x->{
+                                    return 信息变更_核心(null).contains(x.getTranschannel());
+                                }).mapToInt(x->x.getCc().intValue()).sum());
+                                h5_1离柜率_离柜率查询.setGthdbs_柜台核定笔数_Int(0);
+
+                                h5_1离柜率_离柜率查询.setWtztbgbs_账户状态变更笔数_Int(e.getValue().stream().filter(x->{
+                                    return 信息变更_核心(null).contains(x.getTranschannel());
+                                }).mapToInt(x->x.getCc().intValue()).sum());
+                                h5_1离柜率_离柜率查询.setGtztbgbs_账户状态变更笔数_Int(0);
 
 
 
 
                                 h5_1离柜率_离柜率查询.setWtjcjsbs_缴存基数笔数_Int(e.getValue().stream().filter(x->{
-                                    return 缴存基数_核心(null).contains(x.getLastname());
+                                    return 缴存基数_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum());
+                                h5_1离柜率_离柜率查询.setGtjcjsbs_缴存基数笔数_Int(0);
+
                                 h5_1离柜率_离柜率查询.setWttqbs_提取笔数_Int(e.getValue().stream().filter(x->{
-                                    return 提取_核心(null).contains(x.getLastname());
+                                    return 提取_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum());
+                                h5_1离柜率_离柜率查询.setGttqbs_提取笔数_Int(0);
 
                                 h5_1离柜率_离柜率查询.setWttqhkbs_提前还款笔数_Int(e.getValue().stream().filter(x->{
-                                    return 提取还款_提前还款(null).contains(x.getLastname());
+                                    return 提取还款_提前还款(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum());
-
+                                h5_1离柜率_离柜率查询.setGttqhkbs_提前还款笔数_Int(0);
 
                                 h5_1离柜率_离柜率查询.setWtxxbgbs_信息变更笔数_Int(e.getValue().stream().filter(x->{
-                                    return 信息变更_核心(null).contains(x.getLastname());
+                                    return 信息变更_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum());
+                                h5_1离柜率_离柜率查询.setGtxxbgbs_信息变更笔数_Int(0);
+
 
                                 e.getValue().stream().filter(x->{
-                                    return 信息变更_核心(null).contains(x.getLastname());
+                                    return 信息变更_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum();
-
+                                h5_1离柜率_离柜率查询.setGtxxbgbs_信息变更笔数_Int(0);
 
                                 h5_1离柜率_离柜率查询.setDklgl_贷款离柜率_Double(0d);
                                 h5_1离柜率_离柜率查询.setGzlgl_缴存离柜率_Double(0d);
@@ -301,10 +320,10 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
                                 h5_1离柜率_离柜率查询.setZxlgl_中心离柜率_Double(0d);
                                 return h5_1离柜率_离柜率查询;
 
-                            });
+                            }).collect(Collectors.toList());
 
 
-                }).collect(Collectors.toList()));
+                }).flatMap(s->s.stream()).collect(Collectors.toList()));
 
             ;
 

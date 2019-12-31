@@ -56,7 +56,7 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
         Output_totalcount output = new Output_totalcount();
 
-        output.setData(objects.stream().collect(Collectors.groupingBy(e->e.getFirstname())).entrySet()
+        output.setData(objects.stream().collect(Collectors.groupingBy(e->e.getAccinstcode())).entrySet()
                             .stream().map(e->{
 
 
@@ -66,10 +66,10 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
                                 Integer count = e.getValue().stream().filter(x->{
-                                    return 归集_核心(null).contains(x.getLastname());
+                                    return 归集_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum();
                                 Double value = e.getValue().stream().filter(x->{
-                                    return 归集_核心(null).contains(x.getLastname());
+                                    return 归集_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum()+0d;
 
                                 h4_1业务统计_获取各渠道业务统计数据.setGjbs_归集_Int(count);
@@ -78,10 +78,10 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
                                 Integer count_贷款 = e.getValue().stream().filter(x->{
-                                    return 归集_核心(null).contains(x.getLastname());
+                                    return 归集_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum();
                                 Double value_贷款 = e.getValue().stream().filter(x->{
-                                    return 归集_核心(null).contains(x.getLastname());
+                                    return 归集_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum()+0d;
 
                                 h4_1业务统计_获取各渠道业务统计数据.setDkbs_贷款笔数_Int(count_贷款);
@@ -90,10 +90,10 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
                                 Integer count_提前还贷 = e.getValue().stream().filter(x->{
-                                    return 归集_核心(null).contains(x.getLastname());
+                                    return 归集_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum();
                                 Double value_提前还贷 = e.getValue().stream().filter(x->{
-                                    return 归集_核心(null).contains(x.getLastname());
+                                    return 归集_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum()+0d;
 
                                 h4_1业务统计_获取各渠道业务统计数据.setDktqhkbs_提前还贷笔数_Int(count_提前还贷);
@@ -101,10 +101,10 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
                                 h4_1业务统计_获取各渠道业务统计数据.setDktqhkzb_提前还贷占比_Double(1.0D);
 
                                 Integer count_提取业务偿还贷 = e.getValue().stream().filter(x->{
-                                    return 归集_核心(null).contains(x.getLastname());
+                                    return 归集_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum();
                                 Double value_提取业务偿还贷 = e.getValue().stream().filter(x->{
-                                    return 归集_核心(null).contains(x.getLastname());
+                                    return 归集_核心(null).contains(x.getTranschannel());
                                 }).mapToInt(x->x.getCc().intValue()).sum()+0d;
                                 h4_1业务统计_获取各渠道业务统计数据.setTqywchdbs_提取业务偿还贷笔数_Int(count_提取业务偿还贷);
                                 h4_1业务统计_获取各渠道业务统计数据.setTqywchdje_提取业务偿还贷金额_Double(value_提取业务偿还贷);
