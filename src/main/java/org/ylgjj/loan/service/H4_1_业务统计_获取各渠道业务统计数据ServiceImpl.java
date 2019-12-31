@@ -55,7 +55,7 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
 
 
         Output_totalcount output = new Output_totalcount();
-        output.setTotalcount(1);
+
         output.setData(objects.stream().collect(Collectors.groupingBy(e->e.getFirstname())).entrySet()
                             .stream().map(e->{
 
@@ -119,7 +119,7 @@ public class H4_1_业务统计_获取各渠道业务统计数据ServiceImpl {
         ;
 
 
-
+        output.setTotalcount(output.getData().size());
         output.setSuccess(true);
         return output;
     }

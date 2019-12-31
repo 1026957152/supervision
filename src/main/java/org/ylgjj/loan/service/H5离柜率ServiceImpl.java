@@ -12,6 +12,7 @@ import org.ylgjj.loan.output.H5_1离柜率_离柜率查询;
 import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;
 import org.ylgjj.loan.outputenum.E_交易码_HX;
 import org.ylgjj.loan.outputenum.E_渠道_核心_调整_HX;
+import org.ylgjj.loan.pojo.Output_totalcount;
 import org.ylgjj.loan.pojo.QueryH_4_1_业务统计_获取各渠道业务统计数据;
 import org.ylgjj.loan.pojo.QueryH_5_1离柜率_离柜率查询;
 import org.ylgjj.loan.repository.*;
@@ -222,7 +223,7 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
 
 
 
-    public Output H5_1离柜率_离柜率查询(QueryH_5_1离柜率_离柜率查询 query) {
+    public Output_totalcount H5_1离柜率_离柜率查询(QueryH_5_1离柜率_离柜率查询 query) {
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ldt_jsrq = LocalDate.parse(query.getJsrq(),df);
         LocalDate ldt_ksrq = LocalDate.parse(query.getKsrq(),df);
@@ -235,7 +236,10 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
             System.out.println(e.getDesciption());
         });
 
-        Output output = new Output();
+
+
+        Output_totalcount output = new Output_totalcount();
+
         output.setData(objects.stream()
                 .collect(Collectors.groupingBy(e->e.getAccinstcode()))
                 .entrySet()
@@ -305,7 +309,7 @@ public class H5离柜率ServiceImpl extends HistoryServiceImpl {
             ;
 
 
-
+        output.setTotalcount(output.getData().size());
         output.setSuccess(true);
         return output;
     }

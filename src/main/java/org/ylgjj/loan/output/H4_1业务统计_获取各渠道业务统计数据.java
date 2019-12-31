@@ -50,11 +50,12 @@ public class H4_1业务统计_获取各渠道业务统计数据 {
     private double dktqhkzb_提前还贷占比_Double;
     @JsonProperty("tqywchdbs")
     @JSONField(name="tqywchdbs")
-
     private int tqywchdbs_提取业务偿还贷笔数_Int;
-    @JsonProperty("Tqywchdje")
-    @JSONField(name="Tqywchdje")
-    private double Tqywchdje_提取业务偿还贷金额_Double;
+
+
+    @JsonProperty("tqywchdje")
+    @JSONField(name="tqywchdje")
+    private Double tqywchdje_提取业务偿还贷金额_Double;
     @JsonProperty("tqywchdzb")
     @JSONField(name="tqywchdzb")
     private double tqywchdzb_提取业务偿还贷占比_Double;
@@ -172,11 +173,11 @@ public class H4_1业务统计_获取各渠道业务统计数据 {
     }
 
     public double getTqywchdje_提取业务偿还贷金额_Double() {
-        return Tqywchdje_提取业务偿还贷金额_Double;
+        return tqywchdje_提取业务偿还贷金额_Double;
     }
 
     public void setTqywchdje_提取业务偿还贷金额_Double(double tqywchdje_提取业务偿还贷金额_Double) {
-        Tqywchdje_提取业务偿还贷金额_Double = tqywchdje_提取业务偿还贷金额_Double;
+        this.tqywchdje_提取业务偿还贷金额_Double = tqywchdje_提取业务偿还贷金额_Double;
     }
 
     public double getTqywchdzb_提取业务偿还贷占比_Double() {

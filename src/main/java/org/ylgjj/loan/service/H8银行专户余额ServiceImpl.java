@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.ylgjj.loan.config.Constants;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.enumT.E_DP029_定期存款分户文件_资金性质;
 import org.ylgjj.loan.enumT.E_FD012_银行存款账号登记文件_FUNDKIND_资金性质;
@@ -132,9 +133,14 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
 
         List<H8_1银行专户余额_银行专户余额查询> aaaaa = fd012_银行存款账号登记文件s.stream().map(e->{
             H8_1银行专户余额_银行专户余额查询 h8_1银行专户余额_银行专户余额查询 = new H8_1银行专户余额_银行专户余额查询();
-            h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getBANKCODE_不可为空_银行代码());
-            h8_1银行专户余额_银行专户余额查询.setMc_银行名称(e.getBANKACCNM_不可为空_银行账户名称());
-            h8_1银行专户余额_银行专户余额查询.setSszh_总行编码_String(e.getBANKCODE_不可为空_银行代码());
+            h8_1银行专户余额_银行专户余额查询.setZjbbm_住建部中心名称_String(Constants.zxjgmc_中心机构名称);
+            h8_1银行专户余额_银行专户余额查询.setZjbmc_住建部中心编码_String(Constants.zjbzxbm_住建部中心编码);
+
+        /*    h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getBANKCODE_不可为空_银行代码());
+            h8_1银行专户余额_银行专户余额查询.setMc_银行名称(e.getBANKACCNM_不可为空_银行账户名称());*/
+            h8_1银行专户余额_银行专户余额查询.setSszh_总行编码_String(pb011_银行信息表Map().get(e.getBANKCODE_不可为空_银行代码()).getSUPERBANKCODE());
+
+            h8_1银行专户余额_银行专户余额查询.setZhmc_总行名称_String(pb010_大行信息表Map().get(pb011_银行信息表Map().get(e.getBANKCODE_不可为空_银行代码()).getSUPERBANKCODE()).getBANKNAME_不可为空_银行名称());
 
 
             System.out.println("------定期账户Map----xuyao xuya odfsdf ds -----------"+ e.toString());
@@ -146,18 +152,29 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                 Map<String,List<FD029_定期存款分户文件>> ssssss= fd029_定期存款分户文件s1.stream().collect(Collectors.groupingBy(eeee->eeee.getFundkind_不可为空_资金性质()));
                 if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_02_委托贷款户.getText()) != null){
 
-    /*                double sss= ssssss.get(E_DP029_定期存款分户文件_资金性质.E_01_住房公积金存款).stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
-                    h8_1银行专户余额_银行专户余额查询.setDqdkzhye_定期贷款账户余额_String(sss+"");*/
+                  double sss= ssssss.get(E_DP029_定期存款分户文件_资金性质.E_01_住房公积金存款).stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
+                    h8_1银行专户余额_银行专户余额查询.setDqdkzhye_定期贷款账户余额_String(BigDecimal.valueOf(sss).toPlainString());
+                }else{
+                    h8_1银行专户余额_银行专户余额查询.setDqdkzhye_定期贷款账户余额_String("0");
                 }
                 if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_01_住房公积金存款.getText()) != null){
                     double sss= ssssss.get(E_DP029_定期存款分户文件_资金性质.E_01_住房公积金存款.getText()).stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
                     h8_1银行专户余额_银行专户余额查询.setDqgjzhye_定期归集账户余额_String(BigDecimal.valueOf(sss).toPlainString());
+                }else{
+                    h8_1银行专户余额_银行专户余额查询.setDqgjzhye_定期归集账户余额_String("0");
                 }
 
                 if(ssssss.get(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_03_增值收益存款.getText()) != null){
                     double sss= ssssss.get(E_DP029_定期存款分户文件_资金性质.E_03_增值收益存款.getText()).stream().mapToDouble(ff->ff.getDepoamt_不可为空_存单金额()).sum();
                     h8_1银行专户余额_银行专户余额查询.setDqzzsyzhye_定期增值收益账户余额_String(BigDecimal.valueOf(sss).toPlainString());
+
+                }else{
+                    h8_1银行专户余额_银行专户余额查询.setDqzzsyzhye_定期增值收益账户余额_String("0");
                 }
+            }else{
+                h8_1银行专户余额_银行专户余额查询.setDqdkzhye_定期贷款账户余额_String("0");
+                h8_1银行专户余额_银行专户余额查询.setDqgjzhye_定期归集账户余额_String("0");
+                h8_1银行专户余额_银行专户余额查询.setDqzzsyzhye_定期增值收益账户余额_String("0");
             }
 
 
@@ -175,6 +192,9 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                     h8_1银行专户余额_银行专户余额查询
                             .setGjzhye_活期归集账户余额_String("0");
                 }
+            }else{
+                h8_1银行专户余额_银行专户余额查询
+                        .setGjzhye_活期归集账户余额_String("0");
             }
             if(e.getFUNDKIND_不可为空_资金性质().equals(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_02_委托贷款户.getText())){
                 Page<FN090_账户变动通知文件> fn090_账户变动通知文件s = fn090_账户变动通知文件_repository.
@@ -187,6 +207,8 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                 }else{
                        h8_1银行专户余额_银行专户余额查询.setDkzhye_活期贷款账户余额_String("0");
                 }
+            }else{
+                h8_1银行专户余额_银行专户余额查询.setDkzhye_活期贷款账户余额_String("0");
             }
 
             if(e.getFUNDKIND_不可为空_资金性质().equals(E_FD012_银行存款账号登记文件_FUNDKIND_资金性质.E_03_增值收益存款.getText())){
@@ -200,6 +222,8 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
                 }else{
                     h8_1银行专户余额_银行专户余额查询.setZzsyzhye_活期增值收益账户余额_String("0");
                 }
+            }else{
+                h8_1银行专户余额_银行专户余额查询.setZzsyzhye_活期增值收益账户余额_String("0");
             }
 
 
@@ -215,22 +239,34 @@ public class H8银行专户余额ServiceImpl extends HistoryServiceImpl {
         }).collect(Collectors.toList());
 
 
-/*        aaaaa.stream().collect(Collectors.groupingBy(e->{
-            return pb011_银行信息表Map().get(e.getBm_银行编码()).getSUPERBANKCODE();
 
-        })).entrySet().stream()
-        .map(e->{
-            e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDqdkzhye_定期贷款账户余额_String()).doubleValue()).sum();
-            e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDqgjzhye_定期归集账户余额_String()).doubleValue()).sum();
-            e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDqzzsyzhye_定期增值收益账户余额_String()).doubleValue()).sum();
-            e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDkzhye_活期贷款账户余额_String()).doubleValue()).sum();
-            e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getZzsyzhye_活期增值收益账户余额_String()).doubleValue()).sum();
-            e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getGjzhye_活期归集账户余额_String()).doubleValue()).sum();
-
-        });*/
 
         Output output = new Output();
-        output.setData(aaaaa);
+        output.setData(aaaaa.stream().collect(Collectors.groupingBy(e->{
+            return e.getSszh_总行编码_String();
+
+        })).entrySet().stream()
+                .map(e->{
+
+                    H8_1银行专户余额_银行专户余额查询 h8_1银行专户余额_银行专户余额查询 = new H8_1银行专户余额_银行专户余额查询();
+                    h8_1银行专户余额_银行专户余额查询.setZjbbm_住建部中心名称_String(Constants.zxjgmc_中心机构名称);
+                    h8_1银行专户余额_银行专户余额查询.setZjbmc_住建部中心编码_String(Constants.zjbzxbm_住建部中心编码);
+
+        /*    h8_1银行专户余额_银行专户余额查询.setBm_银行编码(e.getBANKCODE_不可为空_银行代码());
+            h8_1银行专户余额_银行专户余额查询.setMc_银行名称(e.getBANKACCNM_不可为空_银行账户名称());*/
+                    h8_1银行专户余额_银行专户余额查询.setSszh_总行编码_String(e.getKey());
+
+                    h8_1银行专户余额_银行专户余额查询.setZhmc_总行名称_String(pb010_大行信息表Map().get(e.getKey()).getBANKNAME_不可为空_银行名称());
+
+                    h8_1银行专户余额_银行专户余额查询.setDqdkzhye_定期贷款账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDqdkzhye_定期贷款账户余额_String()).doubleValue()).sum()).toPlainString());
+                    h8_1银行专户余额_银行专户余额查询.setDqgjzhye_定期归集账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDqgjzhye_定期归集账户余额_String()).doubleValue()).sum()).toPlainString());
+                    h8_1银行专户余额_银行专户余额查询.setDqzzsyzhye_定期增值收益账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDqzzsyzhye_定期增值收益账户余额_String()).doubleValue()).sum()).toPlainString());
+                    h8_1银行专户余额_银行专户余额查询.setDkzhye_活期贷款账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getDkzhye_活期贷款账户余额_String()).doubleValue()).sum()).toPlainString());
+                    h8_1银行专户余额_银行专户余额查询.setZzsyzhye_活期增值收益账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getZzsyzhye_活期增值收益账户余额_String()).doubleValue()).sum()).toPlainString());
+                    h8_1银行专户余额_银行专户余额查询.setGjzhye_活期归集账户余额_String(BigDecimal.valueOf(e.getValue().stream().mapToDouble(x-> new BigDecimal(x.getGjzhye_活期归集账户余额_String()).doubleValue()).sum()).toPlainString());
+
+                    return h8_1银行专户余额_银行专户余额查询;
+                }).collect(Collectors.toList()));
         return output;
     }
 }

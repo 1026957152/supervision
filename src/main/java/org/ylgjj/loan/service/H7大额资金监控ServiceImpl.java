@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.config.Constants;
 import org.ylgjj.loan.domain.FD045_资金划转业务登记文件;
 import org.ylgjj.loan.domain.Output;
+import org.ylgjj.loan.enumT.E_FD045_资金划转业务登记文件_划转原因;
 import org.ylgjj.loan.history_stream.HistoryServiceImpl;
 import org.ylgjj.loan.output.H7_1大额资金监控_监控数据明细查询;
 import org.ylgjj.loan.output.H7_2大额资金监控_监控数据明细表格查询_大额资金监控汇总数据查询;
@@ -57,7 +58,10 @@ public class H7大额资金监控ServiceImpl extends HistoryServiceImpl {
 
 
         Output output = new Output();
-        output.setData(fd045_资金划转业务登记文件s.stream().collect(Collectors.groupingBy(e->e.getTRANSFERREASON_可为空_划转原因())).entrySet().stream().map(x->{
+        output.setData(fd045_资金划转业务登记文件s.stream().collect(Collectors.groupingBy(e->{
+
+            return E_FD045_资金划转业务登记文件_划转原因.fromString(e.getTRANSFERREASON_可为空_划转原因());
+        })).entrySet().stream().map(x->{
 
 
 
@@ -94,8 +98,8 @@ public class H7大额资金监控ServiceImpl extends HistoryServiceImpl {
                     }));
 
             H7_1大额资金监控_监控数据明细查询 h7_1大额资金监控_监控数据明细查询 = new H7_1大额资金监控_监控数据明细查询();
-            h7_1大额资金监控_监控数据明细查询.setZjytmc_业务类型(x.getKey());
-            h7_1大额资金监控_监控数据明细查询.setZjytbm_业务类型编码(x.getKey());
+            h7_1大额资金监控_监控数据明细查询.setZjytmc_业务类型(x.getKey().getDisplayText());
+            h7_1大额资金监控_监控数据明细查询.setZjytbm_业务类型编码(x.getKey().getText());
             if(map.get(SY_H7大额资金监控.je1_金额_500__1000)!= null){
                 h7_1大额资金监控_监控数据明细查询.
                         setJe1_金额_500_1000(BigDecimal.valueOf(map.get(SY_H7大额资金监控.je1_金额_500__1000).stream().mapToDouble(e->e.getTRANSFERAMT不可为空划转金额()).sum()).toPlainString());

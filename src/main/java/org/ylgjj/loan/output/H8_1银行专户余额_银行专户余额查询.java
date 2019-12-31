@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class H8_1银行专户余额_银行专户余额查询 {
 
 
-    @JsonProperty("bm")
+/*    @JsonProperty("bm")
     @JSONField(name="bm")
     private String bm_银行编码;
 
     @JsonProperty("mc")
     @JSONField(name="mc")
-    private String mc_银行名称;
+    private String mc_银行名称;*/
 
     @JsonProperty("id")
     @JSONField(name="id")
@@ -64,21 +64,6 @@ public class H8_1银行专户余额_银行专户余额查询 {
     @JSONField(name="hj")
     private String hj_合计余额_String;
 
-    public String getBm_银行编码() {
-        return bm_银行编码;
-    }
-
-    public void setBm_银行编码(String bm_银行编码) {
-        this.bm_银行编码 = bm_银行编码;
-    }
-
-    public String getMc_银行名称() {
-        return mc_银行名称;
-    }
-
-    public void setMc_银行名称(String mc_银行名称) {
-        this.mc_银行名称 = mc_银行名称;
-    }
 
     public String getId_银行logo图片() {
         return id_银行logo图片;

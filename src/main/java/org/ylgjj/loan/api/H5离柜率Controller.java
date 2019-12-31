@@ -7,6 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.output.H5_1离柜率_离柜率查询;
+import org.ylgjj.loan.pojo.Output_totalcount;
 import org.ylgjj.loan.pojo.QueryH8_1银行专户余额_银行专户余额查询;
 import org.ylgjj.loan.pojo.QueryH_5_1离柜率_离柜率查询;
 import org.ylgjj.loan.service.H5离柜率ServiceImpl;
@@ -32,9 +33,9 @@ public class H5离柜率Controller {
     @RequestMapping(value = "/lgl_cx.service", method = RequestMethod.POST)
     @ResponseBody
 
-    public Output H5_1离柜率_离柜率查询(@Valid @RequestBody QueryH_5_1离柜率_离柜率查询 query, Errors errors)  {
+    public Output_totalcount H5_1离柜率_离柜率查询(@Valid @RequestBody QueryH_5_1离柜率_离柜率查询 query, Errors errors)  {
         if (errors.hasErrors()) {
-            return Output.情况4_入参数格式错误(errors.toString());
+            return Output_totalcount.情况4_入参数格式错误(errors.toString());
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
         }
         System.out.println("----------------- "+ query.toString());
