@@ -3,7 +3,6 @@ package org.ylgjj.loan.history_stream;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Triplet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_flow.AnalysisStream;
@@ -12,9 +11,6 @@ import org.ylgjj.loan.domain_flow.CollectHistory;
 import org.ylgjj.loan.domain_flow.TargetHistory;
 import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
-import org.ylgjj.loan.repository.CM001_单位基本资料表Repository;
-import org.ylgjj.loan.repository.DP005_单位分户账_Repository;
-import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 
 import java.time.LocalDate;
 import java.util.Comparator;
@@ -190,7 +186,7 @@ public class S_21_SEQ_新开户职工数__非本市缴存职工___AND_0301003205
 
 
 
-        List<DP007_个人分户账> dp007_个人分户账s = dp007_个人分户账_repository.findAll().stream().filter(e->e.getIndiacctype_个人账户类型().equals("")).collect(Collectors.toList());
+        List<DP007_个人分户账> dp007_个人分户账s = dp007_个人分户账_repository.findAll().stream().filter(e->e.getIndiacctype个人账户类型().equals("")).collect(Collectors.toList());
 
 
         System.out.println("beginDate----------"+ beginDateTotal+"----------endDate----"+endDateTotal);

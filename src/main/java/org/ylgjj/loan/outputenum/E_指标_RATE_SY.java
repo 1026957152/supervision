@@ -207,7 +207,7 @@ public enum E_指标_RATE_SY {
 
 
 
-    SY_115_ffje_发放金额("ffje","发放金额",true),
+    SY_115_ffje_发放金额_本期值("ffje","发放金额",true),
     SY_116_hbffje_环比发放金额("hbffje","环比发放金额",true),
     SY_117_snffje_同比发放金额("snffje","同比发放金额",true),
 
@@ -249,7 +249,7 @@ public enum E_指标_RATE_SY {
     SY_133_sndkye_同比贷款余额("sndkye","同比贷款余额",true),
 
 
-    SY_134_ffbs_发放笔数("ffbs","发放笔数",true),
+    SY_134_ffbs_发放笔数_本期值("ffbs","发放笔数",true),
     SY_135_hbffbs_环比发放笔数("hbffbs","环比发放笔数",true),
     SY_136_snffbs_同比发放笔数("snffbs","同比发放笔数",true),
 

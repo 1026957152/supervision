@@ -375,7 +375,7 @@ public class ZYmgjczg每一个缴存职工HistoryerviceImpl {
 
 
                         loanHistory.setIntValue(o.getValue().stream()
-                                .filter(x->x.getValue3().getIndiaccstate_个人账户状态().equals(E_DP007_个人分户账_个人账户状态.销户))
+                                .filter(x->x.getValue3().getIndiaccstate个人账户状态().equals(E_DP007_个人分户账_个人账户状态.销户))
                                 .filter(x->x.getValue3().getClsaccdate销户日期().minusDays(1).isBefore(n))
                                 .count());  //
 

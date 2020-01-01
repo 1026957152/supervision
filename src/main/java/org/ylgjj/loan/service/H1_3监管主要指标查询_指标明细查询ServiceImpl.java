@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.Output;
 import org.ylgjj.loan.domain.ReturnResult;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.domain_flow.StreamHistory;
 import org.ylgjj.loan.history_stream.S_1_SEQ_暂存款笔数_AND_0301000101_HistoryServiceImpl;

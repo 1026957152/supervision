@@ -4,19 +4,13 @@ package org.ylgjj.loan.history_stream;
 import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
 import org.ylgjj.loan.domain_flow.*;
 import org.ylgjj.loan.enumT.E_CM001_单位基本资料表_单位性质;
 import org.ylgjj.loan.enumT.E_DP005_单位分户账_单位账户类型;
-import org.ylgjj.loan.enumT.E_DP021_单位缴存登记簿_缴存类型;
 import org.ylgjj.loan.outputenum.StatisticalIndexCodeEnum;
-import org.ylgjj.loan.repository.CM001_单位基本资料表Repository;
-import org.ylgjj.loan.repository.DP005_单位分户账_Repository;
-import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 
-import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -132,7 +126,7 @@ public class S_13_SEQ_开户总单位数_AND_0301002101_HistoryServiceImpl exten
 
         List<DP005_单位分户账> dp005_单位分户账s =  dp005__单位分户账_repository.findAll()
                 .stream()
-                .filter(e->e.getUnitacctype_单位账户类型().equals(E_DP005_单位分户账_单位账户类型.普通.getText()))
+                .filter(e->e.getUnitacctype单位账户类型().equals(E_DP005_单位分户账_单位账户类型.普通.getText()))
                 .collect(Collectors.toList());
 
         List<DP004_单位缴存信息表> dp004_单位缴存信息表s = dp004_单位缴存信息表_repository.findAll();

@@ -2,23 +2,19 @@ package org.ylgjj.loan.rates;
 
 
 import org.apache.commons.lang3.time.StopWatch;
-import org.javatuples.Triplet;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.javatuples.Pair;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.LN003_合同信息;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
-import org.ylgjj.loan.repository.LN003_合同信息_Repository;
-import org.ylgjj.loan.repository.LN004_合同状态信息Repository;
-import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,69 +28,74 @@ import java.util.stream.Collectors;
 @Service
 public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImpl{
 
-    E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_134_ffbs_发放笔数;
-
-    @Autowired
-    private LN003_合同信息_Repository ln003_合同信息_repository;
-    @Autowired
-    private LN004_合同状态信息Repository ln004_合同状态信息Repository;
-
-    @Autowired
-    private RateHistoryRepository rateHistoryRepository;
-
-    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_134_ffbs_发放笔数_本期值;
 
 
-   //
-    public void process() {
+
+    //@PostConstruct
+    public void trans() {
+        process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+
+
+        transfer本期值ToPro(e_指标_rate_sy, Double.class.getName());
+    }
+
+    public void process(LocalDate beginDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
             return;
         }
+        StopWatch timer = new StopWatch();
+        timer.start();
+        if(rateAnalysisTable.getAanalysedEndDate()== null){
 
-        updateRateTable(rateAnalysisTable,history());
+            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+
+            RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }else{
+            //     if(rateAnalysisTable.getAanalysedEndDate().is)
+            RateAnalysisStream rateAnalysisStream = history(rateAnalysisTable.getAanalysedEndDate(),LocalDate.now());
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }
+
 
     }
 
 
-    public RateAnalysisStream history() {
-
-        StopWatch timer = new StopWatch();
-        timer.start();
-
-        LocalDate beginDate =  LocalDate.now().minusDays(20000);
-        LocalDate endDate = LocalDate.now();
+    public RateAnalysisStream history(LocalDate beginDate,LocalDate endDate) {
 
 
 
         //List<LN003_合同信息> ln003_合同信息s = ln003_合同信息_repository.findByOrderByLoandate放款日期Desc();
-        List<LN003_合同信息> ln003_合同信息s = ln003_合同信息_repository.findByLoandate放款日期BetweenOrderByLoandate放款日期Desc(beginDate,endDate);
+        List<LN003_合同信息> ln003_合同信息s = ln003_合同信息_repository.findByLoandate放款日期BetweenOrderByLoandate放款日期Desc(beginDate.minusDays(1),endDate.plusDays(1));
         System.out.println("-----------------------------"+ ln003_合同信息s.size());
 
 
-        List<Triplet<LocalDate,Integer,Long>> sourceList =ln003_合同信息s.stream().collect(Collectors.groupingBy(e->e.getLoandate放款日期())).entrySet()
+        List<Pair<LocalDate,Long>> sourceList =ln003_合同信息s.stream().collect(Collectors.groupingBy(e->e.getLoandate放款日期())).entrySet()
                 .stream()
                 .sorted(Comparator.comparingLong(e->e.getKey().toEpochDay()))
                 .map(e->{
                     System.out.println("stream---------"+e.getKey());
-                    return Triplet.with(e.getKey(),e.getValue().size(),0L);
+                    return Pair.with(e.getKey(),e.getValue().stream().count());
         }).collect(Collectors.toList());
 
         Long num = 0L;
 
-        List<Triplet<LocalDate,Integer,Long>> triplets = new ArrayList<>();
-        for(Triplet<LocalDate,Integer,Long> triplet: sourceList){
+        List<Pair<LocalDate,Long>> triplets = new ArrayList<>();
+        for(Pair<LocalDate,Long> triplet: sourceList){
 
             num += triplet.getValue1();
 
-            triplets.add(Triplet.with(triplet.getValue0(),triplet.getValue1(),num));
+            triplets.add(Pair.with(triplet.getValue0(),triplet.getValue1()));
         }
-
-        triplets.stream().forEach(e->{
-            System.out.println("-----------"+ e.toString());
-        });
-
 
 
 
@@ -105,26 +106,22 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
         RateAnalysisStream rateAnalysisStream = new RateAnalysisStream();
         rateAnalysisStream.setBeginDate(beginDate);
         rateAnalysisStream.setEndDate(endDate);
-        rateAnalysisStream.setDuration(timer.getTime());
 
-        System.out.println();
+
         return rateAnalysisStream;
 
     }
 
 
-
-
     @Transactional
-    public void save(List<Triplet<LocalDate,Integer,Long>> triplets) {
+    public void save(List<Pair<LocalDate,Long>> triplets) {
         triplets.stream().forEach(e->{
-
-            RateHistory rateHistory = new RateHistory();
-            rateHistory.setIndexNo(e_指标_rate_sy.get编码());
-            rateHistory.setLongValue(e.getValue2());
-            rateHistory.setDate(e.getValue0());
-            rateHistoryRepository.save(rateHistory);
-
+            RateHistory rateHistory = rateHistoryRepository.findByIndexNoAndDate(e_指标_rate_sy.get编码(),e.getValue0());
+            if(rateHistory== null) {
+                rateHistory = new RateHistory(e.getValue0(), e_指标_rate_sy);
+                rateHistory.setDeltaLongValue(e.getValue1());
+                rateHistoryRepository.save(rateHistory);
+            }
             System.out.println("-----------"+ e.toString());
         });
 
@@ -173,27 +170,27 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
         h1.setSnffbs_同比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
-        Optional<RateHistory> rateHistory_环比 = rateHistories_环比
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
+Optional<ProRateHistory> rateHistory_环比 = rateHistories_环比
                 .stream()
                 .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
                 .findFirst();
 
-        Optional<RateHistory> rateHistory_同比 = rateHistories_同比
+        Optional<ProRateHistory> rateHistory_同比 = rateHistories_同比
                 .stream()
                 .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
                 .findFirst();
 
-        Optional<RateHistory> rateHistory = rateHistories
+        Optional<ProRateHistory> rateHistory = rateHistories
                 .stream()
                 .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
                 .findFirst();
 
 
         if(rateHistory.isPresent())
-            h1.setFfbs_发放笔数_NUMBER_18_0(rateHistory.get().getLongValue());
+            h1.setFfbs_发放笔数_NUMBER_18_0(rateHistory.get().getDeltaLongValue());
         if(rateHistory.isPresent() && rateHistory_环比.isPresent()){
-            BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory.get().getLongValue().intValue()-rateHistory_环比.get().getLongValue().intValue()+0D)/rateHistory_环比.get().getLongValue().intValue());
+            BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory.get().getDeltaLongValue().intValue()-rateHistory_环比.get().getDeltaLongValue().intValue()+0D)/rateHistory_环比.get().getDeltaLongValue().intValue());
             h1.setHbffbs_环比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
         }
@@ -201,7 +198,7 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
 
 
         if(rateHistory.isPresent() && rateHistory_同比.isPresent()){
-            BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory.get().getLongValue().intValue()-rateHistory_同比.get().getLongValue().intValue()+0D)/rateHistory_同比.get().getLongValue().intValue());
+            BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory.get().getDeltaLongValue().intValue()-rateHistory_同比.get().getDeltaLongValue().intValue()+0D)/rateHistory_同比.get().getDeltaLongValue().intValue());
             h1.setSnffbs_同比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
         }

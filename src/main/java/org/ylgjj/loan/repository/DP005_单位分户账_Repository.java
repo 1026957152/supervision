@@ -21,4 +21,8 @@ public interface DP005_单位分户账_Repository extends JpaRepository<DP005_�
     List<DP005_单位分户账> findByOpnaccdate开户日期BetweenOrderByOpnaccdate开户日期Desc(LocalDate minusDays, LocalDate now);
 
     List<DP005_单位分户账> findByClsaccdate销户日期BetweenOrderByClsaccdate销户日期Desc(LocalDate minusDays, LocalDate now);
+
+    Long countByUnitacctype单位账户类型AndUnitaccstate单位账户状态(String text,String text2);
+
+    Long countByUnitacctype单位账户类型(String text);
 }

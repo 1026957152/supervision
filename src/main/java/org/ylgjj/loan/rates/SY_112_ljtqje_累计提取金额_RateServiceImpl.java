@@ -2,18 +2,21 @@ package org.ylgjj.loan.rates;
 
 
 import org.apache.commons.lang3.time.StopWatch;
+import org.javatuples.Pair;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.DW025_公积金提取审核登记表;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.repository.DW025_公积金提取审核登记表_Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -33,75 +36,70 @@ public class SY_112_ljtqje_累计提取金额_RateServiceImpl extends RateServic
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_112_ljtqje_累计提取金额;
 
-    @Autowired
-    private DW025_公积金提取审核登记表_Repository dw025_公积金提取审核登记表_repository;
 
-    @Autowired
-    private RateHistoryRepository rateHistoryRepository;
-
-    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-
-
-
-    //
     public void process() {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
             return;
         }
-
-        updateRateTable(rateAnalysisTable,history());
-
-    }
-    public RateAnalysisStream history() {
         StopWatch timer = new StopWatch();
         timer.start();
-        LocalDate beginDate =  LocalDate.now().minusDays(20000);
-        LocalDate endDate = LocalDate.now();
+        if(rateAnalysisTable.getAanalysedEndDate()== null){
+
+            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+
+            RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now());
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }else{
+            //     if(rateAnalysisTable.getAanalysedEndDate().is)
+            RateAnalysisStream rateAnalysisStream = history(rateAnalysisTable.getAanalysedEndDate(),LocalDate.now());
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }
+
+
+    }
+
+    public RateAnalysisStream history(LocalDate beginDate,LocalDate endDate) {
 
 
 
-
-        //List<LN003_合同信息> ln003_合同信息s = ln003_合同信息_repository.findByOrderByLoandate放款日期Desc();
         List<DW025_公积金提取审核登记表> ln003_合同信息s = dw025_公积金提取审核登记表_repository.findByTransdate交易日期BetweenOrderByTransdate交易日期Desc(LocalDate.now().minusDays(20000),LocalDate.now());
         System.out.println("------------------DW025_公积金提取审核登记表-----------"+ ln003_合同信息s.size());
 
 
-        List<Triplet<LocalDate,Double,Long>> sourceList =ln003_合同信息s.stream().collect(Collectors.groupingBy(e->e.getTransdate交易日期())).entrySet()
+        List<Pair<LocalDate,Double>> sourceList =ln003_合同信息s.stream().collect(Collectors.groupingBy(e->e.getTransdate交易日期())).entrySet()
                 .stream()
                 .sorted(Comparator.comparingLong(e->e.getKey().toEpochDay()))
                 .map(e->{
                     System.out.println("stream---------"+e.getKey());
                     Double tqje = e.getValue().stream().mapToDouble(f->f.getDrawamt_提取金额().doubleValue()).sum();
-                    return Triplet.with(e.getKey(),tqje,0L);
+                    return Pair.with(e.getKey(),tqje);
                 }).collect(Collectors.toList());
 
         Double num = 0D;
 
-        List<Triplet<LocalDate,Double,Double>> triplets = new ArrayList<>();
-        for(Triplet<LocalDate,Double,Long> triplet: sourceList){
+        List<Pair<LocalDate,Double>> triplets_acc = new ArrayList<>();
+        for(Pair<LocalDate,Double> triplet: sourceList){
 
             num += triplet.getValue1();
-            triplet.setAt2(num);
-            triplets.add(Triplet.with(triplet.getValue0(),triplet.getValue1(),num));
+            triplets_acc.add(Pair.with(triplet.getValue0(),num));
         }
 
-        triplets.stream().forEach(e->{
-            System.out.println("-----------"+ e.toString());
-        });
 
 
-        save(triplets);
-        RateAnalysisStream rateAnalysisStream = new RateAnalysisStream();
-        rateAnalysisStream.setBeginDate(beginDate);
-        rateAnalysisStream.setEndDate(endDate);
-        rateAnalysisStream.setDuration(timer.getTime());
 
-        System.out.println();
-        return rateAnalysisStream;
 
+
+        saveAccDouble(triplets_acc,e_指标_rate_sy);
+
+        return new RateAnalysisStream(beginDate,endDate);
     }
 
 
@@ -112,13 +110,12 @@ public class SY_112_ljtqje_累计提取金额_RateServiceImpl extends RateServic
     @Transactional
     public void save(List<Triplet<LocalDate,Double,Double>> triplets) {
         triplets.stream().forEach(e->{
-
-            RateHistory rateHistory = new RateHistory();
-            rateHistory.setIndexNo(e_指标_rate_sy.get编码());
-            rateHistory.setDoubleValue(e.getValue2());
-            rateHistory.setDate(e.getValue0());
-            rateHistoryRepository.save(rateHistory);
-
+            RateHistory rateHistory = rateHistoryRepository.findByIndexNoAndDate(e_指标_rate_sy.get编码(),e.getValue0());
+            if(rateHistory== null) {
+                rateHistory = new RateHistory(e.getValue0(), e_指标_rate_sy);
+                rateHistory.setDoubleValue(e.getValue2());
+                rateHistoryRepository.save(rateHistory);
+            }
             System.out.println("-----------"+ e.toString());
         });
 
@@ -171,9 +168,8 @@ public class SY_112_ljtqje_累计提取金额_RateServiceImpl extends RateServic
 
     }
 
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
-
-        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
+if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
                 .stream()
                 .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
                 .mapToDouble(e->e.getDoubleValue()).sum();

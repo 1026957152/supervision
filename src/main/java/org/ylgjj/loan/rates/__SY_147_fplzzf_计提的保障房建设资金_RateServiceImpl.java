@@ -5,6 +5,7 @@ import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.LN003_合同信息;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;

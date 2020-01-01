@@ -360,14 +360,14 @@ public class CustomerServiceImpl implements CustomerService {
       //  data.setCjgzsj(DateUtils.getDate(dp007_individual_sub_account_个人分户账.getOpnaccdate_开户日期()));
 
         //String grzhzt; //个人账户状态
-        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007__个人分户账.getIndiaccstate_个人账户状态()).getText());
+        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007__个人分户账.getIndiaccstate个人账户状态()).getText());
 
 
         //BigDecimal sqgzze; //税前工资总额
         data.setSqgzze(dp006__个人缴存信息表.getBasenum_缴存基数());
 
         //BigDecimal gjjye; //公积金余额
-        data.setGjjye(dp007__个人分户账.getBal_余额());
+        data.setGjjye(dp007__个人分户账.getBal余额());
 
 
 
@@ -439,16 +439,16 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         //String dwjezt; // 单位缴存状态
-        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.封存.getText())){
+        if(dp005__单位分户账.getUnitaccstate单位账户状态().equals(E_DP005_单位分户账_单位账户状态.封存.getText())){
             data.setDwjezt(单位账户状态Enum_银行.封存.getText());
         }else
-        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.正常.getText())){
+        if(dp005__单位分户账.getUnitaccstate单位账户状态().equals(E_DP005_单位分户账_单位账户状态.正常.getText())){
             data.setDwjezt(单位账户状态Enum_银行.正常.getText());
         }else
-        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.销户.getText())){
+        if(dp005__单位分户账.getUnitaccstate单位账户状态().equals(E_DP005_单位分户账_单位账户状态.销户.getText())){
             data.setDwjezt(单位账户状态Enum_银行.销户.getText());
         }else
-        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.空账.getText())){
+        if(dp005__单位分户账.getUnitaccstate单位账户状态().equals(E_DP005_单位分户账_单位账户状态.空账.getText())){
             data.setDwjezt(单位账户状态Enum_银行.其他.getText());
         }
 
@@ -972,14 +972,14 @@ public class CustomerServiceImpl implements CustomerService {
       //  data.setCjgzsj(DateUtils.getDate(dp007_individual_sub_account_个人分户账.getOpnaccdate_开户日期()));
 
         //String grzhzt; //个人账户状态
-        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007__个人分户账.getIndiaccstate_个人账户状态()).getText());
+        data.setGrzhzt(E_DP007_个人分户账_个人账户状态.from(dp007__个人分户账.getIndiaccstate个人账户状态()).getText());
 
         Double coefficient = 1.55;
         //BigDecimal sqgzze; //税前工资总额
         data.setSqgzze(dp006__个人缴存信息表.getBasenum_缴存基数().multiply(BigDecimal.valueOf(coefficient)).setScale(2,BigDecimal.ROUND_CEILING));
 
         //BigDecimal gjjye; //公积金余额
-        data.setGjjye(dp007__个人分户账.getBal_余额().add(BigDecimal.valueOf(90000)));
+        data.setGjjye(dp007__个人分户账.getBal余额().add(BigDecimal.valueOf(90000)));
 
 
 
@@ -1051,16 +1051,16 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         //String dwjezt; // 单位缴存状态
-        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.封存.getText())){
+        if(dp005__单位分户账.getUnitaccstate单位账户状态().equals(E_DP005_单位分户账_单位账户状态.封存.getText())){
             data.setDwjezt(单位账户状态Enum_银行.封存.getText());
         }else
-        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.正常.getText())){
+        if(dp005__单位分户账.getUnitaccstate单位账户状态().equals(E_DP005_单位分户账_单位账户状态.正常.getText())){
             data.setDwjezt(单位账户状态Enum_银行.正常.getText());
         }else
-        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.销户.getText())){
+        if(dp005__单位分户账.getUnitaccstate单位账户状态().equals(E_DP005_单位分户账_单位账户状态.销户.getText())){
             data.setDwjezt(单位账户状态Enum_银行.销户.getText());
         }else
-        if(dp005__单位分户账.getUnitaccstate_单位账户状态().equals(E_DP005_单位分户账_单位账户状态.空账.getText())){
+        if(dp005__单位分户账.getUnitaccstate单位账户状态().equals(E_DP005_单位分户账_单位账户状态.空账.getText())){
             data.setDwjezt(单位账户状态Enum_银行.其他.getText());
         }
 

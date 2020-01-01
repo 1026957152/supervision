@@ -431,8 +431,8 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
 
     private double ljsntqe_同比历史累计提取额_提取原因_NUMBER_18_2;
 
-    @JsonProperty("tqje_")
-    @JSONField(name="tqje_")
+    @JsonProperty("tqje")
+    @JSONField(name="tqje")
     private double tqje_提取金额_NUMBER_18_2;
 
     @JsonProperty("hbtqje")

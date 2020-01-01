@@ -9,6 +9,7 @@ import org.ylgjj.loan.domain.LN004_合同状态信息;
 import org.ylgjj.loan.enumT.E_LN003_合同信息_合同状态;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
@@ -52,7 +53,7 @@ public class SY_46_ljzldkbs_存量贷款笔数_RateServiceImpl extends RateServi
 
 
 
-    public void process() {
+    public void process(LocalDate beginDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
@@ -191,8 +192,7 @@ public class SY_46_ljzldkbs_存量贷款笔数_RateServiceImpl extends RateServi
         h1.setLjsnzldkbs_同比存量贷款笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
     }
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
-
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
 /*        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
                 .stream()
                 .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))

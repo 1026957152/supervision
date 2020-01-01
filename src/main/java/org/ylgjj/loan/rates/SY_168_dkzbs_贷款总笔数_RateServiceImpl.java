@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.LN003_合同信息;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
@@ -176,10 +177,8 @@ public class SY_168_dkzbs_贷款总笔数_RateServiceImpl extends RateServiceBas
     }
 
 
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
-
-
-        Long rateHistory = rateHistories
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
+Long rateHistory = rateHistories
                 .stream()
                 .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
                 .mapToLong(e->e.getLongValue()).sum();

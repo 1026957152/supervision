@@ -4,11 +4,11 @@ package org.ylgjj.loan.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.*;
-import org.ylgjj.loan.domain_flow.RateHistory;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.output.H1_1监管主要指标查询_公积金年度查询;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.rates.*;
-import org.ylgjj.loan.repository_flow.RateHistoryRepository;
+import org.ylgjj.loan.repository_flow.ProRateHistoryRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +28,7 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
 
 
     @Autowired
-    private RateHistoryRepository rateHistoryRepository;
+    private ProRateHistoryRepository rateHistoryRepository;
 
 
     DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -37,7 +37,7 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     @Autowired
     private SY_134_ffbs_发放笔数_RateServiceImpl sy_134_ffbs_发放笔数_rateService;
     @Autowired
-    private SY_127_ljffdkje_累计发放贷款金额_RateServiceImpl sy_127_ljffdkje_累计发放贷款金额_rateService;
+    private SY_127_ljffdkje_期末值_累计发放贷款金额_RateServiceImpl sy_127_ljffdkje_累计发放贷款金额_rateService;
     @Autowired
     private SY_166_tqzbs_提取总笔数_RateServiceImpl sy_166_tqzbs_提取总笔数_rateService;
     @Autowired
@@ -132,7 +132,7 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     private SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl sy_13_ljjzzcdws_建制正常单位数_rateService;
 
     @Autowired
-    private SY_10_ljjzfcdws_建制封存单位数_RateServiceImpl sy_10_ljjzfcdws_建制封存单位数_rateService;
+    private SY_10_ljjzfcdws_问题_建制封存单位数_RateServiceImpl sy_10_ljjzfcdws_建制封存单位数_rateService;
 
     @Autowired
     private SY_7_ljjzfxhdws_建制非销户单位数_RateServiceImpl sy_7_ljjzfxhdws_建制非销户单位数_rateService;
@@ -164,6 +164,9 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
     private SY_130_yqdkje_逾期贷款金额_RateServiceImpl sy_130_yqdkje_逾期贷款金额_rateService;
     @Autowired
     private SY_140_zzsyje_增长收益金额_RateServiceImpl sy_140_zzsyje_增长收益金额_rateService;
+
+    @Autowired
+    private SY_115_ffje_发放金额_RateServiceImpl sy_115_ffje_发放金额_rateService;
 
 
 
@@ -208,13 +211,22 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         LocalDate ldt_ksrq_同比_begin  = ldt_ksrq.minusYears(1);
         LocalDate ldt_ksrq_同比_end  = ldt_jsrq.minusYears(1);
 
-        List<RateHistory> rateHistories = rateHistoryRepository
+        List<ProRateHistory> rateHistories = rateHistoryRepository
                 .findByDateBetweenOrderByDateDesc(ldt_ksrq,ldt_jsrq);
 
-        List<RateHistory> rateHistories_环比 = rateHistoryRepository
+        List<ProRateHistory> rateHistories_环比 = rateHistoryRepository
                 .findByDateBetweenOrderByDateDesc(ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
-        List<RateHistory> rateHistories_同比 = rateHistoryRepository
+        List<ProRateHistory> rateHistories_同比 = rateHistoryRepository
                 .findByDateBetweenOrderByDateDesc(ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
+
+        System.out.println("----------ldt_ksrq:"+ldt_ksrq.toString());
+        System.out.println("----------ldt_jsrq"+ldt_jsrq.toString());
+        System.out.println("----------ldt_ksrq_环比_begin"+ldt_ksrq_环比_begin.toString());
+        System.out.println("----------ldt_ksrq_环比_end"+ldt_ksrq_环比_end.toString());
+
+        System.out.println("----------ldt_ksrq_同比_begin"+ldt_ksrq_同比_begin.toString());
+        System.out.println("----------ldt_ksrq_同比_end"+ldt_ksrq_同比_end.toString());
+
 /*
         if(irateHistories.size()==0) return;if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
         Double rateHistory_同比 = rateHistories_同比.stream().mapToDouble(e->e.getDoubleValue()).sum();;
@@ -290,6 +302,7 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         sy_177_dkpjspts_贷款平均审批天数_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);
 
 
+        sy_115_ffje_发放金额_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);
 
 
 

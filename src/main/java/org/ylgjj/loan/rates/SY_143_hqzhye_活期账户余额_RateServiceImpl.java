@@ -6,8 +6,10 @@ import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.Fn032_会计凭证历史流水;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
@@ -177,10 +179,8 @@ public class SY_143_hqzhye_活期账户余额_RateServiceImpl extends RateServic
         h1.setLjsnffdkje_累计同比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());*/
 
     }
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
-
-
-        Double rateHistory = rateHistories
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
+Double rateHistory = rateHistories
                 .stream()
                 .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
                 .mapToDouble(e->e.getDoubleValue()).sum();

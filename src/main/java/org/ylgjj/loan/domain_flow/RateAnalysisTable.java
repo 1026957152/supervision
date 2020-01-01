@@ -20,6 +20,8 @@ public class RateAnalysisTable extends BaseDomain {
     private LocalDate updateTime;
     private Integer seq;
     private String name;
+    private LocalDate aanalysedBeginDate;
+    private LocalDate aanalysedEndDate;
 
     @Override
     public String toString() {
@@ -57,5 +59,21 @@ public class RateAnalysisTable extends BaseDomain {
 
     public String getName() {
         return name;
+    }
+
+    public void setAanalysedBeginDate(LocalDate aanalysedBeginDate) {
+        this.aanalysedBeginDate = aanalysedBeginDate;
+    }
+
+    public LocalDate getAanalysedBeginDate() {
+        return aanalysedBeginDate;
+    }
+
+    public void setAanalysedEndDate(LocalDate aanalysedEndDate) {
+        this.aanalysedEndDate = aanalysedEndDate;
+    }
+
+    public LocalDate getAanalysedEndDate() {
+        return aanalysedEndDate;
     }
 }

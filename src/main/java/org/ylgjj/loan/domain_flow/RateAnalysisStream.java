@@ -30,6 +30,17 @@ public class RateAnalysisStream extends BaseDomain {
             ;
     private long duration;
     private Integer rateTableId;
+    private LocalDate aanalysedEndDate;
+    private LocalDate aanalysedBeginDate;
+
+    public RateAnalysisStream(LocalDate beginDate, LocalDate endDate) {
+        this.beginDate = beginDate;
+        this.endDate = endDate;
+    }
+
+    public RateAnalysisStream() {
+
+    }
 
 
     @Override
@@ -109,4 +120,6 @@ public class RateAnalysisStream extends BaseDomain {
     public Integer getRateTableId() {
         return rateTableId;
     }
+
+
 }

@@ -2,25 +2,22 @@ package org.ylgjj.loan.rates;
 
 
 import org.apache.commons.lang3.time.StopWatch;
-import org.javatuples.Triplet;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.javatuples.Pair;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.DP034_公积金开销户登记簿;
+import org.ylgjj.loan.enumT.E_DP007_个人分户账_个人账户状态;
 import org.ylgjj.loan.enumT.E_DP034_公积金开销户登记簿_开销户标志;
 import org.ylgjj.loan.enumT.E_DP034_公积金开销户登记簿_账户标志;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
-import org.ylgjj.loan.domain_flow.RateHistory;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
+import org.ylgjj.loan.enumT.E_dp007_个人分户账_类型;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
-import org.ylgjj.loan.repository.*;
-import org.ylgjj.loan.repository_flow.RateHistoryRepository;
+import org.ylgjj.loan.outputenum.统计周期编码;
 
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,51 +31,63 @@ public class SY_22_ljjzxhrs_建制销户人数_RateServiceImpl extends RateServi
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_22_ljjzxhrs_建制销户人数;
 
-    @Autowired
-    private DP006_个人缴存信息表_Repository dp006_个人缴存信息表_repository;
-    @Autowired
-    private CM002_个人基本资料表Repository cm002_个人基本资料表Repository;
-    @Autowired
-    private DP007_个人分户账_Repository dp007_个人分户账_repository;
-    @Autowired
-    private DP034_公积金开销户登记簿_Repository dp034_公积金开销户登记簿_repository;
+    public void realTime() {
 
-    @Autowired
-    private RateHistoryRepository rateHistoryRepository;
+        Long count_ = dp007_个人分户账_repository
+                .countByIndiacctype个人账户类型AndIndiaccstate个人账户状态(E_dp007_个人分户账_类型.E_1_正常.getText(), E_DP007_个人分户账_个人账户状态.销户.getText());
+/*        Long count = dp005_单位分户账_repository
+                .countByUnitacctype单位账户类型AndUnitaccstate单位账户状态(E_DP005_单位分户账_单位账户类型.普通.getText(), E_DP005_单位分户账_单位账户状态.销户.getText());
+       */
+        saveAccLongRealtime(count_,LocalDate.now(),e_指标_rate_sy);
+    }
 
-    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public void groupProcess(){
+        process(LocalDate.parse("2015-10-01",df),LocalDate.now());
 
+        realTime();
 
-
-
-
-    //
-    public void process() {
+        complete(e_指标_rate_sy, 统计周期编码.H__03_每月);
+        transfer期末ToPro(e_指标_rate_sy);
+    }
+    public void process(LocalDate beginDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
             return;
         }
-        history();
-        //   updateRateTable(rateAnalysisTable,history());
+        StopWatch timer = new StopWatch();
+        timer.start();
+        if(rateAnalysisTable.getAanalysedEndDate()== null){
+
+            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+
+            RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }else{
+            //     if(rateAnalysisTable.getAanalysedEndDate().is)
+            RateAnalysisStream rateAnalysisStream = history(rateAnalysisTable.getAanalysedEndDate(),LocalDate.now());
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }
+
 
     }
 
-    public RateAnalysisStream history() {
-        StopWatch timer = new StopWatch();
-        timer.start();
-        LocalDate beginDate =  LocalDate.now().minusDays(20000);
-        LocalDate endDate = LocalDate.now();
+
+    public RateAnalysisStream history(LocalDate beginDate,LocalDate endDate) {
 
 
-
-        //List<LN003_合同信息> ln003_合同信息s = ln003_合同信息_repository.findByOrderByLoandate放款日期Desc();
         List<DP034_公积金开销户登记簿> ln003_合同信息s = dp034_公积金开销户登记簿_repository
-                .findByTransdate不可为空交易日期BetweenOrderByTransdate不可为空交易日期Desc(beginDate,endDate);
+                .findByTransdate不可为空交易日期BetweenOrderByTransdate不可为空交易日期Desc(beginDate.minusDays(1),endDate.plusDays(1));
         System.out.println("-----------------------------"+ ln003_合同信息s.size());
 
 
-        List<Triplet<LocalDate,Integer,Long>> sourceList =ln003_合同信息s
+        List<Pair<LocalDate,Long>> sourceList =ln003_合同信息s
                 .stream()
                 .filter(e->e.getAccflag_不可为空_账户标志().equals(E_DP034_公积金开销户登记簿_账户标志.E_2_个人户.getText()))
                 .collect(Collectors.groupingBy(e->e.getTransdate不可为空交易日期())).entrySet()
@@ -87,47 +96,22 @@ public class SY_22_ljjzxhrs_建制销户人数_RateServiceImpl extends RateServi
                 .map(e->{
                     ;
                     System.out.println("stream---------"+e.getKey());
-                    return Triplet.with(e.getKey(),
-                            e.getValue().stream().mapToInt(x->{
+                    return Pair.with(e.getKey(),
+                            e.getValue().stream().mapToLong(x->{
 /*                                if(x.getOcflag_不可为空_开销户标志().equals(E_DP034_公积金开销户登记簿_开销户标志.E_0_开户.getText()))
                                     return +1;*/
                                 if(x.getOcflag_不可为空_开销户标志().equals(E_DP034_公积金开销户登记簿_开销户标志.E_1_销户.getText()))
                                     return -1;
                                 return 0;
-                            }).sum()
-                            ,0L);
+                            }).sum());
                 }).collect(Collectors.toList());
 
-        Long num = 0L;
-
-        List<Triplet<LocalDate,Integer,Long>> triplets = new ArrayList<>();
-        for(Triplet<LocalDate,Integer,Long> triplet: sourceList){
-
-            num += triplet.getValue1();
-            triplet.setAt2(num);
-            triplets.add(Triplet.with(triplet.getValue0(),triplet.getValue1(),num));
-        }
-
-        triplets.stream().forEach(e->{
-            System.out.println("-----------"+ e.toString());
-        });
 
 
 
+        saveDeltaLong(sourceList,e_指标_rate_sy);
 
-
-
-
-
-
-        save(triplets);
-        RateAnalysisStream rateAnalysisStream = new RateAnalysisStream();
-        rateAnalysisStream.setBeginDate(beginDate);
-        rateAnalysisStream.setEndDate(endDate);
-        rateAnalysisStream.setDuration(timer.getTime());
-
-        System.out.println();
-        return rateAnalysisStream;
+        return new RateAnalysisStream(beginDate,endDate);
 
     }
 
@@ -136,78 +120,12 @@ public class SY_22_ljjzxhrs_建制销户人数_RateServiceImpl extends RateServi
 
 
 
-    @Transactional
-    public void save(List<Triplet<LocalDate,Integer,Long>> triplets) {
-        triplets.stream().forEach(e->{
-
-            RateHistory rateHistory = new RateHistory();
-            rateHistory.setIndexNo(e_指标_rate_sy.get编码());
-            rateHistory.setDoubleValue(e.getValue2());
-            rateHistory.setDate(e.getValue0());
-            rateHistoryRepository.save(rateHistory);
-
-            System.out.println("-----------"+ e.toString());
-        });
-
-    }
 
 
 
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, String ksrq, String jsrq) {
 
-
-        LocalDate ldt_ksrq = LocalDate.parse(ksrq, df);
-        LocalDate ldt_jsrq = LocalDate.parse(jsrq, df);
-        LocalDate ldt_ksrq_环比_begin  = ldt_ksrq.minusMonths(1);
-        LocalDate ldt_ksrq_环比_end  = ldt_jsrq.minusMonths(1);
-
-
-        LocalDate ldt_ksrq_同比_begin  = ldt_ksrq.minusYears(1);
-        LocalDate ldt_ksrq_同比_end  = ldt_jsrq.minusYears(1);
-
-
-        List<RateHistory> rateHistories = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq,ldt_jsrq);
-
-        List<RateHistory> rateHistories_环比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
-        List<RateHistory> rateHistories_同比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
-        Double rateHistory_同比 = rateHistories_同比.stream().mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories.stream().mapToDouble(e->e.getDoubleValue()).sum();
-
-
-        h1.setLjjzxhrs_建制销户人数_NUMBER_18_0(rateHistory.intValue());
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
-
-        h1.setLjhbjzxhrs_环比建制销户人数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
-
-        h1.setLjsnjzxhdws_同比建制销户单位数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-
-    }
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<RateHistory> rateHistories, List<RateHistory> rateHistories_环比, List<RateHistory> rateHistories_同比) {
-
-/*
-        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
-
-        Double rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
-*/
-
-        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
+    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
+if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
                 .stream()
                 .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
                 .mapToLong(e->e.getLongValue()).sum();

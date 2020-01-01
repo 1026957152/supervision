@@ -15,9 +15,9 @@ import java.time.LocalDate;
  */
 
 @Entity
-@Table(name = "rate_history")
+@Table(name = "pro_rate_history")
 
-public class RateHistory extends BaseDomain{
+public class ProRateHistory extends BaseDomain{
 
 
     @Column(name = "date")
@@ -30,41 +30,45 @@ public class RateHistory extends BaseDomain{
     private String indexNo;
 
     private Double doubleValue;
-    private Long seqNum;
-    private String dimension1;
-    private String dimension2;
     private Long longValue;
     private Long deltaLongValue;
     private Double deltaDoubleValue;
-    private String type;
 
-    public RateHistory(LocalDate n) {
+
+    public ProRateHistory(LocalDate n) {
         this.date = n;
     }
-    public RateHistory(LocalDate n, StatisticalIndexCodeEnum index) {
+    public ProRateHistory(LocalDate n, StatisticalIndexCodeEnum index) {
 
     }
 
-    public RateHistory() {
+    public ProRateHistory() {
     }
 
 
 
-    public RateHistory(LocalDate beginDate, LocalDate endDate, StatisticalIndexCodeEnum s1Seq暂存款笔数And0301000101) {
+    public ProRateHistory(LocalDate beginDate, LocalDate endDate, StatisticalIndexCodeEnum s1Seq暂存款笔数And0301000101) {
         this.date = beginDate;
         indexNo = s1Seq暂存款笔数And0301000101.get指标编码();
         this.endDate = endDate;
     }
 
-    public RateHistory(LocalDate value0, E_指标_RATE_SY e_指标_rate_sy) {
+    public ProRateHistory(LocalDate value0, E_指标_RATE_SY e_指标_rate_sy) {
         this.date = value0;
         this.indexNo = e_指标_rate_sy.get编码();
     }
 
-    public RateHistory(LocalDate now, E_指标_RATE_SY e_指标_rate_sy, E_HISTORY_数据来源 e_history_数据来源) {
-        this.date = now;
-        this.indexNo = e_指标_rate_sy.get编码();
-        this.type = e_history_数据来源.get编码();
+    public ProRateHistory(LocalDate now, E_指标_RATE_SY e_指标_rate_sy, E_HISTORY_数据来源 e_history_数据来源) {
+
+    }
+
+    public ProRateHistory(RateHistory e) {
+        this.date = e.getDate();
+        this.indexNo = e.getIndexNo();
+        this.longValue = e.getLongValue();
+        this.doubleValue = e.getDoubleValue();
+        this.deltaDoubleValue = e.getDeltaDoubleValue();
+        this.deltaLongValue = e.getDeltaLongValue();
     }
 
     @Override
@@ -95,7 +99,6 @@ public class RateHistory extends BaseDomain{
     }
 
 
-
     public Double getDoubleValue() {
         return doubleValue;
     }
@@ -104,29 +107,7 @@ public class RateHistory extends BaseDomain{
         this.doubleValue = doubleValue;
     }
 
-    public Long getSeqNum() {
-        return seqNum;
-    }
 
-    public void setSeqNum(Long seqNum) {
-        this.seqNum = seqNum;
-    }
-
-    public void setDimension1(String dimension1) {
-        this.dimension1 = dimension1;
-    }
-
-    public String getDimension1() {
-        return dimension1;
-    }
-
-    public void setDimension2(String dimension2) {
-        this.dimension2 = dimension2;
-    }
-
-    public String getDimension2() {
-        return dimension2;
-    }
 
     public void setLongValue(Long longValue) {
         this.longValue = longValue;
@@ -156,11 +137,5 @@ public class RateHistory extends BaseDomain{
         this.deltaDoubleValue = deltaDoubleValue;
     }
 
-    public void setType(String type) {
-        this.type = type;
-    }
 
-    public String getType() {
-        return type;
-    }
 }

@@ -6,7 +6,11 @@ import org.javatuples.Pair;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.ylgjj.loan.domain.LN003_合同信息;
+import org.ylgjj.loan.domain.LN004_合同状态信息;
 import org.ylgjj.loan.domain.LN101_贷款明细账;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
+import org.ylgjj.loan.enumT.E_LN004_合同状态信息_合同状态;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
 import org.ylgjj.loan.domain_flow.ProRateHistory;
@@ -14,7 +18,8 @@ import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.outputenum.统计周期编码;
-import org.ylgjj.loan.repository.LN101_贷款明细账_Repository;
+import org.ylgjj.loan.repository.LN003_合同信息_Repository;
+import org.ylgjj.loan.repository.LN004_合同状态信息Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
 import javax.annotation.PostConstruct;
@@ -25,6 +30,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -32,19 +38,18 @@ import java.util.stream.Collectors;
  */
 
 @Service
-public class SY_124_ljhsje_累计回收金额_RateServiceImpl extends RateServiceBaseImpl {
+public class SY_127_ljffdkje_期末值_累计发放贷款金额_RateServiceImpl extends RateServiceBaseImpl{
 
+    E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_127_ljffdkje_累计发放贷款金额;
 
-    E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_124_ljhsje_累计回收金额;
-
-
-  //  @PostConstruct
+     @PostConstruct
     public void trans() {
         process(LocalDate.parse("2015-10-01",df),LocalDate.now());
 
         complete(e_指标_rate_sy, 统计周期编码.H__03_每月);
-        transfer累计ToPro(e_指标_rate_sy);
+        transfer本期值ToPro(e_指标_rate_sy,Double.class.getName());
     }
+
 
     //@PostConstruct
     public void process(LocalDate beginDate,LocalDate endDate) {
@@ -57,7 +62,7 @@ public class SY_124_ljhsje_累计回收金额_RateServiceImpl extends RateServic
         timer.start();
         if(rateAnalysisTable.getAanalysedEndDate()== null){
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+            deleteReduction_流水还原(e_指标_rate_sy);
 
             RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
@@ -79,24 +84,41 @@ public class SY_124_ljhsje_累计回收金额_RateServiceImpl extends RateServic
 
     public RateAnalysisStream history(LocalDate beginDate,LocalDate endDate) {
 
-        List<LN101_贷款明细账> ln003_合同信息s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期BetweenOrderByTransdate不可为空交易日期Desc(beginDate.minusDays(1),endDate.plusDays(1));
+
+        List<LN004_合同状态信息> ln004_合同状态信息s = ln004_合同状态信息Repository.findAll();
+
+
+        List<LN003_合同信息> ln003_合同信息s = ln003_合同信息_repository.findByLoandate放款日期BetweenOrderByLoandate放款日期Desc(beginDate.minusDays(1),endDate.plusDays(1));
         System.out.println("-----------------------------"+ ln003_合同信息s.size());
 
-        List<Pair<LocalDate,Double>> triplets = ln003_合同信息s.stream().collect(Collectors.groupingBy(e->e.getTransdate不可为空交易日期()))
+        Map<String,LN003_合同信息> ln003_合同信息Map =ln003_合同信息s.stream().collect(Collectors.toMap(e->e.getLoancontrcode合同代码().trim(), e->e));
+
+
+
+        List<Pair<LocalDate,Double>> triplets = ln004_合同状态信息s.stream().collect(Collectors.groupingBy(e->e.getTransdate()))
                 .entrySet()
                 .stream()
                 .sorted(Comparator.comparingLong(e->e.getKey().toEpochDay()))
                 .map(e->{
 
                     double diff = e.getValue().stream()
-                            //       .filter(x->x.getDcflag不可为空_借贷标志().equals("1"))
+                            .filter(x->x.getLoancontrstate().equals(E_LN004_合同状态信息_合同状态.E_09_放款.getText()))
+
+                            /*                    .filter(x->!x.getLoancontrstate_合同状态().equals(E_LN004_合同状态信息_合同状态.E_99_合同废弃.getText()))
+                            .filter(x->!x.getLoancontrstate_合同状态().equals(E_LN004_合同状态信息_合同状态.E_00_申请.getText()))
+*/
                             .mapToDouble(x->{
 
-                                if(x.getDcflag不可为空_借贷标志().equals("2")){
-                                    return x.getTransamt不可为空_交易金额().doubleValue();
+                                LN003_合同信息 ln003_合同信息 = ln003_合同信息Map.get(x.getLoancontrcode().trim());
+                                if(ln003_合同信息 == null) {
+                                    System.out.println("--------------------------------"+ x.getLoancontrstate());
+                                    System.out.println("--------------------------------"+ x.toString());
+                                    return 0;
+                                }else{
+                                    return ln003_合同信息.getLoanamt_贷款金额().doubleValue();
                                 }
 
-                                return 0;
+
 
                             })
                             .sum();
@@ -105,16 +127,20 @@ public class SY_124_ljhsje_累计回收金额_RateServiceImpl extends RateServic
                 }).collect(Collectors.toList());
 
 
-
-
+/*
+        List<Pair<LocalDate,Double>> triplets_acc = new ArrayList<>();
+        Double num = 0D;
+        for(Pair<LocalDate,Double> triplet: triplets){
+            num += triplet.getValue1();
+            triplets.add(Pair.with(triplet.getValue0(),num));
+        }
+*/
 
         saveDeltaDouble(triplets,e_指标_rate_sy);
 
         return new RateAnalysisStream(beginDate,endDate);
 
     }
-
-
 
 
 
@@ -148,14 +174,15 @@ if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环
                 .mapToLong(e->e.getLongValue()).sum();*/
 
 
-        h1.setLjhsje_累计回收金额_NUMBER_18_2(rateHistory.intValue());
+        h1.setLjffdkje_累计发放贷款金额_NUMBER_18_2(rateHistory);
+
         BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
 
-        h1.setLjhbhsje_累计环比回收金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        h1.setLjhbffdkje_累计环比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
         bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
 
-        h1.setLjsnhsje_累计同比回收金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        h1.setLjsnffdkje_累计同比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
     }
 

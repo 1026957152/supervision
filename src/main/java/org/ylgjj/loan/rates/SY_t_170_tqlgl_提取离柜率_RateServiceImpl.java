@@ -9,6 +9,7 @@ import org.ylgjj.loan.domain.DW145_提取结算登记簿;
 import org.ylgjj.loan.domain_zongfu.Mi107_业务日志;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
+import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_业务类型_综服_HX;

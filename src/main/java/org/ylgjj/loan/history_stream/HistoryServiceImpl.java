@@ -537,7 +537,7 @@ public class HistoryServiceImpl {
 
             dp005_单位分户账Map =  dp005__单位分户账_repository.findAll()
                     .stream()
-                    .filter(e->e.getUnitacctype_单位账户类型().equals(E_DP005_单位分户账_单位账户类型.普通.getText()))
+                    .filter(e->e.getUnitacctype单位账户类型().equals(E_DP005_单位分户账_单位账户类型.普通.getText()))
                     .collect(Collectors.toMap(e -> e.getUnitaccnum单位账号(),e->e));
         }
         return dp005_单位分户账Map;
@@ -578,12 +578,25 @@ public class HistoryServiceImpl {
 
             dp007_个人分户账Map =  dp007_个人分户账_repository.findAll()
                     .stream()
-                    .filter(e->e.getIndiacctype_个人账户类型().equals(E_dp007_个人分户账_类型.E_1_正常.getText()))
+                    .filter(e->e.getIndiacctype个人账户类型().equals(E_dp007_个人分户账_类型.E_1_正常.getText()))
                     .collect(Collectors.toMap(e -> e.getAccnum_个人账号(),e->e));
         }
         return dp007_个人分户账Map;
     }
 
+    List<DP007_个人分户账> dp007_个人分户账List = null;
+    public List<DP007_个人分户账> dp007_个人分户账List() {
+
+
+        if(dp007_个人分户账List == null){
+
+            dp007_个人分户账List =  dp007_个人分户账_repository.findAll()
+                    .stream()
+                    .filter(e->e.getIndiacctype个人账户类型().equals(E_dp007_个人分户账_类型.E_1_正常.getText()))
+                    .collect(Collectors.toList());
+        }
+        return dp007_个人分户账List;
+    }
 
 
 

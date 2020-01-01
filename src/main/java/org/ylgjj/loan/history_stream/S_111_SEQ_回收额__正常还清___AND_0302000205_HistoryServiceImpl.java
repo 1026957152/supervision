@@ -35,12 +35,6 @@ public class S_111_SEQ_回收额__正常还清___AND_0302000205_HistoryServiceIm
     private DP021_单位缴存登记薄Repository dp021_单位缴存登记薄Repository;
 
 
-    @Autowired
-    private DP005_单位分户账_Repository dp005__单位分户账_repository;
-
-    @Autowired
-    private CM001_单位基本资料表Repository cm001单位基本资料表Repository;
-
 
 
 

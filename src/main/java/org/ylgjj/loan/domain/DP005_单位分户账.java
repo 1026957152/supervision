@@ -38,14 +38,14 @@ public class DP005_单位分户账 {
     private String exttranslvl;
 
     @Column(name = "unitaccstate")
-    private String unitaccstate_单位账户状态;
+    private String unitaccstate单位账户状态;
 
 
     @Column(name = "frzflag")
     private String frzflag_冻结标志;
 
     @Column(name = "unitacctype")
-    private String unitacctype_单位账户类型;
+    private String unitacctype单位账户类型;
 // 1－普通4－自由5－军转6－托管7－执法8－久悬未取 9－预缴户
 
     @Column(name = "lastbal")
@@ -130,12 +130,12 @@ public class DP005_单位分户账 {
         this.exttranslvl = exttranslvl;
     }
 
-    public String getUnitaccstate_单位账户状态() {
-        return unitaccstate_单位账户状态;
+    public String getUnitaccstate单位账户状态() {
+        return unitaccstate单位账户状态;
     }
 
-    public void setUnitaccstate_单位账户状态(String unitaccstate_单位账户状态) {
-        this.unitaccstate_单位账户状态 = unitaccstate_单位账户状态;
+    public void setUnitaccstate单位账户状态(String unitaccstate_单位账户状态) {
+        this.unitaccstate单位账户状态 = unitaccstate_单位账户状态;
     }
 
     public String getFrzflag_冻结标志() {
@@ -146,12 +146,12 @@ public class DP005_单位分户账 {
         this.frzflag_冻结标志 = frzflag_冻结标志;
     }
 
-    public String getUnitacctype_单位账户类型() {
-        return unitacctype_单位账户类型;
+    public String getUnitacctype单位账户类型() {
+        return unitacctype单位账户类型;
     }
 
-    public void setUnitacctype_单位账户类型(String unitacctype_单位账户类型) {
-        this.unitacctype_单位账户类型 = unitacctype_单位账户类型;
+    public void setUnitacctype单位账户类型(String unitacctype_单位账户类型) {
+        this.unitacctype单位账户类型 = unitacctype_单位账户类型;
     }
 
     public BigDecimal getLastbal_上日余额() {

@@ -40,15 +40,15 @@ public class DP007_个人分户账 {
     private String certinum_证件号码;
 
     @Column(name = "indiacctype")
-    private String indiacctype_个人账户类型;
+    private String indiacctype个人账户类型;
 
     @Column(name = "indiaccstate")
-    private String indiaccstate_个人账户状态;
+    private String indiaccstate个人账户状态;
 /*	0-正常,1-全部冻结,2-部分冻结 3异地贷款：
  */
 
     @Column(name = "frzflag")
-    private String frzflag_冻结标志;
+    private String frzflag冻结标志;
 
     //开户日期
     @Column(name = "opnaccdate")
@@ -85,7 +85,7 @@ public class DP007_个人分户账 {
     private BigDecimal keepbal;
 
     @Column(name = "bal")
-    private BigDecimal bal_余额;
+    private BigDecimal bal余额;
 
 
     @Column(name = "accinstcode")
@@ -149,28 +149,28 @@ public class DP007_个人分户账 {
         this.certinum_证件号码 = certinum_证件号码;
     }
 
-    public String getFrzflag_冻结标志() {
-        return frzflag_冻结标志;
+    public String getFrzflag冻结标志() {
+        return frzflag冻结标志;
     }
 
-    public void setFrzflag_冻结标志(String frzflag_冻结标志) {
-        this.frzflag_冻结标志 = frzflag_冻结标志;
+    public void setFrzflag冻结标志(String frzflag_冻结标志) {
+        this.frzflag冻结标志 = frzflag_冻结标志;
     }
 
-    public String getIndiacctype_个人账户类型() {
-        return indiacctype_个人账户类型;
+    public String getIndiacctype个人账户类型() {
+        return indiacctype个人账户类型;
     }
 
-    public void setIndiacctype_个人账户类型(String indiacctype_个人账户类型) {
-        this.indiacctype_个人账户类型 = indiacctype_个人账户类型;
+    public void setIndiacctype个人账户类型(String indiacctype_个人账户类型) {
+        this.indiacctype个人账户类型 = indiacctype_个人账户类型;
     }
 
-    public String getIndiaccstate_个人账户状态() {
-        return indiaccstate_个人账户状态;
+    public String getIndiaccstate个人账户状态() {
+        return indiaccstate个人账户状态;
     }
 
-    public void setIndiaccstate_个人账户状态(String indiaccstate_个人账户状态) {
-        this.indiaccstate_个人账户状态 = indiaccstate_个人账户状态;
+    public void setIndiaccstate个人账户状态(String indiaccstate_个人账户状态) {
+        this.indiaccstate个人账户状态 = indiaccstate_个人账户状态;
     }
 
     public LocalDate getOpnaccdate开户日期() {
@@ -253,12 +253,12 @@ public class DP007_个人分户账 {
         this.keepbal = keepbal;
     }
 
-    public BigDecimal getBal_余额() {
-        return bal_余额;
+    public BigDecimal getBal余额() {
+        return bal余额;
     }
 
-    public void setBal_余额(BigDecimal bal_余额) {
-        this.bal_余额 = bal_余额;
+    public void setBal余额(BigDecimal bal_余额) {
+        this.bal余额 = bal_余额;
     }
 
     @Override

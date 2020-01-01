@@ -69,8 +69,8 @@ public class H1监管主要指标查询Controller {
             return Output.情况4_入参数格式错误(errors.toString());
             //  return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
         }
-        query.setKsrq("2019-09-11");
-        query.setJsrq("2019-11-30");
+/*        query.setKsrq("2019-09-11");
+        query.setJsrq("2019-11-30");*/
         System.out.println("----------------- "+ query.toString());
 
         return h1_2监管主要指标查询_公积金中心主要运行情况查询Service.H_1_2_监管主要指标查询_公积金中心主要运行情况查询(
