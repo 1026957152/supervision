@@ -42,7 +42,7 @@ public class SY_127_ljffdkje_期末值_累计发放贷款金额_RateServiceImpl 
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_127_ljffdkje_累计发放贷款金额;
 
-     @PostConstruct
+    // @PostConstruct
     public void trans() {
         process(LocalDate.parse("2015-10-01",df),LocalDate.now());
 
