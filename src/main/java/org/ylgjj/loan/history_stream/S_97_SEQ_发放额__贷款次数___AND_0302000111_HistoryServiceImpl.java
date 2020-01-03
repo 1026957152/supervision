@@ -54,7 +54,7 @@ public class S_97_SEQ_发放额__贷款次数___AND_0302000111_HistoryServiceImp
 
 
 
-   // @PostConstruct
+   // //
     public void process() {
 
 

@@ -93,7 +93,7 @@ public class SY_166_tqzbs_提取总笔数_RateServiceImpl extends RateServiceBas
 
 
 
-        save(triplets);
+       // save(triplets);
         RateAnalysisStream rateAnalysisStream = new RateAnalysisStream();
         rateAnalysisStream.setBeginDate(beginDate);
         rateAnalysisStream.setEndDate(endDate);
@@ -107,73 +107,6 @@ public class SY_166_tqzbs_提取总笔数_RateServiceImpl extends RateServiceBas
     }
 
 
-
-
-    @Transactional
-    public void save(List<Triplet<LocalDate,Integer,Long>> triplets) {
-        triplets.stream().forEach(e->{
-
-            RateHistory rateHistory = new RateHistory();
-            rateHistory.setIndexNo(e_指标_rate_sy.get编码());
-            rateHistory.setLongValue(e.getValue2());
-            rateHistory.setDate(e.getValue0());
-            rateHistoryRepository.save(rateHistory);
-
-            System.out.println("-----------"+ e.toString());
-        });
-
-    }
-
-
-
-
-
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, String ksrq, String jsrq) {
-
-
-        LocalDate ldt_ksrq = LocalDate.parse(ksrq, df);
-        LocalDate ldt_jsrq = LocalDate.parse(jsrq, df);
-        LocalDate ldt_ksrq_环比_begin  = ldt_ksrq.minusMonths(1);
-        LocalDate ldt_ksrq_环比_end  = ldt_jsrq.minusMonths(1);
-
-
-        LocalDate ldt_ksrq_同比_begin  = ldt_ksrq.minusYears(1);
-        LocalDate ldt_ksrq_同比_end  = ldt_jsrq.minusYears(1);
-
-
-
-
-
-        List<RateHistory> rateHistories = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq,ldt_jsrq);
-
-/*        List<RateHistory> rateHistories_环比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
-        List<RateHistory> rateHistories_同比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        Integer rateHistory_环比 = rateHistories_环比.stream().mapToInt(e->e.getLongValue().intValue()).sum();
-        Integer rateHistory_同比 = rateHistories_同比.stream().mapToInt(e->e.getLongValue().intValue()).sum();;
-        */
-
-        Integer rateHistory = rateHistories.stream().mapToInt(e->e.getLongValue().intValue()).sum();
-
-
-
-        h1.setTqzbs_提取总笔数_NUMBER_18_0(rateHistory);
-        h1.setWttqbs_网上提取笔数_NUMBER_18_0(rateHistory);
-
-
-/*
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
-
-        h1.setLjhbffdkje_累计环比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
-
-        h1.setLjsnffdkje_累计同比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-*/
-
-    }
 
 
 

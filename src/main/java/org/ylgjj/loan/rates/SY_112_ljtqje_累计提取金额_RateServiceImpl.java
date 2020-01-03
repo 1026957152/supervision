@@ -13,6 +13,7 @@ import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
+import org.ylgjj.loan.outputenum.统计周期编码;
 import org.ylgjj.loan.repository.DW025_公积金提取审核登记表_Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
@@ -36,8 +37,16 @@ public class SY_112_ljtqje_累计提取金额_RateServiceImpl extends RateServic
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_112_ljtqje_累计提取金额;
 
+    public void groupProcess() {
+        process(LocalDate.parse("2015-10-01", df), LocalDate.now());
 
-    public void process() {
+
+        transfer本年累计ToPro(e_指标_rate_sy, Double.class.getName());
+
+
+    }
+    //  //
+    public void process(LocalDate localDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
@@ -45,11 +54,12 @@ public class SY_112_ljtqje_累计提取金额_RateServiceImpl extends RateServic
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true ||rateAnalysisTable.getAanalysedEndDate()== null){
+            deleteAll(e_指标_rate_sy);
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
-
-            RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now());
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
+            RateAnalysisStream rateAnalysisStream = history(localDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());

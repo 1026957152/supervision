@@ -2,6 +2,7 @@ package org.ylgjj.loan.rates;
 
 
 import org.apache.commons.lang3.time.StopWatch;
+import org.javatuples.Pair;
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.ylgjj.loan.domain_flow.ProRateHistory;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
+import org.ylgjj.loan.outputenum.统计周期编码;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
 import org.ylgjj.loan.repository.LN004_合同状态信息Repository;
 import org.ylgjj.loan.repository.LN101_贷款明细账_Repository;
@@ -26,6 +28,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.ylgjj.loan.history_stream.HistoryServiceImpl.run统计周期编码;
+
 /**
  * Created by silence yuan on 2015/7/25.
  */
@@ -34,93 +38,57 @@ import java.util.stream.Collectors;
 public class SY_131_dkye_贷款余额_RateServiceImpl extends RateServiceBaseImpl{
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_131_dkye_贷款余额;
-    @Autowired
-    private LN003_合同信息_Repository ln003_合同信息_repository;
-    @Autowired
-    private LN004_合同状态信息Repository ln004_合同状态信息Repository;
-
-    @Autowired
-    private RateHistoryRepository rateHistoryRepository;
-
-    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    @Autowired
-    private LN101_贷款明细账_Repository ln101_贷款明细账_repository;
-
-
-/*    public void update(LocalDate lastDate) {
 
 
 
-
-        //List<LN003_合同信息> ln003_合同信息s = ln003_合同信息_repository.findByOrderByLoandate放款日期Desc();
-        List<LN101_贷款明细账> ln003_合同信息s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期BetweenOrderByTransdate不可为空交易日期Desc(lastDate,LocalDate.now());
-        System.out.println("-----------------------------"+ ln003_合同信息s.size());
+    public void trans() {
+        process(LocalDate.parse("2015-10-01",df),LocalDate.now());
 
 
+        transfer累计ToProFrom前(LocalDate.parse("2015-10-01",df),e_指标_rate_sy, Long.class.getName());
+    }
 
-        List<Triplet<LocalDate,Integer,Double>> triplets = ln003_合同信息s.stream().collect(Collectors.groupingBy(e->e.getTransdate不可为空交易日期()))
-                .entrySet()
-                .stream()
-                .sorted(Comparator.comparingLong(e->e.getKey().toEpochDay()))
-                .map(e->{
-
-                    double diff = e.getValue().stream()
-                            //       .filter(x->x.getDcflag不可为空_借贷标志().equals("1"))
-                            .mapToDouble(x->{
-
-                                if(x.getDcflag不可为空_借贷标志().equals("1")){
-                                    return x.getTransamt不可为空_交易金额().doubleValue();
-                                }
-                                if(x.getDcflag不可为空_借贷标志().equals("2")){
-                                    return -x.getTransamt不可为空_交易金额().doubleValue();
-                                }
-                                return 0;
-
-                            })
-                            .sum();
-
-                    return Triplet.with(e.getKey(),e.getValue().size(),diff);
-                }).collect(Collectors.toList());
-
-        triplets.stream().forEach(e->{
-            System.out.println("-----------"+ e.toString());
-        });
-
-
-
-    }*/
-
-    //
-    public void process() {
+    public void process(LocalDate beginDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
             return;
         }
+        StopWatch timer = new StopWatch();
+        timer.start();
+        if(true ||rateAnalysisTable.getAanalysedEndDate()== null){
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
 
-        updateRateTable(rateAnalysisTable,history());
+            RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }else{
+            //     if(rateAnalysisTable.getAanalysedEndDate().is)
+            RateAnalysisStream rateAnalysisStream = history(rateAnalysisTable.getAanalysedEndDate(),LocalDate.now());
+            rateAnalysisStream.setDuration(timer.getTime());
+            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+            updateRateTable(rateAnalysisTable,rateAnalysisStream);
+        }
+
 
     }
 
-    public RateAnalysisStream history() {
 
-        StopWatch timer = new StopWatch();
-        timer.start();
-        LocalDate beginDate =  LocalDate.now().minusDays(20000);
-        LocalDate endDate = LocalDate.now();
+    public RateAnalysisStream history(LocalDate beginDate,LocalDate endDate) {
 
 
-
-
-        //List<LN003_合同信息> ln003_合同信息s = ln003_合同信息_repository.findByOrderByLoandate放款日期Desc();
         List<LN101_贷款明细账> ln003_合同信息s = ln101_贷款明细账_repository
                 .findByTransdate不可为空交易日期BetweenOrderByTransdate不可为空交易日期Desc(beginDate,endDate  );
         System.out.println("-----------------------------"+ ln003_合同信息s.size());
 
 
 
-        List<Triplet<LocalDate,Integer,Double>> triplets = ln003_合同信息s.stream().collect(Collectors.groupingBy(e->e.getTransdate不可为空交易日期()))
+        List<Pair<LocalDate,Double>> triplets = ln003_合同信息s.stream().collect(Collectors.groupingBy(e->e.getTransdate不可为空交易日期()))
                 .entrySet()
                 .stream()
                 .sorted(Comparator.comparingLong(e->e.getKey().toEpochDay()))
@@ -141,89 +109,21 @@ public class SY_131_dkye_贷款余额_RateServiceImpl extends RateServiceBaseImp
                             })
                             .sum();
 
-                    return Triplet.with(e.getKey(),e.getValue().size(),diff);
+                    return Pair.with(e.getKey(),diff);
                 }).collect(Collectors.toList());
 
-        triplets.stream().forEach(e->{
-            System.out.println("-----------"+ e.toString());
-        });
 
 
+        saveDeltaDouble(triplets,e_指标_rate_sy);
 
-
-
-        save(triplets);
-        RateAnalysisStream rateAnalysisStream = new RateAnalysisStream();
-        rateAnalysisStream.setBeginDate(beginDate);
-        rateAnalysisStream.setEndDate(endDate);
-        rateAnalysisStream.setDuration(timer.getTime());
-
-        System.out.println();
-        return rateAnalysisStream;
+        if(triplets.isEmpty())
+            return null;
+        return new RateAnalysisStream(beginDate,endDate);
     }
 
 
 
 
-
-
-    @Transactional
-    public void save(List<Triplet<LocalDate,Integer,Double>> triplets) {
-        triplets.stream().forEach(e->{
-
-            RateHistory rateHistory = new RateHistory();
-            rateHistory.setIndexNo(e_指标_rate_sy.get编码());
-            rateHistory.setDoubleValue(e.getValue2());
-            rateHistory.setDate(e.getValue0());
-            rateHistoryRepository.save(rateHistory);
-
-            System.out.println("-----------"+ e.toString());
-        });
-
-    }
-
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, String ksrq, String jsrq) {
-
-
-        LocalDate ldt_ksrq = LocalDate.parse(ksrq, df);
-        LocalDate ldt_jsrq = LocalDate.parse(jsrq, df);
-        LocalDate ldt_ksrq_环比_begin  = ldt_ksrq.minusMonths(1);
-        LocalDate ldt_ksrq_环比_end  = ldt_jsrq.minusMonths(1);
-
-
-        LocalDate ldt_ksrq_同比_begin  = ldt_ksrq.minusYears(1);
-        LocalDate ldt_ksrq_同比_end  = ldt_jsrq.minusYears(1);
-
-
-
-
-
-        List<RateHistory> rateHistories = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq,ldt_jsrq);
-
-        List<RateHistory> rateHistories_环比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
-        List<RateHistory> rateHistories_同比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
-        Double rateHistory_同比 = rateHistories_同比.stream().mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories.stream().mapToDouble(e->e.getDoubleValue()).sum();
-
-
-/*        private double dkye_贷款余额_NUMBER_18_2;
-        private double hbdkye_环比贷款余额_NUMBER_18_2;
-        private double sndkye_同比贷款余额_NUMBER_18_2;*/
-        h1.setDkye_贷款余额_NUMBER_18_2(rateHistory);
-
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
-
-        h1.setHbdkye_环比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
-
-        h1.setSndkye_同比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-    }
 
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
 if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
@@ -241,18 +141,6 @@ if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环
                 .mapToDouble(e->e.getDoubleValue()).sum();
 
         System.out.println(rateHistory_环比+":::"+rateHistory_同比+":::"+rateHistory);
-/*        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();
-        Long rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();;
-        Long rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();*/
 
 
         h1.setDkye_贷款余额_NUMBER_18_2(rateHistory);
@@ -264,6 +152,46 @@ if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环
         bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
 
         h1.setSndkye_同比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public void planProcess(LocalDate beginDate, LocalDate endDate, 统计周期编码 period, E_指标_RATE_SY e_指标_rate_sy) {
+        RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
+
+        if(rateAnalysisTable == null){
+            return;
+        }
+        //  RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now());
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(beginDate,endDate, period);
+
+        for(Triplet<Long,LocalDate,LocalDate> triplet:triplets){
+
+            StopWatch timer = new StopWatch();
+            timer.start();
+            RateAnalysisStream rateAnalysisStream = history(triplet.getValue1(),triplet.getValue2());
+            if(rateAnalysisStream!= null){
+                rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
+                rateAnalysisStream.setDuration(timer.getTime());
+                //rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
+                rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
+                updateRateTable(rateAnalysisTable,rateAnalysisStream);
+            }
+        }
 
     }
 

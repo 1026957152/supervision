@@ -36,7 +36,13 @@ public class SY_40_ljhsdkje_历史累计回收额_RateServiceImpl extends RateSe
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_40_ljhsdkje_历史累计回收额;
 
 
-    //@PostConstruct
+
+    public void groupProcess(){
+        process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+        transfer累计ToPro(LocalDate.parse("2015-10-01",df),e_指标_rate_sy,Double.class.getName());
+    }
+
+
     public void process(LocalDate beginDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
@@ -45,11 +51,14 @@ public class SY_40_ljhsdkje_历史累计回收额_RateServiceImpl extends RateSe
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true || rateAnalysisTable.getAanalysedEndDate()== null){
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
-
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
             RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
+
+
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
@@ -94,16 +103,7 @@ public class SY_40_ljhsdkje_历史累计回收额_RateServiceImpl extends RateSe
                 }).collect(Collectors.toList());
 
 
-
-
-        List<Pair<LocalDate,Double>> triplets_acc = new ArrayList<>();
-        Double num = 0D;
-        for(Pair<LocalDate,Double> triplet: sourceList){
-            num += triplet.getValue1();
-            sourceList.add(Pair.with(triplet.getValue0(),num));
-        }
-
-        saveAccDouble(triplets_acc,e_指标_rate_sy);
+        saveDeltaDouble(sourceList,e_指标_rate_sy);
 
         return new RateAnalysisStream(beginDate,endDate);
 
@@ -112,20 +112,16 @@ public class SY_40_ljhsdkje_历史累计回收额_RateServiceImpl extends RateSe
 
 
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
+if(rateHistories.size()==0) return;
 
-        Double rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
 
+
+        Triplet<Double,Double,Double> triplet = queryDouble期末(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
+
+
+        Double rateHistory_环比 =triplet.getValue1();
+        Double rateHistory_同比 = triplet.getValue2();
+        Double rateHistory = triplet.getValue0();
 
 
         h1.setLjhsdkje_历史累计回收额_NUMBER_18_2(rateHistory.intValue());

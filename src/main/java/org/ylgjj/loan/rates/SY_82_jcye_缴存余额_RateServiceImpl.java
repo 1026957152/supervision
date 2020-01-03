@@ -4,27 +4,20 @@ package org.ylgjj.loan.rates;
 import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.DP008_单位明细账;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
 import org.ylgjj.loan.domain_flow.ProRateHistory;
-import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
-import org.ylgjj.loan.repository.DP008_单位明细账_Repository;
-import org.ylgjj.loan.repository.LN003_合同信息_Repository;
-import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
-import javax.transaction.Transactional;
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +29,14 @@ public class SY_82_jcye_缴存余额_RateServiceImpl extends RateServiceBaseImpl
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_82_jcye_缴存余额;
 
-    public void process() {
+
+    //
+    public void groupProcess(){
+       // process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+        transfer累计ToPro(LocalDate.parse("2015-10-01",df),e_指标_rate_sy,Double.class.getName());
+    }
+
+    public void process(LocalDate beginDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
@@ -44,11 +44,13 @@ public class SY_82_jcye_缴存余额_RateServiceImpl extends RateServiceBaseImpl
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true || rateAnalysisTable.getAanalysedEndDate()== null){
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
+            RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
 
-            RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now());
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
@@ -107,15 +109,7 @@ public class SY_82_jcye_缴存余额_RateServiceImpl extends RateServiceBaseImpl
                 }).collect(Collectors.toList());
 
 
-
-        List<Pair<LocalDate,Double>> triplets_acc = new ArrayList<>();
-        Double num = 0D;
-        for(Pair<LocalDate,Double> triplet: triplets){
-            num += triplet.getValue1();
-            triplets.add(Pair.with(triplet.getValue0(),num));
-        }
-
-        saveAccDouble(triplets_acc,e_指标_rate_sy);
+        saveDeltaDouble(triplets,e_指标_rate_sy);
         return new RateAnalysisStream(beginDate,endDate);
     }
 
@@ -125,19 +119,15 @@ public class SY_82_jcye_缴存余额_RateServiceImpl extends RateServiceBaseImpl
 
 
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
+if(rateHistories.size()==0) return;
 
-        Double rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
+
+
+        Triplet<Double,Double,Double> triplet = queryDouble期末(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
+
+        Double rateHistory_环比 =triplet.getValue1();
+        Double rateHistory_同比 = triplet.getValue2();
+        Double rateHistory = triplet.getValue0();
 
 
         h1.setJcye_缴存余额_NUMBER_18_2(rateHistory);

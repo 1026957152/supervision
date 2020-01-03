@@ -33,13 +33,6 @@ public class SY_106_ljtqe_历史累计提取额_提取原因_RateServiceImpl ext
 
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_106_ljtqe_历史累计提取额_提取原因_;
-    @Autowired
-    private DW025_公积金提取审核登记表_Repository dw025_公积金提取审核登记表_repository;
-
-    @Autowired
-    private RateHistoryRepository rateHistoryRepository;
-
-    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 
 

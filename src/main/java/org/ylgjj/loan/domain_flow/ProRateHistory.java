@@ -71,6 +71,11 @@ public class ProRateHistory extends BaseDomain{
         this.deltaLongValue = e.getDeltaLongValue();
     }
 
+    public ProRateHistory(E_指标_RATE_SY e_指标_rate_sy, LocalDate value1) {
+        this.date = value1;
+        this.indexNo = e_指标_rate_sy.get编码();
+    }
+
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);

@@ -4,7 +4,6 @@ package org.ylgjj.loan.rates;
 import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.ylgjj.loan.domain.DP034_公积金开销户登记簿;
 import org.ylgjj.loan.enumT.E_DP034_公积金开销户登记簿_开销户标志;
@@ -12,17 +11,12 @@ import org.ylgjj.loan.enumT.E_DP034_公积金开销户登记簿_账户标志;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
 import org.ylgjj.loan.domain_flow.ProRateHistory;
-import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
-import org.ylgjj.loan.repository.DP034_公积金开销户登记簿_Repository;
-import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
-import javax.transaction.Transactional;
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,8 +29,16 @@ import java.util.stream.Collectors;
 public class SY_91_xkhzgs_新开户职工_RateServiceImpl extends RateServiceBaseImpl{
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_91_xkhzgs_新开户职工;
-    //@PostConstruct
-    public void process() {
+
+
+    //
+    public void groupProcess(){
+       process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+
+        transfer本期值ToPro(e_指标_rate_sy,Long.class.getName());
+    }
+
+    public void process(LocalDate localDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
@@ -44,11 +46,13 @@ public class SY_91_xkhzgs_新开户职工_RateServiceImpl extends RateServiceBas
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true || rateAnalysisTable.getAanalysedEndDate()== null){
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
 
-            RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now());
+            RateAnalysisStream rateAnalysisStream = history(localDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
@@ -106,34 +110,18 @@ public class SY_91_xkhzgs_新开户职工_RateServiceImpl extends RateServiceBas
 
 
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-/*
-        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
 
-        Double rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
-        */
+        if(rateHistories.size()==0) return;
 
-        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getDeltaLongValue()).sum();
-        Long rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getDeltaLongValue()).sum();;
-        Long rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getDeltaLongValue()).sum();
+
+
+
+        Triplet<Long,Long,Long> triplet = queryLong本期值(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
+
+        Long rateHistory_环比 =triplet.getValue1();
+        Long rateHistory_同比 = triplet.getValue2();
+        Long rateHistory = triplet.getValue0();
+
 
         h1.setXkhzgs_新开户职工_NUMBER_18_0(rateHistory.intValue());
 

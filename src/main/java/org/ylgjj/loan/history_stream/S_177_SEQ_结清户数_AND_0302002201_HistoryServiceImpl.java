@@ -56,7 +56,7 @@ public class S_177_SEQ_结清户数_AND_0302002201_HistoryServiceImpl extends Hi
 
 
 
-    //@PostConstruct
+
     public void process() {
 
        //流水_单位缴存spanTimeSpan( LocalDate.now().minusDays(20000),LocalDate.now());

@@ -17,6 +17,7 @@ import org.ylgjj.loan.repository.DP021_单位缴存登记薄Repository;
 import org.ylgjj.loan.repository.LN003_合同信息_Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -33,7 +34,15 @@ import java.util.stream.Collectors;
 public class SY_100_sjce_实缴存额_RateServiceImpl extends RateServiceBaseImpl{
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_100_sjce_实缴存额;
-    public void process() {
+
+
+    public void groupProcess(){
+        process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+        transfer本期值ToPro(e_指标_rate_sy,Double.class.getName());
+    }
+
+    public void process(LocalDate beginDate,LocalDate endDate) {
+
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
@@ -41,11 +50,12 @@ public class SY_100_sjce_实缴存额_RateServiceImpl extends RateServiceBaseImp
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true || rateAnalysisTable.getAanalysedEndDate()== null){
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
-
-            RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now());
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
+            RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
@@ -114,19 +124,14 @@ public class SY_100_sjce_实缴存额_RateServiceImpl extends RateServiceBaseImp
 
 
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDeltaDoubleValue()).sum();
+if(rateHistories.size()==0) return;
 
-        Double rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDeltaDoubleValue()).sum();;
-        Double rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDeltaDoubleValue()).sum();
+        Triplet<Double,Double,Double> triplet = queryDouble本期值(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
+
+        Double rateHistory_环比 =triplet.getValue1();
+        Double rateHistory_同比 = triplet.getValue2();
+        Double rateHistory = triplet.getValue0();
+
 
 
 

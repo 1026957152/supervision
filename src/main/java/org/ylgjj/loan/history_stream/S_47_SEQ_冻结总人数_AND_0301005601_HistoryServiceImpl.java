@@ -61,7 +61,7 @@ public class S_47_SEQ_冻结总人数_AND_0301005601_HistoryServiceImpl extends 
 
 
 
-  //  @PostConstruct
+  //  //
     public void process() {
 
        流水_单位缴存spanTimeSpan( LocalDate.now().minusDays(20000),LocalDate.now());

@@ -58,7 +58,7 @@ public class S_1_SEQ_暂存款笔数_AND_0301000101_HistoryServiceImpl extends H
 
 
 
-    //@PostConstruct
+
     public void process() {
 
 

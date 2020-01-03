@@ -32,21 +32,8 @@ import java.util.stream.Collectors;
 @Service
 public class SY_46_ljzldkbs_存量贷款笔数_RateServiceImpl extends RateServiceBaseImpl {
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_46_ljzldkbs_存量贷款笔数;
-    @Autowired
-    private LN101_贷款明细账_Repository ln101_贷款明细账_repository;
-    @Autowired
-    private LN003_合同信息_Repository ln003_合同信息_repository;
-    @Autowired
-    private DP007_个人分户账_Repository dp007_个人分户账_repository;
-    @Autowired
-    private DP093_冻结解冻登记簿_Repository dp093_冻结解冻登记簿_repository;
-    @Autowired
-    private LN004_合同状态信息Repository ln004_合同状态信息Repository;
 
-    @Autowired
-    private RateHistoryRepository rateHistoryRepository;
 
-    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 
 
@@ -125,7 +112,6 @@ public class SY_46_ljzldkbs_存量贷款笔数_RateServiceImpl extends RateServi
 
 
 
-         save(triplets);
         RateAnalysisStream rateAnalysisStream = new RateAnalysisStream();
         rateAnalysisStream.setBeginDate(beginDate);
         rateAnalysisStream.setEndDate(endDate);
@@ -139,73 +125,8 @@ public class SY_46_ljzldkbs_存量贷款笔数_RateServiceImpl extends RateServi
 
 
 
-
-    @Transactional
-    public void save(List<Triplet<LocalDate,Integer,Integer>> triplets) {
-        triplets.stream().forEach(e->{
-
-            RateHistory rateHistory = new RateHistory();
-            rateHistory.setIndexNo(e_指标_rate_sy.get编码());
-            rateHistory.setLongValue(e.getValue2().longValue());
-            rateHistory.setDate(e.getValue0());
-            rateHistoryRepository.save(rateHistory);
-
-            System.out.println("-----------"+ e.toString());
-        });
-
-    }
-
-
-
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, String ksrq, String jsrq) {
-
-
-        LocalDate ldt_ksrq = LocalDate.parse(ksrq, df);
-        LocalDate ldt_jsrq = LocalDate.parse(jsrq, df);
-        LocalDate ldt_ksrq_环比_begin  = ldt_ksrq.minusMonths(1);
-        LocalDate ldt_ksrq_环比_end  = ldt_jsrq.minusMonths(1);
-
-
-        LocalDate ldt_ksrq_同比_begin  = ldt_ksrq.minusYears(1);
-        LocalDate ldt_ksrq_同比_end  = ldt_jsrq.minusYears(1);
-
-
-        List<RateHistory> rateHistories = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq,ldt_jsrq);
-
-        List<RateHistory> rateHistories_环比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
-        List<RateHistory> rateHistories_同比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比.stream().mapToLong(e->e.getLongValue()).sum();
-        Long rateHistory_同比 = rateHistories_同比.stream().mapToLong(e->e.getLongValue()).sum();;
-        Long rateHistory = rateHistories.stream().mapToLong(e->e.getLongValue()).sum();
-
-
-        h1.setLjzldkbs_存量贷款笔数_NUMBER_18_0(rateHistory.intValue());
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
-
-        h1.setLjhbzldkbs_环比存量贷款笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
-
-        h1.setLjsnzldkbs_同比存量贷款笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-    }
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-/*        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
 
-        Double rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();*/
 
         if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
                 .stream()

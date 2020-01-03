@@ -43,34 +43,16 @@ public class SY_55_hslx_回收利息_RateServiceImpl extends RateServiceBaseImpl
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_55_hslx_回收利息;
 
 
-    //@PostConstruct
-    public void process() {
-        RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
-        if(rateAnalysisTable == null){
-            return;
-        }
-        StopWatch timer = new StopWatch();
-        timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+  //  //
+    public void trans() {
+        planProcess(LocalDate.parse("2015-10-01",df),LocalDate.now(),统计周期编码.H__03_每月,e_指标_rate_sy);
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
 
-            RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now(),false);
-            rateAnalysisStream.setDuration(timer.getTime());
-            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
-            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
-            updateRateTable(rateAnalysisTable,rateAnalysisStream);
-        }else{
-            //     if(rateAnalysisTable.getAanalysedEndDate().is)
-            RateAnalysisStream rateAnalysisStream = history(rateAnalysisTable.getAanalysedEndDate(),LocalDate.now(),false);
-            rateAnalysisStream.setDuration(timer.getTime());
-            rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
-            rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
-            updateRateTable(rateAnalysisTable,rateAnalysisStream);
-        }
-
-
+        transfer本期值ToPro(e_指标_rate_sy, Double.class.getName());
     }
 
 
@@ -162,7 +144,7 @@ if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环
 
 
 
-    //@PostConstruct
+
     public void planProcess(LocalDate beginDate, LocalDate endDate, 统计周期编码 period, E_指标_RATE_SY e_指标_rate_sy) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 

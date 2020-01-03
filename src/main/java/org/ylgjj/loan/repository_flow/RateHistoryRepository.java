@@ -26,7 +26,8 @@ public interface RateHistoryRepository extends JpaRepository<RateHistory, Intege
 
     RateHistory findByIndexNoAndDate(String 编码, LocalDate value0);
 
-
+    @Transactional
+    @Modifying
     void deleteByIndexNo(String 编码);
 
     RateHistory findByIndexNoAndDateAndType(String 编码, LocalDate value1, String fill);

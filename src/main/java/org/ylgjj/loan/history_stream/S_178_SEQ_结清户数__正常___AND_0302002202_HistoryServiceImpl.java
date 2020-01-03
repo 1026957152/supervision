@@ -59,7 +59,7 @@ public class S_178_SEQ_结清户数__正常___AND_0302002202_HistoryServiceImpl 
 
 
 
-    //@PostConstruct
+
     public void process() {
 
        //流水_单位缴存spanTimeSpan( LocalDate.now().minusDays(20000),LocalDate.now());

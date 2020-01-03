@@ -212,12 +212,12 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         LocalDate ldt_ksrq_同比_end  = ldt_jsrq.minusYears(1);
 
         List<ProRateHistory> rateHistories = rateHistoryRepository
-                .findByDateBetweenOrderByDateDesc(ldt_ksrq,ldt_jsrq);
+                .findByDateBetweenOrderByDateDesc(ldt_ksrq.minusDays(1),ldt_jsrq.plusDays(1));
 
         List<ProRateHistory> rateHistories_环比 = rateHistoryRepository
-                .findByDateBetweenOrderByDateDesc(ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
+                .findByDateBetweenOrderByDateDesc(ldt_ksrq_环比_begin.minusDays(1),ldt_ksrq_环比_end.plusDays(1));
         List<ProRateHistory> rateHistories_同比 = rateHistoryRepository
-                .findByDateBetweenOrderByDateDesc(ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
+                .findByDateBetweenOrderByDateDesc(ldt_ksrq_同比_begin.minusDays(1),ldt_ksrq_同比_end.plusDays(1));
 
         System.out.println("----------ldt_ksrq:"+ldt_ksrq.toString());
         System.out.println("----------ldt_jsrq"+ldt_jsrq.toString());
@@ -227,6 +227,14 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         System.out.println("----------ldt_ksrq_同比_begin"+ldt_ksrq_同比_begin.toString());
         System.out.println("----------ldt_ksrq_同比_end"+ldt_ksrq_同比_end.toString());
 
+
+        System.out.println("----------rateHistories size"+rateHistories.size());
+        System.out.println("----------rateHistories_环比 size" +rateHistories_环比.size());
+        System.out.println("----------rateHistories_同比 size" +rateHistories_同比.size());
+
+        System.out.println("----------rateHistories size"+rateHistories.toString());
+        System.out.println("----------rateHistories_环比 size" +rateHistories_环比.toString());
+        System.out.println("----------rateHistories_同比 size" +rateHistories_同比.toString());
 /*
         if(irateHistories.size()==0) return;if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
         Double rateHistory_同比 = rateHistories_同比.stream().mapToDouble(e->e.getDoubleValue()).sum();;
@@ -254,7 +262,9 @@ public class H1_2监管主要指标查询_公积金中心主要运行情况查�
         sy_58_ljhslx_累计回收利息_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);
         sy_46_ljzldkbs_存量贷款笔数_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);
         sy_124_ljhsje_累计回收金额_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);
+
         sy_118_ljffje_累计发放金额_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);
+
         sy_112_ljtqje_累计提取金额_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);
         sy_109_tqje_提取金额_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);
         sy_106_ljtqe_历史累计提取额_提取原因_rateService.query(h1,rateHistories,rateHistories_环比,rateHistories_同比);

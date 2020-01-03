@@ -3,7 +3,9 @@ package org.ylgjj.loan.rates;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Pair;
+import org.javatuples.Triplet;
 import org.springframework.stereotype.Service;
+import org.ylgjj.loan.domain.DP007_个人分户账;
 import org.ylgjj.loan.domain.DP034_公积金开销户登记簿;
 import org.ylgjj.loan.enumT.E_DP007_个人分户账_个人账户状态;
 import org.ylgjj.loan.enumT.E_DP034_公积金开销户登记簿_开销户标志;
@@ -47,11 +49,8 @@ public class SY_25_ljjzfxhrs_建制非销户人数_RateServiceImpl extends RateS
 
     public void groupProcess(){
         process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+        transfer累计ToPro(LocalDate.parse("2015-10-01",df),e_指标_rate_sy,Long.class.getName());
 
-        realTime();
-
-        complete(e_指标_rate_sy, 统计周期编码.H__03_每月);
-        transfer期末ToPro(e_指标_rate_sy);
     }
 
     public void process(LocalDate beginDate,LocalDate endDate) {
@@ -62,17 +61,19 @@ public class SY_25_ljjzfxhrs_建制非销户人数_RateServiceImpl extends RateS
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true || rateAnalysisTable.getAanalysedEndDate()== null){
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
 
-            RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
+            RateAnalysisStream rateAnalysisStream = history_approved(beginDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
             updateRateTable(rateAnalysisTable,rateAnalysisStream);
         }else{
-            //     if(rateAnalysisTable.getAanalysedEndDate().is)
+
             RateAnalysisStream rateAnalysisStream = history(rateAnalysisTable.getAanalysedEndDate(),LocalDate.now());
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
@@ -83,6 +84,42 @@ public class SY_25_ljjzfxhrs_建制非销户人数_RateServiceImpl extends RateS
 
     }
 
+
+    public RateAnalysisStream history_approved(LocalDate beginDate,LocalDate endDate) {
+
+
+   /*     List<DP007_个人分户账> ln003_合同信息s = dp007_个人分户账_repository
+                .findByOpnaccdate开户日期BetweenOrderByOpnaccdate开户日期Desc(beginDate.minusDays(1),endDate.plusDays(1));
+        System.out.println("-----------------------------"+ ln003_合同信息s.size());
+
+
+        List<Pair<LocalDate,Long>> sourceList =ln003_合同信息s
+                .stream()
+                .filter(e->e.getAccflag_不可为空_账户标志().equals(E_DP034_公积金开销户登记簿_账户标志.E_2_个人户.getText()))
+                .collect(Collectors.groupingBy(e->e.getTransdate不可为空交易日期())).entrySet()
+                .stream()
+                .sorted(Comparator.comparingLong(e->e.getKey().toEpochDay()))
+                .map(e->{
+                    ;
+                    System.out.println("stream---------"+e.getKey());
+                    return Pair.with(e.getKey(),
+                            e.getValue().stream().mapToLong(x->{
+                                if(x.getOcflag_不可为空_开销户标志().equals(E_DP034_公积金开销户登记簿_开销户标志.E_0_开户.getText()))
+                                    return +1;
+                                if(x.getOcflag_不可为空_开销户标志().equals(E_DP034_公积金开销户登记簿_开销户标志.E_1_销户.getText()))
+                                    return -1;
+                                return 0;
+                            }).sum());
+                }).collect(Collectors.toList());
+
+
+
+
+        saveDeltaLong(sourceList,e_指标_rate_sy);
+*/
+        return new RateAnalysisStream(beginDate,endDate);
+
+    }
 
     public RateAnalysisStream history(LocalDate beginDate,LocalDate endDate) {
 
@@ -126,21 +163,15 @@ public class SY_25_ljjzfxhrs_建制非销户人数_RateServiceImpl extends RateS
 
 
 
-
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();
-        Long rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();;
-        Long rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();
+if(rateHistories.size()==0) return;
 
+
+        Triplet<Long,Long,Long> triplet = queryLong期末(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
+
+        Long rateHistory_环比 =triplet.getValue1();
+        Long rateHistory_同比 = triplet.getValue2();
+        Long rateHistory = triplet.getValue0();
 
 
         h1.setLjjzfxhrs_建制非销户人数_NUMBER_18_0(rateHistory.intValue());

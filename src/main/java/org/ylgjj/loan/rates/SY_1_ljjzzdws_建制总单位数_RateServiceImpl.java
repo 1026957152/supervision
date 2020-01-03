@@ -37,12 +37,11 @@ public class SY_1_ljjzzdws_建制总单位数_RateServiceImpl extends RateServic
 
     }
 
-    //@PostConstruct
+
     public void groupProcess(){
         process(LocalDate.parse("2015-10-01",df),LocalDate.now());
-        realTime();
-        complete(e_指标_rate_sy, 统计周期编码.H__03_每月);
-        transfer期末ToPro(e_指标_rate_sy);
+
+        transfer累计ToPro(LocalDate.parse("2015-10-01",df),e_指标_rate_sy,Long.class.getName());
     }
 
 
@@ -61,9 +60,11 @@ public class SY_1_ljjzzdws_建制总单位数_RateServiceImpl extends RateServic
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true || rateAnalysisTable.getAanalysedEndDate()== null){
 
+            deleteAll(e_指标_rate_sy);
             deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
 
             RateAnalysisStream rateAnalysisStream = history(beginDate,endDate,false);
             rateAnalysisStream.setDuration(timer.getTime());

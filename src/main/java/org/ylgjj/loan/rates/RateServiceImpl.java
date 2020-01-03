@@ -36,7 +36,7 @@ public class RateServiceImpl {
 
 
 
-  //@PostConstruct
+
     @Transactional
     public void CONFIG() {
         List<E_指标_RATE_SY> statisticalIndexCodeEnums = Arrays.stream(E_指标_RATE_SY.values()).collect(Collectors.toList());

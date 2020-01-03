@@ -18,6 +18,7 @@ import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要�
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.outputenum.统计周期编码;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
@@ -42,14 +43,13 @@ public class SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl extends RateS
 
     }
 
-   // @PostConstruct
+
     public void groupProcess(){
         process(LocalDate.parse("2015-10-01",df),LocalDate.now());
-        realTime();
-        complete(e_指标_rate_sy, 统计周期编码.H__03_每月);
-        transfer期末ToPro(e_指标_rate_sy);
+
+        transfer累计ToPro(LocalDate.parse("2015-10-01",df),e_指标_rate_sy,Long.class.getName());
     }
- //   @PostConstruct
+ //   //
     public void process(LocalDate beginDate, LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
@@ -58,9 +58,11 @@ public class SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl extends RateS
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true || rateAnalysisTable.getAanalysedEndDate()== null){
 
+            deleteAll(e_指标_rate_sy);
             deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
 
             RateAnalysisStream rateAnalysisStream =  history(beginDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
@@ -86,8 +88,6 @@ public class SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl extends RateS
         List<DP005_单位分户账> dp005_单位分户账s = dp005_单位分户账_repository
                 .findByClsaccdate销户日期BetweenOrderByClsaccdate销户日期Desc(beginDate,endDate);
 
-        Map<String,DP005_单位分户账> dp005_单位分户账Map = dp005_单位分户账s.stream().filter(x->x.getUnitacctype单位账户类型().equals(E_DP005_单位分户账_单位账户类型.普通.getText()))
-                .collect(Collectors.toMap(e->e.getUnitcustid_单位客户号(),e->e));
 
 
 
@@ -172,7 +172,6 @@ public class SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl extends RateS
 
 
         sourceList_销户.addAll(sourceList_开户);
-      //  sourceList_销户.addAll(sourceList);
 
 
         List<Pair<LocalDate,Long>> sourceList_last = sourceList_销户.stream().collect(Collectors.groupingBy(e->e.getValue0()))
@@ -181,16 +180,6 @@ public class SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl extends RateS
             return Pair.with(e.getKey(),e.getValue().stream().mapToLong(x->x.getValue1()).sum());
         }).collect(Collectors.toList());
 
-
-
-        Long num = 0L;
-
-        List<Pair<LocalDate,Long>> triplets = new ArrayList<>();
-        for(Pair<LocalDate,Long> triplet: sourceList_last){
-
-            num += triplet.getValue1();
-            triplets.add(Pair.with(triplet.getValue0(),num));
-        }
 
 
 
@@ -300,7 +289,10 @@ public class SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl extends RateS
 
     }
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-        if(rateHistories.size()==0) return;      Triplet<Long,Long,Long> triplet = queryLong期末(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
+        if(rateHistories.size()==0) return;
+
+
+        Triplet<Long,Long,Long> triplet = queryLong期末(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
 
         Long rateHistory_环比 =triplet.getValue1();
         Long rateHistory_同比 = triplet.getValue2();

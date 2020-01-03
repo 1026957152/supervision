@@ -15,6 +15,7 @@ import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要�
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.outputenum.统计周期编码;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
@@ -31,22 +32,25 @@ public class SY_4_ljjzxhdws_建制销户单位数_RateServiceImpl extends RateSe
 
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_4_ljjzxhdws_建制销户单位数;
-
-
-    public void groupProcess(){
-       process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+    public void realTime(){
+        process(LocalDate.parse("2015-10-01",df),LocalDate.now());
         Long count = dp005_单位分户账_repository
                 .countByUnitacctype单位账户类型AndUnitaccstate单位账户状态(E_DP005_单位分户账_单位账户类型.普通.getText(), E_DP005_单位分户账_单位账户状态.销户.getText());
         saveAccLongRealtime(count,LocalDate.now(),e_指标_rate_sy);
-        complete(e_指标_rate_sy, 统计周期编码.H__03_每月);
-        transfer期末ToPro(e_指标_rate_sy);
+
+    }
+
+    public void groupProcess(){
+       process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+
+        transfer累计ToPro(LocalDate.parse("2015-10-01",df),e_指标_rate_sy,Long.class.getName());
     }
 
 
 
 
 
-  //  @PostConstruct
+
     public void process(LocalDate beginDate, LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
@@ -55,18 +59,19 @@ public class SY_4_ljjzxhdws_建制销户单位数_RateServiceImpl extends RateSe
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
-
+        if(true|| rateAnalysisTable.getAanalysedEndDate()== null){
+            deleteAll(e_指标_rate_sy);
             deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
 
-            RateAnalysisStream rateAnalysisStream = history(beginDate,endDate,false);
+            RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
             updateRateTable(rateAnalysisTable,rateAnalysisStream);
         }else{
             //     if(rateAnalysisTable.getAanalysedEndDate().is)
-            RateAnalysisStream rateAnalysisStream = history(rateAnalysisTable.getAanalysedEndDate(),LocalDate.now(),false);
+            RateAnalysisStream rateAnalysisStream = history(rateAnalysisTable.getAanalysedEndDate(),LocalDate.now());
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
@@ -77,7 +82,7 @@ public class SY_4_ljjzxhdws_建制销户单位数_RateServiceImpl extends RateSe
     }
 
 
-    public RateAnalysisStream history(LocalDate beginDate,LocalDate endDate,Boolean acc) {
+    public RateAnalysisStream history(LocalDate beginDate,LocalDate endDate) {
 
         List<DP005_单位分户账> ln003_合同信息s = dp005_单位分户账_repository
                 .findByClsaccdate销户日期BetweenOrderByClsaccdate销户日期Desc(beginDate.minusDays(1),endDate.plusDays(1));
@@ -101,23 +106,7 @@ public class SY_4_ljjzxhdws_建制销户单位数_RateServiceImpl extends RateSe
                 }).collect(Collectors.toList());
 
 
-
-        Long num = 0L;
-
-        List<Pair<LocalDate,Long>> triplets = new ArrayList<>();
-        for(Pair<LocalDate,Long> triplet: sourceList){
-
-            num += triplet.getValue1();
-            triplets.add(Pair.with(triplet.getValue0(),num));
-        }
-
-
-        if(acc){
-            saveAccLong(triplets,e_指标_rate_sy);
-        }else{
             saveDeltaLong(sourceList,e_指标_rate_sy);
-        }
-
 
 
 

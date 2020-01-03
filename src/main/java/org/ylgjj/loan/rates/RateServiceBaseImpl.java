@@ -238,7 +238,111 @@ public class RateServiceBaseImpl {
 
     }
 
+    public Triplet<Long,Long,Long> queryLong本期值(E_指标_RATE_SY e_指标_rate_sy, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
 
+
+        if(rateHistories.size()==0) return Triplet.with(0L,0L,0L);
+
+
+        Long rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getDeltaLongValue()).sum();
+
+        System.out.println("--rateHistories_环比--------"+rateHistories_环比);
+
+        Long rateHistory_同比  = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getDeltaLongValue()).sum();
+
+        Long rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToLong(e->e.getDeltaLongValue()).sum();
+
+
+        System.out.println("-==="+e_指标_rate_sy.get名称());
+        System.out.println("-=rateHistory=="+rateHistory);
+        //    System.out.println("-=optionalRateHistory_环比=="+optionalRateHistory_环比.get());
+        //  System.out.println("-=optionalRateHistory_同比=="+optionalRateHistory_同比.get());
+        return Triplet.with(rateHistory,rateHistory_环比,rateHistory_同比);
+
+
+
+
+    }
+    public Triplet<Double,Double,Double> queryDouble本期值(E_指标_RATE_SY e_指标_rate_sy, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
+
+
+        if(rateHistories.size()==0) return Triplet.with(0d,0d,0d);
+
+
+        Double rateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDeltaDoubleValue()).sum();
+
+        System.out.println("--rateHistories_环比--------"+rateHistories_环比);
+
+        Double rateHistory_同比  = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDeltaDoubleValue()).sum();
+
+        Double rateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .mapToDouble(e->e.getDeltaDoubleValue()).sum();
+
+
+        System.out.println("-==="+e_指标_rate_sy.get名称());
+        System.out.println("-=rateHistory=="+rateHistory);
+        //    System.out.println("-=optionalRateHistory_环比=="+optionalRateHistory_环比.get());
+        //  System.out.println("-=optionalRateHistory_同比=="+optionalRateHistory_同比.get());
+        return Triplet.with(rateHistory,rateHistory_环比,rateHistory_同比);
+
+
+
+
+    }
+
+    public Triplet<Double,Double,Double> queryDouble期末(E_指标_RATE_SY e_指标_rate_sy, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
+
+
+        if(rateHistories.size()==0) return Triplet.with(0d,0d,0d);
+
+
+        Optional<ProRateHistory> optionalRateHistory_环比 = rateHistories_环比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+        Double rateHistory_环比 = optionalRateHistory_环比.isPresent()? optionalRateHistory_环比.get().getDoubleValue(): 0;
+
+
+        Optional<ProRateHistory> optionalRateHistory_同比 = rateHistories_同比
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+        Double rateHistory_同比 = optionalRateHistory_同比.isPresent()? optionalRateHistory_同比.get().getDoubleValue(): 0;
+
+        Optional<ProRateHistory> optionalRateHistory = rateHistories
+                .stream()
+                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
+                .findFirst();
+        Double rateHistory = optionalRateHistory.isPresent()? optionalRateHistory.get().getDoubleValue(): 0;
+
+
+        System.out.println("-==="+e_指标_rate_sy.get名称());
+        System.out.println("-=rateHistory=="+rateHistory);
+        //    System.out.println("-=optionalRateHistory_环比=="+optionalRateHistory_环比.get());
+        //  System.out.println("-=optionalRateHistory_同比=="+optionalRateHistory_同比.get());
+        return Triplet.with(rateHistory,rateHistory_环比,rateHistory_同比);
+
+
+
+
+    }
 
 
 
@@ -351,14 +455,20 @@ public class RateServiceBaseImpl {
     }
 
 
+    public void deleteAll(E_指标_RATE_SY e_指标_rate_sy) {
 
+        rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+    }
     public void deleteReduction_流水还原(E_指标_RATE_SY e_指标_rate_sy) {
 
         rateHistoryRepository.deleteByIndexNoAndTypeIn(e_指标_rate_sy.get编码(),Arrays.asList(E_HISTORY_数据来源.Reduction_流水还原.get编码(),E_HISTORY_数据来源.fill.get编码()));
     }
 
 
+    public void deleteReduction_流水还原_Pro(E_指标_RATE_SY e_指标_rate_sy) {
 
+        proRateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+    }
 
 
 
@@ -429,74 +539,9 @@ public class RateServiceBaseImpl {
 
     }
 
-    @Transactional
-    protected void transfer累计ToPro(E_指标_RATE_SY e_指标_rate_sy) {
-
-
-
-        List<RateHistory> rateHistories1 = rateHistoryRepository.findByIndexNo(e_指标_rate_sy.get编码())
-                .stream()
-                .collect(Collectors.groupingBy(e -> e.getDate())).entrySet().stream().map(e -> {
-                    Optional<RateHistory> o = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).findFirst();
-                    if (o.isPresent()) {
-                        return o.get();
-                    } else {
-                        Optional<RateHistory> p = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).findFirst();
-                        if(p.isPresent()){
-                            return p.get();
-                        }else{
-                            Optional<RateHistory> t = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).findFirst();
-
-                            if(t.isPresent()){
-                                return t.get();
-                            }else{
-                                return null;
-                            }
-
-                        }
-
-                    }
-                }).filter(e->e!= null).sorted(Comparator.comparingLong(e -> -e.getDate().toEpochDay())).collect(Collectors.toList());//.collect(Collectors.toList());
-
-
-        RateHistory preAcc = null;
-        for (RateHistory rateHistory : rateHistories1) {
-            System.out.println(rateHistory.getDate()+"------------------------"+rateHistory.getType());
-            System.out.println(rateHistory.getDate()+"------------------------"+rateHistory.toString());
-
-            if (preAcc != null) {
-                if (preAcc.getLongValue() != null) {
-                    rateHistory.setLongValue(preAcc.getLongValue() - rateHistory.getDeltaLongValue());
-                }
-            }
-
-            preAcc = rateHistory;
-
-        }
-
-        rateHistories1.forEach(e -> {
-
-            System.out.println("------------------------"+e.toString());
-            ProRateHistory proRateHistory = proRateHistoryRepository.findByIndexNoAndDate(e_指标_rate_sy.get编码(), e.getDate());
-            if (proRateHistory == null) {
-                proRateHistory = new ProRateHistory(e);
-            }else{
-                proRateHistory.setLongValue(e.getLongValue());
-                proRateHistory.setDeltaLongValue(e.getDeltaLongValue());
-                proRateHistory.setDoubleValue(e.getDoubleValue());
-                proRateHistory.setDeltaDoubleValue(e.getDeltaDoubleValue());
-            }
-            proRateHistoryRepository.save(proRateHistory);
-
-        });
-
-
-    }
-
-
 
     @Transactional
-    protected void transfer本期值ToPro(E_指标_RATE_SY e_指标_rate_sy, String name) {
+    protected void transfer累计ToPro从后(E_指标_RATE_SY e_指标_rate_sy) {
 
 
 
@@ -525,21 +570,15 @@ public class RateServiceBaseImpl {
                 }).filter(e->e!= null).sorted(Comparator.comparingLong(e -> e.getDate().toEpochDay())).collect(Collectors.toList());//.collect(Collectors.toList());
 
 
-        Long preAcc = 0l;
-        Double valueDouble = 0d;
+        Long valueLong = 0L;
+        Double valueDouble = 0D;
         for (RateHistory rateHistory : rateHistories1) {
-
-            if(name.equals(Double.class.getName())){
-                valueDouble += rateHistory.getDeltaDoubleValue();
-
-                rateHistory.setDeltaDoubleValue(valueDouble);
-
-            }
-
-            if(name.equals(Long.class.getName())){
-                preAcc += rateHistory.getDeltaLongValue();
-                rateHistory.setLongValue(preAcc);
-            }
+            System.out.println(rateHistory.getDate()+"------------------------"+rateHistory.getType());
+            System.out.println(rateHistory.getDate()+"------------------------"+rateHistory.toString());
+            valueDouble += rateHistory.getDeltaDoubleValue();
+            valueLong += rateHistory.getDeltaLongValue();
+            rateHistory.setLongValue(valueLong);
+            rateHistory.setDoubleValue(valueDouble);
 
 
         }
@@ -551,15 +590,422 @@ public class RateServiceBaseImpl {
             if (proRateHistory == null) {
                 proRateHistory = new ProRateHistory(e);
             }else{
-                proRateHistory.setLongValue(e.getDeltaLongValue());
+                proRateHistory.setLongValue(e.getLongValue());
                 proRateHistory.setDeltaLongValue(e.getDeltaLongValue());
-                proRateHistory.setDoubleValue(e.getDeltaDoubleValue());
+                proRateHistory.setDoubleValue(e.getDoubleValue());
                 proRateHistory.setDeltaDoubleValue(e.getDeltaDoubleValue());
             }
             proRateHistoryRepository.save(proRateHistory);
 
         });
 
+
+    }
+
+
+
+
+
+    @Transactional
+    protected void transfer累计ToPro从后(LocalDate parse, E_指标_RATE_SY e_指标_rate_sy, String doubleClass) {
+
+
+        List<RateHistory> rateHistories1 = rateHistoryRepository.findByIndexNo(e_指标_rate_sy.get编码())
+                .stream()
+                .collect(Collectors.groupingBy(e -> e.getDate())).entrySet().stream().map(e -> {
+                    System.out.println("pppppp"+e);
+                    Long count = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).count();
+                    if(count>0){
+                        return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).findFirst().get();
+                    }else{
+                        Long count_ = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).count();
+                        if(count_ > 0) {
+                            return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).findFirst().get();
+                        }else{
+                            Long count_2 = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).count();
+                            if (count_2>0){
+                                return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).findFirst().get();
+
+                            }else{
+                                return null;
+                            }
+                        }
+
+                    }
+
+
+                }).filter(e->e!= null).sorted(Comparator.comparingLong(e -> e.getDate().toEpochDay())).collect(Collectors.toList());//.collect(Collectors.toList());
+
+
+
+
+
+        RateHistory rateHistorySecond =rateHistories1.stream().sorted(Comparator.comparingLong(e -> -e.getDate().toEpochDay())).findFirst().get();
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(parse,rateHistorySecond.getDate(),统计周期编码.H__01_每日);
+
+        triplets.forEach(e -> {
+            ProRateHistory proRateHistory = proRateHistoryRepository.findByIndexNoAndDate(e_指标_rate_sy.get编码(), e.getValue1());
+            if (proRateHistory == null) {
+                proRateHistory = new ProRateHistory(e_指标_rate_sy,e.getValue1());
+            }
+
+            if(doubleClass.equals(Double.class.getName())){
+
+                RateHistory frontValue = rateHistories1.stream()
+                        .filter(x->x.getDate().isAfter(e.getValue1().minusDays(1)))
+                        .filter(x->x.getType().equals(e.getValue1().minusDays(1))).findFirst().get();
+
+                List<RateHistory> value_ = rateHistories1.stream()
+                        .filter(x->x.getDate().isAfter(e.getValue1().minusDays(1)))
+                        .filter(x->x.getDate().isBefore(frontValue.getDate().minusDays(1)))
+                        .collect(Collectors.toList());
+
+
+                Double value = value_.stream().mapToDouble(x->{
+                            System.out.println("----找到一个"+x.toString());
+                            return x.getDeltaDoubleValue();
+                        }).sum();
+
+                proRateHistory.setDoubleValue(frontValue.getDoubleValue() - value);
+
+
+            }
+            if(doubleClass.equals(Long.class.getName())){
+                Long value = rateHistories1.stream()
+                        .filter(x->x.getDate().isBefore(e.getValue1().plusDays(1)))
+                        .mapToLong(x->{
+                            System.out.println("----找到一个"+x.toString());
+                            return x.getDeltaLongValue();
+                        }).sum();
+
+                proRateHistory.setLongValue(value);
+            }
+            //proRateHistory.setDeltaDoubleValue(e.getValue1());
+            //System.out.println("------------存储了一个 数据啊啊啊");
+            proRateHistoryRepository.save(proRateHistory);
+
+        });
+
+
+
+
+
+
+
+
+
+    }
+
+
+    @Transactional
+    protected void transfer累计ToPro(LocalDate parse, E_指标_RATE_SY e_指标_rate_sy, String doubleClass) {
+
+
+        List<RateHistory> rateHistories1 = rateHistoryRepository.findByIndexNo(e_指标_rate_sy.get编码())
+                .stream()
+                .collect(Collectors.groupingBy(e -> e.getDate())).entrySet().stream().map(e -> {
+                    System.out.println("pppppp"+e);
+                    Long count = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).count();
+                    if(count>0){
+                        return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).findFirst().get();
+                    }else{
+                        Long count_ = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).count();
+                        if(count_ > 0) {
+                            return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).findFirst().get();
+                        }else{
+                            Long count_2 = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).count();
+                            if (count_2>0){
+                                return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).findFirst().get();
+
+                            }else{
+                                return null;
+                            }
+                        }
+
+                    }
+
+
+                }).filter(e->e!= null).sorted(Comparator.comparingLong(e -> e.getDate().toEpochDay())).collect(Collectors.toList());//.collect(Collectors.toList());
+
+
+
+
+
+        RateHistory rateHistorySecond =rateHistories1.stream().sorted(Comparator.comparingLong(e -> -e.getDate().toEpochDay())).findFirst().get();
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(parse,rateHistorySecond.getDate(),统计周期编码.H__01_每日);
+
+        triplets.forEach(e -> {
+            ProRateHistory proRateHistory = proRateHistoryRepository.findByIndexNoAndDate(e_指标_rate_sy.get编码(), e.getValue1());
+            if (proRateHistory == null) {
+                proRateHistory = new ProRateHistory(e_指标_rate_sy,e.getValue1());
+            }
+
+            if(doubleClass.equals(Double.class.getName())){
+                Double value = rateHistories1.stream()
+                        .filter(x->x.getDate().isBefore(e.getValue1().plusDays(1)))
+                        .mapToDouble(x->{
+                            System.out.println("----找到一个"+x.toString());
+                            return x.getDeltaDoubleValue();
+                        }).sum();
+
+                proRateHistory.setDoubleValue(value);
+            }
+            if(doubleClass.equals(Long.class.getName())){
+                Long value = rateHistories1.stream()
+                        .filter(x->x.getDate().isBefore(e.getValue1().plusDays(1)))
+                        .mapToLong(x->{
+                            System.out.println("----找到一个"+x.toString());
+                            return x.getDeltaLongValue();
+                        }).sum();
+
+                proRateHistory.setLongValue(value);
+            }
+            //proRateHistory.setDeltaDoubleValue(e.getValue1());
+            System.out.println("------------存储了一个 数据啊啊啊");
+            proRateHistoryRepository.save(proRateHistory);
+
+        });
+
+
+
+
+
+
+
+
+
+    }
+
+
+    @Transactional
+    protected void transfer累计ToProFrom前(LocalDate parse, E_指标_RATE_SY e_指标_rate_sy, String doubleClass) {
+
+
+        List<RateHistory> rateHistories1 = rateHistoryRepository.findByIndexNo(e_指标_rate_sy.get编码())
+                .stream()
+                .collect(Collectors.groupingBy(e -> e.getDate())).entrySet().stream().map(e -> {
+                    System.out.println("pppppp"+e);
+                    Long count = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).count();
+                    if(count>0){
+                        return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).findFirst().get();
+                    }else{
+                        Long count_ = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).count();
+                        if(count_ > 0) {
+                            return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).findFirst().get();
+                        }else{
+                            Long count_2 = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).count();
+                            if (count_2>0){
+                                return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).findFirst().get();
+
+                            }else{
+                                return null;
+                            }
+                        }
+
+                    }
+
+
+                }).filter(e->e!= null).sorted(Comparator.comparingLong(e -> e.getDate().toEpochDay())).collect(Collectors.toList());//.collect(Collectors.toList());
+
+
+
+
+
+        RateHistory rateHistorySecond =rateHistories1.stream().sorted(Comparator.comparingLong(e -> -e.getDate().toEpochDay())).findFirst().get();
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(parse,rateHistorySecond.getDate(),统计周期编码.H__01_每日);
+
+        triplets.forEach(e -> {
+            ProRateHistory proRateHistory = proRateHistoryRepository.findByIndexNoAndDate(e_指标_rate_sy.get编码(), e.getValue1());
+            if (proRateHistory == null) {
+                proRateHistory = new ProRateHistory(e_指标_rate_sy,e.getValue1());
+            }
+
+            if(doubleClass.equals(Double.class.getName())){
+                Double value = rateHistories1.stream()
+                        .filter(x->x.getDate().isBefore(e.getValue1().plusDays(1)))
+                        .mapToDouble(x->{
+                            System.out.println("----找到一个"+x.toString());
+                            return x.getDeltaDoubleValue();
+                        }).sum();
+
+                proRateHistory.setDoubleValue(value);
+            }
+            if(doubleClass.equals(Integer.class.getName())){
+                Long value = rateHistories1.stream()
+                        .filter(x->x.getDate().isBefore(e.getValue1().plusDays(1)))
+                        .mapToLong(x->{
+                            System.out.println("----找到一个"+x.toString());
+                            return x.getDeltaLongValue();
+                        }).sum();
+
+                proRateHistory.setLongValue(value);
+            }
+            //proRateHistory.setDeltaDoubleValue(e.getValue1());
+            System.out.println("------------存储了一个 数据啊啊啊");
+            proRateHistoryRepository.save(proRateHistory);
+
+        });
+
+
+
+
+
+
+
+
+
+    }
+
+    @Transactional
+    protected void transfer本年累计ToPro(E_指标_RATE_SY e_指标_rate_sy, String doubleClass) {
+
+        List<RateHistory> rateHistories1 = rateHistoryRepository.findByIndexNo(e_指标_rate_sy.get编码())
+                .stream()
+                .collect(Collectors.groupingBy(e -> e.getDate())).entrySet().stream().map(e -> {
+                    System.out.println("pppppp"+e);
+                    Long count = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).count();
+                    if(count>0){
+                        return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).findFirst().get();
+                    }else{
+                        Long count_ = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).count();
+                        if(count_ > 0) {
+                            return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).findFirst().get();
+                        }else{
+                            Long count_2 = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).count();
+                            if (count_2>0){
+                                return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).findFirst().get();
+
+                            }else{
+                                return null;
+                            }
+                        }
+
+                    }
+
+
+                }).filter(e->e!= null).sorted(Comparator.comparingLong(e -> e.getDate().toEpochDay())).collect(Collectors.toList());//.collect(Collectors.toList());
+
+
+
+        Map<Integer,List<RateHistory>> maps = rateHistories1.stream().collect(Collectors.groupingBy(e->e.getDate().getYear()));
+
+
+        RateHistory rateHistory = rateHistories1.stream().sorted(Comparator.comparingLong(e -> e.getDate().toEpochDay())).findFirst().get();
+
+        RateHistory rateHistorySecond =rateHistories1.stream().sorted(Comparator.comparingLong(e -> -e.getDate().toEpochDay())).findFirst().get();
+
+
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(rateHistory.getDate(),rateHistorySecond.getDate(),统计周期编码.H__01_每日);
+
+        triplets.forEach(e -> {
+            ProRateHistory proRateHistory = proRateHistoryRepository.findByIndexNoAndDate(e_指标_rate_sy.get编码(), e.getValue1());
+            if (proRateHistory == null) {
+                proRateHistory = new ProRateHistory(e_指标_rate_sy,e.getValue1());
+            }
+
+            if(doubleClass.equals(Double.class.getName())){
+                Double value = maps.get(e.getValue1().getYear()).stream()
+                        .filter(x->x.getDate().isBefore(e.getValue1().plusDays(1)))
+                        .mapToDouble(x->{
+                            System.out.println("----找到一个"+x.toString());
+                            return x.getDeltaDoubleValue();
+                        }).sum();
+
+                proRateHistory.setDoubleValue(value);
+            }
+            if(doubleClass.equals(Long.class.getName())){
+                Long value = maps.get(e.getValue1().getYear()).stream()
+                        .filter(x->x.getDate().isBefore(e.getValue1().plusDays(1)))
+                        .mapToLong(x->{
+                            System.out.println("----找到一个"+x.toString());
+                            return x.getDeltaLongValue();
+                        }).sum();
+
+                proRateHistory.setLongValue(value);
+            }
+            //proRateHistory.setDeltaDoubleValue(e.getValue1());
+            System.out.println("------------存储了一个 数据啊啊啊");
+            proRateHistoryRepository.save(proRateHistory);
+
+        });
+
+
+    }
+
+
+
+
+
+    @Transactional
+    protected void transfer本期值ToPro(E_指标_RATE_SY e_指标_rate_sy, String doubleClass) {
+
+
+        List<RateHistory> rateHistories1 = rateHistoryRepository.findByIndexNo(e_指标_rate_sy.get编码())
+                .stream()
+                .collect(Collectors.groupingBy(e -> e.getDate())).entrySet().stream().map(e -> {
+                    System.out.println("pppppp"+e);
+                    Long count = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).count();
+                    if(count>0){
+                        return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Realtime_State.get编码())).findFirst().get();
+                    }else{
+                        Long count_ = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).count();
+                        if(count_ > 0) {
+                            return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.Reduction_流水还原.get编码())).findFirst().get();
+                        }else{
+                            Long count_2 = e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).count();
+                            if (count_2>0){
+                                return e.getValue().stream().filter(x -> x.getType().equals(E_HISTORY_数据来源.fill.get编码())).findFirst().get();
+
+                            }else{
+                                return null;
+                            }
+                        }
+
+                    }
+
+
+                }).filter(e->e!= null).sorted(Comparator.comparingLong(e -> e.getDate().toEpochDay())).collect(Collectors.toList());//.collect(Collectors.toList());
+
+
+
+
+        Map<LocalDate,RateHistory> maps = rateHistories1.stream().collect(Collectors.toMap(e->e.getDate(),e->e));
+        RateHistory rateHistory = rateHistories1.stream().sorted(Comparator.comparingLong(e -> e.getDate().toEpochDay())).findFirst().get();
+        RateHistory rateHistorySecond =rateHistories1.stream().sorted(Comparator.comparingLong(e -> -e.getDate().toEpochDay())).findFirst().get();
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(rateHistory.getDate(),rateHistorySecond.getDate(),统计周期编码.H__01_每日);
+
+        triplets.forEach(e -> {
+            ProRateHistory proRateHistory = proRateHistoryRepository.findByIndexNoAndDate(e_指标_rate_sy.get编码(), e.getValue1());
+            if (proRateHistory == null) {
+                proRateHistory = new ProRateHistory(e_指标_rate_sy,e.getValue1());
+            }
+
+            if(doubleClass.equals(Double.class.getName())){
+                RateHistory value = maps.get(e.getValue1());
+                if(value!= null){
+                    System.out.println("----------------- 找到了"+value.getDeltaDoubleValue());
+
+                    proRateHistory.setDeltaDoubleValue(value.getDeltaDoubleValue());
+                }else{
+                    System.out.println("----------------- 找不到");
+                    proRateHistory.setDeltaDoubleValue(0D);
+                }
+            }
+
+
+            if(doubleClass.equals(Long.class.getName())){
+                RateHistory value = maps.get(e.getValue1());
+                if(value!= null){
+                    proRateHistory.setDeltaLongValue(value.getDeltaLongValue());
+                }else{
+                    proRateHistory.setDeltaLongValue(0L);
+                }
+            }
+            //proRateHistory.setDeltaDoubleValue(e.getValue1());
+            System.out.println("------------存储了一个 数据啊啊啊");
+            proRateHistoryRepository.save(proRateHistory);
+
+        });
 
     }
 

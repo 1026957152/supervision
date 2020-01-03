@@ -4,28 +4,19 @@ package org.ylgjj.loan.rates;
 import org.apache.commons.lang3.time.StopWatch;
 import org.javatuples.Pair;
 import org.javatuples.Triplet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.ylgjj.loan.domain.DP009_个人明细账;
 import org.ylgjj.loan.domain.LN101_贷款明细账;
-import org.ylgjj.loan.enumT.E_DP093_冻结解冻登记表_冻结业务标志;
 import org.ylgjj.loan.enumT.E_LN101_贷款明细账_借贷标志;
 import org.ylgjj.loan.domain_flow.RateAnalysisStream;
 import org.ylgjj.loan.domain_flow.RateAnalysisTable;
 import org.ylgjj.loan.domain_flow.ProRateHistory;
-import org.ylgjj.loan.domain_flow.RateHistory;
-import org.ylgjj.loan.enumT.E_dp007_个人分户账_类型;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
 import org.ylgjj.loan.outputenum.统计周期编码;
-import org.ylgjj.loan.repository.*;
-import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
 import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -42,7 +33,18 @@ public class SY_37_ljhse_累计回收额_RateServiceImpl extends RateServiceBase
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_37_ljhse_累计回收额;
 
-    public void realTime() {
+
+
+    //
+    public void trans() {
+        planProcess(LocalDate.parse("2015-10-01",df),LocalDate.now());
+
+      transfer本年累计ToPro(e_指标_rate_sy,Double.class.getName());
+
+    }
+
+
+/*    public void realTime() {
         List<LN101_贷款明细账> ln003_合同信息s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期(LocalDate.now());
 
         Double count = ln003_合同信息s.stream()
@@ -55,8 +57,9 @@ public class SY_37_ljhse_累计回收额_RateServiceImpl extends RateServiceBase
 
         saveAccDoubleRealtime(count,LocalDate.now(),e_指标_rate_sy);
 
-    }
+    }*/
 
+/*
     public void process(LocalDate beginDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
@@ -65,10 +68,11 @@ public class SY_37_ljhse_累计回收额_RateServiceImpl extends RateServiceBase
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true || rateAnalysisTable.getAanalysedEndDate()== null){
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
-
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
             RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
@@ -106,23 +110,27 @@ public class SY_37_ljhse_累计回收额_RateServiceImpl extends RateServiceBase
                     System.out.println("stream---------"+e.getKey());
                     return Pair.with(e.getKey(),
                             e.getValue().stream().mapToDouble(x->{
-   /*                             if(x.getLoanfundtype不可为空_贷款资金类型().equals(E_LN101_贷款明细账_贷款资金类型.E_))
+   */
+/*                             if(x.getLoanfundtype不可为空_贷款资金类型().equals(E_LN101_贷款明细账_贷款资金类型.E_))
                                     return +1;
                                 if(x.getFrztype_不可为空_冻结类型().equals(E_DP093_冻结解冻登记表_冻结业务标志.E_1_解冻))
-                                    return -1; // 之前 是 满的，现在空了*/
+                                    return -1; // 之前 是 满的，现在空了*//*
+
                                 return x.getTransamt不可为空_交易金额().doubleValue();
                             }).sum());
                 }).collect(Collectors.toList());
 
-
+*/
+/*
         List<Pair<LocalDate,Double>> triplets_acc = new ArrayList<>();
         Double num = 0D;
         for(Pair<LocalDate,Double> triplet: sourceList){
             num += triplet.getValue1();
             triplets_acc.add(Pair.with(triplet.getValue0(),num));
-        }
+        }*//*
 
-        saveAccDouble(triplets_acc,e_指标_rate_sy);
+
+        saveDeltaDouble(sourceList,e_指标_rate_sy);
 
         return new RateAnalysisStream(beginDate,endDate);
 
@@ -130,40 +138,27 @@ public class SY_37_ljhse_累计回收额_RateServiceImpl extends RateServiceBase
 
 
 
+*/
 
 
 
 
 
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
 
-        Double rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
 
-/*
-        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();
-        Long rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();;
-        Long rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();
-*/
+        if(rateHistories.size()==0) return;
+
+
+
+        Triplet<Double,Double,Double> triplet = queryDouble期末(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
+
+
+        Double rateHistory_环比 =triplet.getValue1();
+        Double rateHistory_同比 = triplet.getValue2();
+        Double rateHistory = triplet.getValue0();
+
+
 
 
         h1.setLjhse_累计回收额_NUMBER_18_2(rateHistory.intValue());
@@ -180,15 +175,19 @@ if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环
 
 
 
-    //@PostConstruct
-    public void planProcess() {
+
+    public void planProcess(LocalDate beginDate, LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
             return;
         }
+        deleteAll(e_指标_rate_sy);
+        deleteReduction_流水还原(e_指标_rate_sy);
+        deleteReduction_流水还原_Pro(e_指标_rate_sy);
+
         //  RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now());
-        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(LocalDate.now().minusDays(1200),LocalDate.now(), 统计周期编码.H__03_每月);
+        List<Triplet<Long,LocalDate,LocalDate>> triplets = run统计周期编码(beginDate,endDate, 统计周期编码.H__03_每月);
 
         for(Triplet<Long,LocalDate,LocalDate> triplet:triplets){
 
@@ -210,14 +209,14 @@ if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环
 
         System.out.println("处理数据---------"+beginDate.toString()+"--"+endDate.toString());
 
-        List<DP009_个人明细账> ln003_合同信息s = dp009_个人明细账_repository
-                .findByTransdate不可为空交易日期BetweenOrderByTransdate不可为空交易日期Desc(beginDate.minusDays(1),endDate.plusDays(1));
+
+        List<LN101_贷款明细账> ln003_合同信息s = ln101_贷款明细账_repository.findByTransdate不可为空交易日期BetweenOrderByTransdate不可为空交易日期Desc(beginDate.minusDays(1),endDate.plusDays(1));
         System.out.println("-----------------------------"+ ln003_合同信息s.size());
 
 
-        List<Pair<LocalDate,Long>> sourceList =ln003_合同信息s
+        List<Pair<LocalDate,Double>> sourceList =ln003_合同信息s
                 .stream()
-                //     .filter(e->e.get().equals(E_DP034_公积金开销户登记簿_账户标志.E_2_个人户.getText()))
+                .filter(e->e.getDcflag不可为空_借贷标志().equals(E_LN101_贷款明细账_借贷标志.E_2_贷方.getText()))
                 .collect(Collectors.groupingBy(e->e.getTransdate不可为空交易日期())).entrySet()
                 .stream()
                 .sorted(Comparator.comparingLong(e->e.getKey().toEpochDay()))
@@ -225,17 +224,17 @@ if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环
                     ;
                     System.out.println("stream---------"+e.getKey());
                     return Pair.with(e.getKey(),
-                            e.getValue().stream().mapToLong(x->{
-                                if(x.getBal_不可为空_余额()> 0 &&  x.getBal_不可为空_余额() - x.getAmt_不可为空_发生额() == 0)
-                                    return +1;  //开户了， 之前是空的，现在是满的，
-                                if(x.getBal_不可为空_余额() - x.getAmt_不可为空_发生额() > 0 && x.getBal_不可为空_余额() == 0)
-                                    return -1; // 之前 是 满的，现在空了
-                                return 0;
+                            e.getValue().stream().mapToDouble(x->{
+   /*                             if(x.getLoanfundtype不可为空_贷款资金类型().equals(E_LN101_贷款明细账_贷款资金类型.E_))
+                                    return +1;
+                                if(x.getFrztype_不可为空_冻结类型().equals(E_DP093_冻结解冻登记表_冻结业务标志.E_1_解冻))
+                                    return -1; // 之前 是 满的，现在空了*/
+                                return x.getTransamt不可为空_交易金额().doubleValue();
                             }).sum());
                 }).collect(Collectors.toList());
 
 
-        saveDeltaLong(sourceList,e_指标_rate_sy);
+        saveDeltaDouble(sourceList,e_指标_rate_sy);
 
         if(sourceList.isEmpty())
             return null;

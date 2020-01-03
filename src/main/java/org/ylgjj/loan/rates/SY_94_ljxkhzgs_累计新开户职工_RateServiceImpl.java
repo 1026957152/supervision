@@ -15,9 +15,11 @@ import org.ylgjj.loan.domain_flow.RateAnalysisTable;
 import org.ylgjj.loan.domain_flow.RateHistory;
 import org.ylgjj.loan.output.H1_2监管主要指标查询_公积金中心主要运行情况查询;
 import org.ylgjj.loan.outputenum.E_指标_RATE_SY;
+import org.ylgjj.loan.outputenum.统计周期编码;
 import org.ylgjj.loan.repository.DP034_公积金开销户登记簿_Repository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,7 +37,16 @@ import java.util.stream.Collectors;
 public class SY_94_ljxkhzgs_累计新开户职工_RateServiceImpl extends RateServiceBaseImpl{
 
     E_指标_RATE_SY e_指标_rate_sy = E_指标_RATE_SY.SY_94_ljxkhzgs_累计新开户职工;
-    public void process() {
+  // //
+    public void groupProcess(){
+        process(LocalDate.parse("2015-10-01",df),LocalDate.now());
+
+        transfer本年累计ToPro(e_指标_rate_sy,Long.class.getName());
+    }
+
+
+    //  //
+    public void process(LocalDate localDate,LocalDate endDate) {
         RateAnalysisTable rateAnalysisTable = rateAnalysisTableRepository.findByIndexNo(e_指标_rate_sy.get编码());
 
         if(rateAnalysisTable == null){
@@ -43,11 +54,11 @@ public class SY_94_ljxkhzgs_累计新开户职工_RateServiceImpl extends RateSe
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
+        if(true||rateAnalysisTable.getAanalysedEndDate()== null){
 
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
-
-            RateAnalysisStream rateAnalysisStream = history(LocalDate.now().minusDays(20000),LocalDate.now());
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
+            RateAnalysisStream rateAnalysisStream = history(localDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
             rateAnalysisTable.setAanalysedBeginDate(rateAnalysisStream.getBeginDate());
             rateAnalysisTable.setAanalysedEndDate(rateAnalysisStream.getEndDate());
@@ -93,6 +104,7 @@ public class SY_94_ljxkhzgs_累计新开户职工_RateServiceImpl extends RateSe
                             }).sum());
                 }).collect(Collectors.toList());
 
+/*
         Long num = 0L;
 
         List<Pair<LocalDate,Long>> triplets = new ArrayList<>();
@@ -101,9 +113,10 @@ public class SY_94_ljxkhzgs_累计新开户职工_RateServiceImpl extends RateSe
             triplets.add(Pair.with(triplet.getValue0(),num));
         }
 
+*/
 
 
-        saveAccLong(triplets,e_指标_rate_sy);
+        saveDeltaLong(sourceList,e_指标_rate_sy);
 
         return new RateAnalysisStream(beginDate,endDate);
     }

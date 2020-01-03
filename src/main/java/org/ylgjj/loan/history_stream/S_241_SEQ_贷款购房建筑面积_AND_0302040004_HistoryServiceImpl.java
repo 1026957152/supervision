@@ -57,7 +57,7 @@ public class S_241_SEQ_贷款购房建筑面积_AND_0302040004_HistoryServiceImp
 
 
 
-    //@PostConstruct
+
     public void process() {
 
        //流水_单位缴存spanTimeSpan( LocalDate.now().minusDays(20000),LocalDate.now());

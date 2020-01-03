@@ -32,12 +32,12 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
 
 
 
-    //@PostConstruct
+
     public void trans() {
         process(LocalDate.parse("2015-10-01",df),LocalDate.now());
 
 
-        transfer本期值ToPro(e_指标_rate_sy, Double.class.getName());
+        transfer本期值ToPro(e_指标_rate_sy, Long.class.getName());
     }
 
     public void process(LocalDate beginDate,LocalDate endDate) {
@@ -48,9 +48,10 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
         }
         StopWatch timer = new StopWatch();
         timer.start();
-        if(rateAnalysisTable.getAanalysedEndDate()== null){
-
-            rateHistoryRepository.deleteByIndexNo(e_指标_rate_sy.get编码());
+        if(true ||rateAnalysisTable.getAanalysedEndDate()== null){
+            deleteAll(e_指标_rate_sy);
+            deleteReduction_流水还原(e_指标_rate_sy);
+            deleteReduction_流水还原_Pro(e_指标_rate_sy);
 
             RateAnalysisStream rateAnalysisStream = history(beginDate,endDate);
             rateAnalysisStream.setDuration(timer.getTime());
@@ -87,6 +88,7 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
                     return Pair.with(e.getKey(),e.getValue().stream().count());
         }).collect(Collectors.toList());
 
+/*
         Long num = 0L;
 
         List<Pair<LocalDate,Long>> triplets = new ArrayList<>();
@@ -96,19 +98,13 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
 
             triplets.add(Pair.with(triplet.getValue0(),triplet.getValue1()));
         }
+*/
 
 
-
-        save(triplets);
-
+        saveDeltaLong(sourceList,e_指标_rate_sy);
 
 
-        RateAnalysisStream rateAnalysisStream = new RateAnalysisStream();
-        rateAnalysisStream.setBeginDate(beginDate);
-        rateAnalysisStream.setEndDate(endDate);
-
-
-        return rateAnalysisStream;
+        return new RateAnalysisStream(beginDate,endDate);
 
     }
 
@@ -128,47 +124,6 @@ public class SY_134_ffbs_发放笔数_RateServiceImpl extends RateServiceBaseImp
     }
 
 
-
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, String ksrq, String jsrq) {
-
-
-        LocalDate ldt_ksrq = LocalDate.parse(ksrq, df);
-        LocalDate ldt_jsrq = LocalDate.parse(jsrq, df);
-        LocalDate ldt_ksrq_环比_begin  = ldt_ksrq.minusMonths(1);
-        LocalDate ldt_ksrq_环比_end  = ldt_jsrq.minusMonths(1);
-
-
-        LocalDate ldt_ksrq_同比_begin  = ldt_ksrq.minusYears(1);
-        LocalDate ldt_ksrq_同比_end  = ldt_jsrq.minusYears(1);
-
-
-
-
-
-        List<RateHistory> rateHistories = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq,ldt_jsrq);
-
-        List<RateHistory> rateHistories_环比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
-        List<RateHistory> rateHistories_同比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        Integer rateHistory_环比 = rateHistories_环比.stream().mapToInt(e->e.getLongValue().intValue()).sum();
-        Integer rateHistory_同比 = rateHistories_同比.stream().mapToInt(e->e.getLongValue().intValue()).sum();;
-        Integer rateHistory = rateHistories.stream().mapToInt(e->e.getLongValue().intValue()).sum();
-
-
-
-        h1.setFfbs_发放笔数_NUMBER_18_0(rateHistory);
-
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
-
-
-        h1.setHbffbs_环比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
-
-        h1.setSnffbs_同比发放笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-    }
 
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
 Optional<ProRateHistory> rateHistory_环比 = rateHistories_环比
