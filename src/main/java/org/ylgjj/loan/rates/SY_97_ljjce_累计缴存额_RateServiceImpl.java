@@ -147,6 +147,7 @@ if(rateHistories.size()==0) return;
 
 
 
+
         Triplet<Double,Double,Double> triplet = queryDouble本期值(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
 
         Double rateHistory_环比 =triplet.getValue1();
