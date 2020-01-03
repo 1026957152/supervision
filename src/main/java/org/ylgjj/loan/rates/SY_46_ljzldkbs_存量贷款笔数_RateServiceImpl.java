@@ -144,11 +144,11 @@ public class SY_46_ljzldkbs_存量贷款笔数_RateServiceImpl extends RateServi
 
 
         h1.setLjzldkbs_存量贷款笔数_NUMBER_18_0(rateHistory.intValue());
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
+        BigDecimal bigDecimal = BigDecimal.valueOf(rateHistory_环比);
 
         h1.setLjhbzldkbs_环比存量贷款笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
+        bigDecimal = BigDecimal.valueOf(rateHistory_同比);
 
         h1.setLjsnzldkbs_同比存量贷款笔数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 

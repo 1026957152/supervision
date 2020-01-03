@@ -171,11 +171,11 @@ public class SY_164_gjzbs_归集总笔数_RateServiceImpl extends RateServiceBas
         h1.setGjzbs_归集总笔数_NUMBER_18_0(rateHistory);
         h1.setWtgjzbs_网厅归集总笔数_NUMBER_18_0(rateHistory);
 /*
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
+        BigDecimal bigDecimal = BigDecimal.valueOf(rateHistory_环比);
 
         h1.setLjhbffdkje_累计环比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
+        bigDecimal = BigDecimal.valueOf(rateHistory_同比);
 
         h1.setLjsnffdkje_累计同比发放贷款金额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 */

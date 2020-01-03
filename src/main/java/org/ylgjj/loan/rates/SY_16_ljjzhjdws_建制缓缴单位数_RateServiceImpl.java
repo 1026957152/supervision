@@ -32,7 +32,7 @@ public class SY_16_ljjzhjdws_建制缓缴单位数_RateServiceImpl extends RateS
 
  //   //
 
-    @PostConstruct
+    //@PostConstruct
     public void groupProcess(){
         process(LocalDate.parse("2015-10-01",df),LocalDate.now());
 
@@ -116,11 +116,11 @@ Triplet<Long,Long,Long> triplet = queryLong期末(e_指标_rate_sy,rateHistories
 
 
         h1.setLjjzhjdws_建制缓缴单位数_NUMBER_18_0(rateHistory.intValue());
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
+        BigDecimal bigDecimal = BigDecimal.valueOf(rateHistory_环比);
 
         h1.setLjhbjzhjdws_环比建制缓缴单位数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
+        bigDecimal = BigDecimal.valueOf(rateHistory_同比);
 
         h1.setLjsnjzhjdws_同比建制缓缴单位数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 

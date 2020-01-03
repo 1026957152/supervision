@@ -145,11 +145,11 @@ if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环
 
         h1.setDkye_贷款余额_NUMBER_18_2(rateHistory);
 
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
+        BigDecimal bigDecimal = BigDecimal.valueOf(rateHistory_环比);
 
         h1.setHbdkye_环比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
+        bigDecimal = BigDecimal.valueOf(rateHistory_同比);
 
         h1.setSndkye_同比贷款余额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 

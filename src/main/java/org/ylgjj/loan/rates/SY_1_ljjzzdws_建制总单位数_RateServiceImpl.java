@@ -39,6 +39,7 @@ public class SY_1_ljjzzdws_建制总单位数_RateServiceImpl extends RateServic
 
 
     public void groupProcess(){
+
         process(LocalDate.parse("2015-10-01",df),LocalDate.now());
 
         transfer累计ToPro(LocalDate.parse("2015-10-01",df),e_指标_rate_sy,Long.class.getName());

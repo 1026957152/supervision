@@ -301,11 +301,11 @@ public class SY_13_ljjzzcdws_建制正常单位数_RateServiceImpl extends RateS
 
 
         h1.setLjjzzcdws_建制正常单位数_NUMBER_18_0(rateHistory.intValue());
-        BigDecimal bigDecimal = BigDecimal.valueOf((rateHistory-rateHistory_环比+0D)/(rateHistory_环比!=0? rateHistory_环比:-1));
+        BigDecimal bigDecimal = BigDecimal.valueOf(rateHistory_环比);
 
         h1.setLjhbjzzcdws_环比建制正常单位数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        bigDecimal = BigDecimal.valueOf((rateHistory.intValue()-rateHistory_同比.intValue()+0D)/(rateHistory_同比!=0? rateHistory_同比:-1));
+        bigDecimal = BigDecimal.valueOf(rateHistory_同比);
 
         h1.setLjsnjzzcrs_同比建制正常人数_NUMBER_18_0(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
 

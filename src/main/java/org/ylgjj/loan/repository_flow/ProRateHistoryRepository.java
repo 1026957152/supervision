@@ -29,4 +29,8 @@ public interface ProRateHistoryRepository extends JpaRepository<ProRateHistory, 
     @Modifying
     void deleteByIndexNo(String 编码);
 
+
+    @Transactional
+    @Modifying
+    void deleteByDate(LocalDate parse);
 }

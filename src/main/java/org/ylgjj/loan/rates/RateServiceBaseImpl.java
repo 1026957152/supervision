@@ -20,6 +20,7 @@ import org.ylgjj.loan.repository_flow.ProRateHistoryRepository;
 import org.ylgjj.loan.repository_flow.RateAnalysisTableRepository;
 import org.ylgjj.loan.repository_flow.RateHistoryRepository;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -452,6 +453,16 @@ public class RateServiceBaseImpl {
                     .collect(Collectors.toList());
         }
         return dp007_个人分户账List;
+    }
+
+
+
+    @PostConstruct
+    public void deleteAll() {
+
+
+        System.out.println("删除");
+        proRateHistoryRepository.deleteByDate(LocalDate.parse("2020-01-31",df));
     }
 
 
