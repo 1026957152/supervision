@@ -145,11 +145,15 @@ public class SY_1_ljjzzdws_建制总单位数_RateServiceImpl extends RateServic
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
 Triplet<Long,Long,Long> triplet = queryLong期末(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
 
+        Long rateHistory_环比 =triplet.getValue1();
+        Long rateHistory_同比 = triplet.getValue2();
+        Long rateHistory = triplet.getValue0();
 
-        h1.setLjjzzdws_建制总单位数_NUMBER_18_2(triplet.getValue0().intValue());
-        BigDecimal bigDecimal = BigDecimal.valueOf((triplet.getValue0()-triplet.getValue1()+0D)/(triplet.getValue1()!=0? triplet.getValue1():-1));
+
+        h1.setLjjzzdws_建制总单位数_NUMBER_18_2(rateHistory.intValue());
+        BigDecimal bigDecimal = BigDecimal.valueOf(rateHistory_环比);
         h1.setLjhbjzzdws_环比建制总单位数_NUMBER_18_0(bigDecimal.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
-        bigDecimal = BigDecimal.valueOf((triplet.getValue0().intValue()-triplet.getValue2().intValue()+0D)/(triplet.getValue2()!=0? triplet.getValue2():-1));
+        bigDecimal = BigDecimal.valueOf(rateHistory_同比);
         h1.setLjsnjzzdws_同比建制总单位数_NUMBER_18_0(bigDecimal.setScale(4, BigDecimal.ROUND_HALF_UP).doubleValue());
 
 
