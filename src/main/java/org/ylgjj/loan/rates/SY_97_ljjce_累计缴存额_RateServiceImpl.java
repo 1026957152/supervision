@@ -142,74 +142,17 @@ public class SY_97_ljjce_累计缴存额_RateServiceImpl extends RateServiceBase
 
 
 
-    public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, String ksrq, String jsrq) {
-
-
-        LocalDate ldt_ksrq = LocalDate.parse(ksrq, df);
-        LocalDate ldt_jsrq = LocalDate.parse(jsrq, df);
-        LocalDate ldt_ksrq_环比_begin  = ldt_ksrq.minusMonths(1);
-        LocalDate ldt_ksrq_环比_end  = ldt_jsrq.minusMonths(1);
-
-
-        LocalDate ldt_ksrq_同比_begin  = ldt_ksrq.minusYears(1);
-        LocalDate ldt_ksrq_同比_end  = ldt_jsrq.minusYears(1);
-
-
-
-
-
-        List<RateHistory> rateHistories = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq,ldt_jsrq);
-
-        List<RateHistory> rateHistories_环比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_环比_begin,ldt_ksrq_环比_end);
-        List<RateHistory> rateHistories_同比 = rateHistoryRepository
-                .findByIndexNoAndDateBetweenOrderByDateDesc(e_指标_rate_sy.get编码(),ldt_ksrq_同比_begin,ldt_ksrq_同比_end);
-        if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比.stream().mapToDouble(e->e.getDoubleValue()).sum();
-        Double rateHistory_同比 = rateHistories_同比.stream().mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories.stream().mapToDouble(e->e.getDoubleValue()).sum();
-
-
-
-        h1.setLjjce_累计缴存额_NUMBER_18_2(rateHistory);
-
-        BigDecimal bigDecimal = BigDecimal.valueOf(rateHistory_环比);
-
-        h1.setLjhbjce_环比累计缴存额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-        bigDecimal = BigDecimal.valueOf(rateHistory_同比);
-
-        h1.setLjsnjce_同比累计缴存额_NUMBER_18_2(bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
-
-
-    }
     public void query(H1_2监管主要指标查询_公积金中心主要运行情况查询 h1, List<ProRateHistory> rateHistories, List<ProRateHistory> rateHistories_环比, List<ProRateHistory> rateHistories_同比) {
-if(rateHistories.size()==0) return;Double rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
+if(rateHistories.size()==0) return;
 
-        Double rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();;
-        Double rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToDouble(e->e.getDoubleValue()).sum();
 
-/*        if(rateHistories.size()==0) return;Long rateHistory_环比 = rateHistories_环比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();
-        Long rateHistory_同比 = rateHistories_同比
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();;
-        Long rateHistory = rateHistories
-                .stream()
-                .filter(e->e.getIndexNo().equals(e_指标_rate_sy.get编码()))
-                .mapToLong(e->e.getLongValue()).sum();*/
+
+        Triplet<Double,Double,Double> triplet = queryDouble本期值(e_指标_rate_sy,rateHistories,rateHistories_环比,rateHistories_同比);
+
+        Double rateHistory_环比 =triplet.getValue1();
+        Double rateHistory_同比 = triplet.getValue2();
+        Double rateHistory = triplet.getValue0();
+
 
         h1.setLjjce_累计缴存额_NUMBER_18_2(rateHistory);
 
